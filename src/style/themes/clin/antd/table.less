@@ -1,0 +1,35 @@
+// Table
+@table-row-hover-bg: @gray-3;
+@table-selected-row-bg: @gray-2;
+@table-body-sort-bg: @gray-2;
+@table-expanded-row-bg: @gray-2;
+@table-header-bg: @gray-3;
+@table-header-color: @gray-8;
+@table-header-bg-sm: @gray-2;
+.@{table-prefix-cls} {
+  &-thead {
+    > tr {
+      > th {
+        background-color: @gray-3;
+        height: 40px;
+        padding: 0px 16px;
+      }
+    }
+  }
+  &-tbody {
+    > tr {
+      > td {
+        height: 40px;
+        padding: 0px 16px;
+        border: none;
+      }
+    }
+    > tr:nth-child(even) {
+      background-color: @gray-2;
+    }
+  }
+}
+
+.ant-table {
+  font-size: 14px;
+}
