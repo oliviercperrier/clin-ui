@@ -4,6 +4,14 @@
 .variantPagecontainer {
   position: relative;
 
+  :global(.patient-variant-repo__query-builder) {
+    // must check why antd.css is override QueryPills.module.scss from ferlab
+    // this doesn't happend in other projects
+    :global(div[class*="QueryPill_filtersDropdown"]) {
+      padding: 8px 16px;
+    }
+  }
+
   .variantTabs {
     margin-top: 24px;
 

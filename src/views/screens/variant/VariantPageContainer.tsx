@@ -22,9 +22,9 @@ import GeneTableContainer from "./GeneTableContainer";
 import { history } from "configureStore";
 import { useParams } from "react-router";
 import { dotToUnderscore } from "@ferlab/ui/core/data/arranger/formatting";
+import GenericFilters from "./filters/GenericFilters";
 
 import styles from "./VariantPageContainer.module.scss";
-import GenericFilters from "./filters/GenericFilters";
 
 export type VariantPageContainerData = {
   mappingResults: MappingResults;
