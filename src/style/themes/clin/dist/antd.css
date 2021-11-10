@@ -25210,6 +25210,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-tabs-nav {
   margin-bottom: 0 !important;
 }
+body {
+  color: #364a63;
+}
 .ant-btn-link {
   color: #006aa3;
   padding: 0;

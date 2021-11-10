@@ -4,13 +4,11 @@
 /* eslint-disable react/jsx-curly-spacing */
 
 import React, { useState } from "react";
-import type { ProColumns } from "@ant-design/pro-table";
-import ProTable from "@ant-design/pro-table";
 import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
 import { VariantPageResults } from "./VariantPageContainer";
 import intl from "react-intl-universal";
+import { Table } from "antd";
 
-import "../../../../node_modules/@ant-design/pro-table/dist/table.css";
 import style from "./VariantTableContainer.module.scss";
 
 const DEFAULT_PAGE_NUM = 1;
@@ -30,7 +28,7 @@ const GeneTableContainer = (props: OwnProps) => {
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
   const total = 0;
 
-  const columns: ProColumns[] = [
+  const columns = [
     {
       title: intl.get("screen.patientvariant.results.gene.table.symbol"),
       dataIndex: "test1",
@@ -64,40 +62,31 @@ const GeneTableContainer = (props: OwnProps) => {
   ];
 
   return (
-    <ProTable
-      columns={columns}
-      search={false}
-      toolbar={{
-        title: (
-          <div className={style.tabletotalTitle}>
-            Résultats <strong>1 - {DEFAULT_PAGE_SIZE}</strong> sur{" "}
-            <strong>200</strong>
-          </div>
-        ),
-      }}
-      defaultData={defaultData}
-      className={style.variantSearchTable}
-      options={{
-        density: false,
-        reload: false,
-        setting: false,
-      }}
-      cardBordered={true}
-      pagination={{
-        current: currentPageNum,
-        showTotal: () => undefined,
-        showTitle: false,
-        showSizeChanger: true,
-        showQuickJumper: false,
-        onChange: (page) => {
-          if (currentPageNum !== page) {
-            setCurrentPageNum(page);
-            setCurrentPageCb(page);
-          }
-        },
-        size: "small",
-      }}
-    />
+    <>
+      <div className={style.tabletotalTitle}>
+        Résultats <strong>1 - {DEFAULT_PAGE_SIZE}</strong> sur{" "}
+        <strong>200</strong>
+      </div>
+      <Table
+        columns={columns}
+        dataSource={defaultData}
+        className={style.variantSearchTable}
+        pagination={{
+          current: currentPageNum,
+          showTotal: () => undefined,
+          showTitle: false,
+          showSizeChanger: true,
+          showQuickJumper: false,
+          onChange: (page) => {
+            if (currentPageNum !== page) {
+              setCurrentPageNum(page);
+              setCurrentPageCb(page);
+            }
+          },
+          size: "small",
+        }}
+      />
+    </>
   );
 };
 

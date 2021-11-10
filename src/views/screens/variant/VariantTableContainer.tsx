@@ -4,8 +4,7 @@
 /* eslint-disable react/jsx-curly-spacing */
 
 import React, { useState } from "react";
-import type { ProColumns } from "@ant-design/pro-table";
-import ProTable from "@ant-design/pro-table";
+import { Table } from "antd";
 import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
 import { VariantPageResults } from "./VariantPageContainer";
 import intl from "react-intl-universal";
@@ -23,7 +22,6 @@ import {
 import { DISPLAY_WHEN_EMPTY_DATUM } from "./Empty";
 import ConsequencesCell from "./ConsequencesCell";
 
-import "../../../../node_modules/@ant-design/pro-table/dist/table.css";
 import style from "./VariantTableContainer.module.scss";
 
 const DEFAULT_PAGE_NUM = 1;
@@ -52,11 +50,11 @@ const VariantTableContainer = (props: OwnProps) => {
   const variants = variantsResults?.hits?.edges || [];
   const total = variantsResults?.hits?.total || 0;
 
-  const columns: ProColumns[] = [
+  const columns = [
     {
       title: intl.get("screen.patientvariant.results.table.variant"),
       dataIndex: "hgvsg",
-      render: (hgvsg, entity: VariantEntity) =>
+      render: (hgvsg: string, entity: VariantEntity) =>
         hgvsg ? (
           <Tooltip placement="topLeft" title={hgvsg}>
             <Link to={`/variantDetails/${entity.hash}`} href={"#top"}>
@@ -74,7 +72,7 @@ const VariantTableContainer = (props: OwnProps) => {
     {
       title: intl.get("screen.patientvariant.results.table.dbsnp"),
       dataIndex: "rsnumber",
-      render: (rsNumber) =>
+      render: (rsNumber: string) =>
         rsNumber ? (
           <a
             target="_blank"
@@ -91,29 +89,23 @@ const VariantTableContainer = (props: OwnProps) => {
       title: intl.get("screen.patientvariant.results.table.consequence"),
       dataIndex: "consequences",
       width: 300,
-      render: (consequences) => {
-        const consequencesData = consequences as {
-          hits: { edges: Consequence[] };
-        };
+      render: (consequences: { hits: { edges: Consequence[] } }) => {
         return (
-          <ConsequencesCell
-            consequences={consequencesData?.hits?.edges || []}
-          />
+          <ConsequencesCell consequences={consequences?.hits?.edges || []} />
         );
       },
     },
     {
       title: intl.get("screen.patientvariant.results.table.clinvar"),
       dataIndex: "clinvar",
-      render: (clinVar) => {
-        const clinVarData = clinVar as ClinVar;
-        return clinVarData?.clin_sig && clinVarData.clinvar_id ? (
+      render: (clinVar: ClinVar) => {
+        return clinVar?.clin_sig && clinVar.clinvar_id ? (
           <a
-            href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinVarData.clinvar_id}`}
+            href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinVar.clinvar_id}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {clinVarData.clin_sig.join(", ")}
+            {clinVar.clin_sig.join(", ")}
           </a>
         ) : (
           DISPLAY_WHEN_EMPTY_DATUM
@@ -123,19 +115,17 @@ const VariantTableContainer = (props: OwnProps) => {
     {
       title: intl.get("screen.variantsearch.table.gnomAd"),
       dataIndex: "frequencies",
-      render: (frequencies) => {
-        const freq = frequencies as FrequenciesEntity;
-        return freq.gnomad_exomes_2_1_1
-          ? freq.gnomad_exomes_2_1_1.af
+      render: (frequencies: FrequenciesEntity) => {
+        return frequencies.gnomad_exomes_2_1_1
+          ? frequencies.gnomad_exomes_2_1_1.af
           : DISPLAY_WHEN_EMPTY_DATUM;
       },
     },
     {
       title: intl.get("screen.patientvariant.results.table.rqdm"),
       dataIndex: "donors",
-      render: (donors) => {
-        const donorsData = donors as ESResult<DonorsEntity>;
-        return donorsData.hits.total;
+      render: (donors: ESResult<DonorsEntity>) => {
+        return donors.hits.total;
       },
     },
     {
@@ -149,44 +139,35 @@ const VariantTableContainer = (props: OwnProps) => {
   ];
 
   return (
-    <ProTable
-      loading={results.loading}
-      columns={columns}
-      search={false}
-      toolbar={{
-        title: (
-          <div className={style.tabletotalTitle}>
-            Résultats <strong>1 - {DEFAULT_PAGE_SIZE}</strong> sur{" "}
-            <strong>{total}</strong>
-          </div>
-        ),
-      }}
-      dataSource={makeRows(variants)}
-      className={style.variantSearchTable}
-      options={{
-        density: false,
-        reload: false,
-        setting: false,
-      }}
-      cardBordered={true}
-      pagination={{
-        current: currentPageNum,
-        showTotal: () => undefined,
-        total: total,
-        showTitle: false,
-        showSizeChanger: true,
-        showQuickJumper: false,
-        defaultPageSize: currentPageSize,
-        onChange: (page, pageSize) => {
-          if (currentPageNum !== page || currentPageSize !== pageSize) {
-            setCurrentPageNum(page);
-            setCurrentPageCb(page);
-            setcurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
-          }
-        },
-        size: "small",
-      }}
-    />
+    <>
+      <div className={style.tabletotalTitle}>
+        Résultats <strong>1 - {DEFAULT_PAGE_SIZE}</strong> sur{" "}
+        <strong>{total}</strong>
+      </div>
+      <Table
+        loading={results.loading}
+        columns={columns}
+        dataSource={makeRows(variants)}
+        className={style.variantSearchTable}
+        pagination={{
+          current: currentPageNum,
+          showTotal: () => undefined,
+          total: total,
+          showTitle: false,
+          showSizeChanger: true,
+          showQuickJumper: false,
+          defaultPageSize: currentPageSize,
+          onChange: (page, pageSize) => {
+            if (currentPageNum !== page || currentPageSize !== pageSize) {
+              setCurrentPageNum(page);
+              setCurrentPageCb(page);
+              setcurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
+            }
+          },
+          size: "small",
+        }}
+      />
+    </>
   );
 };
 
