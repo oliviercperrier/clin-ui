@@ -1074,6 +1074,14 @@ const fr = {
   'querybuilder.actions.clear.description': 'Vous êtes sur le point de supprimer toutes vos requêtes. Ils seront perdus à jamais.',
   'querybuilder.actions.new': 'Nouvelle',
   'querybuilder.actions.changeOperatorTo': 'Changer l\'opérateur à',
+  'screen.patientvariant.category_pathogenicity': 'Pathogénicité',
+  'screen.patientvariant.category_occurrence': 'Occurrence',
+  'screen.patientvariant.filter.grouptitle.genepanel': 'Panels de gènes',
+  'screen.patientvariant.filter.grouptitle.predictions': 'Prédictions',
+  'screen.patientvariant.filter.grouptitle.rqdmpatient': 'Patients RQDM',
+  'screen.patientvariant.filter.grouptitle.publiccohorts': 'Cohortes publiques',
+  'screen.patientvariant.filter.collapse.all': 'Tout fermer',
+  'screen.patientvariant.filter.expand.all': 'Tout ouvrir',
 };
 
 export default fr;

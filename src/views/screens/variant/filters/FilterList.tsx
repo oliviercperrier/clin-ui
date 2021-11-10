@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Button, Layout } from 'antd';
-import { MappingResults } from 'store/graphql/utils/actions';
-import CustomFilterContainer from './CustomFilterContainer';
-import intl from 'react-intl-universal';
-import { FilterGroup } from './types';
+import React, { useState } from "react";
+import { Button, Layout } from "antd";
+import { MappingResults } from "store/graphql/utils/actions";
+import CustomFilterContainer from "./CustomFilterContainer";
+import intl from "react-intl-universal";
+import { FilterGroup } from "./types";
 
-import styles from './Filters.module.scss';
+import styles from "./Filters.module.scss";
 
 type OwnProps = {
   mappingResults: MappingResults;
@@ -20,15 +20,17 @@ const FilterList = ({ mappingResults, filterGroups }: OwnProps) => {
       <div className={styles.expandButtonContainerVariant}>
         <Button onClick={() => setFiltersOpen(!filtersOpen)} type="link">
           {filtersOpen
-            ? intl.get('screen.patientvariant.filter.collapse.all')
-            : intl.get('screen.patientvariant.filter.expand.all')}
+            ? intl.get("screen.patientvariant.filter.collapse.all")
+            : intl.get("screen.patientvariant.filter.expand.all")}
         </Button>
       </div>
       <Layout className={styles.variantFilterWrapper}>
-        {filterGroups.map((group: FilterGroup) => (
-          <>
+        {filterGroups.map((group: FilterGroup, index) => (
+          <div key={index}>
             {group.title ? (
-              <div className={styles.filterGroupTitle}>{intl.get(group.title)}</div>
+              <div className={styles.filterGroupTitle}>
+                {intl.get(group.title)}
+              </div>
             ) : null}
             {group.fields.map((field) => (
               <CustomFilterContainer
@@ -39,7 +41,7 @@ const FilterList = ({ mappingResults, filterGroups }: OwnProps) => {
                 filtersOpen={filtersOpen}
               />
             ))}
-          </>
+          </div>
         ))}
       </Layout>
     </>

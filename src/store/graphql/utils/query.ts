@@ -5,7 +5,6 @@ import {
   QueryHookOptions,
   TypedDocumentNode,
   useQuery,
-  gql
 } from '@apollo/client';
 
 export enum Hits {

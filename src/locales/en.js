@@ -866,6 +866,14 @@ const en = {
   'querybuilder.actions.clear.description': 'You are about to delete all your queries. They will be lost forever.',
   'querybuilder.actions.new': 'New',
   'querybuilder.actions.changeOperatorTo': 'Change operator to',
+  'screen.patientvariant.category_pathogenicity': 'Pathogenicity',
+  'screen.patientvariant.category_occurrence': 'Occurrence',
+  'screen.patientvariant.filter.grouptitle.genepanel': 'Gene panels',
+  'screen.patientvariant.filter.grouptitle.predictions': 'Predictions',
+  'screen.patientvariant.filter.grouptitle.rqdmpatient': 'RQDM Patients',
+  'screen.patientvariant.filter.grouptitle.publiccohorts': 'Public Cohorts',
+  'screen.patientvariant.filter.collapse.all': 'Collapse all',
+  'screen.patientvariant.filter.expand.all': 'Expand all',
 };
 
 export default en;

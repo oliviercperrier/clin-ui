@@ -52,16 +52,15 @@ export const DEFAULT_PAGE_SIZE = 20;
 const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
   const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
-  const { uid: patientID } = useParams<{ uid: string }>();
+  const { patientid } = useParams<{ patientid: string }>();
 
   const { filters } = useFilters();
   const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
   let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters));
   resolvedSqon.content.push({
-    content: { field: "donors.patient_id", value: ["QA-PA-00081"] },
+    content: { field: "donors.patient_id", value: [patientid] },
     op: "in",
   });
-  // TODO {"content": {"field": "donors.patient_id", "value": [patientID]}, "op": "in"}
 
   const results = useGetPageData(
     {
@@ -90,7 +89,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
       },
       noQuery: intl.get("querybuilder.query.noQuery"),
       facet: (key) => {
-        if (key == "locus") return "Variant";
+        if (key === "locus") return "Variant";
 
         return (
           mappingResults?.extendedMapping?.find(
@@ -132,7 +131,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
         }}
         history={history}
         cacheKey={VARIANT_REPO_CACHE_KEY}
-        enableCombine={false}
+        enableCombine={true}
         currentQuery={filters?.content?.length ? filters : {}}
         loading={results.loading}
         total={total}
@@ -153,7 +152,10 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
       />
       <Tabs type="card" className={styles.variantTabs}>
         <Tabs.TabPane
-          tab={intl.get("screen.patientvariant.results.table.variants") || "Variants"}
+          tab={
+            intl.get("screen.patientvariant.results.table.variants") ||
+            "Variants"
+          }
           key="variants"
         >
           <VariantTableContainer
@@ -166,7 +168,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
         </Tabs.TabPane>
         <Tabs.TabPane
           disabled
-          tab={intl.get("screen.patientvariant.results.table.genes") || "Genes"}
+          tab={intl.get("screen.patientvariant.results.table.genes") || "Genes"}
           key="genes"
         >
           <GeneTableContainer

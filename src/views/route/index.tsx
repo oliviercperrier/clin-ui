@@ -16,7 +16,7 @@ const AppRouter = (): React.ReactElement => {
           <Route path="/search/:token">
               <Search />
           </Route>
-          <Route path="/variant">
+          <Route path="/variant/:patientid">
               <Variant />
           </Route>
         </Switch>

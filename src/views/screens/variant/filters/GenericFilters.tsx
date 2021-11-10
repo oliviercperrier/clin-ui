@@ -31,14 +31,14 @@ const GenericFilters: FunctionComponent<OwnProps> = ({
   mappingResults,
 }) => {
   const { filters } = useFilters();
-  const { uid: patientID } = useParams<{ uid: string }>();
+  const { patientid } = useParams<{ patientid: string }>();
   const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
   let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters));
   resolvedSqon.content.push({
-    content: { field: "donors.patient_id", value: ["QA-PA-00081"] },
+    content: { field: "donors.patient_id", value: [patientid] },
     op: "in",
   });
-  // TODO {"content": {"field": "donors.patient_id", "value": [patientID]}, "op": "in"}
+
   let results = useGetFilterBuckets(
     {
       sqon: resolvedSqon,

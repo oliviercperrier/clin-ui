@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import intl from "react-intl-universal";
 import SidebarMenu, {
   ISidebarMenuItem,
@@ -80,8 +79,8 @@ const filterGroups: { [type: string]: FilterGroup[] } = {
       fields: [
         "frequencies__internal__af",
         "frequencies_by_lab__CHUSJ__af",
-        "frequencies_by_lab__CHUS__af",
-        "frequencies_by_lab__CUSM__af",
+        //"frequencies_by_lab__CHUS__af",
+        //"frequencies_by_lab__CUSM__af",
       ],
     },
     {

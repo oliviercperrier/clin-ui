@@ -57,7 +57,7 @@ const PrescriptionSearch = (): React.ReactElement => {
           <div title="Studies">
             <ContentContainer
               extendedMapping={extendedMapping}
-              filters={sqonFilters.filters}
+              filters={sqonFilters}
               pagination={{
                 current: currentPage,
                 onChange: (page, pageSize) => setCurrentPage(page),
