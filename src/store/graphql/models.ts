@@ -36,10 +36,11 @@ export type ArrangerEdge<T extends ArrangerNodeData> = {
 };
 
 export type ExtendedMapping = {
+  active: boolean;
   displayName: string;
-  field: string;
   isArray: boolean;
   type: string;
+  field: string;
   rangeStep?: number;
 };
 

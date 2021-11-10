@@ -1,0 +1,18 @@
+@import 'style/themes/clin/_colors';
+@import 'style/themes/clin/_layout';
+
+.variantPagecontainer {
+  position: relative;
+
+  .variantTabs {
+    margin-top: 24px;
+
+    div[class$='-nav-wrap'] {
+      background-color: transparent;
+
+      div[class$='-tab'] {
+        padding: 8px 16px;
+      }
+    }
+  }
+}

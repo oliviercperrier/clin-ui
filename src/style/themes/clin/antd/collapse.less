@@ -2,21 +2,27 @@
 @collapse-header-bg: @gray-1;
 
 .@{collapse-prefix-cls} {
+  &-content {
+    border-top: 1px solid @gray-4;
+  }
+
   & > &-item {
     border: none !important;
 
     > .@{collapse-prefix-cls}-header {
       display: flex;
       font-weight: 500;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 24px;
+      padding-left: 16px;
+      padding-right: 16px;
 
       > :nth-child(2) {
         flex-grow: 1;
       }
 
       .@{collapse-prefix-cls}-arrow {
-        color: @body-3;
+        color: @gray-7;
       }
     }
   }

@@ -851,7 +851,21 @@ const en = {
   'variant.report.header_value.omim': 'OMIM (Transmission mode)',
   'variant.report.header_value.Parental_origin': 'Status (parental origin)',
   'variant.report.header_value.Prediction_in_silico_sift': 'In silico prediction (Sift)',
-  'variant.report.tolerated': 'Tolerated'
+  'variant.report.tolerated': 'Tolerated',
+  'querybuilder.actions.addQuery': 'New query',
+  'querybuilder.actions.combine': 'Combine',
+  'querybuilder.actions.labels': 'Labels',
+  'querybuilder.actions.delete.title': 'Delete this query?',
+  'querybuilder.actions.delete.titleSelected': 'Delete this query?',
+  'querybuilder.actions.delete.cancel': 'Cancel',
+  'querybuilder.actions.delete.confirm': 'Delete',
+  'querybuilder.actions.clear.title': 'Delete all queries?',
+  'querybuilder.actions.clear.cancel': 'Cancel',
+  'querybuilder.actions.clear.confirm': 'Delete',
+  'querybuilder.actions.clear.buttonTitle': 'Clear all',
+  'querybuilder.actions.clear.description': 'You are about to delete all your queries. They will be lost forever.',
+  'querybuilder.actions.new': 'New',
+  'querybuilder.actions.changeOperatorTo': 'Change operator to',
 };
 
 export default en;

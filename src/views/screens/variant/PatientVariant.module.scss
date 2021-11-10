@@ -1,0 +1,42 @@
+.patientVariantLayout {
+  display: flex;
+  flex-direction: row;
+  background: #f0f2f5;
+  height: 100vh;
+
+  .filterLoader {
+    padding: 24px;
+  }
+
+  .patientVariantSidebar {
+    :global([role='menuitem']) {
+      color: white;
+    }
+
+    * {
+      outline: none;
+    }
+  }
+
+  .tableContainer {
+    background-color: white;
+    margin-top: 24px;
+    border-radius: 2px;
+    border: 1px solid #d8e1eb;
+  }
+
+  .tableContainer > * {
+    margin: 24px;
+  }
+
+  .scrollContent {
+    width: 100%;
+    padding: 24px;
+    width: 100%;
+    min-height: 600px;
+
+    .pageContainer {
+      position: relative;
+    }
+  }
+}

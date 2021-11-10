@@ -8184,7 +8184,6 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   font-size: 14px;
   line-height: 1.5715;
   transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-  padding-top: 0px;
 }
 .ant-form-item .ant-input-textarea-show-count::after {
   margin-bottom: -22px;
@@ -25042,6 +25041,20 @@ div.ant-typography-edit-content.ant-typography-rtl {
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fBBc9.ttf) format('truetype');
 }
+.ant-table {
+  font-size: 14px;
+}
+.ant-table-cell a {
+  color: #006aa3;
+  text-decoration: underline;
+}
+.ant-table-cell a:hover {
+  text-decoration: none;
+  color: #006aa3;
+}
+.ant-table-content {
+  overflow: auto;
+}
 .ant-table-thead > tr > th {
   background-color: #f1f5f9;
   height: 40px;
@@ -25055,8 +25068,8 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-table-tbody > tr:nth-child(even) {
   background-color: #f8fafc;
 }
-.ant-table {
-  font-size: 14px;
+.ant-collapse-content {
+  border-top: 1px solid #e1e8ef;
 }
 .ant-collapse > .ant-collapse-item {
   border: none !important;
@@ -25064,14 +25077,16 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
   display: flex;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 .ant-collapse > .ant-collapse-item > .ant-collapse-header > :nth-child(2) {
   flex-grow: 1;
 }
 .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
-  color: #8a8da8;
+  color: #63768f;
 }
 .ant-checkbox {
   top: 0;
@@ -25191,6 +25206,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
   background-color: #e1e8ef;
+}
+.ant-tabs-nav {
+  margin-bottom: 0 !important;
 }
 .ant-btn-link {
   color: #006aa3;

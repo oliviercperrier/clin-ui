@@ -68,7 +68,7 @@ export const generateFilters = (
     );
   });
 
-const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] => {
+export const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] => {
   if (!aggregations || !key) return [];
   if (isTermAgg(aggregations[key])) {
     return  aggregations[key!].buckets.map((f: any) => {
@@ -95,7 +95,7 @@ const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] =
   return [];
 };
 
-const getFilterGroup = (
+export const getFilterGroup = (
   filter: ExtendedMapping | undefined,
   aggregation: any,
   rangeTypes: string[],

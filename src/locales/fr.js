@@ -1060,6 +1060,20 @@ const fr = {
   'variant.report.header_value.Parental_origin': 'Statut (origine parentale)',
   'variant.report.header_value.Prediction_in_silico_sift': 'Prédiction in silico (Sift)',
   'variant.report.tolerated': 'Tolérée',
+  'querybuilder.actions.addQuery': 'Nouvelle requête',
+  'querybuilder.actions.combine': 'Combiner',
+  'querybuilder.actions.labels': 'Champs',
+  'querybuilder.actions.delete.title': 'Supprimer cette requête ?',
+  'querybuilder.actions.delete.titleSelected': 'Supprimer cette requête ?',
+  'querybuilder.actions.delete.cancel': 'Annuler',
+  'querybuilder.actions.delete.confirm': 'Supprimer',
+  'querybuilder.actions.clear.title': 'Supprimer toutes les requêtes ?',
+  'querybuilder.actions.clear.cancel': 'Annuler',
+  'querybuilder.actions.clear.confirm': 'Supprimer',
+  'querybuilder.actions.clear.buttonTitle': 'Tout effacer',
+  'querybuilder.actions.clear.description': 'Vous êtes sur le point de supprimer toutes vos requêtes. Ils seront perdus à jamais.',
+  'querybuilder.actions.new': 'Nouvelle',
+  'querybuilder.actions.changeOperatorTo': 'Changer l\'opérateur à',
 };
 
 export default fr;
