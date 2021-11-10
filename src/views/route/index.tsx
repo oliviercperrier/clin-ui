@@ -1,25 +1,30 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  Router,
+} from "react-router";
+
+
+import {
   Switch,
   Route,
 } from "react-router-dom";
 
 import Search from 'views/screens/search';
 import Variant from 'views/screens/variant';
+import history from 'utils/history';
 
 const AppRouter = (): React.ReactElement => {
   return (
-    <Router>
-        <Switch>
-          <Route path="/search/:token">
-              <Search />
-          </Route>
-          <Route path="/variant/:token">
-              <Variant />
-          </Route>
-        </Switch>
-    </Router>
+      <Router history={history}>
+          <Switch>
+            <Route path="/search/:token">
+                <Search />
+            </Route>
+            <Route path="/variant/:token">
+                <Variant />
+            </Route>
+          </Switch>
+      </Router>
   );
 }
 

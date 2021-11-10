@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   useParams
 } from "react-router-dom";
@@ -11,6 +11,9 @@ import 'style/themes/clin/dist/antd.css';
 
 const SearchScreen = (): React.ReactElement => {
   const { token }: { token: string } = useParams();
+
+  console.log('>>>>? render SearchScreen');
+
   return (
     <ApolloProvider backend={GraphqlBackend.ARRANGER} token={token}>
       <PatientsPrescriptions />

@@ -1,6 +1,5 @@
 import React from 'react';
 import intl from 'react-intl-universal';
-import { useHistory } from "react-router-dom";
 import { InfoCircleFilled } from '@ant-design/icons';
 import QueryBuilder from '@ferlab/ui/core/components/QueryBuilder';
 import { IDictionary } from '@ferlab/ui/core/components/QueryBuilder/types';
@@ -19,6 +18,7 @@ import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescript
 import PatientsTable from './table/PatientsTable';
 import PrescriptionsTable from './table/PrescriptionsTable';
 import ContentHeader from './ContentHeader';
+import history from 'utils/history';
 
 import styles from './ContentContainer.module.scss';
 
@@ -51,7 +51,6 @@ const ContentContainer = ({
   tabs
 }: PrescriptionResultsContainerProps): React.ReactElement => {
   const total = prescriptions.total || 0;
-  const history = useHistory();
   const dictionary: IDictionary = {
     query: {
       facet: (key) =>
@@ -65,7 +64,7 @@ const ContentContainer = ({
       <ContentHeader searchResults={searchResults} />
       <QueryBuilder
         IconTotal={<InfoCircleFilled className={styles.queryBuilderIcon} />}
-        cacheKey="study-repo"
+        cacheKey="prescription-repo"
         className="file-repo__query-builder"
         currentQuery={filters?.content?.length ? filters : {}}
         dictionary={dictionary}

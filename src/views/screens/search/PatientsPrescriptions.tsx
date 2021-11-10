@@ -26,18 +26,27 @@ const { Title } = Typography;
 export const MAX_NUMBER_RESULTS = 1000;
 
 const PrescriptionSearch = (): React.ReactElement => {
-  const { filters: sqonFilters } = useFilters();
-  const allSqons = getQueryBuilderCache('prescription-repo').state;
   const [currentPage, setCurrentPage] = useState(1);
   const [currentTab, setCurrentTab] = useState(TableTabs.Patients);
-  const arrangerQueryConfig = {first: MAX_NUMBER_RESULTS,
+
+  const { filters: sqonFilters } = useFilters();
+  const allSqons = getQueryBuilderCache('prescription-repo').state;
+  const arrangerQueryConfig = {
+    first: MAX_NUMBER_RESULTS,
     offset: 0,
     sqon: resolveSyntheticSqon(allSqons, sqonFilters),
   }
+
   const searchResults = usePatients(arrangerQueryConfig);
   const prescriptions = usePrescription(arrangerQueryConfig);
   const extendedMapping = usePrescriptionMapping();
-  const patients = usePatients(arrangerQueryConfig);
+  const patients =  {
+    data: [],
+    aggregations: {},
+    loading: false,
+    total: 0,
+  } // usePatients(arrangerQueryConfig);
+  console.log('>>>>> rendering ', sqonFilters);
 
   return (
     <StackLayout orientation={StackOrientation.Vertical}>

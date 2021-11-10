@@ -9,7 +9,7 @@ import {
   getSelectedFilters,
   updateFilters,
 } from '@ferlab/ui/core/data/filters/utils';
-import * as H from 'history';
+import history from 'utils/history';
 
 import { Aggregations } from 'store/graphql/models';
 import { ExtendedMapping, ExtendedMappingResults } from 'store/graphql/models';
@@ -35,7 +35,6 @@ const isTermAgg = (obj: TermAggs) => !!obj.buckets;
 const isRangeAgg = (obj: RangeAggs) => !!obj.stats;
 
 export const generateFilters = (
-  history:  H.History<any>,
   aggregations: Aggregations,
   extendedMapping: ExtendedMappingResults,
   className = '',
@@ -59,6 +58,7 @@ export const generateFilters = (
           filters={filters}
           maxShowing={5}
           onChange={(fg, f) => {
+            console.log('>>>>> updating filters ', fg);
             updateFilters(history, fg, f);
           }}
           searchInputVisible={showSearchInput}
