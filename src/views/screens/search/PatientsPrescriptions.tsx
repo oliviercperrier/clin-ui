@@ -50,7 +50,6 @@ const PrescriptionSearch = (): React.ReactElement => {
     loading: false,
     total: 0,
   }; // usePatients(arrangerQueryConfig);
-  console.log(">>>>> rendering ", sqonFilters);
 
   return (
     <StackLayout orientation={StackOrientation.Vertical}>

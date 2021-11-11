@@ -89,17 +89,15 @@ const VariantTableContainer = (props: OwnProps) => {
       title: intl.get("screen.patientvariant.results.table.consequence"),
       dataIndex: "consequences",
       width: 300,
-      render: (consequences: { hits: { edges: Consequence[] } }) => {
-        return (
-          <ConsequencesCell consequences={consequences?.hits?.edges || []} />
-        );
-      },
+      render: (consequences: { hits: { edges: Consequence[] } }) => (
+        <ConsequencesCell consequences={consequences?.hits?.edges || []} />
+      ),
     },
     {
       title: intl.get("screen.patientvariant.results.table.clinvar"),
       dataIndex: "clinvar",
-      render: (clinVar: ClinVar) => {
-        return clinVar?.clin_sig && clinVar.clinvar_id ? (
+      render: (clinVar: ClinVar) =>
+        clinVar?.clin_sig && clinVar.clinvar_id ? (
           <a
             href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinVar.clinvar_id}`}
             target="_blank"
@@ -109,24 +107,20 @@ const VariantTableContainer = (props: OwnProps) => {
           </a>
         ) : (
           DISPLAY_WHEN_EMPTY_DATUM
-        );
-      },
+        ),
     },
     {
       title: intl.get("screen.variantsearch.table.gnomAd"),
       dataIndex: "frequencies",
-      render: (frequencies: FrequenciesEntity) => {
-        return frequencies.gnomad_exomes_2_1_1
+      render: (frequencies: FrequenciesEntity) =>
+        frequencies.gnomad_exomes_2_1_1
           ? frequencies.gnomad_exomes_2_1_1.af
-          : DISPLAY_WHEN_EMPTY_DATUM;
-      },
+          : DISPLAY_WHEN_EMPTY_DATUM,
     },
     {
       title: intl.get("screen.patientvariant.results.table.rqdm"),
       dataIndex: "donors",
-      render: (donors: ESResult<DonorsEntity>) => {
-        return donors.hits.total;
-      },
+      render: (donors: ESResult<DonorsEntity>) => donors.hits.total,
     },
     {
       title: intl.get("screen.patientvariant.results.table.zygosity"),
