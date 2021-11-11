@@ -11,7 +11,7 @@ import {
 
 import { ExtendedMapping } from "store/graphql/models";
 
-import { getFilterGroup, getFilters, Results } from "../tmp/utils";
+import { getFilterGroup, getFilters, Results } from "store/graphql/utils/Filters";
 import history from "utils/history";
 import { underscoreToDot } from "@ferlab/ui/core/data/arranger/formatting";
 import { MappingResults } from "store/graphql/utils/actions";
@@ -46,7 +46,7 @@ const CustomFilterContainer = ({
     : {};
   const filterGroup = getFilterGroup(found, aggregations, [], true);
   const filters = results?.data
-    ? getFilters(results?.data, filterKey, found?.type || "")
+    ? getFilters(results?.data.aggregations, filterKey)
     : [];
   const selectedFilters = results?.data
     ? getSelectedFilters(filters, filterGroup)

@@ -8,7 +8,7 @@ import { Layout, Spin } from "antd";
 import { cloneDeep } from "lodash";
 import { useParams } from "react-router";
 
-import { generateFilters } from "views/screens/variant/tmp/utils";
+import { generateFilters } from "store/graphql/utils/Filters";
 import {
   VARIANT_INDEX,
   VARIANT_REPO_CACHE_KEY,
@@ -53,8 +53,11 @@ const GenericFilters: FunctionComponent<OwnProps> = ({
         className={`${styles.variantFilterWrapper} ${styles.genericFilterWrapper}`}
       >
         {generateFilters(
-          results,
-          mappingResults,
+          results.data?.aggregations,
+          {
+            loading: mappingResults.loadingMapping,
+            data: mappingResults.extendedMapping,
+          },
           styles.variantFilterContainer,
           true,
           true,

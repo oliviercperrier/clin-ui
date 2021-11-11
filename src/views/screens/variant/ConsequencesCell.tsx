@@ -7,7 +7,7 @@ import LowBadgeIcon from 'components/icons/variantBadgeIcons/LowBadgeIcon';
 import ModerateBadgeIcon from 'components/icons/variantBadgeIcons/ModerateBadgeIcon';
 import ModifierBadgeIcon from 'components/icons/variantBadgeIcons/ModifierBadgeIcon';
 import { Consequence, Impact } from 'store/graphql/variants/models';
-import { toKebabCase } from 'views/screens/variant/tmp/utils';
+import { toKebabCase } from 'store/graphql/utils/Filters';
 
 import style from './ConsequencesCell.module.scss';
 
