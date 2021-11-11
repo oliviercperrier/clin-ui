@@ -12,7 +12,7 @@ import {
 import { ExtendedMapping } from "store/graphql/models";
 
 import { getFilterGroup, getFilters, Results } from "../tmp/utils";
-import { history } from "configureStore";
+import history from "utils/history";
 import { underscoreToDot } from "@ferlab/ui/core/data/arranger/formatting";
 import { MappingResults } from "store/graphql/utils/actions";
 

@@ -12,7 +12,7 @@ export const usePatients = (variables: QueryVariable): GqlResults<PatientResult>
     variables: variables,
   });
   const patients = result?.Patients;
-
+  console.log('>>> usePatient ', result);
   return {
     aggregations: patients?.aggregations,
     data: hydrateResults(patients?.hits?.edges || []),

@@ -7,7 +7,7 @@ import {
   getSelectedFilters,
   updateFilters,
 } from "@ferlab/ui/core/data/filters/utils";
-import { history } from "configureStore"
+import history from "utils/history";
 import {
   keyEnhance,
   keyEnhanceBooleanOnly,

@@ -19,7 +19,7 @@ import { VARIANT_QUERY } from "store/graphql/variants/queries";
 import { VARIANT_INDEX, VARIANT_REPO_CACHE_KEY } from "./constants";
 import VariantTableContainer from "./VariantTableContainer";
 import GeneTableContainer from "./GeneTableContainer";
-import { history } from "configureStore";
+import history from "utils/history";
 import { useParams } from "react-router";
 import { dotToUnderscore } from "@ferlab/ui/core/data/arranger/formatting";
 import GenericFilters from "./filters/GenericFilters";

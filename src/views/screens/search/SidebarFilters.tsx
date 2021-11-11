@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
 import { ReadOutlined } from '@ant-design/icons';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { Col, Row } from 'antd';
@@ -34,7 +33,6 @@ const SidebarFilters = ({
   results
 }: SidebarFilterProps): React.ReactElement => {
   const options: ItemProps[] = [];
-  const history = useHistory();
 
   if (results) {
     results.forEach((n) =>
@@ -59,7 +57,7 @@ const SidebarFilters = ({
 
   return (
     <>
-      {generateFilters(history, aggregations, extendedMapping)}
+      {generateFilters(aggregations, extendedMapping)}
     </>
   );
 };

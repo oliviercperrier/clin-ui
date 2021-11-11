@@ -6,7 +6,7 @@ import locales from "locales";
 
 import "./App.css";
 import "style/themes/clin/main.scss";
-import 'style/themes/clin/dist/antd.css';
+import "style/themes/clin/dist/antd.css";
 
 function App() {
   intl.init({ currentLocale: "fr", locales: { fr: locales.fr } });

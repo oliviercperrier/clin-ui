@@ -4,16 +4,16 @@ import {
   Route,
 } from "react-router-dom";
 import { Router } from 'react-router';
-import { history } from "configureStore"
 
 import Search from 'views/screens/search';
 import Variant from 'views/screens/variant';
+import history from 'utils/history';
 
 const AppRouter = (): React.ReactElement => {
   return (
     <Router history={history}>
         <Switch>
-          <Route path="/search/:token">
+          <Route path="/search">
               <Search />
           </Route>
           <Route path="/variant/:patientid">
