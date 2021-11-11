@@ -41,35 +41,16 @@ const GeneTableContainer = (props: OwnProps) => {
       title: intl.get("screen.patientvariant.results.gene.table.omim_id"),
       dataIndex: "test3",
     },
-    {
-      title: "test4",
-      dataIndex: "test4",
-    },
-    {
-      title: "test5",
-      dataIndex: "test5",
-    },
-  ];
-
-  const defaultData = [
-    {
-      test1: "Allo",
-      test2: "Allo",
-      test3: "Allo",
-      test4: "Allo",
-      test5: "Allo",
-    },
   ];
 
   return (
     <>
       <div className={style.tabletotalTitle}>
         Résultats <strong>1 - {DEFAULT_PAGE_SIZE}</strong> sur{" "}
-        <strong>200</strong>
+        <strong>{total}</strong>
       </div>
       <Table
         columns={columns}
-        dataSource={defaultData}
         className={style.variantSearchTable}
         pagination={{
           current: currentPageNum,
@@ -77,10 +58,11 @@ const GeneTableContainer = (props: OwnProps) => {
           showTitle: false,
           showSizeChanger: true,
           showQuickJumper: false,
-          onChange: (page) => {
-            if (currentPageNum !== page) {
+          onChange: (page, pageSize) => {
+            if (currentPageNum !== page || currentPageSize !== pageSize) {
               setCurrentPageNum(page);
               setCurrentPageCb(page);
+              setcurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
             }
           },
           size: "small",
