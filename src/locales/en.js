@@ -718,6 +718,7 @@ const en = {
   'screen.patientvariant.results.table.variants': 'Variants',
   'screen.patientvariant.results.table.vep': 'VEP',
   'screen.patientvariant.results.table.zygosity': 'Zygosity',
+  'screen.patientvariant.results.table.transmission': 'Transmission',
   'screen.patientvariant.statement.and': 'And',
   'screen.patientvariant.statement.andnot': 'And Not',
   'screen.patientvariant.statement.combine': 'Combine',
@@ -874,6 +875,18 @@ const en = {
   'screen.patientvariant.filter.grouptitle.publiccohorts': 'Public Cohorts',
   'screen.patientvariant.filter.collapse.all': 'Collapse all',
   'screen.patientvariant.filter.expand.all': 'Expand all',
+  'querybuilder.query.combine.and': 'And',
+  'querybuilder.query.combine.or': 'Or',
+  'querybuilder.filters.actions.less': 'Less',
+  'querybuilder.filters.actions.more': 'More',
+  'querybuilder.filters.actions.apply': 'Apply',
+  'querybuilder.filters.actions.clear': 'Clear',
+  'querybuilder.filters.operators.between': 'Between',
+  'querybuilder.filters.operators.lessthan': 'Less than',
+  'querybuilder.filters.operators.lessthanorequal': 'Less than or equal',
+  'querybuilder.filters.operators.greaterthan': 'Greater than',
+  'querybuilder.filters.operators.greaterthanorequal': 'Greater than or equal',
+  'querybuilder.filters.range.is': "Is"
 };
 
 export default en;

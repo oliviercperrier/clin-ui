@@ -125,10 +125,12 @@ const VariantTableContainer = (props: OwnProps) => {
     {
       title: intl.get("screen.patientvariant.results.table.zygosity"),
       dataIndex: "test8",
+      render: () => DISPLAY_WHEN_EMPTY_DATUM
     },
     {
       title: intl.get("screen.patientvariant.results.table.transmission"),
       dataIndex: "test9",
+      render: () => DISPLAY_WHEN_EMPTY_DATUM
     },
   ];
 
@@ -139,6 +141,7 @@ const VariantTableContainer = (props: OwnProps) => {
         <strong>{total}</strong>
       </div>
       <Table
+      size="small"
         loading={results.loading}
         columns={columns}
         dataSource={makeRows(variants)}

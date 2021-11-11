@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FilterContainer from "@ferlab/ui/core/components/filters/FilterContainer";
 import {
+  IDictionary,
   IFilter,
   IFilterGroup,
 } from "@ferlab/ui/core/components/filters/types";
@@ -11,10 +12,15 @@ import {
 
 import { ExtendedMapping } from "store/graphql/models";
 
-import { getFilterGroup, getFilters, Results } from "store/graphql/utils/Filters";
+import {
+  getFilterGroup,
+  getFilters,
+  Results,
+} from "store/graphql/utils/Filters";
 import history from "utils/history";
 import { underscoreToDot } from "@ferlab/ui/core/data/arranger/formatting";
 import { MappingResults } from "store/graphql/utils/actions";
+import intl from "react-intl-universal";
 
 import CustomFilterSelector from "./CustomFilterSelector";
 
@@ -52,6 +58,29 @@ const CustomFilterContainer = ({
     ? getSelectedFilters(filters, filterGroup)
     : [];
 
+  const dictionary: IDictionary = {
+    actions: {
+      all: intl.get("screen.patientvariant.filter.selection.all"),
+      none: intl.get("screen.patientvariant.filter.selection.none"),
+      apply: intl.get("querybuilder.filters.actions.apply"),
+      clear: intl.get("querybuilder.filters.actions.clear"),
+      more: intl.get("querybuilder.filters.actions.more"),
+      less: intl.get("querybuilder.filters.actions.less"),
+    },
+    operators: {
+      between: intl.get("querybuilder.filters.operators.between"),
+      lessThan: intl.get("querybuilder.filters.operators.lessthan"),
+      lessThanOfEqual: intl.get("querybuilder.filters.operators.lessthanorequal"),
+      greaterThan: intl.get("querybuilder.filters.operators.greaterthan"),
+      greaterThanOrEqual: intl.get("querybuilder.filters.operators.greaterthanorequal"),
+    },
+    range: {
+      is: intl.get("querybuilder.filters.range.is"),
+      min: "min",
+      max: "max"
+    }
+  };
+
   return (
     <div className={classname} key={`${filterKey}_${filtersOpen}`}>
       <FilterContainer
@@ -64,7 +93,7 @@ const CustomFilterContainer = ({
         onSearchVisibleChange={setIsSearchVisible}
         customContent={
           <CustomFilterSelector
-            dictionary={{}}
+            dictionary={dictionary}
             filters={filters}
             filterGroup={filterGroup}
             maxShowing={5}

@@ -25058,11 +25058,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-table-thead > tr > th {
   background-color: #f1f5f9;
   height: 40px;
-  padding: 0px 16px;
 }
 .ant-table-tbody > tr > td {
   height: 40px;
-  padding: 0px 16px;
   border: none;
 }
 .ant-table-tbody > tr:nth-child(even) {

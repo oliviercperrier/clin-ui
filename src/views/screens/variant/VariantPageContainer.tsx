@@ -127,7 +127,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
         headerConfig={{
           showHeader: true,
           showTools: false,
-          defaultTitle: "Variant Query",
+          defaultTitle: "Requête de variants",
         }}
         history={history}
         cacheKey={VARIANT_REPO_CACHE_KEY}
