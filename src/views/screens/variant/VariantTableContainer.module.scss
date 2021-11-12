@@ -1,0 +1,30 @@
+@import 'style/themes/clin/_colors';
+
+.variantTableCell {
+  min-width: 160px;
+  width: 14%;
+}
+
+.dbSnpTableCell {
+  min-width: 140px;
+  width: 12%;
+}
+
+.variantSearchTable {
+
+  div[class$='-card-bordered'] {
+    border-top: none;
+
+    > div {
+      // need !important because antd add padding-top: 0 in inline style
+      padding: 8px 24px 8px 24px !important;
+    }
+  }
+}
+
+.tabletotalTitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: $gray-8;
+  margin-bottom: 16px;
+}

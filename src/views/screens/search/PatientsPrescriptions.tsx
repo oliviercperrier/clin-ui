@@ -1,52 +1,67 @@
-import React, { useState } from 'react';
-import intl from 'react-intl-universal';
-import { getQueryBuilderCache, useFilters } from '@ferlab/ui/core/data/filters/utils';
-import { resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
-import ScrollView from '@ferlab/ui/core/layout/ScrollView';
-import StackLayout, { StackOrientation } from '@ferlab/ui/core/layout/StackLayout'
-import { Typography } from 'antd';
-
-import { GqlResults } from 'store/graphql/models';
+import React, { useState } from "react";
+import intl from "react-intl-universal";
 import {
-  usePatients,
-} from 'store/graphql/patients/actions';
-import { PatientResult } from 'store/graphql/patients/models/Patient';
+  getQueryBuilderCache,
+  useFilters,
+} from "@ferlab/ui/core/data/filters/utils";
+import { resolveSyntheticSqon } from "@ferlab/ui/core/data/sqon/utils";
+import ScrollView from "@ferlab/ui/core/layout/ScrollView";
+import StackLayout, {
+  StackOrientation,
+} from "@ferlab/ui/core/layout/StackLayout";
+import { Typography } from "antd";
+
+import { GqlResults } from "store/graphql/models";
+import { usePatients } from "store/graphql/patients/actions";
+import { PatientResult } from "store/graphql/patients/models/Patient";
 import {
   usePrescription,
-  usePrescriptionMapping
-} from 'store/graphql/prescriptions/actions';
+  usePrescriptionMapping,
+} from "store/graphql/prescriptions/actions";
 
-import { TableTabs } from './ContentContainer'
-import ContentContainer from './ContentContainer';
-import Sidebar from './Sidebar';
+import { TableTabs } from "./ContentContainer";
+import ContentContainer from "./ContentContainer";
+import Sidebar from "./Sidebar";
 
-import styles from './PatientsPrescriptions.module.scss';
+import styles from "./PatientsPrescriptions.module.scss";
+import { useParams } from "react-router";
 const { Title } = Typography;
 
 export const MAX_NUMBER_RESULTS = 1000;
 
 const PrescriptionSearch = (): React.ReactElement => {
-  const { filters: sqonFilters } = useFilters();
-  const allSqons = getQueryBuilderCache('prescription-repo').state;
+  useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentTab, setCurrentTab] = useState(TableTabs.Patients);
-  const arrangerQueryConfig = {first: MAX_NUMBER_RESULTS,
+  const { filters: sqonFilters } = useFilters();
+  const allSqons = getQueryBuilderCache("prescription-repo").state;
+  const arrangerQueryConfig = {
+    first: MAX_NUMBER_RESULTS,
     offset: 0,
     sqon: resolveSyntheticSqon(allSqons, sqonFilters),
-  }
+  };
+
   const searchResults = usePatients(arrangerQueryConfig);
   const prescriptions = usePrescription(arrangerQueryConfig);
   const extendedMapping = usePrescriptionMapping();
-  const patients = usePatients(arrangerQueryConfig);
+  const patients = {
+    data: [],
+    aggregations: {},
+    loading: false,
+    total: 0,
+  }; // usePatients(arrangerQueryConfig);
 
   return (
     <StackLayout orientation={StackOrientation.Vertical}>
       <div className="page_headerStaticNoMargin">
         <div className="variant-page-content__header">
-          <Title level={3}>{ intl.get('screen.patientsearch.title') }</Title>
+          <Title level={3}>{intl.get("screen.patientsearch.title")}</Title>
         </div>
       </div>
-      <StackLayout className={styles.layout} orientation={StackOrientation.Horizontal}>
+      <StackLayout
+        className={styles.layout}
+        orientation={StackOrientation.Horizontal}
+      >
         <Sidebar
           aggregations={prescriptions.aggregations}
           extendedMapping={extendedMapping}
@@ -57,7 +72,7 @@ const PrescriptionSearch = (): React.ReactElement => {
           <div title="Studies">
             <ContentContainer
               extendedMapping={extendedMapping}
-              filters={sqonFilters.filters}
+              filters={sqonFilters}
               pagination={{
                 current: currentPage,
                 onChange: (page, pageSize) => setCurrentPage(page),
@@ -67,7 +82,7 @@ const PrescriptionSearch = (): React.ReactElement => {
               searchResults={searchResults}
               tabs={{
                 currentTab,
-                setCurrentTab
+                setCurrentTab,
               }}
             />
           </div>

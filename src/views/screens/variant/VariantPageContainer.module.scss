@@ -1,0 +1,36 @@
+@import 'style/themes/clin/_colors';
+@import 'style/themes/clin/_layout';
+
+.variantPagecontainer {
+  position: relative;
+
+  :global(.patient-variant-repo__query-builder) {
+    // must check why antd.css is override QueryPills.module.scss from ferlab
+    // this doesn't happend in other projects
+    :global(div[class*="QueryPill_filtersDropdown"]) {
+      padding: 8px 16px;
+    }
+  }
+
+  .variantTabs {
+    margin-top: 24px;
+
+    div[class$="content-holder"] {
+      padding: 24px;
+      padding-bottom: 8px;
+      border: 1px solid $gray-4;
+      border-top: none;
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px;
+      background-color: white;
+    }
+
+    div[class$='-nav-wrap'] {
+      background-color: transparent;
+
+      div[class$='-tab'] {
+        padding: 8px 16px;
+      }
+    }
+  }
+}

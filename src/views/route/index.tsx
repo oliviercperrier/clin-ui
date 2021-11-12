@@ -1,21 +1,22 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
+import { Router } from 'react-router';
 
 import Search from 'views/screens/search';
 import Variant from 'views/screens/variant';
+import history from 'utils/history';
 
 const AppRouter = (): React.ReactElement => {
   return (
-    <Router>
+    <Router history={history}>
         <Switch>
-          <Route path="/search/:token">
+          <Route path="/search">
               <Search />
           </Route>
-          <Route path="/variant/:token">
+          <Route path="/variant/:patientid">
               <Variant />
           </Route>
         </Switch>

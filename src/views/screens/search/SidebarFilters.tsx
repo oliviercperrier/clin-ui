@@ -1,15 +1,14 @@
-import React from 'react';
-import { useHistory } from "react-router-dom";
-import { ReadOutlined } from '@ant-design/icons';
-import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
-import { Col, Row } from 'antd';
+import React from "react";
+import { ReadOutlined } from "@ant-design/icons";
+import { ISqonGroupFilter } from "@ferlab/ui/core/data/sqon/types";
+import { Col, Row } from "antd";
 
-import { Aggregations, ArrangerNodeData } from 'store/graphql/models';
-import { ExtendedMappingResults } from 'store/graphql/models';
-import { generateFilters } from 'store/graphql/utils/Filters';
+import { Aggregations, ArrangerNodeData } from "store/graphql/models";
+import { ExtendedMappingResults } from "store/graphql/models";
+import { generateFilters } from "store/graphql/utils/Filters";
 
-import style from './SidebarFilter.module.scss';
-import {PrescriptionResult} from "store/graphql/prescriptions/models/Prescription";
+import style from "./SidebarFilter.module.scss";
+import { PrescriptionResult } from "store/graphql/prescriptions/models/Prescription";
 
 export type SidebarFilterProps = {
   aggregations: Aggregations;
@@ -25,16 +24,15 @@ export interface ItemProps {
 
 const sqon = {
   content: [],
-  op: 'and',
+  op: "and",
 };
 
 const SidebarFilters = ({
   aggregations,
   extendedMapping,
-  results
+  results,
 }: SidebarFilterProps): React.ReactElement => {
   const options: ItemProps[] = [];
-  const history = useHistory();
 
   if (results) {
     results.forEach((n) =>
@@ -53,13 +51,21 @@ const SidebarFilters = ({
           </>
         ),
         value: `${n.code}|${n.name}`,
-      }),
+      })
     );
   }
 
   return (
     <>
-      {generateFilters(history, aggregations, extendedMapping)}
+      {generateFilters(
+        aggregations,
+        extendedMapping,
+        "",
+        true,
+        false,
+        true,
+        false
+      )}
     </>
   );
 };

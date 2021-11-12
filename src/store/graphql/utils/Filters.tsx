@@ -1,25 +1,37 @@
-import React from 'react';
-import intl from 'react-intl-universal';
-import FilterContainer from '@ferlab/ui/core/components/filters/FilterContainer';
-import FilterSelector from '@ferlab/ui/core/components/filters/FilterSelector';
-import { IFilter, IFilterGroup } from '@ferlab/ui/core/components/filters/types';
-import { keyEnhance, keyEnhanceBooleanOnly, underscoreToDot } from '@ferlab/ui/core/data/arranger/formatting';
+import intl from "react-intl-universal";
+
+import FilterContainer from "@ferlab/ui/core/components/filters/FilterContainer";
+import FilterSelector from "@ferlab/ui/core/components/filters/FilterSelector";
+import {
+  IFilter,
+  IFilterGroup,
+} from "@ferlab/ui/core/components/filters/types";
+import { Aggregations } from "store/graphql/models";
+import { ExtendedMapping, ExtendedMappingResults } from "store/graphql/models";
 import {
   getFilterType,
   getSelectedFilters,
   updateFilters,
-} from '@ferlab/ui/core/data/filters/utils';
-import * as H from 'history';
+} from "@ferlab/ui/core/data/filters/utils";
+import history from "utils/history";
+import {
+  keyEnhance,
+  keyEnhanceBooleanOnly,
+  underscoreToDot,
+} from "@ferlab/ui/core/data/arranger/formatting";
+import { VariantEntity } from "store/graphql/variants/models";
 
-import { Aggregations } from 'store/graphql/models';
-import { ExtendedMapping, ExtendedMappingResults } from 'store/graphql/models';
+export type Results = {
+  data: GQLData | null;
+  loading: boolean;
+};
+
 export interface RangeAggs {
   stats: {
     max: number;
     min: number;
   };
 }
-
 export interface TermAggs {
   buckets: TermAgg[];
 }
@@ -30,34 +42,44 @@ export interface TermAgg {
 }
 
 export type Aggs = TermAggs | RangeAggs;
+export type HitsEntity = VariantEntity;
 
 const isTermAgg = (obj: TermAggs) => !!obj.buckets;
 const isRangeAgg = (obj: RangeAggs) => !!obj.stats;
 
 export const generateFilters = (
-  history:  H.History<any>,
   aggregations: Aggregations,
   extendedMapping: ExtendedMappingResults,
-  className = '',
-  showSearchInput = false,
-  useFilterSelector = false,
-): React.ReactElement[] =>
+  className: string = "",
+  filtersOpen: boolean = true,
+  filterFooter: boolean = false,
+  showSearchInput: boolean = false,
+  useFilterSelector: boolean = false
+) =>
   Object.keys(aggregations || []).map((key) => {
     const found = (extendedMapping?.data || []).find(
-      (f: any) => f.field === underscoreToDot(key),
+      (f: ExtendedMapping) => f.field === underscoreToDot(key)
     );
 
-    const filterGroup = getFilterGroup(found, aggregations[key], []);
+    const filterGroup = getFilterGroup(
+      found,
+      aggregations[key],
+      [],
+      filterFooter
+    );
     const filters = getFilters(aggregations, key);
     const selectedFilters = getSelectedFilters(filters, filterGroup);
-    const FilterComponent = useFilterSelector ? FilterSelector : FilterContainer;
+    const FilterComponent = useFilterSelector
+      ? FilterSelector
+      : FilterContainer;
 
     return (
-      <div className={className} key={key}>
+      <div className={className} key={`${key}_${filtersOpen}`}>
         <FilterComponent
+          maxShowing={5}
+          isOpen={filtersOpen}
           filterGroup={filterGroup}
           filters={filters}
-          maxShowing={5}
           onChange={(fg, f) => {
             updateFilters(history, fg, f);
           }}
@@ -68,10 +90,25 @@ export const generateFilters = (
     );
   });
 
-const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] => {
+export interface GQLData<T extends Aggs = any> {
+  aggregations: any;
+  hits: {
+    edges: [
+      {
+        node: HitsEntity;
+      }
+    ];
+    total: number;
+  };
+}
+
+export const getFilters = (
+  aggregations: Aggregations | null,
+  key: string
+): IFilter[] => {
   if (!aggregations || !key) return [];
   if (isTermAgg(aggregations[key])) {
-    return  aggregations[key!].buckets.map((f: any) => {
+    return aggregations[key!].buckets.map((f: any) => {
       const translatedKey = intl.get(`filters.${keyEnhance(f.key)}`);
       const name = translatedKey ? translatedKey : f.key;
       return {
@@ -80,7 +117,7 @@ const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] =
           key: keyEnhanceBooleanOnly(f.key),
         },
         id: f.key,
-        name: name
+        name: name,
       };
     });
   } else if (aggregations[key]?.stats) {
@@ -95,31 +132,45 @@ const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] =
   return [];
 };
 
-const getFilterGroup = (
-  filter: ExtendedMapping | undefined,
+export const getFilterGroup = (
+  extendedMapping: ExtendedMapping | undefined,
   aggregation: any,
   rangeTypes: string[],
+  filterFooter: boolean
 ): IFilterGroup => {
   if (isRangeAgg(aggregation)) {
     return {
+      field: extendedMapping?.field || "",
+      title: extendedMapping?.displayName || "",
+      type: getFilterType(extendedMapping?.type || ""),
       config: {
-        max: aggregation.stats.max,
         min: aggregation.stats.min,
+        max: aggregation.stats.max,
+        step: extendedMapping?.rangeStep || 1,
         rangeTypes: rangeTypes.map((r) => ({
-          key: r,
           name: r,
+          key: r,
         })),
-        step: filter?.rangeStep || 1,
       },
-      field: filter?.field || '',
-      title: filter?.displayName || '',
-      type: getFilterType(filter?.type || ''),
     };
   }
 
   return {
-    field: filter?.field || '',
-    title: intl.get(`filters.header.${filter?.field}`) || '',
-    type: getFilterType(filter?.type || ''),
+    field: extendedMapping?.field || "",
+    title: extendedMapping?.displayName || "",
+    type: getFilterType(extendedMapping?.type || ""),
+    config: {
+      nameMapping: [],
+      withFooter: filterFooter,
+    },
   };
 };
+
+export const toKebabCase = (str: string) =>
+  str &&
+  str
+    .match(
+      /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
+    )!
+    .map((x: string) => x.toLowerCase())
+    .join("-");
