@@ -1,0 +1,14 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build_qa:
+    name: Build QA Image
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set the QA configuration file
+      run: mv env-qa .env
+    - name: Ensure we can build the image
+      run: docker build -t test:test --target server .

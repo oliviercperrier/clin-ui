@@ -1,0 +1,13 @@
+NODE_ENV=production
+REACT_APP_TITLE=CLIN-UI
+REACT_APP_RELEASE_ID=$npm_package_version
+REACT_APP_RELEASE_NAME=$npm_package_versionName
+REACT_APP_NOSCRIPT_CONTENT=JavaScript is required.
+REACT_APP_NAMESPACE=qa
+#AUTH
+REACT_APP_KEYCLOAK_CONFIG={"realm": "clin", "url": "https://auth.qa.clin.ferlab.bio/auth/", "clientId": "clin-client", "authClientId": "clin-acl"}
+# API
+REACT_APP_ARRANGER_API=https://data-api.qa.cqdg.ferlab.bio
+REACT_APP_ARRANGER_PROJECT_ID=clin_2021_11_03
+# Style
+SASS_PATH=/code/src/style/themes/clin
