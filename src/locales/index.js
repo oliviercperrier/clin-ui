@@ -1,9 +1,10 @@
-import intlFr from './fr';
-import intlEn from './en';
+import intlFr from "./fr";
+import intlEn from "./en";
+import { LANG } from "utils/constants";
 
 const locales = {
-  fr: intlFr,
-  en: intlEn,
+  [LANG.FR]: intlFr,
+  [LANG.EN]: intlEn,
 };
 
 export default locales;
