@@ -875,8 +875,11 @@ const en = {
   'screen.patientvariant.filter.grouptitle.publiccohorts': 'Public Cohorts',
   'screen.patientvariant.filter.collapse.all': 'Collapse all',
   'screen.patientvariant.filter.expand.all': 'Expand all',
+  'screen.patientvariant.results.table.rqdm': 'RQDM',
+  'screen.patientvariant.results.table.genes': 'Genes',
   'querybuilder.query.combine.and': 'And',
   'querybuilder.query.combine.or': 'Or',
+  'querybuilder.query.noQuery': 'Use the filters to build a query',
   'querybuilder.filters.actions.less': 'Less',
   'querybuilder.filters.actions.more': 'More',
   'querybuilder.filters.actions.apply': 'Apply',
@@ -886,7 +889,8 @@ const en = {
   'querybuilder.filters.operators.lessthanorequal': 'Less than or equal',
   'querybuilder.filters.operators.greaterthan': 'Greater than',
   'querybuilder.filters.operators.greaterthanorequal': 'Greater than or equal',
-  'querybuilder.filters.range.is': "Is"
+  'querybuilder.filters.range.is': "Is",
+  'screen.patientvariant.results.table.genes': 'Genes',
 };
 
 export default en;

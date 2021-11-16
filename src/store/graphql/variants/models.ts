@@ -22,7 +22,10 @@ export type FrequenciesEntity = {
   }
 }
 
-export type DonorsEntity = {}
+export type DonorsEntity = {
+  patient_id: string;
+  zygosity: string;
+}
 
 export type VariantEntity = {
   id: string;

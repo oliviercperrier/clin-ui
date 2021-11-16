@@ -33,6 +33,7 @@ type OwnProps = {
   setCurrentPageCb: (currentPage: number) => void;
   currentPageSize: number;
   setcurrentPageSize: (currentPage: number) => void;
+  patientid: string;
 };
 
 const makeRows = (rows: ESResultNode<VariantEntity>[]) =>
@@ -124,13 +125,19 @@ const VariantTableContainer = (props: OwnProps) => {
     },
     {
       title: intl.get("screen.patientvariant.results.table.zygosity"),
-      dataIndex: "test8",
-      render: () => DISPLAY_WHEN_EMPTY_DATUM
+      dataIndex: "donors",
+      render: (donors: ESResult<DonorsEntity>) => {
+        console.log(donors.hits.edges);
+        return donors.hits.edges.find(
+          (donor: ESResultNode<DonorsEntity>) =>
+            donor.node.patient_id == props.patientid
+        )?.node.zygosity;
+      },
     },
     {
       title: intl.get("screen.patientvariant.results.table.transmission"),
       dataIndex: "test9",
-      render: () => DISPLAY_WHEN_EMPTY_DATUM
+      render: () => DISPLAY_WHEN_EMPTY_DATUM,
     },
   ];
 
@@ -141,7 +148,7 @@ const VariantTableContainer = (props: OwnProps) => {
         <strong>{total}</strong>
       </div>
       <Table
-      size="small"
+        size="small"
         loading={results.loading}
         columns={columns}
         dataSource={makeRows(variants)}

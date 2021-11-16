@@ -43,6 +43,13 @@ export const VARIANT_QUERY = gql`
             donors {
               hits {
                 total
+                edges {
+                  node {
+                    patient_id
+                    zygosity
+                    #transmission
+                  }
+                }
               }
             }
 
