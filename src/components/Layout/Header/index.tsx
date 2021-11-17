@@ -6,19 +6,22 @@ import TranslateIcon from "components/icons/TranslateIcon";
 import AccountCircleIcon from "components/icons/AccountCircleIcon";
 import SupervisorIcon from "components/icons/SupervisorIcon";
 import LangMenu from "components/Layout/Header/LangMenu";
+import { getUserFirstname } from "utils/helper"; 
 
 import styles from "./index.module.scss";
+import useQueryString from "utils/useQueryString";
 
 const Header = () => {
+  const { token } = useQueryString();
   const lang = intl.getInitOptions().currentLocale;
   const title = intl.get("header.title");
   const langText = intl.get(`lang.${lang}.short`);
-  const user = { firstName: "Olivier" };
+  const userFirstname = getUserFirstname(token as string)
 
   const getExtra = () => {
     let extras = [];
 
-    if (user) {
+    if (userFirstname) {
       extras.push(
         <Button
           key="0"
@@ -37,7 +40,7 @@ const Header = () => {
           type="text"
           icon={<AccountCircleIcon />}
         >
-          {user.firstName}
+          {userFirstname}
         </Button>
       );
     }
