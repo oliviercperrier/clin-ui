@@ -1,0 +1,35 @@
+@import "../../../style/themes/clin/colors";
+
+.pageHeader {
+  padding: 9px 16px;
+  background-color: $blue-9;
+
+  .logo {
+    max-height: 32px;
+  }
+
+  .divider {
+    background: white;
+    height: 100%;
+    opacity: 0.5;
+  }
+
+  .noMargin {
+    margin: 0;
+  }
+
+  span[class$="-extra"] {
+    display: flex;
+    align-items: center;
+    .navBtn {
+      display: flex;
+      align-items: center;
+      opacity: 0.5;
+      span {
+        color: white;
+        font-weight: 500;
+        margin-left: 8px;
+      }
+    }
+  }
+}
