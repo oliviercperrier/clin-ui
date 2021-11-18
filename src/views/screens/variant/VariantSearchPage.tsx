@@ -3,8 +3,8 @@ import intl from "react-intl-universal";
 import SidebarMenu, {
   ISidebarMenuItem,
 } from "@ferlab/ui/core/components/sidebarMenu";
-import { FilterGroup } from "views/screens/Variant/filters/types";
-import FilterList from "views/screens/Variant/filters/FilterList";
+import { FilterGroup } from "views/screens/variant/filters/types";
+import FilterList from "views/screens/variant/filters/FilterList";
 import ScrollView from "@ferlab/ui/core/layout/ScrollView";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import LineStyleIcon from "components/icons/LineStyleIcon";
@@ -12,8 +12,8 @@ import GeneIcon from "components/icons/GeneIcon";
 import DiseaseIcon from "components/icons/DiseaseIcon";
 import FrequencyIcon from "components/icons/FrequencyIcon";
 import OccurenceIcon from "components/icons/OccurenceIcon";
-import VariantPageContainer from "views/screens/Variant/VariantPageContainer";
-import { VARIANT_INDEX } from "views/screens/Variant/constants";
+import VariantPageContainer from "views/screens/variant/VariantPageContainer";
+import { VARIANT_INDEX } from "views/screens/variant/constants";
 
 import { Spin } from "antd";
 import {

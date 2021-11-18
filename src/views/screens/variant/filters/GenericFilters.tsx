@@ -12,7 +12,7 @@ import { generateFilters } from "store/graphql/utils/Filters";
 import {
   VARIANT_INDEX,
   VARIANT_REPO_CACHE_KEY,
-} from "views/screens/Variant/constants";
+} from "views/screens/variant/constants";
 import {
   MappingResults,
   useGetFilterBuckets,

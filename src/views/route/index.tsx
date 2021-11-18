@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { Router } from "react-router";
 
 import Search from "views/screens/search";
-import Variant from "views/screens/Variant";
+import Variant from "views/screens/variant";
 import history from "utils/history";
 import Layout from "components/Layout";
 import RouteWrapper from "./RouteWrapper";

@@ -1,7 +1,7 @@
 import React from "react";
 import useQueryString from "utils/useQueryString";
 
-import VariantSearchPage from "views/screens/Variant/VariantSearchPage";
+import VariantSearchPage from "views/screens/variant/VariantSearchPage";
 import { GraphqlBackend } from "store/providers";
 import ApolloProvider from "store/providers/apollo";
 
