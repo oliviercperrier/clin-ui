@@ -4,6 +4,7 @@ REACT_APP_RELEASE_ID=$npm_package_version
 REACT_APP_RELEASE_NAME=$npm_package_versionName
 REACT_APP_NOSCRIPT_CONTENT=JavaScript is required.
 REACT_APP_NAMESPACE=qa
+PUBLIC_URL=/clinui
 #AUTH
 REACT_APP_KEYCLOAK_CONFIG={"realm": "clin", "url": "https://auth.qa.clin.ferlab.bio/auth/", "clientId": "clin-client", "authClientId": "clin-acl"}
 # API
