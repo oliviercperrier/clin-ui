@@ -1,5 +1,38 @@
 .@{tab-prefix-cls} {
-    &-nav {
-        margin-bottom: 0 !important;
+  // Type default
+  &-nav {
+    margin-bottom: 0 !important;
+
+    .@{tab-prefix-cls}-tab {
+      span {
+        display: flex;
+        align-items: center;
+        svg {
+          margin-right: 5px;
+          fill: @blue-9;
+        }
+      }
+
+      &:not(&-active) {
+        &:hover {
+          span {
+            color: @blue-8;
+            svg {
+              fill: @blue-8;
+            }
+          }
+        }
+
+        span {
+          svg {
+            fill: @gray-6;
+          }
+        }
+      }
     }
+  }
+
+  // Type Card
+  &-card {
+  }
 }

@@ -21,6 +21,7 @@ export const VARIANT_QUERY = gql`
               clin_sig
             }
             rsnumber
+            variant_type
             participant_number
             #participant_frequency
             #participant_total_number

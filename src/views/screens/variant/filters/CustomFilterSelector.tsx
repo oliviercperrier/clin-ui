@@ -18,7 +18,7 @@ import { VARIANT_AGGREGATION_QUERY } from "store/graphql/variants/queries";
 import {
   VARIANT_INDEX,
   VARIANT_REPO_CACHE_KEY,
-} from "views/screens/variant/constants";
+} from "views/screens/Variant/constants";
 
 type OwnProps = FilterSelectorProps & {
   filterKey: string;

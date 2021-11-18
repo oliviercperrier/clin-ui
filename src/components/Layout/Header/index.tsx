@@ -38,7 +38,7 @@ const Header = () => {
           className={cx(styles.navBtn, styles.noMargin)}
           size="small"
           type="text"
-          icon={<AccountCircleIcon />}
+          icon={<AccountCircleIcon/>}
         >
           {userFirstname}
         </Button>

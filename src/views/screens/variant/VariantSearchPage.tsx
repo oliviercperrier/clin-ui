@@ -3,8 +3,8 @@ import intl from "react-intl-universal";
 import SidebarMenu, {
   ISidebarMenuItem,
 } from "@ferlab/ui/core/components/sidebarMenu";
-import { FilterGroup } from "views/screens/variant/filters/types";
-import FilterList from "views/screens/variant/filters/FilterList";
+import { FilterGroup } from "views/screens/Variant/filters/types";
+import FilterList from "views/screens/Variant/filters/FilterList";
 import ScrollView from "@ferlab/ui/core/layout/ScrollView";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import LineStyleIcon from "components/icons/LineStyleIcon";
@@ -12,8 +12,8 @@ import GeneIcon from "components/icons/GeneIcon";
 import DiseaseIcon from "components/icons/DiseaseIcon";
 import FrequencyIcon from "components/icons/FrequencyIcon";
 import OccurenceIcon from "components/icons/OccurenceIcon";
-import VariantPageContainer from "views/screens/variant/VariantPageContainer";
-import { VARIANT_INDEX } from "views/screens/variant/constants";
+import VariantPageContainer from "views/screens/Variant/VariantPageContainer";
+import { VARIANT_INDEX } from "views/screens/Variant/constants";
 
 import { Spin } from "antd";
 import {
@@ -134,7 +134,7 @@ const VariantSearchPage = (): React.ReactElement => {
     {
       key: "1",
       title: intl.get("screen.patientvariant.category_variant"),
-      icon: <LineStyleIcon />,
+      icon: <LineStyleIcon className={styles.sideMenuIcon}/>,
       panelContent: filtersContainer(
         variantMappingResults,
         FilterTypes.Variant
@@ -143,13 +143,13 @@ const VariantSearchPage = (): React.ReactElement => {
     {
       key: "2",
       title: intl.get("screen.patientvariant.category_genomic"),
-      icon: <GeneIcon />,
+      icon: <GeneIcon className={styles.sideMenuIcon}/>,
       panelContent: filtersContainer(variantMappingResults, FilterTypes.Gene),
     },
     {
       key: "3",
       title: intl.get("screen.patientvariant.category_cohort"),
-      icon: <FrequencyIcon />,
+      icon: <FrequencyIcon className={styles.sideMenuIcon}/>,
       panelContent: filtersContainer(
         variantMappingResults,
         FilterTypes.Frequency
@@ -158,7 +158,7 @@ const VariantSearchPage = (): React.ReactElement => {
     {
       key: "4",
       title: intl.get("screen.patientvariant.category_pathogenicity"),
-      icon: <DiseaseIcon />,
+      icon: <DiseaseIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(
         variantMappingResults,
         FilterTypes.Pathogenicity
@@ -167,7 +167,7 @@ const VariantSearchPage = (): React.ReactElement => {
     {
       key: "5",
       title: intl.get("screen.patientvariant.category_occurrence"),
-      icon: <OccurenceIcon />,
+      icon: <OccurenceIcon className={styles.sideMenuIcon}/>,
       panelContent: filtersContainer(
         variantMappingResults,
         FilterTypes.Occurrence
@@ -178,7 +178,7 @@ const VariantSearchPage = (): React.ReactElement => {
   return (
     <div className={styles.patientVariantLayout}>
       <SidebarMenu
-        className={styles.patientVariantSidebar}
+        className={styles.patientVariantSideMenu}
         menuItems={menuItems}
       />
       <ScrollView className={styles.scrollContent}>

@@ -8,9 +8,13 @@
     padding: 24px;
   }
 
-  .patientVariantSidebar {
-    :global([role='menuitem']) {
+  .patientVariantSideMenu {
+    li[role="menuitem"] {
       color: white;
+
+      span[class$="-title-content"] {
+        margin-left: 0 !important;
+      }
     }
 
     * {
@@ -39,4 +43,8 @@
       position: relative;
     }
   }
+}
+
+.sideMenuIcon {
+  fill: white;
 }
