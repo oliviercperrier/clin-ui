@@ -165,7 +165,7 @@ export const TAB_FREQUENCIES_QUERY = gql`
 `;
 
 export const TAB_SUMMARY_QUERY = gql`
-  query GetSummaryTabVariant($sqon: JSON) {
+    query GetSummaryTabVariant($sqon: JSON) {
     Variants {
       hits(filters: $sqon) {
         total
@@ -183,9 +183,12 @@ export const TAB_SUMMARY_QUERY = gql`
             rsnumber
             reference
             start
+            variant_type
             participant_number
-            participant_frequency
+            max_impact_score
             variant_class
+            assembly_version
+            last_annotation_update
             consequences {
               hits {
                 edges {
@@ -206,15 +209,15 @@ export const TAB_SUMMARY_QUERY = gql`
                     ensembl_transcript_id
                     predictions {
                       fathmm_pred
-                      fathmm_converted_rankscore
-                      cadd_rankscore
-                      dann_rankscore
+                      FATHMM_converted_rankscore
+                      cadd_score
+                      dann_score
                       lrt_pred
                       lrt_converted_rankscore
                       revel_rankscore
-                      sift_converted_rankscore
+                      sift_converted_rank_score
                       sift_pred
-                      polyphen2_hvar_rankscore
+                      polyphen2_hvar_score
                       polyphen2_hvar_pred
                     }
                     impact_score
@@ -222,35 +225,31 @@ export const TAB_SUMMARY_QUERY = gql`
                 }
               }
             }
-            frequencies {
-              internal {
-                lower_bound_kf {
-                  ac
-                  af
-                  an
-                  homozygotes
-                  heterozygotes
-                }
-                upper_bound_kf {
-                  ac
-                  af
-                  an
-                  homozygotes
-                  heterozygotes
-                }
-              }
-            }
-            studies {
-              hits {
-                total
-              }
-            }
+            #frequencies {
+            #  internal {
+            #    lower_bound_kf {
+            #      ac
+            #      af
+            #      an
+            #      homozygotes
+            #      heterozygotes
+            #    }
+            #    upper_bound_kf {
+            #      ac
+            #      af
+            #      an
+            #      homozygotes
+            #      heterozygotes
+            #    }
+            #  }
+            #}
             genes {
               hits {
                 edges {
                   node {
                     omim_gene_id
                     symbol
+                    location
                   }
                 }
               }

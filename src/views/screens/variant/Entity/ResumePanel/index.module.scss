@@ -1,0 +1,49 @@
+@import "../../../../../style/themes/clin/colors";
+
+.resumePanel {
+  .resumeCard {
+    margin-bottom: 24px;
+  }
+
+  .divider {
+    height: auto;
+    margin: 0 45px;
+  }
+
+  .infoCard {
+    background-color: $gray-2;
+    .row {
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+
+      .infoTitle {
+        width: 100px;
+      }
+
+      .infoValue {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .resumeContent {
+    margin-left: 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .row {
+      display: flex;
+      flex-direction: column;
+
+      .contentTitle {
+        color: $gray-7;
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: 500;
+      }
+    }
+  }
+}

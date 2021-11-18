@@ -4,6 +4,7 @@ import { Router } from "react-router";
 
 import Search from "views/screens/search";
 import Variant from "views/screens/variant";
+import VariantEntity from "views/screens/variant/Entity";
 import history from "utils/history";
 import Layout from "components/Layout";
 import RouteWrapper from "./RouteWrapper";
@@ -21,7 +22,7 @@ const AppRouter = (): React.ReactElement => {
         <RouteWrapper
           exact
           path="/variant/entity/:hash"
-          component={() => <>Variant Entity</>}
+          component={VariantEntity}
           layout={Layout}
         />
       </Switch>

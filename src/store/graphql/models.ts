@@ -28,6 +28,7 @@ export interface ArrangerResultsTree<T extends ArrangerNodeData> {
 }
 
 export interface ArrangerHits<T extends ArrangerNodeData> {
+  total?: number;
   edges: ArrangerEdge<T>[];
 };
 

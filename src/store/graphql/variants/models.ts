@@ -32,8 +32,15 @@ export type VariantEntity = {
   participant_number: number;
   variant_class: string;
   rsnumber: string;
+  variant_type: string;
   [key: string]: any;
 };
+
+export type GeneEntity = {
+  omim_gene_id: string;
+  symbol: string;
+  location: string;
+}
 
 type ClinVarData = string[] | undefined;
 
