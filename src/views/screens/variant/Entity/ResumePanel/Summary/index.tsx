@@ -103,7 +103,9 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
         <Col className={styles.resumeContent}>
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>Patients</Text>
-            <Text className={styles.contentValue}>SNV</Text>
+            <Text className={styles.contentValue}>
+              {variant?.participant_number}
+            </Text>
           </Row>
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>

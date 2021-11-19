@@ -225,24 +225,6 @@ export const TAB_SUMMARY_QUERY = gql`
                 }
               }
             }
-            #frequencies {
-            #  internal {
-            #    lower_bound_kf {
-            #      ac
-            #      af
-            #      an
-            #      homozygotes
-            #      heterozygotes
-            #    }
-            #    upper_bound_kf {
-            #      ac
-            #      af
-            #      an
-            #      homozygotes
-            #      heterozygotes
-            #    }
-            #  }
-            #}
             genes {
               hits {
                 edges {
