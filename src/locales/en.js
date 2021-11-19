@@ -890,7 +890,10 @@ const en = {
   'screen.variant.entity.table.prediction': "Prediction(s)",
   'screen.variant.entity.table.codingadn': "Coding DNA",
   'screen.variant.entity.table.consequences': "Consequence(s)",
-  'screen.variant.entity.table.transcript': "Transcript",
+  'screen.variant.entity.table.transcript': "Transcripts",
+  'screen.variant.entity.table.hidetranscript': "Hide Transcripts",
+  'screen.variant.entity.table.showtranscript': "Show Transcripts",
+  'screen.variant.entity.table.gene': "Gene"
 };
 
 export default en;

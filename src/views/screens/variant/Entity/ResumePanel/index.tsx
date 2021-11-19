@@ -1,14 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import {
-  Card,
-  Typography,
-  Space,
-  Tooltip,
-  Empty,
-  Spin
-} from "antd";
+import { Card, Typography, Space, Tooltip, Empty, Spin } from "antd";
 import intl from "react-intl-universal";
 import capitalize from "lodash/capitalize";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/Empty";
@@ -344,7 +337,9 @@ const ResumePanel = ({ data }: OwnProps) => {
                   <Card
                     title={
                       <Space>
-                        <span>Gene</span>
+                        <span>
+                          {intl.get("screen.variant.entity.table.gene")}
+                        </span>
                         <span>{symbol}</span>
                         {omim && (
                           <>
@@ -361,8 +356,12 @@ const ResumePanel = ({ data }: OwnProps) => {
                       nOfElementsWhenCollapsed={1}
                       buttonText={(showAll, hiddenNum) =>
                         showAll
-                          ? "Hide Transcripts"
-                          : `Show Transcripts (${hiddenNum})`
+                          ? intl.get(
+                              "screen.variant.entity.table.hidetranscript"
+                            )
+                          : `${intl.get(
+                              "screen.variant.entity.table.showtranscript"
+                            )} (${hiddenNum})`
                       }
                       key={index}
                       dataSource={makeRows(orderedConsequences)}
