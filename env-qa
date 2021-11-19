@@ -8,7 +8,7 @@ PUBLIC_URL=/clinui
 #AUTH
 REACT_APP_KEYCLOAK_CONFIG={"realm": "clin", "url": "https://auth.qa.clin.ferlab.bio/auth/", "clientId": "clin-client", "authClientId": "clin-acl"}
 # API
-REACT_APP_ARRANGER_API=https://data-api.qa.cqdg.ferlab.bio
+REACT_APP_ARRANGER_API=https://data-api.qa.clin.ferlab.bio
 REACT_APP_ARRANGER_PROJECT_ID=clin_2021_11_03
 # Style
 SASS_PATH=/code/src/style/themes/clin
