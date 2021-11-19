@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Divider, Row, Skeleton, Typography } from "antd";
+import { Card, Col, Divider, Row, Spin, Typography } from "antd";
 import {
   ESResultNode,
   GeneEntity,
@@ -20,7 +20,7 @@ const { Text } = Typography;
 
 const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
   <Card bordered={false} className={styles.summaryCard}>
-    <Skeleton loading={loading} active>
+    <Spin spinning={loading}>
       <Row>
         <Col>
           <Card className={styles.infoCard}>
@@ -129,7 +129,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
           </Row>
         </Col>
       </Row>
-    </Skeleton>
+    </Spin>
   </Card>
 );
 

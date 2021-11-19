@@ -41,6 +41,90 @@ const makeRows = (rows: ESResultNode<VariantEntity>[]) =>
     key: `${index}`,
   }));
 
+const columns = [
+  {
+    title: () => intl.get("screen.patientvariant.results.table.variant"),
+    dataIndex: "hgvsg",
+    render: (hgvsg: string, entity: VariantEntity) =>
+      hgvsg ? (
+        <Tooltip placement="topLeft" title={hgvsg}>
+          <Link to={`/variant/entity/${entity.hash}`} href={"#top"}>
+            {hgvsg}
+          </Link>
+        </Tooltip>
+      ) : (
+        DISPLAY_WHEN_EMPTY_DATUM
+      ),
+  },
+  {
+    title: () => intl.get("screen.patientvariant.results.table.type"),
+    dataIndex: "variant_class",
+  },
+  {
+    title: () => intl.get("screen.patientvariant.results.table.dbsnp"),
+    dataIndex: "rsnumber",
+    render: (rsNumber: string) =>
+      rsNumber ? (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://www.ncbi.nlm.nih.gov/snp/${rsNumber}`}
+        >
+          {rsNumber}
+        </a>
+      ) : (
+        DISPLAY_WHEN_EMPTY_DATUM
+      ),
+  },
+  {
+    title: () => intl.get("screen.patientvariant.results.table.consequence"),
+    dataIndex: "consequences",
+    width: 300,
+    render: (consequences: { hits: { edges: Consequence[] } }) => (
+      <ConsequencesCell consequences={consequences?.hits?.edges || []} />
+    ),
+  },
+  {
+    title: () => intl.get("screen.patientvariant.results.table.clinvar"),
+    dataIndex: "clinvar",
+    render: (clinVar: ClinVar) =>
+      clinVar?.clin_sig && clinVar.clinvar_id ? (
+        <a
+          href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinVar.clinvar_id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {clinVar.clin_sig.join(", ")}
+        </a>
+      ) : (
+        DISPLAY_WHEN_EMPTY_DATUM
+      ),
+  },
+  {
+    title: () => intl.get("screen.variantsearch.table.gnomAd"),
+    dataIndex: "frequencies",
+    render: (frequencies: FrequenciesEntity) =>
+      frequencies.gnomad_exomes_2_1_1
+        ? frequencies.gnomad_exomes_2_1_1.af
+        : DISPLAY_WHEN_EMPTY_DATUM,
+  },
+  {
+    title: () => intl.get("screen.patientvariant.results.table.rqdm"),
+    dataIndex: "donors",
+    render: (donors: ESResult<DonorsEntity>) => donors.hits.total,
+  },
+  {
+    title: () => intl.get("screen.patientvariant.results.table.zygosity"),
+    dataIndex: "test8",
+    render: () => DISPLAY_WHEN_EMPTY_DATUM,
+  },
+  {
+    title: () => intl.get("screen.patientvariant.results.table.transmission"),
+    dataIndex: "test9",
+    render: () => DISPLAY_WHEN_EMPTY_DATUM,
+  },
+];
+
 const VariantTableContainer = (props: OwnProps) => {
   const { results, setCurrentPageCb, currentPageSize, setcurrentPageSize } =
     props;
@@ -50,90 +134,6 @@ const VariantTableContainer = (props: OwnProps) => {
   const variants = variantsResults?.hits?.edges || [];
   const total = variantsResults?.hits?.total || 0;
 
-  const columns = [
-    {
-      title: intl.get("screen.patientvariant.results.table.variant"),
-      dataIndex: "hgvsg",
-      render: (hgvsg: string, entity: VariantEntity) =>
-        hgvsg ? (
-          <Tooltip placement="topLeft" title={hgvsg}>
-            <Link to={`/variant/entity/${entity.hash}`} href={"#top"}>
-              {hgvsg}
-            </Link>
-          </Tooltip>
-        ) : (
-          DISPLAY_WHEN_EMPTY_DATUM
-        ),
-    },
-    {
-      title: intl.get("screen.patientvariant.results.table.type"),
-      dataIndex: "variant_class",
-    },
-    {
-      title: intl.get("screen.patientvariant.results.table.dbsnp"),
-      dataIndex: "rsnumber",
-      render: (rsNumber: string) =>
-        rsNumber ? (
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={`https://www.ncbi.nlm.nih.gov/snp/${rsNumber}`}
-          >
-            {rsNumber}
-          </a>
-        ) : (
-          DISPLAY_WHEN_EMPTY_DATUM
-        ),
-    },
-    {
-      title: intl.get("screen.patientvariant.results.table.consequence"),
-      dataIndex: "consequences",
-      width: 300,
-      render: (consequences: { hits: { edges: Consequence[] } }) => (
-        <ConsequencesCell consequences={consequences?.hits?.edges || []} />
-      ),
-    },
-    {
-      title: intl.get("screen.patientvariant.results.table.clinvar"),
-      dataIndex: "clinvar",
-      render: (clinVar: ClinVar) =>
-        clinVar?.clin_sig && clinVar.clinvar_id ? (
-          <a
-            href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinVar.clinvar_id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {clinVar.clin_sig.join(", ")}
-          </a>
-        ) : (
-          DISPLAY_WHEN_EMPTY_DATUM
-        ),
-    },
-    {
-      title: intl.get("screen.variantsearch.table.gnomAd"),
-      dataIndex: "frequencies",
-      render: (frequencies: FrequenciesEntity) =>
-        frequencies.gnomad_exomes_2_1_1
-          ? frequencies.gnomad_exomes_2_1_1.af
-          : DISPLAY_WHEN_EMPTY_DATUM,
-    },
-    {
-      title: intl.get("screen.patientvariant.results.table.rqdm"),
-      dataIndex: "donors",
-      render: (donors: ESResult<DonorsEntity>) => donors.hits.total,
-    },
-    {
-      title: intl.get("screen.patientvariant.results.table.zygosity"),
-      dataIndex: "test8",
-      render: () => DISPLAY_WHEN_EMPTY_DATUM
-    },
-    {
-      title: intl.get("screen.patientvariant.results.table.transmission"),
-      dataIndex: "test9",
-      render: () => DISPLAY_WHEN_EMPTY_DATUM
-    },
-  ];
-
   return (
     <>
       <div className={style.tabletotalTitle}>
@@ -141,7 +141,7 @@ const VariantTableContainer = (props: OwnProps) => {
         <strong>{total}</strong>
       </div>
       <Table
-      size="small"
+        size="small"
         loading={results.loading}
         columns={columns}
         dataSource={makeRows(variants)}

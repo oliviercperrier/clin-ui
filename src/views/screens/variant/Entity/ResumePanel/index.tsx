@@ -69,121 +69,6 @@ const getLongPredictionLabelIfKnown = (
   return longPrediction || null;
 };
 
-const columns = [
-  {
-    title: "AA",
-    dataIndex: "aa",
-    render: (aa: string) => (
-      <Tooltip placement="topLeft" title={aa || DISPLAY_WHEN_EMPTY_DATUM}>
-        <div className={styles.longValue}>{aa || DISPLAY_WHEN_EMPTY_DATUM}</div>
-      </Tooltip>
-    ),
-    className: `${styles.longValue}`,
-    width: "10%",
-  },
-  {
-    title: intl.get("screen.variant.entity.table.consequences"),
-    dataIndex: "consequences",
-    render: (consequences: string[]) => {
-      if (consequences.length === 0) {
-        return <></>;
-      }
-      return (
-        <ExpandableCell
-          dataSource={consequences}
-          renderItem={(item: any, id): React.ReactNode => (
-            <StackLayout key={id} horizontal className={styles.cellList}>
-              <Text>{item}</Text>
-            </StackLayout>
-          )}
-        />
-      );
-    },
-  },
-  {
-    title: intl.get("screen.variant.entity.table.codingadn"),
-    dataIndex: "codingDna",
-    render: (codingDna: string) => (
-      <Tooltip
-        placement="topLeft"
-        title={codingDna || DISPLAY_WHEN_EMPTY_DATUM}
-      >
-        <div className={styles.longValue}>
-          {codingDna || DISPLAY_WHEN_EMPTY_DATUM}
-        </div>
-      </Tooltip>
-    ),
-  },
-  {
-    title: "VEP",
-    dataIndex: "vep",
-    render: (vep: Impact) => {
-      return getVepImpactTag(vep.toLowerCase());
-    },
-  },
-  {
-    title: intl.get("screen.variant.entity.table.prediction"),
-    dataIndex: "impact",
-    render: (impacts: string[][]) => {
-      if (impacts.length === 0) {
-        return DISPLAY_WHEN_EMPTY_DATUM;
-      }
-
-      return (
-        <ExpandableCell
-          nOfElementsWhenCollapsed={2}
-          dataSource={impacts}
-          renderItem={(item: any, id): React.ReactNode => {
-            const predictionField = item[INDEX_IMPACT_PREDICTION_FIELD];
-            const score = item[INDEX_IMPACT_SCORE];
-            const predictionShortLabel =
-              item[INDEX_IMPACT_PREDICTION_SHORT_LABEL];
-
-            const predictionLongLabel = getLongPredictionLabelIfKnown(
-              predictionField,
-              predictionShortLabel
-            );
-
-            const label = predictionLongLabel || predictionShortLabel;
-
-            const description = label
-              ? `${capitalize(label)} - ${score}`
-              : score;
-            return (
-              <StackLayout key={id} horizontal className={styles.cellList}>
-                <Text type={"secondary"}>{predictionField}:</Text>
-                <Text>{description}</Text>
-              </StackLayout>
-            );
-          }}
-        />
-      );
-    },
-  },
-  {
-    title: "Conservation",
-    dataIndex: "conservation",
-    render: (conservation: number) =>
-      conservation == null ? DISPLAY_WHEN_EMPTY_DATUM : conservation,
-  },
-  {
-    title: intl.get("screen.variant.entity.table.transcript"),
-    dataIndex: "transcript",
-    render: (transcript: { id: string; isCanonical?: boolean }) =>
-      transcript.id ? (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`https://www.ensembl.org/id/${transcript.id}`}
-        >
-          {transcript.id}
-        </a>
-      ) : (
-        DISPLAY_WHEN_EMPTY_DATUM
-      ),
-  },
-];
-
 const groupConsequencesBySymbol = (
   consequences: ESResultNode<ConsequenceEntity>[],
   genes: ESResultNode<GeneEntity>[]
@@ -304,6 +189,138 @@ const makeRows = (consequences: ESResultNode<ConsequenceEntity>[]) =>
       },
     })
   );
+
+const columns = [
+  {
+    title: () =>
+      intl.get("screen.variantDetails.summaryTab.consequencesTable.AAColumn"),
+    dataIndex: "aa",
+    render: (aa: string) => (
+      <Tooltip placement="topLeft" title={aa || DISPLAY_WHEN_EMPTY_DATUM}>
+        <div className={styles.longValue}>{aa || DISPLAY_WHEN_EMPTY_DATUM}</div>
+      </Tooltip>
+    ),
+    className: `${styles.longValue}`,
+    width: "10%",
+  },
+  {
+    title: () =>
+      intl.get(
+        "screen.variantDetails.summaryTab.consequencesTable.ConsequenceColumn"
+      ),
+    dataIndex: "consequences",
+    render: (consequences: string[]) => {
+      if (consequences.length === 0) {
+        return <></>;
+      }
+      return (
+        <ExpandableCell
+          dataSource={consequences}
+          renderItem={(item: any, id): React.ReactNode => (
+            <StackLayout key={id} horizontal className={styles.cellList}>
+              <Text>{item}</Text>
+            </StackLayout>
+          )}
+        />
+      );
+    },
+  },
+  {
+    title: () =>
+      intl.get(
+        "screen.variantDetails.summaryTab.consequencesTable.CDNAChangeColumn"
+      ),
+    dataIndex: "codingDna",
+    render: (codingDna: string) => (
+      <Tooltip
+        placement="topLeft"
+        title={codingDna || DISPLAY_WHEN_EMPTY_DATUM}
+      >
+        <div className={styles.longValue}>
+          {codingDna || DISPLAY_WHEN_EMPTY_DATUM}
+        </div>
+      </Tooltip>
+    ),
+  },
+  {
+    title: () =>
+      intl.get("screen.variantDetails.summaryTab.consequencesTable.VEP"),
+    dataIndex: "vep",
+    render: (vep: Impact) => {
+      return getVepImpactTag(vep.toLowerCase());
+    },
+  },
+  {
+    title: () =>
+      intl.get(
+        "screen.variantDetails.summaryTab.consequencesTable.ImpactColumn"
+      ),
+    dataIndex: "impact",
+    render: (impacts: string[][]) => {
+      if (impacts.length === 0) {
+        return DISPLAY_WHEN_EMPTY_DATUM;
+      }
+
+      return (
+        <ExpandableCell
+          nOfElementsWhenCollapsed={2}
+          dataSource={impacts}
+          renderItem={(item: any, id): React.ReactNode => {
+            const predictionField = item[INDEX_IMPACT_PREDICTION_FIELD];
+            const score = item[INDEX_IMPACT_SCORE];
+            const predictionShortLabel =
+              item[INDEX_IMPACT_PREDICTION_SHORT_LABEL];
+
+            const predictionLongLabel = getLongPredictionLabelIfKnown(
+              predictionField,
+              predictionShortLabel
+            );
+
+            const label = predictionLongLabel || predictionShortLabel;
+
+            const description = label
+              ? `${capitalize(label)} - ${score}`
+              : score;
+            return (
+              <StackLayout key={id} horizontal className={styles.cellList}>
+                <Text type={"secondary"}>{predictionField}:</Text>
+                <Text>{description}</Text>
+              </StackLayout>
+            );
+          }}
+        />
+      );
+    },
+  },
+  {
+    title: () =>
+      intl.get(
+        "screen.variantDetails.summaryTab.consequencesTable.ConservationColumn"
+      ),
+    dataIndex: "conservation",
+    render: (conservation: number) =>
+      conservation == null ? DISPLAY_WHEN_EMPTY_DATUM : conservation,
+  },
+  {
+    title: () =>
+      intl.get(
+        "screen.variantDetails.summaryTab.consequencesTable.TranscriptsColumn"
+      ),
+    dataIndex: "transcript",
+    render: (transcript: { id: string; isCanonical?: boolean }) =>
+      transcript.id ? (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://www.ensembl.org/id/${transcript.id}`}
+        >
+          {transcript.id}
+        </a>
+      ) : (
+        DISPLAY_WHEN_EMPTY_DATUM
+      ),
+  },
+];
 
 const ResumePanel = ({ data }: OwnProps) => {
   const variantData = data.variantData;

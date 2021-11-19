@@ -1,6 +1,5 @@
 import { useLazyResultQuery } from "store/graphql/utils/query";
 
-import { StudyNode } from "./models";
 import {
   TAB_CLINICAL_QUERY,
   TAB_FREQUENCIES_QUERY,
@@ -37,16 +36,11 @@ export const useTabFrequenciesData = (variantId: string) => {
     loading,
     data: {
       frequencies: nodeVariant?.frequencies || {},
+      frequencies_by_lab: nodeVariant?.frequencies_by_lab || {},
       locus: nodeVariant?.locus || "",
-      variantStudies:
-        nodeVariant?.studies?.hits?.edges.map((e: StudyNode) => ({
-          ...e.node,
-          participantTotalNumber: nodeVariant?.participant_total_number || 0,
-        })) || [],
       participantTotalNumber: nodeVariant?.participant_total_number || 0,
       participantNumber: nodeVariant?.participant_number || 0,
       participant_ids: nodeVariant?.participant_ids || [],
-      globalStudies: nodesStudies?.map((n: StudyNode) => n.node),
     },
     error,
   };

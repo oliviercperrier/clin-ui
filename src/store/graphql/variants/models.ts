@@ -17,10 +17,18 @@ export type ESResultNode<T> = {
 };
 
 export type FrequenciesEntity = {
-  gnomad_exomes_2_1_1: {
-    af: number;
-  };
+  internal: BoundType;
+  topmed_bravo: BoundType;
+  thousand_genomes: BoundType;
+  gnomad_exomes_2_1_1: BoundType;
+  gnomad_genomes_2_1_1: BoundType;
+  gnomad_genomes_3_0: BoundType;
+  [key: string]: any;
 };
+
+export type FrequenciesByLab = {
+  [key: string]: BoundType;
+}
 
 export type DonorsEntity = {};
 
@@ -63,32 +71,10 @@ export type ClinVar = {
   clin_sig: ClinVarData;
 };
 
-type BoundKfType = {
+type BoundType = {
   ac: number;
   af: number;
   an: number;
-  heterozygotes: number;
-  homozygotes: number;
-};
-
-export type FreqInternal = {
-  lower_bound_kf: BoundKfType;
-  upper_bound_kf: BoundKfType;
-};
-
-export type Study = {
-  participant_number: number;
-  participant_ids: string[];
-  study_id: string;
-  frequencies: FreqInternal;
-};
-
-export type StudyInfo = {
-  id: string;
-  code: string;
-  domain: string[];
-};
-
-export type StudyNode = {
-  node: Study;
+  het: number;
+  hom: number;
 };

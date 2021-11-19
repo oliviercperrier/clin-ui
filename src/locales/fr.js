@@ -1095,10 +1095,6 @@ const fr = {
   'querybuilder.filters.operators.greaterthan': 'Plus grand que',
   'querybuilder.filters.operators.greaterthanorequal': 'Plus grand ou égale',
   'querybuilder.filters.range.is': "Est",
-  'screen.variant.entity.table.prediction': "Prédiction(s)",
-  'screen.variant.entity.table.codingadn': "ADN Codant",
-  'screen.variant.entity.table.consequences': "Conséquence(s)",
-  'screen.variant.entity.table.transcript': "Transcrits",
   'screen.variant.entity.table.hidetranscript': "Cacher les Transcrits",
   'screen.variant.entity.table.showtranscript': "Afficher les Transcrits",
   'screen.variant.entity.table.gene': "Gène"

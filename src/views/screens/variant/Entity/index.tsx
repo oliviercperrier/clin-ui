@@ -13,12 +13,13 @@ import { GraphqlBackend } from "store/providers";
 import ApolloProvider from "store/providers/apollo";
 import useQueryString from "utils/useQueryString";
 import { useParams } from "react-router";
+import { useTabSummaryData } from "store/graphql/variants/tabActions";
+import FrequencyPanel from "./FrequencyPanel";
 
 import styles from "./index.module.scss";
-import { useTabSummaryData } from "store/graphql/variants/tabActions";
 
-export const getVepImpactTag = (score: number | string) => {
-  console.log()
+export const getVepImpactTag = (score: number | string) => {
+  console.log();
   switch (score) {
     case 1:
     case "modifier":
@@ -43,11 +44,11 @@ const VariantEntityPage = () => {
   const { loading, data, error } = useTabSummaryData(hash);
 
   if (error) {
-    return <ServerError />
+    return <ServerError />;
   }
 
   if (!data && !loading) {
-    return <NotFound />
+    return <NotFound />;
   }
 
   return (
@@ -92,7 +93,9 @@ const VariantEntityPage = () => {
             </span>
           }
           key="2"
-        ></Tabs.TabPane>
+        >
+          <FrequencyPanel hash={hash} />
+        </Tabs.TabPane>
         <Tabs.TabPane
           tab={
             <span>
