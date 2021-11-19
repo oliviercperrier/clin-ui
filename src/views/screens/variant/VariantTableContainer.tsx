@@ -57,7 +57,7 @@ const VariantTableContainer = (props: OwnProps) => {
       render: (hgvsg: string, entity: VariantEntity) =>
         hgvsg ? (
           <Tooltip placement="topLeft" title={hgvsg}>
-            <Link to={`/variantDetails/${entity.hash}`} href={"#top"}>
+            <Link to={`/variant/entity/${entity.hash}`} href={"#top"}>
               {hgvsg}
             </Link>
           </Tooltip>

@@ -886,7 +886,11 @@ const en = {
   'querybuilder.filters.operators.lessthanorequal': 'Less than or equal',
   'querybuilder.filters.operators.greaterthan': 'Greater than',
   'querybuilder.filters.operators.greaterthanorequal': 'Greater than or equal',
-  'querybuilder.filters.range.is': "Is"
+  'querybuilder.filters.range.is': "Is",
+  'screen.variant.entity.table.prediction': "Prediction(s)",
+  'screen.variant.entity.table.codingadn': "Coding DNA",
+  'screen.variant.entity.table.consequences': "Consequence(s)",
+  'screen.variant.entity.table.transcript': "Transcript",
 };
 
 export default en;

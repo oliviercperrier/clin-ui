@@ -1,8 +1,8 @@
 export enum Impact {
-  High = 'HIGH',
-  Moderate = 'MODERATE',
-  Low = 'LOW',
-  Modifier = 'MODIFIER',
+  High = "HIGH",
+  Moderate = "MODERATE",
+  Low = "LOW",
+  Modifier = "MODIFIER",
 }
 
 export type ESResult<T> = {
@@ -18,11 +18,11 @@ export type ESResultNode<T> = {
 
 export type FrequenciesEntity = {
   gnomad_exomes_2_1_1: {
-    af: number
-  }
-}
+    af: number;
+  };
+};
 
-export type DonorsEntity = {}
+export type DonorsEntity = {};
 
 export type VariantEntity = {
   id: string;
@@ -40,7 +40,21 @@ export type GeneEntity = {
   omim_gene_id: string;
   symbol: string;
   location: string;
-}
+};
+
+export type ConsequenceEntity = {
+  symbol: string;
+  consequences: string[];
+  vep_impact: Impact;
+  aa_change: string | undefined | null;
+  impact_score: number | null;
+  [key: string]: any;
+};
+
+export type Consequence = {
+  node: ConsequenceEntity;
+  [key: string]: any;
+};
 
 type ClinVarData = string[] | undefined;
 
@@ -77,16 +91,4 @@ export type StudyInfo = {
 
 export type StudyNode = {
   node: Study;
-};
-
-export type Consequence = {
-  node: {
-    symbol: string;
-    //consequences: string[];
-    vep_impact: Impact;
-    aa_change: string | undefined | null;
-    impact_score: number | null;
-    [key: string]: any;
-  };
-  [key: string]: any;
 };

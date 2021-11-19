@@ -1,14 +1,12 @@
 import React from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import { Space, Typography, Tag, Tabs, Skeleton } from "antd";
+import { Typography, Tag, Tabs, Skeleton } from "antd";
 import intl from "react-intl-universal";
 import BarChartIcon from "components/icons/BarChartIcon";
 import StockIcon from "components/icons/StockIcon";
 import LibraryIcon from "components/icons/LibraryIcon";
-import { useGetPageData } from "store/graphql/utils/actions";
-import { VARIANT_INDEX } from "views/screens/variant/constants";
-import { TAB_SUMMARY_QUERY } from "store/graphql/variants/queries";
-import { ESResult, VariantEntity } from "store/graphql/variants/models";
+import ServerError from "components/Results/ServerError";
+import NotFound from "components/Results/NotFound";
 
 import ResumePanel from "./ResumePanel";
 import { GraphqlBackend } from "store/providers";
@@ -17,16 +15,22 @@ import useQueryString from "utils/useQueryString";
 import { useParams } from "react-router";
 
 import styles from "./index.module.scss";
+import { useTabSummaryData } from "store/graphql/variants/tabActions";
 
-const getVepImpactTag = (score: number) => {
+export const getVepImpactTag = (score: number | string) => {
+  console.log()
   switch (score) {
     case 1:
+    case "modifier":
       return <Tag>MODIFIER</Tag>;
     case 2:
+    case "low":
       return <Tag color="green">LOW</Tag>;
     case 3:
+    case "moderate":
       return <Tag color="gold">MODERATE</Tag>;
     case 4:
+    case "high":
       return <Tag color="red">HIGH</Tag>;
 
     default:
@@ -36,26 +40,15 @@ const getVepImpactTag = (score: number) => {
 
 const VariantEntityPage = () => {
   const { hash } = useParams<{ hash: string }>();
-  const results = useGetPageData(
-    {
-      sqon: {
-        content: [
-          {
-            op: "in",
-            content: {
-              field: "hash",
-              value: hash,
-            },
-          },
-        ],
-        op: "and",
-      },
-    },
-    TAB_SUMMARY_QUERY,
-    VARIANT_INDEX
-  );
-  const variantResults = results.data?.Variants as ESResult<VariantEntity>;
-  const variantData = variantResults?.hits.edges[0].node;
+  const { loading, data, error } = useTabSummaryData(hash);
+
+  if (error) {
+    return <ServerError />
+  }
+
+  if (!data && !loading) {
+    return <NotFound />
+  }
 
   return (
     <StackLayout className={styles.variantEntity} vertical>
@@ -63,17 +56,15 @@ const VariantEntityPage = () => {
         <Skeleton
           title={{ width: 200 }}
           paragraph={false}
-          loading={results.loading}
+          loading={loading}
           className={styles.titleSkeleton}
           active
         >
           <Typography.Title className={styles.title}>
-            {variantData?.hgvsg}
+            {data?.hgvsg}
           </Typography.Title>
-          <Tag color="purple">
-            {variantData?.variant_type.toLocaleUpperCase()}
-          </Tag>
-          {getVepImpactTag(variantData?.max_impact_score)}
+          <Tag color="purple">{data?.variant_type.toLocaleUpperCase()}</Tag>
+          {getVepImpactTag(data?.max_impact_score)}
         </Skeleton>
       </div>
       <Tabs className={styles.entitySections}>
@@ -88,8 +79,8 @@ const VariantEntityPage = () => {
         >
           <ResumePanel
             data={{
-              loading: results.loading,
-              variantData: variantData,
+              loading: loading,
+              variantData: data,
             }}
           />
         </Tabs.TabPane>
@@ -116,7 +107,7 @@ const VariantEntityPage = () => {
   );
 };
 
-export default (props: any) => {
+const EntityPage = (props: any) => {
   const { token } = useQueryString();
 
   return (
@@ -125,3 +116,5 @@ export default (props: any) => {
     </ApolloProvider>
   );
 };
+
+export default EntityPage;
