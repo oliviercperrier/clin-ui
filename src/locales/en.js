@@ -775,7 +775,7 @@ const en = {
   'screen.variantDetails.patientsTab.lastUpdate': 'Date',
   'screen.variantDetails.patientsTab.LDM': 'LDM',
   'screen.variantDetails.patientsTab.male': 'Male',
-  'screen.variantDetails.patientsTab.qd': 'Reading depth quality',
+  'screen.variantDetails.patientsTab.qd': 'Depth quality',
   'screen.variantDetails.patientsTab.relation': 'Position',
   'screen.variantDetails.patientsTab.sex': 'Sex',
   'screen.variantDetails.patientsTab.studyId': 'Study',
@@ -783,8 +783,11 @@ const en = {
   'screen.variantDetails.patientsTab.title': 'Patients',
   'screen.variantDetails.patientsTab.transmission': 'Transmission',
   'screen.variantDetails.patientsTab.zygosity': 'Zygosity',
+  'screen.variantDetails.patientsTab.affected': 'Affected',
+  'screen.variantDetails.patientsTab.notaffected': 'Not affected',
   'screen.variantdetails.seeLess': 'See Less',
   'screen.variantdetails.seeMore': 'See More',
+  'screen.variantDetails.panel.emptyTable': 'No data Available',
   'screen.variantDetails.summaryTab.assCondTable.title': 'Association/Condition',
   'screen.variantDetails.summaryTab.consequencesTable.AAColumn': 'AA',
   'screen.variantDetails.summaryTab.consequencesTable.CDNAChangeColumn': 'CDNA Change',
@@ -796,7 +799,6 @@ const en = {
   'screen.variantDetails.summaryTab.consequencesTable.title': 'Genetic Consequences',
   'screen.variantDetails.summaryTab.consequencesTable.TranscriptsColumn': 'Transcripts',
   'screen.variantDetails.summaryTab.consequencesTable.VEP': 'VEP',
-  'screen.variantDetails.summaryTab.emptyTable': 'No data Available',
   'screen.variantDetails.summaryTab.externalCohortsTable.title': 'External Cohorts',
   'screen.variantDetails.summaryTab.externalRefTable.clinVar': 'Clin var',
   'screen.variantDetails.summaryTab.externalRefTable.dbSnp': 'dbSNP',
@@ -875,6 +877,7 @@ const en = {
   'screen.patientvariant.filter.grouptitle.publiccohorts': 'Public Cohorts',
   'screen.patientvariant.filter.collapse.all': 'Collapse all',
   'screen.patientvariant.filter.expand.all': 'Expand all',
+  'screen.patientvariant.results.table.rqdm': 'RQDM',
   'querybuilder.query.combine.and': 'And',
   'querybuilder.query.combine.or': 'Or',
   'querybuilder.filters.actions.less': 'Less',
@@ -889,7 +892,7 @@ const en = {
   'querybuilder.filters.range.is': "Is",
   'screen.variant.entity.table.hidetranscript': "Hide Transcripts",
   'screen.variant.entity.table.showtranscript': "Show Transcripts",
-  'screen.variant.entity.table.gene': "Gene"
+  'screen.variant.entity.table.gene': "Gene",
 };
 
 export default en;

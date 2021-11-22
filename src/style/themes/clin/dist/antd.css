@@ -7249,7 +7249,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 }
 .ant-dropdown-menu-item-selected,
 .ant-dropdown-menu-submenu-title-selected {
-  color: #eaf3fa;
+  color: #0a5085;
   background-color: #f1f5f9;
 }
 .ant-dropdown-menu-item:hover,
@@ -25065,6 +25065,16 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-table-tbody > tr:nth-child(even) {
   background-color: #f8fafc;
+}
+.ant-table-filter-dropdown-btns {
+  padding: 8px;
+}
+.ant-table-filter-dropdown .ant-dropdown-menu-title-content {
+  display: flex;
+}
+.ant-table-filter-dropdown .ant-dropdown-menu-item .ant-checkbox-wrapper {
+  display: flex;
+  align-items: center;
 }
 .ant-collapse-content {
   border-top: 1px solid #e1e8ef;

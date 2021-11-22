@@ -4,6 +4,7 @@ import {
   TAB_CLINICAL_QUERY,
   TAB_FREQUENCIES_QUERY,
   TAB_SUMMARY_QUERY,
+  TAB_PATIENT_QUERY,
 } from "./queries";
 
 export const buildVariantIdSqon = (id: string) => ({
@@ -30,7 +31,6 @@ export const useTabFrequenciesData = (variantId: string) => {
   );
 
   const nodeVariant = result?.Variants?.hits?.edges[0]?.node;
-  const nodesStudies = result?.studies?.hits?.edges;
 
   return {
     loading,
@@ -68,4 +68,21 @@ export const useTabClinicalData = (variantId: string) => {
     }
   );
   return { loading, data: result?.Variants?.hits?.edges[0]?.node || {}, error };
+};
+
+export const useTabPatientData = (variantId: string) => {
+  const { loading, result, error } = useLazyResultQuery<any>(
+    TAB_PATIENT_QUERY,
+    {
+      variables: {
+        sqon: buildVariantIdSqon(variantId),
+      },
+    }
+  );
+
+  return {
+    loading,
+    data: result?.Variants?.hits?.edges[0]?.node || {},
+    error,
+  };
 };

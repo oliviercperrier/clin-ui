@@ -1,4 +1,4 @@
-import intl from "react-intl-universal";
+// JWT
 
 export const parseJwt = (token: string) => {
   try {
@@ -24,6 +24,8 @@ export const getUserFirstname = (token: string) => {
   return tokenData ? tokenData.given_name : null;
 };
 
+// NUMBER
+
 export const isNumber = (n: any) => n && !Number.isNaN(n);
 
 export const toExponentialNotation = (
@@ -33,3 +35,19 @@ export const toExponentialNotation = (
   isNumber(numberCandidate)
     ? numberCandidate.toExponential(fractionDigits)
     : numberCandidate;
+
+// STRING
+
+export const toKebabCase = (str: string) =>
+  str &&
+  str
+    .match(
+      /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
+    )!
+    .map((x: string) => x.toLowerCase())
+    .join("-");
+
+// DATE
+
+export const formatTimestampToISODate = (timestamp: number) =>
+  new Date(timestamp).toISOString().split("T")[0];

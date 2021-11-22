@@ -5,10 +5,11 @@ import {
   GeneEntity,
   VariantEntity,
 } from "store/graphql/variants/models";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/Empty";
+import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import intl from "react-intl-universal";
 
 import styles from "./index.module.scss";
+import { formatTimestampToISODate } from "utils/helper";
 
 interface OwnProps {
   loading: boolean;
@@ -19,7 +20,7 @@ interface OwnProps {
 const { Text } = Typography;
 
 const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
-  <Card bordered={false} className={styles.summaryCard}>
+  <Card className={styles.summaryCard}>
     <Spin spinning={loading}>
       <Row>
         <Col>
@@ -121,9 +122,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
             <Text className={styles.contentTitle}>Annotations</Text>
             <Text className={styles.contentValue}>
               {variant?.last_annotation_update
-                ? new Date(variant?.last_annotation_update)
-                    .toISOString()
-                    .split("T")[0]
+                ? formatTimestampToISODate(variant?.last_annotation_update)
                 : DISPLAY_WHEN_EMPTY_DATUM}
             </Text>
           </Row>

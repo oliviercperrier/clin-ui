@@ -20,11 +20,11 @@
       }
     }
   }
-    
+
   &-content {
     overflow: auto;
   }
-  
+
   &-thead {
     > tr {
       > th {
@@ -33,6 +33,7 @@
       }
     }
   }
+
   &-tbody {
     > tr {
       > td {
@@ -42,6 +43,27 @@
     }
     > tr:nth-child(even) {
       background-color: @gray-2;
+    }
+  }
+
+  &-filter-dropdown {
+    &-btns {
+      padding: 8px;
+    }
+
+    .@{dropdown-prefix-cls} {
+      &-menu-title-content {
+        display: flex;
+      }
+
+      &-menu-item {
+        .@{ant-prefix}-checkbox { 
+          &-wrapper {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }

@@ -5,6 +5,7 @@ import intl from "react-intl-universal";
 import BarChartIcon from "components/icons/BarChartIcon";
 import StockIcon from "components/icons/StockIcon";
 import LibraryIcon from "components/icons/LibraryIcon";
+import TeamIcon from "components/icons/TeamIcon";
 import ServerError from "components/Results/ServerError";
 import NotFound from "components/Results/NotFound";
 
@@ -14,12 +15,13 @@ import ApolloProvider from "store/providers/apollo";
 import useQueryString from "utils/useQueryString";
 import { useParams } from "react-router";
 import { useTabSummaryData } from "store/graphql/variants/tabActions";
-import FrequencyPanel from "./FrequencyPanel";
+import FrequencyPanel from "views/screens/variant/Entity/FrequencyPanel";
+import ClinicalPanel from "views/screens/variant/Entity/ClinicalPanel";
+import PatientPanel from "views/screens/variant/Entity/PatientPanel";
 
 import styles from "./index.module.scss";
 
 export const getVepImpactTag = (score: number | string) => {
-  console.log();
   switch (score) {
     case 1:
     case "modifier":
@@ -104,7 +106,20 @@ const VariantEntityPage = () => {
             </span>
           }
           key="3"
-        ></Tabs.TabPane>
+        >
+          <ClinicalPanel hash={hash} />
+        </Tabs.TabPane>
+        <Tabs.TabPane
+          tab={
+            <span>
+              <TeamIcon height="16" width="16" />
+              {intl.get("screen.variantdetails.tab.patients")}
+            </span>
+          }
+          key="4"
+        >
+          <PatientPanel hash={hash} />
+        </Tabs.TabPane>
       </Tabs>
     </StackLayout>
   );

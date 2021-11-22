@@ -1,15 +1,17 @@
-import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import React from "react";
 import cx from "classnames";
+import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { useTabFrequenciesData } from "store/graphql/variants/tabActions";
-import intl, { load } from "react-intl-universal";
-import { Card, Table, Empty, Spin, Space } from "antd";
+import intl from "react-intl-universal";
+import { Card, Table, Spin, Space } from "antd";
 import { toExponentialNotation } from "utils/helper";
 import {
   FrequenciesByLab,
   FrequenciesEntity,
 } from "store/graphql/variants/models";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/Empty";
+import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
+import ServerError from "components/Results/ServerError";
+import NoData from "views/screens/variant/Entity/NoData";
 
 import styles from "./index.module.scss";
 
@@ -42,13 +44,6 @@ const isExternalCohortsTableEmpty = (rows: Row[]) =>
     ({ cohort, key, ...visibleRow }: Row) =>
       !hasAtLeastOneTruthyProperty(visibleRow)
   );
-
-const tableEmpty = () => (
-  <Empty
-    image={Empty.PRESENTED_IMAGE_SIMPLE}
-    description={intl.get("screen.variantDetails.summaryTab.emptyTable")}
-  />
-);
 
 const cohortsColumns = [
   {
@@ -170,6 +165,10 @@ const makeRowFromFrequencies = (
 const FrequencyPanel = ({ hash }: OwnProps) => {
   const { loading, data, error } = useTabFrequenciesData(hash);
 
+  if (error) {
+    return <ServerError />;
+  }
+
   const externalCohortsRows = makeRowFromFrequencies(
     data.frequencies,
     data.locus
@@ -189,12 +188,16 @@ const FrequencyPanel = ({ hash }: OwnProps) => {
           <Card
             title={intl.get("screen.variantDetails.summaryTab.rqdmTable.title")}
           >
-            <Table
-              size="small"
-              dataSource={internalCohortRows}
-              columns={cohortsColumns}
-              pagination={false}
-            />
+            {hasInternalCohorts ? (
+              <Table
+                size="small"
+                dataSource={internalCohortRows}
+                columns={cohortsColumns}
+                pagination={false}
+              />
+            ) : (
+              <NoData />
+            )}
           </Card>
         </Spin>
         <Spin spinning={loading}>
@@ -203,15 +206,15 @@ const FrequencyPanel = ({ hash }: OwnProps) => {
               "screen.variantDetails.summaryTab.externalCohortsTable.title"
             )}
           >
-            {hasEmptyCohorts ? (
-              tableEmpty
-            ) : (
+            {!hasEmptyCohorts ? (
               <Table
                 size="small"
                 dataSource={externalCohortsRows}
                 columns={cohortsColumns}
                 pagination={false}
               />
+            ) : (
+              <NoData />
             )}
           </Card>
         </Spin>

@@ -19,7 +19,7 @@ import {
   FrequenciesEntity,
   DonorsEntity,
 } from "store/graphql/variants/models";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "./Empty";
+import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import ConsequencesCell from "./ConsequencesCell";
 
 import style from "./VariantTableContainer.module.scss";

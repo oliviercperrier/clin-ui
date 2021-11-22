@@ -1,12 +1,13 @@
 import React from "react";
 import cx from "classnames";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import { Card, Typography, Space, Tooltip, Empty, Spin } from "antd";
+import { Card, Typography, Space, Tooltip, Spin } from "antd";
 import intl from "react-intl-universal";
 import capitalize from "lodash/capitalize";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/Empty";
+import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import ExpandableTable from "components/table/ExpandableTable";
 import ExpandableCell from "components/table/ExpandableCell";
+import NoData from "views/screens/variant/Entity/NoData";
 import {
   Consequence,
   ConsequenceEntity,
@@ -391,7 +392,7 @@ const ResumePanel = ({ data }: OwnProps) => {
               })
             ) : (
               <Card>
-                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                <NoData />
               </Card>
             )}
           </Spin>
