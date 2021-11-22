@@ -24,7 +24,7 @@ export const usePrescriptionMapping = (): ExtendedMappingResults => {
   });
 
   return {
-    data: result?.Prescriptions.extended,
+    data: result?.Prescriptions.extended || [],
     loading: loading,
   };
 };

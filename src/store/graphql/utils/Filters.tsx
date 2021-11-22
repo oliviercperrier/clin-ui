@@ -90,6 +90,7 @@ export const generateFilters = (
     );
   });
 
+// eslint-disable-next-line
 export interface GQLData<T extends Aggs = any> {
   aggregations: any;
   hits: {
@@ -100,6 +101,13 @@ export interface GQLData<T extends Aggs = any> {
     ];
     total: number;
   };
+}
+
+export interface GqlResults<DataT> {
+  data: DataT[];
+  aggregations: Aggregations;
+  loading: boolean;
+  total: number;
 }
 
 export const getFilters = (

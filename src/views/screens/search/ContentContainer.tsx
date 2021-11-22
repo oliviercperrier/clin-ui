@@ -89,7 +89,7 @@ const ContentContainer = ({
           >
             <PrescriptionsTable
               pagination={pagination}
-              results={patients}
+              results={prescriptions}
               total={total}
             />
           </TabPane>

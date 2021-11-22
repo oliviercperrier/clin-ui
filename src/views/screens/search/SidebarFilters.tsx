@@ -22,11 +22,6 @@ export interface ItemProps {
   value: string;
 }
 
-const sqon = {
-  content: [],
-  op: "and",
-};
-
 const SidebarFilters = ({
   aggregations,
   extendedMapping,
@@ -55,19 +50,7 @@ const SidebarFilters = ({
     );
   }
 
-  return (
-    <>
-      {generateFilters(
-        aggregations,
-        extendedMapping,
-        "",
-        true,
-        false,
-        true,
-        false
-      )}
-    </>
-  );
+  return <>{generateFilters(aggregations, extendedMapping)}</>;
 };
 
 export default SidebarFilters;

@@ -8,7 +8,7 @@ import {
 import { resolveSyntheticSqon } from "@ferlab/ui/core/data/sqon/utils";
 import { Spin } from "antd";
 import { cloneDeep } from "lodash";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router";
 import {
   MappingResults,

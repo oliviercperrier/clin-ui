@@ -8,7 +8,7 @@ export type AggregationBuckets = {
     {
       key: string;
       doc_count: number;
-    },
+    }
   ];
   stats: string;
 };
@@ -24,13 +24,13 @@ export interface GqlResults<DataT> {
 
 // Recursive type that can represent nested query
 export interface ArrangerResultsTree<T extends ArrangerNodeData> {
-  hits: ArrangerHits<T>
+  hits: ArrangerHits<T>;
 }
 
 export interface ArrangerHits<T extends ArrangerNodeData> {
   total?: number;
   edges: ArrangerEdge<T>[];
-};
+}
 
 export type ArrangerEdge<T extends ArrangerNodeData> = {
   node: T;
@@ -50,9 +50,12 @@ export type ExtendedMappingResults = {
   data: ExtendedMapping[];
 };
 
-export const hydrateResults = <resultType extends ArrangerNodeData>
-(results: ArrangerEdge<resultType>[]): resultType[] => results.map((edge: ArrangerEdge<resultType>): resultType => ({
-    ...edge.node,
-    key: edge.node.cid,
-  }))
-
+export const hydrateResults = <resultType extends ArrangerNodeData>(
+  results: ArrangerEdge<resultType>[]
+): resultType[] =>
+  results.map(
+    (edge: ArrangerEdge<resultType>): resultType => ({
+      ...edge.node,
+      key: edge.node.cid,
+    })
+  );
