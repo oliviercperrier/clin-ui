@@ -70,15 +70,19 @@ const CustomFilterContainer = ({
     operators: {
       between: intl.get("querybuilder.filters.operators.between"),
       lessThan: intl.get("querybuilder.filters.operators.lessthan"),
-      lessThanOfEqual: intl.get("querybuilder.filters.operators.lessthanorequal"),
+      lessThanOfEqual: intl.get(
+        "querybuilder.filters.operators.lessthanorequal"
+      ),
       greaterThan: intl.get("querybuilder.filters.operators.greaterthan"),
-      greaterThanOrEqual: intl.get("querybuilder.filters.operators.greaterthanorequal"),
+      greaterThanOrEqual: intl.get(
+        "querybuilder.filters.operators.greaterthanorequal"
+      ),
     },
     range: {
       is: intl.get("querybuilder.filters.range.is"),
       min: "min",
-      max: "max"
-    }
+      max: "max",
+    },
   };
 
   return (

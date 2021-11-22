@@ -3,7 +3,7 @@ import { ReadOutlined } from "@ant-design/icons";
 import { ISqonGroupFilter } from "@ferlab/ui/core/data/sqon/types";
 import { Col, Row } from "antd";
 
-import { Aggregations, ArrangerNodeData } from "store/graphql/models";
+import { Aggregations } from "store/graphql/models";
 import { ExtendedMappingResults } from "store/graphql/models";
 import { generateFilters } from "store/graphql/utils/Filters";
 
@@ -21,11 +21,6 @@ export interface ItemProps {
   label: React.ReactElement;
   value: string;
 }
-
-const sqon = {
-  content: [],
-  op: "and",
-};
 
 const SidebarFilters = ({
   aggregations,
@@ -55,19 +50,7 @@ const SidebarFilters = ({
     );
   }
 
-  return (
-    <>
-      {generateFilters(
-        aggregations,
-        extendedMapping,
-        "",
-        true,
-        false,
-        true,
-        false
-      )}
-    </>
-  );
+  return <>{generateFilters(aggregations, extendedMapping)}</>;
 };
 
 export default SidebarFilters;
