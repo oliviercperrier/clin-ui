@@ -7,7 +7,7 @@ export type TColumn = {
   name?: string | string[];
   width?: number;
   summary?: boolean;
-  render?: RenderValue  | RenderRecord;
+  render?: RenderValue | RenderRecord;
   children?: TColumn[];
-  key: string;
+  key?: string;
 };

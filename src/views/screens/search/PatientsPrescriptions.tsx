@@ -11,9 +11,7 @@ import StackLayout, {
 } from "@ferlab/ui/core/layout/StackLayout";
 import { Typography } from "antd";
 
-import { GqlResults } from "store/graphql/models";
 import { usePatients } from "store/graphql/patients/actions";
-import { PatientResult } from "store/graphql/patients/models/Patient";
 import {
   usePrescription,
   usePrescriptionMapping,
@@ -44,12 +42,8 @@ const PrescriptionSearch = (): React.ReactElement => {
   const searchResults = usePatients(arrangerQueryConfig);
   const prescriptions = usePrescription(arrangerQueryConfig);
   const extendedMapping = usePrescriptionMapping();
-  const patients = {
-    data: [],
-    aggregations: {},
-    loading: false,
-    total: 0,
-  }; // usePatients(arrangerQueryConfig);
+
+  const patients = usePatients(arrangerQueryConfig);
 
   return (
     <StackLayout orientation={StackOrientation.Vertical}>
