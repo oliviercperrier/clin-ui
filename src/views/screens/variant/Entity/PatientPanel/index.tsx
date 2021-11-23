@@ -4,7 +4,7 @@ import intl from "react-intl-universal";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { useTabPatientData } from "store/graphql/variants/tabActions";
 import ServerError from "components/Results/ServerError";
-import { Card, Table, Spin, Tag } from "antd";
+import { Card, Table, Spin, Tag, InputNumber, Button } from "antd";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import { ColumnType } from "antd/lib/table";
 import {
@@ -23,7 +23,8 @@ interface OwnProps {
 const DEFAULT_PAGE_SIZE = 20;
 
 const makeRows = (donors: ESResultNode<DonorsEntity>[]): DonorsEntity[] => {
-  return donors?.map((donor: ESResultNode<DonorsEntity>) => ({
+  return donors?.map((donor: ESResultNode<DonorsEntity>, index) => ({
+    key: index,
     patient_id: donor.node.patient_id,
     organization_id: donor.node.organization_id,
     gender: donor.node.gender.toLowerCase(),
@@ -39,11 +40,33 @@ const makeRows = (donors: ESResultNode<DonorsEntity>[]): DonorsEntity[] => {
   }));
 };
 
+const getBorderValueAtIndex = (
+  donors: ESResultNode<DonorsEntity>[],
+  dataIndex: string,
+  func: any
+) => {
+  return func.apply(
+    Math,
+    (donors || []).map((donor) => (donor.node as any)[dataIndex])
+  );
+};
+
+const getMaxValue = (
+  donors: ESResultNode<DonorsEntity>[],
+  dataIndex: string
+) => {
+  return getBorderValueAtIndex(donors, dataIndex, Math.max);
+};
+
+const getMinValue = (
+  donors: ESResultNode<DonorsEntity>[],
+  dataIndex: string
+) => {
+  return getBorderValueAtIndex(donors, dataIndex, Math.min);
+};
+
 const PatientPanel = ({ hash }: OwnProps) => {
   const [currentTotal, setTotal] = useState(0);
-
-  console.log(currentTotal);
-
   const { loading, data, error } = useTabPatientData(hash);
   const donorsHits = (data?.donors as ESResult<DonorsEntity>)?.hits;
 
