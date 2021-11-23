@@ -38,6 +38,7 @@ export const makeUnGroupedDataRows = (genes: ESResultNode<GeneEntity>[]) => {
   if (!genes) {
     return [];
   }
+
   return genes.map((gene: ESResultNode<GeneEntity>) => {
     const orphanetNode = gene.node.orphanet;
     const orphanetEdges = getEdgesOrDefault(orphanetNode);
@@ -146,16 +147,20 @@ export const groupRowsBySource = (ungroupedDataTable: any[]) => {
   const cosmicRows = ungroupedDataTable
     .flat()
     .filter((row) => row.source === ClinicalGenesTableSource.cosmic);
+
   return [...orphanetRows, ...omimRows, ...hpoRows, ...dddRows, ...cosmicRows];
 };
 
-export const makeGenesOrderedRow = (genesHits: ESResult<any>) => {
+export const makeGenesOrderedRow = (genesHits: ESResult<GeneEntity>) => {
   const genes = genesHits?.hits?.edges;
+
   if (!genes || genes.length === 0) {
     return [];
   }
+
   const ungroupedRows = makeUnGroupedDataRows(genes);
   const groupedRows = groupRowsBySource(ungroupedRows);
+
   return groupedRows.map((row, index) => ({
     source: row.source,
     gene: row.gene,

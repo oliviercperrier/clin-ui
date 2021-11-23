@@ -33,6 +33,7 @@ type TableGroup = {
   consequences: Consequence[];
   omim: string;
   symbol: string;
+  biotype: string;
   ensembleGeneId: string;
 };
 
@@ -88,6 +89,7 @@ const groupConsequencesBySymbol = (
       }
       const gene = genes.find((g) => g.node.symbol === symbol);
       const omim = gene ? gene.node.omim_gene_id : "";
+      const biotype = gene ? gene.node.biotype : "";
       const ensembleGeneId = consequence.node.ensembl_gene_id || "";
       const oldConsequences = acc[symbol]?.consequences || [];
 
@@ -98,6 +100,7 @@ const groupConsequencesBySymbol = (
           omim,
           symbol,
           ensembleGeneId,
+          biotype
         },
       };
     },
@@ -349,22 +352,44 @@ const ResumePanel = ({ data }: OwnProps) => {
               tables.map((tableData: TableGroup, index: number) => {
                 const symbol = tableData.symbol;
                 const omim = tableData.omim;
+                const biotype = tableData.biotype;
                 const orderedConsequences = tableData.consequences;
 
                 return (
                   <Card
                     title={
-                      <Space>
-                        <span>
-                          {intl.get("screen.variant.entity.table.gene")}
-                        </span>
-                        <span>{symbol}</span>
-                        {omim && (
-                          <>
-                            <span>Omim</span>
-                            <span>{omim}</span>
-                          </>
-                        )}
+                      <Space size={12}>
+                        <Space size={4}>
+                          <span>
+                            {intl.get("screen.variant.entity.table.gene")}
+                          </span>
+                          <span>
+                            <a
+                              href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${symbol}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {symbol}
+                            </a>
+                          </span>
+                        </Space>
+                        <Space size={4}>
+                          {omim && (
+                            <>
+                              <span>Omim</span>
+                              <span>
+                                <a
+                                  href={`https://omim.org/entry/${omim}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {omim}
+                                </a>
+                              </span>
+                            </>
+                          )}
+                        </Space>
+                        <span className="bold value">{ biotype }</span>
                       </Space>
                     }
                     className={styles.card}

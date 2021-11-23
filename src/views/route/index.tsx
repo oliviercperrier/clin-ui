@@ -19,16 +19,16 @@ const AppRouter = (): React.ReactElement => {
         </Route>
         <RouteWrapper
           exact
-          path="/variant/entity/:hash/:tab?"
+          path="/variant/entity/:hash/:tabid?"
           component={(
             props: RouteChildrenProps<{
               hash: string | undefined;
-              tab: string | undefined;
+              tabid: string | undefined;
             }>
           ) => (
             <VariantEntity
               hash={props.match?.params.hash!}
-              tab={props.match?.params.tab!}
+              tabid={props.match?.params.tabid!}
             />
           )}
           layout={Layout}

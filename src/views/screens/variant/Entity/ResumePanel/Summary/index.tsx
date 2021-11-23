@@ -7,10 +7,10 @@ import {
 } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import intl from "react-intl-universal";
-import { Link } from "react-router-dom";
 import { formatTimestampToISODate } from "utils/helper";
 
 import styles from "./index.module.scss";
+import history from "utils/history";
 
 interface OwnProps {
   loading: boolean;
@@ -31,28 +31,46 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
               <Text className={styles.infoValue}>{variant?.chromosome}</Text>
             </Row>
             <Row className={styles.row}>
-              <Text className={styles.infoTitle}>Start</Text>
+              <Text className={styles.infoTitle}>
+                {intl.get(
+                  "screen.variantDetails.summaryTab.summaryTable.start"
+                )}
+              </Text>
               <Text className={styles.infoValue}>{variant?.start}</Text>
             </Row>
             <Row className={styles.row}>
-              <Text className={styles.infoTitle}>Allele Alt.</Text>
+              <Text className={styles.infoTitle}>
+                {intl.get(
+                  "screen.variantDetails.summaryTab.summaryTable.alleleAlt"
+                )}
+              </Text>
               <Text className={styles.infoValue}>{variant?.alternate}</Text>
             </Row>
             <Row className={styles.row}>
-              <Text className={styles.infoTitle}>Allele Réf.</Text>
+              <Text className={styles.infoTitle}>
+                {intl.get(
+                  "screen.variantDetails.summaryTab.summaryTable.alleleRef"
+                )}
+              </Text>
               <Text className={styles.infoValue}>{variant?.reference}</Text>
             </Row>
           </Card>
         </Col>
         <Col className={styles.resumeContent}>
           <Row className={styles.row}>
-            <Text className={styles.contentTitle}>Type</Text>
+            <Text className={styles.contentTitle}>
+              {intl.get("screen.variantDetails.summaryTab.summaryTable.type")}
+            </Text>
             <Text className={styles.contentValue}>
               {variant?.variant_class}
             </Text>
           </Row>
           <Row className={styles.row}>
-            <Text className={styles.contentTitle}>Cytobande</Text>
+            <Text className={styles.contentTitle}>
+              {intl.get(
+                "screen.variantDetails.summaryTab.summaryTable.cytoband"
+              )}
+            </Text>
             <Text className={styles.contentValue}>
               {genes && genes[0]
                 ? genes[0].node.location || DISPLAY_WHEN_EMPTY_DATUM
@@ -60,7 +78,11 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
             </Text>
           </Row>
           <Row className={styles.row}>
-            <Text className={styles.contentTitle}>Genome Réf</Text>
+            <Text className={styles.contentTitle}>
+              {intl.get(
+                "screen.variantDetails.summaryTab.summaryTable.genomeRef"
+              )}
+            </Text>
             <Text className={styles.contentValue}>
               {variant?.assembly_version}
             </Text>
@@ -106,9 +128,13 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>Patients</Text>
             <Text className={styles.contentValue}>
-              <Link to="" type="link">
+              <a
+                onClick={() =>
+                  history.push(`/variant/entity/${variant?.hash}/patients`)
+                }
+              >
                 {variant?.participant_total_number}
-              </Link>
+              </a>
               /{variant?.frequencies.internal.an}
             </Text>
           </Row>

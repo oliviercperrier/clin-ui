@@ -3,6 +3,8 @@ import { Button, Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
+import styles from "./index.module.scss";
+
 type OwnProps = TableProps<any> & {
   nOfElementsWhenCollapsed?: number;
   buttonText: (showAll: boolean, hiddenNum: number) => ReactElement | string;
@@ -31,6 +33,7 @@ const ExpandableTable = ({
           type={'link'}
           icon={showAll ? <CaretUpOutlined /> : <CaretDownOutlined />}
           onClick={() => setShowAll(!showAll)}
+          className={styles.tableExpBtn}
         >
           {buttonText(showAll, hiddenNum)}
         </Button>

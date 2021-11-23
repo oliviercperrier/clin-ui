@@ -2,6 +2,7 @@ import React from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { Typography } from "antd";
 import ExpandableCell from "components/table/ExpandableCell";
+import intl from "react-intl-universal";
 import {
   ClinicalGenesTableSource,
   Conditions,
@@ -49,11 +50,12 @@ type Record = {
 
 export const columnsPhenotypes = [
   {
-    title: "Source",
+    title: () =>
+      intl.get("screen.variantDetails.clinicalAssociationsTab.source"),
     dataIndex: "source",
   },
   {
-    title: "Gene",
+    title: () => intl.get("screen.variantDetails.clinicalAssociationsTab.gene"),
     dataIndex: "gene",
     render: (text: Conditions, record: Record) => {
       const source = record.source;
@@ -77,7 +79,8 @@ export const columnsPhenotypes = [
     },
   },
   {
-    title: "Condition",
+    title: () =>
+      intl.get("screen.variantDetails.clinicalAssociationsTab.condition"),
     dataIndex: "conditions",
     // eslint-disable-next-line react/display-name
     render: (text: Conditions, record: Record) => {
@@ -205,7 +208,8 @@ export const columnsPhenotypes = [
     width: "35%",
   },
   {
-    title: "Inheritance",
+    title: () =>
+      intl.get("screen.variantDetails.clinicalAssociationsTab.inheritance"),
     dataIndex: "inheritance",
     render: (text: Inheritance, record: Record) => {
       const source = record.source;

@@ -25044,6 +25044,12 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-table {
   font-size: 14px;
 }
+.ant-table-cell a {
+  text-decoration: underline;
+}
+.ant-table-cell a:hover {
+  text-decoration: none;
+}
 .ant-table-content {
   overflow: auto;
 }

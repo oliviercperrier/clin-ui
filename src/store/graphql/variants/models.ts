@@ -67,6 +67,7 @@ export type GeneEntity = {
   hpo: ESResult<HpoEntity[] | undefined | null>;
   ddd: ESResult<DddEntity[] | undefined | null>;
   cosmic: ESResult<CosmicEntity[] | undefined | null>;
+  biotype: string;
   [key: string]: any;
 };
 

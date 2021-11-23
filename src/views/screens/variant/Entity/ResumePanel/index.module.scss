@@ -15,4 +15,11 @@
     text-overflow: ellipsis;
     overflow-wrap: initial;
   }
+
+  a {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }

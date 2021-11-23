@@ -42,7 +42,7 @@ const makeRows = (donors: ESResultNode<DonorsEntity>[]): DonorsEntity[] => {
 const PatientPanel = ({ hash }: OwnProps) => {
   const [currentTotal, setTotal] = useState(0);
 
-  console.log(currentTotal)
+  console.log(currentTotal);
 
   const { loading, data, error } = useTabPatientData(hash);
   const donorsHits = (data?.donors as ESResult<DonorsEntity>)?.hits;
@@ -101,7 +101,7 @@ const PatientPanel = ({ hash }: OwnProps) => {
     },
     {
       dataIndex: "affected_status",
-      title: () => intl.get("screen.variantDetails.patientsTab.relation"),
+      title: () => intl.get("screen.variantDetails.patientsTab.status"),
       render: (affected_status: boolean) =>
         intl.get(
           "screen.variantDetails.patientsTab." +
@@ -123,22 +123,25 @@ const PatientPanel = ({ hash }: OwnProps) => {
     {
       dataIndex: "family_id",
       title: () => intl.get("screen.variantDetails.patientsTab.familyId"),
-      render: (family_id: string) => "TODO - " + DISPLAY_WHEN_EMPTY_DATUM,
+      render: (family_id) => (family_id ? family_id : DISPLAY_WHEN_EMPTY_DATUM),
     },
     {
       dataIndex: "qd",
       title: () => intl.get("screen.variantDetails.patientsTab.qd"),
       sorter: (a, b) => a.qd - b.qd,
+      render: (qd) => (qd ? qd : DISPLAY_WHEN_EMPTY_DATUM),
     },
     {
       dataIndex: "ad_alt",
       title: () => intl.get("screen.variantDetails.patientsTab.adAlt"),
       sorter: (a, b) => a.ad_alt - b.ad_alt,
+      render: (ad_alt) => (ad_alt ? ad_alt : DISPLAY_WHEN_EMPTY_DATUM),
     },
     {
       dataIndex: "ad_total",
       title: () => intl.get("screen.variantDetails.patientsTab.adTotal"),
       sorter: (a, b) => a.ad_total - b.ad_total,
+      render: (ad_total) => (ad_total ? ad_total : DISPLAY_WHEN_EMPTY_DATUM),
     },
     {
       dataIndex: "ad_ratio",
@@ -151,6 +154,7 @@ const PatientPanel = ({ hash }: OwnProps) => {
       title: () =>
         intl.get("screen.variantDetails.patientsTab.genotypeQuality"),
       sorter: (a, b) => a.gq - b.gq,
+      render: (gq) => (gq ? gq : DISPLAY_WHEN_EMPTY_DATUM),
     },
   ];
 
@@ -168,7 +172,7 @@ const PatientPanel = ({ hash }: OwnProps) => {
             size="small"
             pagination={{
               defaultPageSize: DEFAULT_PAGE_SIZE,
-              className: styles.patientPagination
+              className: styles.patientPagination,
             }}
             onChange={(pagination, filters, sorter, extra) => {
               setTotal(extra.currentDataSource.length);

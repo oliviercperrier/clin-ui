@@ -214,6 +214,7 @@ export const TAB_SUMMARY_QUERY = gql`
                     omim_gene_id
                     symbol
                     location
+                    biotype
                   }
                 }
               }
@@ -243,6 +244,56 @@ export const TAB_CLINICAL_QUERY = gql`
                   node {
                     symbol
                     omim_gene_id
+                    omim {
+                      hits {
+                        edges {
+                          node {
+                            omim_id
+                            name
+                            inheritance
+                          }
+                        }
+                      }
+                    }
+                    orphanet {
+                      hits {
+                        edges {
+                          node {
+                            panel
+                            inheritance
+                            disorder_id
+                          }
+                        }
+                      }
+                    }
+                    cosmic {
+                      hits {
+                        edges {
+                          node {
+                            tumour_types_germline
+                          }
+                        }
+                      }
+                    }
+                    hpo {
+                      hits {
+                        edges {
+                          node {
+                            hpo_term_label
+                            hpo_term_id
+                          }
+                        }
+                      }
+                    }
+                    ddd {
+                      hits {
+                        edges {
+                          node {
+                            disease_name
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }

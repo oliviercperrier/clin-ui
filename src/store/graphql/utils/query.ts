@@ -60,7 +60,6 @@ export const useLazyResultQueryOnLoadOnly = <
 
   useEffect(() => {
     if (result) {
-      console.log("SETTING");
       setCustomOptions({
         skip: true,
         dataToReturn: result,

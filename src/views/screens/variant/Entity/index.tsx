@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { Typography, Tag, Tabs, Skeleton } from "antd";
 import intl from "react-intl-universal";
@@ -17,9 +17,9 @@ import { useTabSummaryData } from "store/graphql/variants/tabActions";
 import FrequencyPanel from "views/screens/variant/Entity/FrequencyPanel";
 import ClinicalPanel from "views/screens/variant/Entity/ClinicalPanel";
 import PatientPanel from "views/screens/variant/Entity/PatientPanel";
-import { useHistory } from "react-router-dom";
 
 import styles from "./index.module.scss";
+import history from "utils/history";
 
 export const getVepImpactTag = (score: number | string) => {
   switch (score) {
@@ -50,12 +50,11 @@ export enum TAB_ID {
 
 interface OwnProps {
   hash: string;
-  tab: string;
+  tabid: string;
 }
 
-const VariantEntityPage = (props: OwnProps) => {
-  const { loading, data, error } = useTabSummaryData(props.hash);
-  const history = useHistory();
+const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
+  const { loading, data, error } = useTabSummaryData(hash);
 
   if (error) {
     return <ServerError />;
@@ -84,10 +83,10 @@ const VariantEntityPage = (props: OwnProps) => {
       </div>
       <Tabs
         className={styles.entitySections}
-        defaultActiveKey={props.tab}
+        activeKey={tabid}
         onChange={(key) => {
           if (history.location.hash != key) {
-            history.push(`/variant/entity/${props.hash}/${key}`);
+            history.push(`/variant/entity/${hash}/${key}`);
           }
         }}
       >
@@ -116,7 +115,7 @@ const VariantEntityPage = (props: OwnProps) => {
           }
           key={TAB_ID.FREQUENCY}
         >
-          <FrequencyPanel hash={props.hash} />
+          <FrequencyPanel hash={hash} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -127,7 +126,7 @@ const VariantEntityPage = (props: OwnProps) => {
           }
           key={TAB_ID.CLINICAL}
         >
-          <ClinicalPanel hash={props.hash} />
+          <ClinicalPanel hash={hash} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -138,7 +137,7 @@ const VariantEntityPage = (props: OwnProps) => {
           }
           key={TAB_ID.PATIENTS}
         >
-          <PatientPanel hash={props.hash} />
+          <PatientPanel hash={hash} />
         </Tabs.TabPane>
       </Tabs>
     </StackLayout>
