@@ -41,6 +41,9 @@ const makeRows = (donors: ESResultNode<DonorsEntity>[]): DonorsEntity[] => {
 
 const PatientPanel = ({ hash }: OwnProps) => {
   const [currentTotal, setTotal] = useState(0);
+
+  console.log(currentTotal)
+
   const { loading, data, error } = useTabPatientData(hash);
   const donorsHits = (data?.donors as ESResult<DonorsEntity>)?.hits;
 

@@ -1,7 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-import { Router } from "react-router";
-
+import { Router, Switch, Route, RouteChildrenProps } from "react-router-dom";
 import Search from "views/screens/search";
 import Variant from "views/screens/variant";
 import VariantEntity from "views/screens/variant/Entity";
@@ -21,8 +19,18 @@ const AppRouter = (): React.ReactElement => {
         </Route>
         <RouteWrapper
           exact
-          path="/variant/entity/:hash"
-          component={VariantEntity}
+          path="/variant/entity/:hash/:tab?"
+          component={(
+            props: RouteChildrenProps<{
+              hash: string | undefined;
+              tab: string | undefined;
+            }>
+          ) => (
+            <VariantEntity
+              hash={props.match?.params.hash!}
+              tab={props.match?.params.tab!}
+            />
+          )}
           layout={Layout}
         />
       </Switch>

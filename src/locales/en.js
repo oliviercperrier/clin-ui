@@ -893,6 +893,10 @@ const en = {
   'screen.variant.entity.table.hidetranscript': "Hide Transcripts",
   'screen.variant.entity.table.showtranscript': "Show Transcripts",
   'screen.variant.entity.table.gene': "Gene",
+  'result.server.error.title': "Server Error",
+  'result.server.error.description': "An error has occured and we are not able to load content at this time.",
+  'result.notfound.error.title': "Not found",
+  'result.notfound.error.description': "Resource not found",
 };
 
 export default en;

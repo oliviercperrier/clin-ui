@@ -6,8 +6,10 @@ import intl from "react-intl-universal";
 import { Card, Table, Spin, Space } from "antd";
 import { toExponentialNotation } from "utils/helper";
 import {
-  FrequenciesByLab,
+  ESResult,
+  ESResultNode,
   FrequenciesEntity,
+  FrequencyByLabEntity,
 } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import ServerError from "components/Results/ServerError";
@@ -84,18 +86,23 @@ const cohortsColumns = [
   },
 ];
 
-const makeInternalCohortsRows = (frequencies_by_lab: FrequenciesByLab) =>
-  Object.entries(frequencies_by_lab).map((element, index) => ({
+const makeInternalCohortsRows = (
+  frequencies_by_lab: ESResult<FrequencyByLabEntity>
+) => {
+  const labs: ESResultNode<FrequencyByLabEntity>[] =
+    frequencies_by_lab?.hits?.edges || [];
+  return labs.map((element, index) => ({
     key: `${index}`,
     cohort: {
-      cohortName: element[0],
+      cohortName: element.node.lab_name,
     },
-    alt: element[1].ac,
-    altRef: element[1].an,
-    homozygotes: element[1].hom,
-    frequency: toExponentialNotation(element[1].af),
-    ...element[1],
+    alt: element.node.ac,
+    altRef: element.node.an,
+    homozygotes: element.node.hom,
+    frequency: toExponentialNotation(element.node.af),
+    ...element.node,
   }));
+};
 
 const makeRowFromFrequencies = (
   frequencies: FrequenciesEntity,

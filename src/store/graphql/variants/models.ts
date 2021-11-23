@@ -26,23 +26,19 @@ export type FrequenciesEntity = {
   [key: string]: any;
 };
 
-export type FrequenciesByLab = {
-  [key: string]: BoundType;
-};
-
 export type DonorsEntity = {
   patient_id: string;
   organization_id: string;
   gender: string;
   is_proband: boolean;
   family_id: string;
-  last_update: number | string;
+  last_update: number | string;
   ad_alt: number;
   ad_total: number;
   ad_ratio: number;
   affected_status: boolean;
   qd: number;
-  gq: number
+  gq: number;
 };
 
 export type VariantEntity = {
@@ -50,10 +46,15 @@ export type VariantEntity = {
   hash: string;
   hgvsg: string;
   locus: string;
+  participant_frequency: number;
+  participant_total_number: number;
   participant_number: number;
   variant_class: string;
   rsnumber: string;
   variant_type: string;
+  frequencies: {
+    [key: string]: BoundType;
+  }
   [key: string]: any;
 };
 
@@ -177,3 +178,7 @@ export enum ClinicalGenesTableSource {
   ddd = "DDD",
   cosmic = "Cosmic",
 }
+
+export type FrequencyByLabEntity = BoundType & {
+  lab_name: string;
+};

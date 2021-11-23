@@ -1001,7 +1001,7 @@ const fr = {
   'screen.variantDetails.summaryTab.consequencesTable.ConservationColumn':
     'Conservation (PhyloP17Way) ',
   'screen.variantDetails.summaryTab.consequencesTable.GeneColumn': 'Gène',
-  'screen.variantDetails.summaryTab.consequencesTable.ImpactColumn': 'Prediction(s)',
+  'screen.variantDetails.summaryTab.consequencesTable.ImpactColumn': 'Prédiction(s)',
   'screen.variantDetails.summaryTab.consequencesTable.StrandColumn': 'Brin',
   'screen.variantDetails.summaryTab.consequencesTable.title': 'Conséquences Géniques',
   'screen.variantDetails.summaryTab.consequencesTable.TranscriptsColumn': 'Transcrits',
@@ -1100,7 +1100,11 @@ const fr = {
   'querybuilder.filters.range.is': "Est",
   'screen.variant.entity.table.hidetranscript': "Cacher les Transcrits",
   'screen.variant.entity.table.showtranscript': "Afficher les Transcrits",
-  'screen.variant.entity.table.gene': "Gène"
+  'screen.variant.entity.table.gene': "Gène",
+  'result.server.error.title': "Erreur du serveur",
+  'result.server.error.description': "Une erreur s'est produite et nous ne sommes pas en mesure de charger le contenu pour le moment.",
+  'result.notfound.error.title': "Pas trouvé",
+  'result.notfound.error.description': "Ressource introuvable",
 };
 
 export default fr;

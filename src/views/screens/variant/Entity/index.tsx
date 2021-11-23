@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { Typography, Tag, Tabs, Skeleton } from "antd";
 import intl from "react-intl-universal";
@@ -13,11 +13,11 @@ import ResumePanel from "./ResumePanel";
 import { GraphqlBackend } from "store/providers";
 import ApolloProvider from "store/providers/apollo";
 import useQueryString from "utils/useQueryString";
-import { useParams } from "react-router";
 import { useTabSummaryData } from "store/graphql/variants/tabActions";
 import FrequencyPanel from "views/screens/variant/Entity/FrequencyPanel";
 import ClinicalPanel from "views/screens/variant/Entity/ClinicalPanel";
 import PatientPanel from "views/screens/variant/Entity/PatientPanel";
+import { useHistory } from "react-router-dom";
 
 import styles from "./index.module.scss";
 
@@ -41,9 +41,21 @@ export const getVepImpactTag = (score: number | string) => {
   }
 };
 
-const VariantEntityPage = () => {
-  const { hash } = useParams<{ hash: string }>();
-  const { loading, data, error } = useTabSummaryData(hash);
+export enum TAB_ID {
+  SUMMARY = "summary",
+  PATIENTS = "patients",
+  FREQUENCY = "frequency",
+  CLINICAL = "clinical",
+}
+
+interface OwnProps {
+  hash: string;
+  tab: string;
+}
+
+const VariantEntityPage = (props: OwnProps) => {
+  const { loading, data, error } = useTabSummaryData(props.hash);
+  const history = useHistory();
 
   if (error) {
     return <ServerError />;
@@ -70,7 +82,15 @@ const VariantEntityPage = () => {
           {getVepImpactTag(data?.max_impact_score)}
         </Skeleton>
       </div>
-      <Tabs className={styles.entitySections}>
+      <Tabs
+        className={styles.entitySections}
+        defaultActiveKey={props.tab}
+        onChange={(key) => {
+          if (history.location.hash != key) {
+            history.push(`/variant/entity/${props.hash}/${key}`);
+          }
+        }}
+      >
         <Tabs.TabPane
           tab={
             <span>
@@ -78,7 +98,7 @@ const VariantEntityPage = () => {
               {intl.get("screen.variantdetails.tab.summary")}
             </span>
           }
-          key="1"
+          key={TAB_ID.SUMMARY}
         >
           <ResumePanel
             data={{
@@ -94,9 +114,9 @@ const VariantEntityPage = () => {
               {intl.get("screen.variantdetails.tab.frequencies")}
             </span>
           }
-          key="2"
+          key={TAB_ID.FREQUENCY}
         >
-          <FrequencyPanel hash={hash} />
+          <FrequencyPanel hash={props.hash} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -105,9 +125,9 @@ const VariantEntityPage = () => {
               {intl.get("screen.variantdetails.tab.clinicalAssociations")}
             </span>
           }
-          key="3"
+          key={TAB_ID.CLINICAL}
         >
-          <ClinicalPanel hash={hash} />
+          <ClinicalPanel hash={props.hash} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -116,16 +136,16 @@ const VariantEntityPage = () => {
               {intl.get("screen.variantdetails.tab.patients")}
             </span>
           }
-          key="4"
+          key={TAB_ID.PATIENTS}
         >
-          <PatientPanel hash={hash} />
+          <PatientPanel hash={props.hash} />
         </Tabs.TabPane>
       </Tabs>
     </StackLayout>
   );
 };
 
-const EntityPage = (props: any) => {
+const EntityPage = (props: OwnProps) => {
   const { token } = useQueryString();
 
   return (

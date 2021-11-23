@@ -1,4 +1,8 @@
-import { useLazyResultQuery } from "store/graphql/utils/query";
+import { useEffect, useState } from "react";
+import {
+  useLazyResultQuery,
+  useLazyResultQueryOnLoadOnly,
+} from "store/graphql/utils/query";
 
 import {
   TAB_CLINICAL_QUERY,
@@ -21,7 +25,7 @@ export const buildVariantIdSqon = (id: string) => ({
 });
 
 export const useTabFrequenciesData = (variantId: string) => {
-  const { loading, result, error } = useLazyResultQuery<any>(
+  const { loading, data, error } = useLazyResultQueryOnLoadOnly(
     TAB_FREQUENCIES_QUERY,
     {
       variables: {
@@ -30,7 +34,7 @@ export const useTabFrequenciesData = (variantId: string) => {
     }
   );
 
-  const nodeVariant = result?.Variants?.hits?.edges[0]?.node;
+  const nodeVariant = data?.Variants?.hits?.edges[0]?.node;
 
   return {
     loading,
@@ -47,7 +51,7 @@ export const useTabFrequenciesData = (variantId: string) => {
 };
 
 export const useTabSummaryData = (variantId: string) => {
-  const { loading, result, error } = useLazyResultQuery<any>(
+  const { loading, data, error } = useLazyResultQueryOnLoadOnly(
     TAB_SUMMARY_QUERY,
     {
       variables: {
@@ -55,11 +59,16 @@ export const useTabSummaryData = (variantId: string) => {
       },
     }
   );
-  return { loading, data: result?.Variants?.hits?.edges[0]?.node, error };
+
+  return {
+    loading,
+    data: data?.Variants?.hits?.edges[0]?.node,
+    error,
+  };
 };
 
 export const useTabClinicalData = (variantId: string) => {
-  const { loading, result, error } = useLazyResultQuery<any>(
+  const { loading, data, error } = useLazyResultQueryOnLoadOnly(
     TAB_CLINICAL_QUERY,
     {
       variables: {
@@ -67,11 +76,11 @@ export const useTabClinicalData = (variantId: string) => {
       },
     }
   );
-  return { loading, data: result?.Variants?.hits?.edges[0]?.node || {}, error };
+  return { loading, data: data?.Variants?.hits?.edges[0]?.node || {}, error };
 };
 
 export const useTabPatientData = (variantId: string) => {
-  const { loading, result, error } = useLazyResultQuery<any>(
+  const { loading, data, error } = useLazyResultQueryOnLoadOnly(
     TAB_PATIENT_QUERY,
     {
       variables: {
@@ -82,7 +91,7 @@ export const useTabPatientData = (variantId: string) => {
 
   return {
     loading,
-    data: result?.Variants?.hits?.edges[0]?.node || {},
+    data: data?.Variants?.hits?.edges[0]?.node || {},
     error,
   };
 };

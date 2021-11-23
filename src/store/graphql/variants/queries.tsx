@@ -31,8 +31,8 @@ export const VARIANT_QUERY = gql`
             rsnumber
             variant_type
             participant_number
-            #participant_frequency
-            #participant_total_number
+            participant_frequency
+            participant_total_number
             max_impact_score
             consequences {
               hits {
@@ -75,16 +75,18 @@ export const TAB_FREQUENCIES_QUERY = gql`
           node {
             locus
             participant_number
-            #participant_number_visible
-            #participant_total_number
-            #participant_frequency
             frequencies_by_lab {
-              CHUSJ {
-                ac
-                af
-                an
-                hom
-                het
+              hits {
+                edges {
+                  node {
+                    lab_name
+                    ac
+                    af
+                    an
+                    hom
+                    het
+                  }
+                }
               }
             }
             frequencies {
@@ -154,10 +156,21 @@ export const TAB_SUMMARY_QUERY = gql`
             start
             variant_type
             participant_number
+            participant_frequency
+            participant_total_number
             max_impact_score
             variant_class
             assembly_version
             last_annotation_update
+            frequencies {
+              internal {
+                ac
+                af
+                an
+                hom
+                het
+              }
+            }
             consequences {
               hits {
                 edges {

@@ -1,5 +1,5 @@
-@import 'colors';
-@import '~@ferlab/style/index';
+@import "colors";
+@import "~@ferlab/style/index";
 
 html {
   font-size: 12px;
@@ -9,4 +9,12 @@ html {
   margin: auto;
   max-width: 1600px;
   padding: 16px 24px;
+}
+
+a {
+  text-decoration: underline !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
 }

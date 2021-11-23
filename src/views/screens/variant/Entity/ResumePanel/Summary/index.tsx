@@ -7,9 +7,10 @@ import {
 } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import intl from "react-intl-universal";
+import { Link } from "react-router-dom";
+import { formatTimestampToISODate } from "utils/helper";
 
 import styles from "./index.module.scss";
-import { formatTimestampToISODate } from "utils/helper";
 
 interface OwnProps {
   loading: boolean;
@@ -105,7 +106,10 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>Patients</Text>
             <Text className={styles.contentValue}>
-              {variant?.participant_number}
+              <Link to="" type="link">
+                {variant?.participant_total_number}
+              </Link>
+              /{variant?.frequencies.internal.an}
             </Text>
           </Row>
           <Row className={styles.row}>
@@ -115,7 +119,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
               )}
             </Text>
             <Text className={styles.contentValue}>
-              {DISPLAY_WHEN_EMPTY_DATUM}
+              {variant?.frequencies?.internal?.af.toExponential(2)}
             </Text>
           </Row>
           <Row className={styles.row}>
