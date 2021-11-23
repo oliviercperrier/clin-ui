@@ -8,6 +8,7 @@ export const PRESCRIPTIONS_QUERY = gql`
       hits(filters: $sqon, first: $first, offset: $offset) {
         edges {
           node {
+            id
             cid
             status
             timestamp

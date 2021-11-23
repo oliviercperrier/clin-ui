@@ -1,5 +1,6 @@
 export interface ArrangerNodeData {
   id: string;
+  cid?: string;
   key?: string;
 }
 
