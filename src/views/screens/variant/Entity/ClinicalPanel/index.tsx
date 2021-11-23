@@ -26,8 +26,6 @@ const ClinicalPanel = ({ hash }: OwnProps) => {
   const clinvarId = dataClinvar.clinvar_id;
   const dataGenes = data?.genes || {};
 
-  console.log(data)
-
   const clinVarRows = makeClinVarRows(dataClinvar);
   const clinVarHasRows = clinVarRows.length > 0;
 
