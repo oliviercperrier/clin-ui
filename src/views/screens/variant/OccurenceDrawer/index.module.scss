@@ -1,0 +1,11 @@
+.occurenceDrawer {
+  .drawerDivider {
+    margin: 0;
+  }
+
+  .description {
+    span[class$="-item-label"] {
+      width: 50%;
+    }
+  }
+}

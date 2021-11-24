@@ -4,11 +4,10 @@
 /* eslint-disable react/jsx-curly-spacing */
 
 import React, { useState } from "react";
-import { Table } from "antd";
+import { Tooltip, Table } from "antd";
 import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
 import { VariantPageResults } from "./VariantPageContainer";
 import intl from "react-intl-universal";
-import { Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import {
   VariantEntity,
@@ -23,6 +22,7 @@ import { DISPLAY_WHEN_EMPTY_DATUM } from "./Empty";
 import ConsequencesCell from "./ConsequencesCell";
 
 import style from "./VariantTableContainer.module.scss";
+import OccurenceDrawer from "./OccurenceDrawer";
 
 const DEFAULT_PAGE_NUM = 1;
 const DEFAULT_PAGE_SIZE = 10;
@@ -42,6 +42,7 @@ const makeRows = (rows: ESResultNode<VariantEntity>[]) =>
   }));
 
 const VariantTableContainer = (props: OwnProps) => {
+  const [drawerOpened, toggleDrawer] = useState(true);
   const { results, setCurrentPageCb, currentPageSize, setcurrentPageSize } =
     props;
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
@@ -125,12 +126,17 @@ const VariantTableContainer = (props: OwnProps) => {
     {
       title: intl.get("screen.patientvariant.results.table.zygosity"),
       dataIndex: "test8",
-      render: () => DISPLAY_WHEN_EMPTY_DATUM
+      render: () => DISPLAY_WHEN_EMPTY_DATUM,
     },
     {
       title: intl.get("screen.patientvariant.results.table.transmission"),
       dataIndex: "test9",
-      render: () => DISPLAY_WHEN_EMPTY_DATUM
+      render: () => DISPLAY_WHEN_EMPTY_DATUM,
+    },
+    {
+      title: intl.get("screen.patientvariant.results.table.transmission"),
+      dataIndex: "test9",
+      render: () => <div onClick={() => toggleDrawer(true)}>LOL</div>,
     },
   ];
 
@@ -141,7 +147,7 @@ const VariantTableContainer = (props: OwnProps) => {
         <strong>{total}</strong>
       </div>
       <Table
-      size="small"
+        size="small"
         loading={results.loading}
         columns={columns}
         dataSource={makeRows(variants)}
@@ -164,6 +170,7 @@ const VariantTableContainer = (props: OwnProps) => {
           size: "small",
         }}
       />
+      <OccurenceDrawer opened={drawerOpened} toggle={toggleDrawer} />
     </>
   );
 };
