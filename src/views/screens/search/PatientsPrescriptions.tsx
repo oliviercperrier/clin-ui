@@ -20,7 +20,7 @@ import {
 import { TableTabs } from "./ContentContainer";
 import ContentContainer from "./ContentContainer";
 import Sidebar from "./Sidebar";
-
+import ContentHeader from "components/Layout/Content/Header";
 import styles from "./PatientsPrescriptions.module.scss";
 import { useParams } from "react-router";
 const { Title } = Typography;
@@ -47,11 +47,7 @@ const PrescriptionSearch = (): React.ReactElement => {
 
   return (
     <StackLayout orientation={StackOrientation.Vertical}>
-      <div className="page_headerStaticNoMargin">
-        <div className="variant-page-content__header">
-          <Title level={3}>{intl.get("screen.patientsearch.title")}</Title>
-        </div>
-      </div>
+      <ContentHeader title={intl.get("screen.patientsearch.title")} />
       <StackLayout
         className={styles.layout}
         orientation={StackOrientation.Horizontal}
