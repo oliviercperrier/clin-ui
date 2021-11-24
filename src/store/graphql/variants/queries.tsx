@@ -1,8 +1,11 @@
 import { gql } from "@apollo/client";
 
-import { ExtendedMapping } from 'store/graphql/models';
-import { dotToUnderscore, underscoreToDot } from '@ferlab/ui/core/data/arranger/formatting';
-import { MappingResults } from 'store/graphql/variants/actions';
+import { ExtendedMapping } from "store/graphql/models";
+import {
+  dotToUnderscore,
+  underscoreToDot,
+} from "@ferlab/ui/core/data/arranger/formatting";
+import { MappingResults } from "store/graphql/variants/actions";
 
 export const VARIANT_QUERY = gql`
   query VariantInformation(
@@ -49,6 +52,30 @@ export const VARIANT_QUERY = gql`
             donors {
               hits {
                 total
+                edges {
+                  node {
+                    patient_id
+                    organization_id
+                    gender
+                    is_proband
+                    family_id
+                    zygosity
+                    transmission
+                    last_update
+                    ad_alt
+                    ad_total
+                    ad_ratio
+                    affected_status
+                    qd
+                    gq
+                    mother_zygosity
+                    mother_affected_status
+                    mother_calls
+                    father_zygosity
+                    father_affected_status
+                    father_calls
+                  }
+                }
               }
             }
 

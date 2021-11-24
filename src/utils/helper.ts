@@ -29,10 +29,10 @@ export const getUserFirstname = (token: string) => {
 export const isNumber = (n: any) => n && !Number.isNaN(n);
 
 export const toExponentialNotation = (
-  numberCandidate: any,
+  numberCandidate: number,
   fractionDigits = 2
 ) =>
-  isNumber(numberCandidate)
+  numberCandidate
     ? numberCandidate.toExponential(fractionDigits)
     : numberCandidate;
 

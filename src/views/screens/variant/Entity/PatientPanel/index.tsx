@@ -37,31 +37,6 @@ const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
     affected_status: donor.node.affected_status,
   }));
 
-const getBorderValueAtIndex = (
-  donors: ArrangerEdge<DonorsEntity>[],
-  dataIndex: string,
-  func: any
-) => {
-  return func.apply(
-    Math,
-    (donors || []).map((donor) => (donor.node as any)[dataIndex])
-  );
-};
-
-const getMaxValue = (
-  donors: ArrangerEdge<DonorsEntity>[],
-  dataIndex: string
-) => {
-  return getBorderValueAtIndex(donors, dataIndex, Math.max);
-};
-
-const getMinValue = (
-  donors: ArrangerEdge<DonorsEntity>[],
-  dataIndex: string
-) => {
-  return getBorderValueAtIndex(donors, dataIndex, Math.min);
-};
-
 const PatientPanel = ({ hash }: OwnProps) => {
   const [currentTotal, setTotal] = useState(0);
   const { loading, data, error } = useTabPatientData(hash);
@@ -95,7 +70,7 @@ const PatientPanel = ({ hash }: OwnProps) => {
           value: "female",
         },
       ],
-      onFilter: (value: any, record: DonorsEntity) => value === record.gender,
+      onFilter: (value, record: DonorsEntity) => value === record.gender,
     },
     {
       dataIndex: "is_proband",
@@ -116,8 +91,7 @@ const PatientPanel = ({ hash }: OwnProps) => {
           value: false,
         },
       ],
-      onFilter: (value: any, record: DonorsEntity) =>
-        value === record.is_proband,
+      onFilter: (value, record: DonorsEntity) => value === record.is_proband,
     },
     {
       dataIndex: "affected_status",
@@ -137,7 +111,7 @@ const PatientPanel = ({ hash }: OwnProps) => {
           value: false,
         },
       ],
-      onFilter: (value: any, record: DonorsEntity) =>
+      onFilter: (value, record: DonorsEntity) =>
         value === record.affected_status,
     },
     {

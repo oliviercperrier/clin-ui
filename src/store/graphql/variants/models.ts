@@ -46,7 +46,16 @@ export type VariantEntity = {
   frequencies: {
     [key: string]: BoundType;
   };
-  [key: string]: any;
+  consequences?: ArrangerResultsTree<ConsequenceEntity>;
+  genes?: ArrangerResultsTree<GeneEntity>;
+  chromosome: string;
+  start: string;
+  alternate: string;
+  reference: string;
+  assembly_version: string;
+  clinVar: ClinVar;
+  rsnumbermber: string;
+  last_annotation_update: number;
 };
 
 export type GeneEntity = {

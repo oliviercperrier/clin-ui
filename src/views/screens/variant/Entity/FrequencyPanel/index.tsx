@@ -20,7 +20,7 @@ interface OwnProps {
   hash: string;
 }
 
-type ExternalCohortDatum = number | null;
+type ExternalCohortDatum = number | string | null;
 
 type Row = {
   cohort: {

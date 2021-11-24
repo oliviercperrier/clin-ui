@@ -13,9 +13,6 @@ import {
 } from "store/graphql/variants/models";
 import { toKebabCase } from "utils/helper";
 
-const getEdgesOrDefault = (arr: ArrangerResultsTree<any>) =>
-  arr?.hits?.edges || [];
-
 const keepOnlyOmimWithId = (arr: ArrangerEdge<OmimEntity>[]) =>
   arr.filter((omimNode: ArrangerEdge<OmimEntity>) => omimNode.node.omim_id);
 
@@ -128,18 +125,18 @@ export const makeUnGroupedDataRows = (genes: ArrangerEdge<GeneEntity>[]) => {
   return genes.map((gene: ArrangerEdge<GeneEntity>) => {
     const rowOrphanet = orphanetFromEdges(
       gene,
-      getEdgesOrDefault(gene.node.orphanet)
+      gene.node.orphanet?.hits?.edges || []
     );
     const rowOmim = omimFromEdges(
       gene,
-      keepOnlyOmimWithId(getEdgesOrDefault(gene.node.omim))
+      keepOnlyOmimWithId(gene.node.omim?.hits?.edges || [])
     );
     const rowCosmic = cosmicFromEdges(
       gene,
-      getEdgesOrDefault(gene.node.cosmic)
+      gene.node.cosmic?.hits?.edges || []
     );
-    const rowHpo = hpoFromEdges(gene, getEdgesOrDefault(gene.node.hpo));
-    const rowDdd = dddFromEdges(gene, getEdgesOrDefault(gene.node.ddd));
+    const rowHpo = hpoFromEdges(gene, gene.node.hpo?.hits?.edges || []);
+    const rowDdd = dddFromEdges(gene, gene.node.ddd?.hits?.edges || []);
 
     return [rowOrphanet, rowOmim, rowHpo, rowDdd, rowCosmic]
       .filter((row) => row)
