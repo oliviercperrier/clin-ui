@@ -22,7 +22,7 @@ const AppRouter = (): React.ReactElement => {
           path="/variant/entity/:hash/:tabid?"
           component={(
             props: RouteChildrenProps<{
-              hash: string | undefined;
+              hash: string;
               tabid: string | undefined;
             }>
           ) => (
