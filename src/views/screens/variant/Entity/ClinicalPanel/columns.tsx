@@ -8,19 +8,21 @@ import {
   Conditions,
   CosmicConditions,
   DddConditions,
-  HpoCondition,
   HpoConditions,
   Inheritance,
-  OmimCondition,
   OmimConditions,
   OmimGene,
   OmimInheritance,
-  OrphanetCondition,
   OrphanetConditions,
   OrphanetInheritance,
   SingleValuedInheritance,
 } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
+import OmimConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/OmimConditionCell";
+import OrphanetConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/OrphanetConditionCell";
+import HpoConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/HpoConditionCell";
+import DddConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/DddConditionCell";
+import CosmicConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/CosmicConditionCell";
 
 const { Text } = Typography;
 
@@ -82,128 +84,35 @@ export const columnsPhenotypes = [
     title: () =>
       intl.get("screen.variantDetails.clinicalAssociationsTab.condition"),
     dataIndex: "conditions",
-    // eslint-disable-next-line react/display-name
     render: (text: Conditions, record: Record) => {
-      const source = record.source;
-      if (source === ClinicalGenesTableSource.omim) {
-        const omimConditions = record.conditions as OmimConditions;
-        if (omimConditions.length === 0) {
-          return <></>;
-        }
-        return (
-          <div>
-            {omimConditions.map(
-              (omimCondition: OmimCondition, index: number) => {
-                const geneOmimName =
-                  omimCondition.omimName || DISPLAY_WHEN_EMPTY_DATUM;
-                const omimId = omimCondition.omimId;
-
-                return (
-                  <StackLayout key={index}>
-                    <Text>{geneOmimName}</Text> &nbsp; (MIM:
-                    <a
-                      key={index}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={`https://www.omim.org/entry/${omimId}`}
-                    >
-                      {omimId}
-                    </a>
-                    )
-                  </StackLayout>
-                );
-              }
-            )}
-          </div>
-        );
-      } else if (source === ClinicalGenesTableSource.orphanet) {
-        const orphanetConditions = record.conditions as OrphanetConditions;
-        if (orphanetConditions.length === 0) {
-          return <></>;
-        }
-
-        return (
-          <div>
-            {orphanetConditions.map(
-              (orphanetItem: OrphanetCondition, index: number) => {
-                const panel = orphanetItem.panel;
-                const disorderId = orphanetItem.disorderId;
-                return (
-                  <StackLayout key={index}>
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={
-                        "https://www.orpha.net/consor/cgi-bin/Disease_Search.php" +
-                        `?lng=EN&data_id=${disorderId}`
-                      }
-                    >
-                      {panel}
-                    </a>
-                  </StackLayout>
-                );
-              }
-            )}
-          </div>
-        );
-      } else if (source === ClinicalGenesTableSource.hpo) {
-        const hpoConditions = record.conditions as HpoConditions;
-        return (
-          <ExpandableCell
-            dataSource={hpoConditions || []}
-            renderItem={(hpoItem, id) => {
-              const item = hpoItem as HpoCondition;
-
-              const termLabel = item.hpoTermLabel || "";
-              const termId = item.hpoTermTermId;
-
-              // expects: aLabel (HP:xxxxxx)
-              const split = termLabel.split("(");
-              const condition = split[0];
-
-              return (
-                <StackLayout key={id}>
-                  <Text>{condition}</Text> &nbsp; (
-                  <a
-                    key={id}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={`https://hpo.jax.org/app/browse/term/${termId}`}
-                  >
-                    {termId}
-                  </a>
-                  )
-                </StackLayout>
-              );
-            }}
-          />
-        );
-      } else if (source === ClinicalGenesTableSource.ddd) {
-        const dddConditions = record.conditions as DddConditions;
-        if (dddConditions.length === 0) {
-          return <></>;
-        }
-        return dddConditions.map((dddCondition, index: number) => (
-          <StackLayout key={index}>
-            <Text>{dddCondition}</Text>
-          </StackLayout>
-        ));
+      switch (record.source) {
+        case ClinicalGenesTableSource.omim:
+          return (
+            <OmimConditionCell
+              conditions={record.conditions as OmimConditions}
+            />
+          );
+        case ClinicalGenesTableSource.orphanet:
+          return (
+            <OrphanetConditionCell
+              conditions={record.conditions as OrphanetConditions}
+            />
+          );
+        case ClinicalGenesTableSource.hpo:
+          return (
+            <HpoConditionCell conditions={record.conditions as HpoConditions} />
+          );
+        case ClinicalGenesTableSource.ddd:
+          return (
+            <DddConditionCell conditions={record.conditions as DddConditions} />
+          );
+        default:
+          return (
+            <CosmicConditionCell
+              conditions={record.conditions as CosmicConditions}
+            />
+          );
       }
-      //Cosmic
-      const comicConditions = record.conditions as CosmicConditions;
-      if (comicConditions.length === 0) {
-        return <></>;
-      }
-
-      return (
-        <div>
-          {comicConditions.map((cosmicCondition, index: number) => (
-            <StackLayout key={index}>
-              <Text>{cosmicCondition}</Text>
-            </StackLayout>
-          ))}
-        </div>
-      );
     },
     width: "35%",
   },

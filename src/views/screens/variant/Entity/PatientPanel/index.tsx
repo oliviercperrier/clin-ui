@@ -19,8 +19,8 @@ interface OwnProps {
 
 const DEFAULT_PAGE_SIZE = 20;
 
-const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] => {
-  return donors?.map((donor: ArrangerEdge<DonorsEntity>, index) => ({
+const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
+  donors?.map((donor: ArrangerEdge<DonorsEntity>, index) => ({
     key: index,
     id: donor.node.id,
     patient_id: donor.node.patient_id,
@@ -36,7 +36,6 @@ const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] => {
     ad_ratio: donor.node.ad_ratio,
     affected_status: donor.node.affected_status,
   }));
-};
 
 const getBorderValueAtIndex = (
   donors: ArrangerEdge<DonorsEntity>[],

@@ -737,7 +737,7 @@ const en = {
   'screen.variantDetails.clinicalAssociationsTab.inheritance': 'Inheritance',
   'screen.variantDetails.clinicalAssociationsTab.clinVar': 'ClinVar',
   'screen.variantDetails.clinicalAssociationsTab.ClinVarID': 'Clin Var ID',
-  'screen.variantDetails.clinicalAssociationsTab.condition': 'Condition',
+  'screen.variantDetails.clinicalAssociationsTab.condition': 'Condition(s)',
   'screen.variantDetails.clinicalAssociationsTab.donors': 'Nb Patients',
   'screen.variantDetails.clinicalAssociationsTab.gene': 'Gene',
   'screen.variantDetails.clinicalAssociationsTab.geneLocus': 'Gene/Locus',

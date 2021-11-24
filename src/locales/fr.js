@@ -942,7 +942,7 @@ const fr = {
   'screen.variantDetails.clinicalAssociationsTab.inheritance': 'Héritage',
   'screen.variantDetails.clinicalAssociationsTab.clinVar': 'ClinVar',
   'screen.variantDetails.clinicalAssociationsTab.ClinVarID': 'Identifiant clinvar',
-  'screen.variantDetails.clinicalAssociationsTab.condition': 'Condition',
+  'screen.variantDetails.clinicalAssociationsTab.condition': 'Condition(s)',
   'screen.variantDetails.clinicalAssociationsTab.donors': 'Nb Patients',
   'screen.variantDetails.clinicalAssociationsTab.gene': 'Gène',
   'screen.variantDetails.clinicalAssociationsTab.geneLocus': 'Gène/Locus',

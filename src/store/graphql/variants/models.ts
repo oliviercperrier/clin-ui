@@ -1,4 +1,4 @@
-import { ArrangerResultsTree } from "../models";
+import { ArrangerResultsTree } from "store/graphql/models";
 
 export enum Impact {
   High = "HIGH",
@@ -14,7 +14,6 @@ export type FrequenciesEntity = {
   gnomad_exomes_2_1_1: BoundType;
   gnomad_genomes_2_1_1: BoundType;
   gnomad_genomes_3_0: BoundType;
-  [key: string]: any;
 };
 
 export type DonorsEntity = {
@@ -61,7 +60,6 @@ export type GeneEntity = {
   ddd: ArrangerResultsTree<DddEntity>;
   cosmic: ArrangerResultsTree<CosmicEntity>;
   biotype: string;
-  [key: string]: any;
 };
 
 export type ConsequenceEntity = {
@@ -71,12 +69,17 @@ export type ConsequenceEntity = {
   vep_impact: Impact;
   aa_change: string | undefined | null;
   impact_score: number | null;
-  [key: string]: any;
+  canonical: string;
+  coding_dna_change: string;
+  strand: string;
+  ensembl_transcript_id: string;
+  ensembl_gene_id: string;
+  predictions: any;
+  conservations: any;
 };
 
 export type Consequence = {
   node: ConsequenceEntity;
-  [key: string]: any;
 };
 
 export type ClinVarData = string[] | undefined;
