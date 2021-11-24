@@ -1,21 +1,18 @@
 import React from "react";
 import { Card, Col, Divider, Row, Spin, Typography } from "antd";
-import {
-  ESResultNode,
-  GeneEntity,
-  VariantEntity,
-} from "store/graphql/variants/models";
+import { GeneEntity, VariantEntity } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import intl from "react-intl-universal";
 import { formatTimestampToISODate } from "utils/helper";
+import history from "utils/history";
+import { ArrangerEdge } from "store/graphql/models";
 
 import styles from "./index.module.scss";
-import history from "utils/history";
 
 interface OwnProps {
   loading: boolean;
   variant: VariantEntity | null;
-  genes: ESResultNode<GeneEntity>[];
+  genes: ArrangerEdge<GeneEntity>[];
 }
 
 const { Text } = Typography;

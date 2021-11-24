@@ -4,15 +4,12 @@ import intl from "react-intl-universal";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { useTabPatientData } from "store/graphql/variants/tabActions";
 import ServerError from "components/Results/ServerError";
-import { Card, Table, Spin, Tag, InputNumber, Button } from "antd";
+import { Card, Table, Spin, Tag } from "antd";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import { ColumnType } from "antd/lib/table";
-import {
-  DonorsEntity,
-  ESResult,
-  ESResultNode,
-} from "store/graphql/variants/models";
+import { DonorsEntity } from "store/graphql/variants/models";
 import { formatTimestampToISODate } from "utils/helper";
+import { ArrangerEdge, ArrangerResultsTree } from "store/graphql/models";
 
 import styles from "./index.module.scss";
 
@@ -22,9 +19,10 @@ interface OwnProps {
 
 const DEFAULT_PAGE_SIZE = 20;
 
-const makeRows = (donors: ESResultNode<DonorsEntity>[]): DonorsEntity[] => {
-  return donors?.map((donor: ESResultNode<DonorsEntity>, index) => ({
+const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] => {
+  return donors?.map((donor: ArrangerEdge<DonorsEntity>, index) => ({
     key: index,
+    id: donor.node.id,
     patient_id: donor.node.patient_id,
     organization_id: donor.node.organization_id,
     gender: donor.node.gender.toLowerCase(),
@@ -41,7 +39,7 @@ const makeRows = (donors: ESResultNode<DonorsEntity>[]): DonorsEntity[] => {
 };
 
 const getBorderValueAtIndex = (
-  donors: ESResultNode<DonorsEntity>[],
+  donors: ArrangerEdge<DonorsEntity>[],
   dataIndex: string,
   func: any
 ) => {
@@ -52,14 +50,14 @@ const getBorderValueAtIndex = (
 };
 
 const getMaxValue = (
-  donors: ESResultNode<DonorsEntity>[],
+  donors: ArrangerEdge<DonorsEntity>[],
   dataIndex: string
 ) => {
   return getBorderValueAtIndex(donors, dataIndex, Math.max);
 };
 
 const getMinValue = (
-  donors: ESResultNode<DonorsEntity>[],
+  donors: ArrangerEdge<DonorsEntity>[],
   dataIndex: string
 ) => {
   return getBorderValueAtIndex(donors, dataIndex, Math.min);
@@ -68,7 +66,7 @@ const getMinValue = (
 const PatientPanel = ({ hash }: OwnProps) => {
   const [currentTotal, setTotal] = useState(0);
   const { loading, data, error } = useTabPatientData(hash);
-  const donorsHits = (data?.donors as ESResult<DonorsEntity>)?.hits;
+  const donorsHits = (data?.donors as ArrangerResultsTree<DonorsEntity>)?.hits;
 
   useEffect(() => {
     setTotal(donorsHits?.total!);

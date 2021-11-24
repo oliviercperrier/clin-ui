@@ -1,23 +1,22 @@
+import { ArrangerResultsTree, ArrangerEdge } from "store/graphql/models";
 import {
   ClinVar,
   Conditions,
   Inheritance,
   OmimEntity,
   ClinicalGenesTableSource,
-  ESResultNode,
   CosmicEntity,
   DddEntity,
   OrphanetEntity,
   GeneEntity,
-  HpoEntity,
-  ESResult,
+  HpoEntity
 } from "store/graphql/variants/models";
 import { toKebabCase } from "utils/helper";
 
-const getEdgesOrDefault = (arr: ESResult<any>) => arr?.hits?.edges || [];
+const getEdgesOrDefault = (arr: ArrangerResultsTree<any>) => arr?.hits?.edges || [];
 
-const keepOnlyOmimWithId = (arr: ESResultNode<OmimEntity>[]) =>
-  arr.filter((omimNode: ESResultNode<OmimEntity>) => omimNode.node.omim_id);
+const keepOnlyOmimWithId = (arr: ArrangerEdge<OmimEntity>[]) =>
+  arr.filter((omimNode: ArrangerEdge<OmimEntity>) => omimNode.node.omim_id);
 
 export const makeClinVarRows = (clinvar: ClinVar) => {
   if (!clinvar || !clinvar.conditions?.length) {
@@ -34,12 +33,12 @@ export const makeClinVarRows = (clinvar: ClinVar) => {
   }));
 };
 
-export const makeUnGroupedDataRows = (genes: ESResultNode<GeneEntity>[]) => {
+export const makeUnGroupedDataRows = (genes: ArrangerEdge<GeneEntity>[]) => {
   if (!genes) {
     return [];
   }
 
-  return genes.map((gene: ESResultNode<GeneEntity>) => {
+  return genes.map((gene: ArrangerEdge<GeneEntity>) => {
     const orphanetNode = gene.node.orphanet;
     const orphanetEdges = getEdgesOrDefault(orphanetNode);
 
@@ -49,13 +48,13 @@ export const makeUnGroupedDataRows = (genes: ESResultNode<GeneEntity>[]) => {
         source: ClinicalGenesTableSource.orphanet,
         gene: gene.node.symbol,
         conditions: orphanetEdges.map(
-          (orphanetNode: ESResultNode<OrphanetEntity>) => ({
+          (orphanetNode: ArrangerEdge<OrphanetEntity>) => ({
             panel: orphanetNode.node.panel,
             disorderId: orphanetNode.node.disorder_id,
           })
         ),
         inheritance: orphanetEdges.map(
-          (orphanetNode: ESResultNode<OrphanetEntity>) =>
+          (orphanetNode: ArrangerEdge<OrphanetEntity>) =>
             orphanetNode.node.inheritance
         ),
       };
@@ -69,13 +68,13 @@ export const makeUnGroupedDataRows = (genes: ESResultNode<GeneEntity>[]) => {
       rowOmim = {
         source: ClinicalGenesTableSource.omim,
         gene: [gene.node.symbol, gene.node.omim_gene_id],
-        conditions: filteredOmim.map((omimNode: ESResultNode<OmimEntity>) => ({
+        conditions: filteredOmim.map((omimNode: ArrangerEdge<OmimEntity>) => ({
           omimName: omimNode.node.name,
           omimId: omimNode.node.omim_id,
         })),
         inheritance:
           filteredOmim.map(
-            (omimNode: ESResultNode<OmimEntity>) => omimNode.node.inheritance
+            (omimNode: ArrangerEdge<OmimEntity>) => omimNode.node.inheritance
           ) || [],
       };
     }
@@ -87,7 +86,7 @@ export const makeUnGroupedDataRows = (genes: ESResultNode<GeneEntity>[]) => {
       rowHpo = {
         source: ClinicalGenesTableSource.hpo,
         gene: gene.node.symbol,
-        conditions: hpoNodeEdges.map((hpoNode: ESResultNode<HpoEntity>) => ({
+        conditions: hpoNodeEdges.map((hpoNode: ArrangerEdge<HpoEntity>) => ({
           hpoTermLabel: hpoNode.node.hpo_term_label,
           hpoTermTermId: hpoNode.node.hpo_term_id,
         })),
@@ -103,7 +102,7 @@ export const makeUnGroupedDataRows = (genes: ESResultNode<GeneEntity>[]) => {
         source: ClinicalGenesTableSource.ddd,
         gene: gene.node.symbol,
         conditions: dddNodeEdges.map(
-          (dddNode: ESResultNode<DddEntity>) => dddNode.node.disease_name
+          (dddNode: ArrangerEdge<DddEntity>) => dddNode.node.disease_name
         ),
         inheritance: "",
       };
@@ -118,7 +117,7 @@ export const makeUnGroupedDataRows = (genes: ESResultNode<GeneEntity>[]) => {
         gene: gene.node.symbol,
         conditions: cosmicNodeEdges
           .map(
-            (cosmicNode: ESResultNode<CosmicEntity>) =>
+            (cosmicNode: ArrangerEdge<CosmicEntity>) =>
               cosmicNode.node.tumour_types_germline
           )
           .flat(),
@@ -151,7 +150,7 @@ export const groupRowsBySource = (ungroupedDataTable: any[]) => {
   return [...orphanetRows, ...omimRows, ...hpoRows, ...dddRows, ...cosmicRows];
 };
 
-export const makeGenesOrderedRow = (genesHits: ESResult<GeneEntity>) => {
+export const makeGenesOrderedRow = (genesHits: ArrangerResultsTree<GeneEntity>) => {
   const genes = genesHits?.hits?.edges;
 
   if (!genes || genes.length === 0) {

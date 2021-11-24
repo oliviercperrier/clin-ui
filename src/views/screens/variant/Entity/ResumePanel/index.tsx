@@ -11,14 +11,13 @@ import NoData from "views/screens/variant/Entity/NoData";
 import {
   Consequence,
   ConsequenceEntity,
-  ESResult,
-  ESResultNode,
   GeneEntity,
   Impact,
   VariantEntity,
 } from "store/graphql/variants/models";
 import { getVepImpactTag } from "views/screens/variant/Entity/index";
 import SummaryCard from "views/screens/variant/Entity/ResumePanel/Summary";
+import { ArrangerEdge, ArrangerResultsTree } from "store/graphql/models";
 
 import styles from "./index.module.scss";
 
@@ -72,8 +71,8 @@ const getLongPredictionLabelIfKnown = (
 };
 
 const groupConsequencesBySymbol = (
-  consequences: ESResultNode<ConsequenceEntity>[],
-  genes: ESResultNode<GeneEntity>[]
+  consequences: ArrangerEdge<ConsequenceEntity>[],
+  genes: ArrangerEdge<GeneEntity>[]
 ) => {
   if (consequences.length === 0) {
     return {};
@@ -81,7 +80,7 @@ const groupConsequencesBySymbol = (
   return consequences.reduce(
     (
       acc: SymbolToConsequences,
-      consequence: ESResultNode<ConsequenceEntity>
+      consequence: ArrangerEdge<ConsequenceEntity>
     ) => {
       const symbol = consequence.node.symbol;
       if (!symbol) {
@@ -100,7 +99,7 @@ const groupConsequencesBySymbol = (
           omim,
           symbol,
           ensembleGeneId,
-          biotype
+          biotype,
         },
       };
     },
@@ -135,8 +134,8 @@ const orderConsequencesForTable = (tableGroups: TableGroup[]) => {
 };
 
 const makeTables = (
-  rawConsequences: ESResultNode<ConsequenceEntity>[],
-  rawGenes: ESResultNode<GeneEntity>[]
+  rawConsequences: ArrangerEdge<ConsequenceEntity>[],
+  rawGenes: ArrangerEdge<GeneEntity>[]
 ) => {
   if (!rawConsequences || rawConsequences.length === 0) {
     return [];
@@ -149,9 +148,9 @@ const makeTables = (
   return orderConsequencesForTable(orderedGenes);
 };
 
-const makeRows = (consequences: ESResultNode<ConsequenceEntity>[]) =>
+const makeRows = (consequences: ArrangerEdge<ConsequenceEntity>[]) =>
   consequences.map(
-    (consequence: ESResultNode<ConsequenceEntity>, index: number) => ({
+    (consequence: ArrangerEdge<ConsequenceEntity>, index: number) => ({
       key: `${index + 1}`,
       aa: consequence.node.aa_change,
       consequences: consequence.node.consequences.filter(
@@ -329,9 +328,10 @@ const columns = [
 const ResumePanel = ({ data }: OwnProps) => {
   const variantData = data.variantData;
   const consequences = (
-    variantData?.consequences as ESResult<ConsequenceEntity>
+    variantData?.consequences as ArrangerResultsTree<ConsequenceEntity>
   )?.hits.edges;
-  const genes = (variantData?.genes as ESResult<GeneEntity>)?.hits.edges;
+  const genes = (variantData?.genes as ArrangerResultsTree<GeneEntity>)?.hits
+    .edges;
   const tables = makeTables(consequences, genes);
   const hasTables = tables.length > 0;
 
@@ -389,7 +389,7 @@ const ResumePanel = ({ data }: OwnProps) => {
                             </>
                           )}
                         </Space>
-                        <span className="bold value">{ biotype }</span>
+                        <span className="bold value">{biotype}</span>
                       </Space>
                     }
                     className={styles.card}

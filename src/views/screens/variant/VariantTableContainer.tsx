@@ -14,13 +14,12 @@ import {
   VariantEntity,
   ClinVar,
   Consequence,
-  ESResult,
-  ESResultNode,
   FrequenciesEntity,
   DonorsEntity,
 } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import ConsequencesCell from "./ConsequencesCell";
+import { ArrangerResultsTree, ArrangerEdge } from "store/graphql/models";
 
 import style from "./VariantTableContainer.module.scss";
 
@@ -35,8 +34,8 @@ type OwnProps = {
   setcurrentPageSize: (currentPage: number) => void;
 };
 
-const makeRows = (rows: ESResultNode<VariantEntity>[]) =>
-  rows.map((row: ESResultNode<VariantEntity>, index: number) => ({
+const makeRows = (rows: ArrangerEdge<VariantEntity>[]) =>
+  rows.map((row: ArrangerEdge<VariantEntity>, index: number) => ({
     ...row.node,
     key: `${index}`,
   }));
@@ -111,7 +110,7 @@ const columns = [
   {
     title: () => intl.get("screen.patientvariant.results.table.rqdm"),
     dataIndex: "donors",
-    render: (donors: ESResult<DonorsEntity>) => donors.hits.total,
+    render: (donors: ArrangerResultsTree<DonorsEntity>) => donors.hits.total,
   },
   {
     title: () => intl.get("screen.patientvariant.results.table.zygosity"),
@@ -130,7 +129,8 @@ const VariantTableContainer = (props: OwnProps) => {
     props;
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
 
-  const variantsResults = results.data?.Variants as ESResult<VariantEntity>;
+  const variantsResults = results.data
+    ?.Variants as ArrangerResultsTree<VariantEntity>;
   const variants = variantsResults?.hits?.edges || [];
   const total = variantsResults?.hits?.total || 0;
 

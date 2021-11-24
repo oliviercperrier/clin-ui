@@ -1,20 +1,11 @@
+import { ArrangerResultsTree } from "../models";
+
 export enum Impact {
   High = "HIGH",
   Moderate = "MODERATE",
   Low = "LOW",
   Modifier = "MODIFIER",
 }
-
-export type ESResult<T> = {
-  hits: {
-    total?: number;
-    edges: Array<ESResultNode<T>>;
-  };
-};
-
-export type ESResultNode<T> = {
-  node: T;
-};
 
 export type FrequenciesEntity = {
   internal: BoundType;
@@ -27,6 +18,7 @@ export type FrequenciesEntity = {
 };
 
 export type DonorsEntity = {
+  id: string;
   patient_id: string;
   organization_id: string;
   gender: string;
@@ -54,24 +46,26 @@ export type VariantEntity = {
   variant_type: string;
   frequencies: {
     [key: string]: BoundType;
-  }
+  };
   [key: string]: any;
 };
 
 export type GeneEntity = {
+  id: string;
   omim_gene_id: string;
   symbol: string;
   location: string;
-  orphanet: ESResult<OrphanetEntity[] | undefined | null>;
-  omim: ESResult<OmimEntity[] | undefined | null>;
-  hpo: ESResult<HpoEntity[] | undefined | null>;
-  ddd: ESResult<DddEntity[] | undefined | null>;
-  cosmic: ESResult<CosmicEntity[] | undefined | null>;
+  orphanet: ArrangerResultsTree<OrphanetEntity>;
+  omim: ArrangerResultsTree<OmimEntity>;
+  hpo: ArrangerResultsTree<HpoEntity>;
+  ddd: ArrangerResultsTree<DddEntity>;
+  cosmic: ArrangerResultsTree<CosmicEntity>;
   biotype: string;
   [key: string]: any;
 };
 
 export type ConsequenceEntity = {
+  id: string;
   symbol: string;
   consequences: string[];
   vep_impact: Impact;
@@ -148,25 +142,30 @@ export type Inheritance =
 export type OmimGene = string[][];
 
 export type CosmicEntity = {
+  id: string;
   tumour_types_germline: string[];
 };
 
 export type DddEntity = {
+  id: string;
   disease_name: string;
 };
 
 export type OrphanetEntity = {
+  id: string;
   panel: string;
   inheritance: OrphanetInheritance | null | undefined;
   disorder_id: number;
 };
 
 export type HpoEntity = {
+  id: string;
   hpo_term_label: string;
   hpo_term_id: string;
 };
 
 export type OmimEntity = {
+  id: string;
   omim_id: string;
   name: string;
   inheritance: OmimInheritance | undefined | null;
@@ -181,5 +180,6 @@ export enum ClinicalGenesTableSource {
 }
 
 export type FrequencyByLabEntity = BoundType & {
+  id: string;
   lab_name: string;
 };

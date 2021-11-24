@@ -6,14 +6,13 @@ import intl from "react-intl-universal";
 import { Card, Table, Spin, Space } from "antd";
 import { toExponentialNotation } from "utils/helper";
 import {
-  ESResult,
-  ESResultNode,
   FrequenciesEntity,
   FrequencyByLabEntity,
 } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import ServerError from "components/Results/ServerError";
 import NoData from "views/screens/variant/Entity/NoData";
+import { ArrangerEdge, ArrangerResultsTree } from "store/graphql/models";
 
 import styles from "./index.module.scss";
 
@@ -87,9 +86,9 @@ const cohortsColumns = [
 ];
 
 const makeInternalCohortsRows = (
-  frequencies_by_lab: ESResult<FrequencyByLabEntity>
+  frequencies_by_lab: ArrangerResultsTree<FrequencyByLabEntity>
 ) => {
-  const labs: ESResultNode<FrequencyByLabEntity>[] =
+  const labs: ArrangerEdge<FrequencyByLabEntity>[] =
     frequencies_by_lab?.hits?.edges || [];
   return labs.map((element, index) => ({
     key: `${index}`,
