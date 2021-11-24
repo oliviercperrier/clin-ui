@@ -38,7 +38,7 @@ const autoCompleteResults = (data: PatientResult[]) => data.map((result) => ({
       </Row>
     </>
   ),
-  value: result.cid,
+  value: result.id,
 }));
 
 const ContentHeader = ({
