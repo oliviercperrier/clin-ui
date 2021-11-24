@@ -47,7 +47,7 @@ const columns = [
     render: (hgvsg: string, entity: VariantEntity) =>
       hgvsg ? (
         <Tooltip placement="topLeft" title={hgvsg}>
-          <Link to={`/variant/entity/${entity.hash}`} href={"#top"}>
+          <Link target="_blank" to={`/variant/entity/${entity.hash}`} href={"#top"}>
             {hgvsg}
           </Link>
         </Tooltip>
