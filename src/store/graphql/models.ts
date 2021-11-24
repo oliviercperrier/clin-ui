@@ -1,5 +1,6 @@
 export interface ArrangerNodeData {
-  cid: string;
+  id: string;
+  cid?: string;
   key?: string;
 }
 
@@ -53,8 +54,8 @@ export const hydrateResults = <resultType extends ArrangerNodeData>(
   results: ArrangerEdge<resultType>[]
 ): resultType[] =>
   results.map(
-    (edge: ArrangerEdge<resultType>): resultType => ({
+    (edge: ArrangerEdge<resultType>, index): resultType => ({
       ...edge.node,
-      key: edge.node.cid,
+      key: edge.node?.id || index,
     })
   );
