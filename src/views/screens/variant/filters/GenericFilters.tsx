@@ -15,8 +15,8 @@ import {
 } from "views/screens/variant/constants";
 import {
   MappingResults,
-  useGetFilterBuckets,
-} from "store/graphql/utils/actions";
+  useGetVariantAggregations,
+} from "store/graphql/variants/actions";
 import { VARIANT_AGGREGATION_QUERY } from "store/graphql/variants/queries";
 
 import styles from "./Filters.module.scss";
@@ -39,12 +39,11 @@ const GenericFilters: FunctionComponent<OwnProps> = ({
     op: "in",
   });
 
-  let results = useGetFilterBuckets(
+  let results = useGetVariantAggregations(
     {
       sqon: resolvedSqon,
     },
-    VARIANT_AGGREGATION_QUERY([field], mappingResults),
-    VARIANT_INDEX
+    VARIANT_AGGREGATION_QUERY([field], mappingResults)
   );
 
   return (
@@ -53,7 +52,7 @@ const GenericFilters: FunctionComponent<OwnProps> = ({
         className={`${styles.variantFilterWrapper} ${styles.genericFilterWrapper}`}
       >
         {generateFilters(
-          results.data?.aggregations,
+          results?.aggregations,
           {
             loading: mappingResults.loadingMapping,
             data: mappingResults.extendedMapping,

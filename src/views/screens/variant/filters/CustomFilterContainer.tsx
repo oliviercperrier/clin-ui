@@ -10,16 +10,12 @@ import {
   updateFilters,
 } from "@ferlab/ui/core/data/filters/utils";
 
-import { ExtendedMapping } from "store/graphql/models";
+import { ExtendedMapping, GqlResults } from "store/graphql/models";
 
-import {
-  getFilterGroup,
-  getFilters,
-  Results,
-} from "store/graphql/utils/Filters";
+import { getFilterGroup, getFilters } from "store/graphql/utils/Filters";
 import history from "utils/history";
 import { underscoreToDot } from "@ferlab/ui/core/data/arranger/formatting";
-import { MappingResults } from "store/graphql/utils/actions";
+import { MappingResults } from "store/graphql/variants/actions";
 import intl from "react-intl-universal";
 
 import CustomFilterSelector from "./CustomFilterSelector";
@@ -38,7 +34,7 @@ const CustomFilterContainer = ({
   mappingResults,
 }: OwnProps) => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [results, setResults] = useState<Results>();
+  const [results, setResults] = useState<GqlResults<any>>();
   const found = (mappingResults?.extendedMapping || []).find(
     (f: ExtendedMapping) => f.field === underscoreToDot(filterKey)
   );
@@ -47,12 +43,12 @@ const CustomFilterContainer = ({
     updateFilters(history, fg, f);
   };
 
-  const aggregations = results?.data
-    ? results?.data.aggregations[filterKey]
+  const aggregations = results?.aggregations
+    ? results?.aggregations[filterKey]
     : {};
   const filterGroup = getFilterGroup(found, aggregations, [], true);
   const filters = results?.data
-    ? getFilters(results?.data.aggregations, filterKey)
+    ? getFilters(results?.aggregations, filterKey)
     : [];
   const selectedFilters = results?.data
     ? getSelectedFilters(filters, filterGroup)
