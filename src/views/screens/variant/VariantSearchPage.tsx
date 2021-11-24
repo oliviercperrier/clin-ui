@@ -13,13 +13,12 @@ import DiseaseIcon from "components/icons/DiseaseIcon";
 import FrequencyIcon from "components/icons/FrequencyIcon";
 import OccurenceIcon from "components/icons/OccurenceIcon";
 import VariantPageContainer from "views/screens/variant/VariantPageContainer";
-import { VARIANT_INDEX } from "views/screens/variant/constants";
 
 import { Spin } from "antd";
 import {
   MappingResults,
-  useGetExtendedMappings,
-} from "store/graphql/utils/actions";
+  useGetVariantExtendedMappings,
+} from "store/graphql/variants/actions";
 
 import styles from "./VariantSearchPage.module.scss";
 
@@ -129,12 +128,12 @@ const filtersContainer = (
 };
 
 const VariantSearchPage = (): React.ReactElement => {
-  const variantMappingResults = useGetExtendedMappings(VARIANT_INDEX);
+  const variantMappingResults = useGetVariantExtendedMappings();
   const menuItems: ISidebarMenuItem[] = [
     {
       key: "1",
       title: intl.get("screen.patientvariant.category_variant"),
-      icon: <LineStyleIcon className={styles.sideMenuIcon}/>,
+      icon: <LineStyleIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(
         variantMappingResults,
         FilterTypes.Variant
@@ -143,13 +142,13 @@ const VariantSearchPage = (): React.ReactElement => {
     {
       key: "2",
       title: intl.get("screen.patientvariant.category_genomic"),
-      icon: <GeneIcon className={styles.sideMenuIcon}/>,
+      icon: <GeneIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(variantMappingResults, FilterTypes.Gene),
     },
     {
       key: "3",
       title: intl.get("screen.patientvariant.category_cohort"),
-      icon: <FrequencyIcon className={styles.sideMenuIcon}/>,
+      icon: <FrequencyIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(
         variantMappingResults,
         FilterTypes.Frequency
@@ -167,7 +166,7 @@ const VariantSearchPage = (): React.ReactElement => {
     {
       key: "5",
       title: intl.get("screen.patientvariant.category_occurrence"),
-      icon: <OccurenceIcon className={styles.sideMenuIcon}/>,
+      icon: <OccurenceIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(
         variantMappingResults,
         FilterTypes.Occurrence

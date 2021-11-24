@@ -74,8 +74,26 @@ export type ConsequenceEntity = {
   strand: string;
   ensembl_transcript_id: string;
   ensembl_gene_id: string;
-  predictions: any;
-  conservations: any;
+  predictions: PredictionEntity;
+  conservations: ConservationsEntity;
+};
+
+export type ConservationsEntity = {
+  phylo_p17way_primate_rankscore: number;
+};
+
+export type PredictionEntity = {
+  fathmm_pred: number;
+  FATHMM_converted_rankscore: number;
+  cadd_score: number;
+  dann_score: number;
+  lrt_pred: string;
+  lrt_converted_rankscore: number;
+  revel_rankscore: number;
+  sift_converted_rank_score: number;
+  sift_pred: string;
+  polyphen2_hvar_score: number;
+  polyphen2_hvar_pred: string;
 };
 
 export type Consequence = {

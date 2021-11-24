@@ -163,20 +163,20 @@ const makeRows = (consequences: ArrangerEdge<ConsequenceEntity>[]) =>
         [
           "Sift",
           consequence.node.predictions?.sift_pred,
-          consequence.node.predictions?.sift_converted_rankscore,
+          consequence.node.predictions?.sift_converted_rank_score,
         ],
         [
           "Polyphen2",
           consequence.node.predictions?.polyphen2_hvar_pred,
-          consequence.node.predictions?.sift_converted_rankscore,
+          consequence.node.predictions?.sift_converted_rank_score,
         ],
         [
           "Fathmm",
           consequence.node.predictions?.fathmm_pred,
-          consequence.node.predictions?.fathmm_converted_rankscore,
+          consequence.node.predictions?.FATHMM_converted_rankscore,
         ],
-        ["Cadd", null, consequence.node.predictions?.cadd_rankscore],
-        ["Dann", null, consequence.node.predictions?.dann_rankscore],
+        ["Cadd", null, consequence.node.predictions?.cadd_score],
+        ["Dann", null, consequence.node.predictions?.dann_score],
         [
           "Lrt",
           consequence.node.predictions?.lrt_pred,

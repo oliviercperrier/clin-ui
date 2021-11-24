@@ -21,11 +21,6 @@ import {
 } from "@ferlab/ui/core/data/arranger/formatting";
 import { VariantEntity } from "store/graphql/variants/models";
 
-export type Results = {
-  data: GQLData | null;
-  loading: boolean;
-};
-
 export interface RangeAggs {
   stats: {
     max: number;
@@ -89,26 +84,6 @@ export const generateFilters = (
       </div>
     );
   });
-
-// eslint-disable-next-line
-export interface GQLData<T extends Aggs = any> {
-  aggregations: any;
-  hits: {
-    edges: [
-      {
-        node: HitsEntity;
-      }
-    ];
-    total: number;
-  };
-}
-
-export interface GqlResults<DataT> {
-  data: DataT[];
-  aggregations: Aggregations;
-  loading: boolean;
-  total: number;
-}
 
 export const getFilters = (
   aggregations: Aggregations | null,

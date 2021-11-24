@@ -12,7 +12,10 @@ import { Tabs } from "antd";
 import { cloneDeep } from "lodash";
 
 import { ExtendedMapping } from "store/graphql/models";
-import { MappingResults, useGetPageData } from "store/graphql/utils/actions";
+import {
+  MappingResults,
+  useGetVariantPageData,
+} from "store/graphql/variants/actions";
 import { VariantEntity } from "store/graphql/variants/models";
 import { VARIANT_QUERY } from "store/graphql/variants/queries";
 
@@ -62,7 +65,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
     op: "in",
   });
 
-  const results = useGetPageData(
+  const results = useGetVariantPageData(
     {
       sqon: resolvedSqon,
       pageSize: currentPageSize,
@@ -71,9 +74,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
         { field: "max_impact_score", order: "desc" },
         { field: "hgvsg", order: "asc" },
       ],
-    },
-    VARIANT_QUERY,
-    VARIANT_INDEX
+    }
   );
   const [selectedFilterContent, setSelectedFilterContent] = useState<
     React.ReactElement | undefined
