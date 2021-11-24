@@ -12,13 +12,10 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import {
   MappingResults,
-  useGetFilterBuckets,
-} from "store/graphql/utils/actions";
+  useGetVariantAggregations,
+} from "store/graphql/variants/actions";
 import { VARIANT_AGGREGATION_QUERY } from "store/graphql/variants/queries";
-import {
-  VARIANT_INDEX,
-  VARIANT_REPO_CACHE_KEY,
-} from "views/screens/variant/constants";
+import { VARIANT_REPO_CACHE_KEY } from "views/screens/variant/constants";
 
 type OwnProps = FilterSelectorProps & {
   filterKey: string;
@@ -47,19 +44,18 @@ const CustomFilterSelector = ({
     op: "in",
   });
 
-  const results = useGetFilterBuckets(
+  const results = useGetVariantAggregations(
     {
       sqon: resolvedSqon,
     },
-    VARIANT_AGGREGATION_QUERY([filterKey], mappingResults),
-    VARIANT_INDEX
+    VARIANT_AGGREGATION_QUERY([filterKey], mappingResults)
   );
 
   useEffect(() => {
     if (results.data) {
       onDataLoaded(results);
     }
-  }, [results.data]);
+  }, [results.aggregations]);
 
   return (
     <Spin spinning={results.loading}>

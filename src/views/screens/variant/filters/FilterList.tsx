@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Layout } from "antd";
-import { MappingResults } from "store/graphql/utils/actions";
+import { MappingResults } from "store/graphql/variants/actions";
 import CustomFilterContainer from "./CustomFilterContainer";
 import intl from "react-intl-universal";
 import { FilterGroup } from "./types";
