@@ -5,7 +5,7 @@ import { QueryVariable } from 'store/graphql/queries';
 import { INDEX_EXTENDED_MAPPING } from 'store/graphql/queries';
 import { useLazyResultQuery } from 'store/graphql/utils/query';
 
-import { PATIENTS_QUERY } from './queries';
+import { PATIENTS_QUERY, PATIENT_FILES_QUERY } from './queries';
 
 export const usePatients = (variables: QueryVariable): GqlResults<PatientResult> => {
   const { loading, result } = useLazyResultQuery<any>(PATIENTS_QUERY, {
@@ -37,3 +37,15 @@ export const usePatientsMapping = (): ExtendedMappingResults => {
   };
 };
 
+export const usePatientFilesData = (patientId: string): any => {
+  const {  loading, result, } = useLazyResultQuery<any>(PATIENT_FILES_QUERY(patientId), {
+    variables: {
+      patientId: patientId
+    },
+  });
+
+  return {
+    loading,
+    results: result?.Patient || [],
+  };
+};

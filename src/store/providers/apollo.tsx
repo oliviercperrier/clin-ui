@@ -28,7 +28,7 @@ const getAuthLink = (token: string) => (
       {
         headers: {
           ...headers,
-          authorization: `Bearer "${token || getAccessTokenStatus}"`
+          authorization: `Bearer ${token || getAccessTokenStatus}`
         },
       }
   ))

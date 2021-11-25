@@ -70,8 +70,10 @@ export const isDevelopmentEnv = () => {
 
 export const getTopBodyElement = () => {
   /* eslint no-restricted-globals: ["off"] */
-  if (top && top.window && !isDevelopmentEnv()) {
-    return top.window.document.body!;
+  if (top && top.window) {
+    try {
+      return top?.window.document.body
+    } catch {}
   }
   return window.document.body;
 };

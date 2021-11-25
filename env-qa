@@ -10,5 +10,6 @@ REACT_APP_KEYCLOAK_CONFIG={"realm": "clin", "url": "https://auth.qa.clin.ferlab.
 # API
 REACT_APP_ARRANGER_API=https://data-api.qa.clin.ferlab.bio
 REACT_APP_ARRANGER_PROJECT_ID=clin_2021_11_03
+REACT_APP_FHIR_SERVICE_URL=https://fhir-green.qa.clin.ferlab.bio/fhir
 # Style
 SASS_PATH=/code/src/style/themes/clin
