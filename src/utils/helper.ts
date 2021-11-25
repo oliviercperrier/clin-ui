@@ -51,3 +51,15 @@ export const toKebabCase = (str: string) =>
 
 export const formatTimestampToISODate = (timestamp: number) =>
   new Date(timestamp).toISOString().split("T")[0];
+
+// NAVIGATION
+
+export const navigateTo = (href: string) => {
+  /* eslint no-restricted-globals: ["off"] */
+  if (top && top.window) {
+    // iframe support
+    top.window.location.href = href;
+  } else {
+    window.location.href = href;
+  }
+};

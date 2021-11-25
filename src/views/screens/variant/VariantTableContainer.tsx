@@ -9,7 +9,6 @@ import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
 import { VariantPageResults } from "./VariantPageContainer";
 import intl from "react-intl-universal";
 import { Tooltip } from "antd";
-import { Link } from "react-router-dom";
 import {
   VariantEntity,
   ClinVar,
@@ -20,6 +19,7 @@ import {
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import ConsequencesCell from "./ConsequencesCell";
 import { ArrangerResultsTree, ArrangerEdge } from "store/graphql/models";
+import { navigateTo } from "utils/helper";
 
 import style from "./VariantTableContainer.module.scss";
 
@@ -47,9 +47,13 @@ const columns = [
     render: (hgvsg: string, entity: VariantEntity) =>
       hgvsg ? (
         <Tooltip placement="topLeft" title={hgvsg}>
-          <Link target="_blank" to={`/variant/entity/${entity.hash}`} href={"#top"}>
+          <a
+            onClick={() =>
+              navigateTo(`/variant/entity/${entity.hash}`)
+            }
+          >
             {hgvsg}
-          </Link>
+          </a>
         </Tooltip>
       ) : (
         DISPLAY_WHEN_EMPTY_DATUM
