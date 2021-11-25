@@ -20,7 +20,7 @@ import {
   useGetVariantExtendedMappings,
 } from "store/graphql/variants/actions";
 
-import styles from "./PatientVariant.module.scss";
+import styles from "./VariantSearchPage.module.scss";
 
 enum FilterTypes {
   Variant,

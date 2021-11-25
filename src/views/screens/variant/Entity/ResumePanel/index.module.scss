@@ -1,0 +1,25 @@
+@import "colors";
+
+.resumePanel {
+  .consequenceCards {
+    .card {
+      &:not(:last-child) {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .longValue {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: initial;
+  }
+
+  a {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

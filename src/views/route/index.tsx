@@ -1,9 +1,8 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-import { Router } from "react-router";
-
+import { Router, Switch, Route, RouteChildrenProps } from "react-router-dom";
 import Search from "views/screens/search";
 import Variant from "views/screens/variant";
+import VariantEntity from "views/screens/variant/Entity";
 import history from "utils/history";
 import Layout from "components/Layout";
 import RouteWrapper from "./RouteWrapper";
@@ -20,8 +19,18 @@ const AppRouter = (): React.ReactElement => {
         </Route>
         <RouteWrapper
           exact
-          path="/variant/entity/:hash"
-          component={() => <>Variant Entity</>}
+          path="/variant/entity/:hash/:tabid?"
+          component={(
+            props: RouteChildrenProps<{
+              hash: string;
+              tabid: string | undefined;
+            }>
+          ) => (
+            <VariantEntity
+              hash={props.match?.params.hash!}
+              tabid={props.match?.params.tabid!}
+            />
+          )}
           layout={Layout}
         />
       </Switch>

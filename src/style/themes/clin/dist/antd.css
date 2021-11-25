@@ -2233,8 +2233,8 @@ html {
 }
 .ant-btn-lg {
   height: 40px;
-  padding: 8px 15px;
-  font-size: 14px;
+  padding: 6.4px 15px;
+  font-size: 16px;
   border-radius: 2px;
 }
 .ant-btn-sm {
@@ -3400,12 +3400,12 @@ html {
 .ant-btn-icon-only.ant-btn-lg {
   width: 40px;
   height: 40px;
-  padding: 6.4px 0;
-  font-size: 16px;
+  padding: 4.9px 0;
+  font-size: 18px;
   border-radius: 2px;
 }
 .ant-btn-icon-only.ant-btn-lg > * {
-  font-size: 16px;
+  font-size: 18px;
 }
 .ant-btn-icon-only.ant-btn-sm {
   width: 24px;
@@ -3429,8 +3429,8 @@ html {
 }
 .ant-btn-round.ant-btn-lg {
   height: 40px;
-  padding: 8px 20px;
-  font-size: 14px;
+  padding: 6.4px 20px;
+  font-size: 16px;
   border-radius: 40px;
 }
 .ant-btn-round.ant-btn-sm {
@@ -3527,8 +3527,8 @@ html {
 .ant-btn-group-lg > .ant-btn,
 .ant-btn-group-lg > span > .ant-btn {
   height: 40px;
-  padding: 8px 15px;
-  font-size: 14px;
+  padding: 6.4px 15px;
+  font-size: 16px;
   border-radius: 0;
 }
 .ant-btn-group-lg .ant-btn.ant-btn-icon-only {
@@ -7249,7 +7249,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 }
 .ant-dropdown-menu-item-selected,
 .ant-dropdown-menu-submenu-title-selected {
-  color: #eaf3fa;
+  color: #0a5085;
   background-color: #f1f5f9;
 }
 .ant-dropdown-menu-item:hover,
@@ -25045,12 +25045,10 @@ div.ant-typography-edit-content.ant-typography-rtl {
   font-size: 14px;
 }
 .ant-table-cell a {
-  color: #006aa3;
   text-decoration: underline;
 }
 .ant-table-cell a:hover {
   text-decoration: none;
-  color: #006aa3;
 }
 .ant-table-content {
   overflow: auto;
@@ -25065,6 +25063,16 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-table-tbody > tr:nth-child(even) {
   background-color: #f8fafc;
+}
+.ant-table-filter-dropdown-btns {
+  padding: 8px;
+}
+.ant-table-filter-dropdown .ant-dropdown-menu-title-content {
+  display: flex;
+}
+.ant-table-filter-dropdown .ant-dropdown-menu-item .ant-checkbox-wrapper {
+  display: flex;
+  align-items: center;
 }
 .ant-collapse-content {
   border-top: 1px solid #e1e8ef;
@@ -25227,15 +25235,6 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 body {
   color: #364a63;
-}
-.ant-btn-link {
-  color: #0a5085;
-  padding: 0;
-}
-.ant-btn-link:hover,
-.ant-btn-link:focus {
-  color: #1382be;
-  background: transparent;
 }
 .ant-radio-button-wrapper-disabled.ant-radio-button-wrapper-checked {
   border-color: #8b9db2;
