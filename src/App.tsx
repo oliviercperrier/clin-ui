@@ -3,10 +3,12 @@ import intl from "react-intl-universal";
 import locales from "locales";
 // import keycloak from 'auth/keycloak-api/keycloak';
 // import { ReactKeycloakProvider } from "@react-keycloak/web";
+import { ConfigProvider } from "antd";
+import frFR from "antd/lib/locale/fr_FR";
+import { LANG } from "utils/constants";
 
 import "style/themes/clin/main.scss";
 import "style/themes/clin/dist/antd.css";
-import { LANG } from "utils/constants";
 
 const App = () => {
   intl.init({
@@ -14,10 +16,12 @@ const App = () => {
     locales: { [LANG.FR]: locales[LANG.FR] },
   });
 
-  return (
-    <div className="App">
-      <Router />
-    </div>
+  return ( // Replace with redux
+    <ConfigProvider locale={LANG.FR ? frFR : undefined}>
+      <div className="App">
+        <Router />
+      </div>
+    </ConfigProvider>
   );
 };
 

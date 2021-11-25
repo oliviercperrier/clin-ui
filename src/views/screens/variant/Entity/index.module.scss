@@ -1,0 +1,31 @@
+.variantEntity {
+  .entityHeader {
+    width: 100%;
+    padding: 16px 24px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+
+    .titleSkeleton {
+      *[class$="-title"] {
+        margin: 0; 
+        height: 24px;
+      }
+    }
+
+    .title {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  }
+
+  .entitySections {
+    div[class$="-nav"] {
+      background-color: white;
+
+      div[class$="-nav-list"] {
+        padding: 0 24px;
+      }
+    }
+  }
+}

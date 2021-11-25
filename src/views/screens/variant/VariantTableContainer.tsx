@@ -8,21 +8,22 @@ import { Tooltip, Table } from "antd";
 import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
 import { VariantPageResults } from "./VariantPageContainer";
 import intl from "react-intl-universal";
-import { Link } from "react-router-dom";
+import UserAffected from "components/icons/UserAffectedIcon";
 import {
   VariantEntity,
   ClinVar,
   Consequence,
-  ESResult,
-  ESResultNode,
   FrequenciesEntity,
   DonorsEntity,
 } from "store/graphql/variants/models";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "./Empty";
+import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import ConsequencesCell from "./ConsequencesCell";
+import { ArrangerResultsTree, ArrangerEdge } from "store/graphql/models";
+import { navigateTo } from "utils/helper";
 
 import style from "./VariantTableContainer.module.scss";
 import OccurenceDrawer from "./OccurenceDrawer";
+import { ColumnType } from "antd/lib/table";
 
 const DEFAULT_PAGE_NUM = 1;
 const DEFAULT_PAGE_SIZE = 10;
@@ -33,45 +34,50 @@ type OwnProps = {
   setCurrentPageCb: (currentPage: number) => void;
   currentPageSize: number;
   setcurrentPageSize: (currentPage: number) => void;
+  patientId: string;
 };
 
-const makeRows = (rows: ESResultNode<VariantEntity>[]) =>
-  rows.map((row: ESResultNode<VariantEntity>, index: number) => ({
+const makeRows = (rows: ArrangerEdge<VariantEntity>[]) =>
+  rows.map((row: ArrangerEdge<VariantEntity>, index: number) => ({
     ...row.node,
     key: `${index}`,
   }));
 
 const VariantTableContainer = (props: OwnProps) => {
-  const [drawerOpened, toggleDrawer] = useState(true);
+  const [drawerOpened, toggleDrawer] = useState(false);
+  const [selectedDonor, setSelectedDonor] = useState<DonorsEntity | undefined>(
+    undefined
+  );
   const { results, setCurrentPageCb, currentPageSize, setcurrentPageSize } =
     props;
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
 
-  const variantsResults = results.data?.Variants as ESResult<VariantEntity>;
+  const variantsResults = results.data
+    ?.Variants as ArrangerResultsTree<VariantEntity>;
   const variants = variantsResults?.hits?.edges || [];
   const total = variantsResults?.hits?.total || 0;
 
-  const columns = [
+  const columns: ColumnType<VariantEntity>[] = [
     {
-      title: intl.get("screen.patientvariant.results.table.variant"),
+      title: () => intl.get("screen.patientvariant.results.table.variant"),
       dataIndex: "hgvsg",
       render: (hgvsg: string, entity: VariantEntity) =>
         hgvsg ? (
           <Tooltip placement="topLeft" title={hgvsg}>
-            <Link to={`/variantDetails/${entity.hash}`} href={"#top"}>
+            <a onClick={() => navigateTo(`/variant/entity/${entity.hash}`)}>
               {hgvsg}
-            </Link>
+            </a>
           </Tooltip>
         ) : (
           DISPLAY_WHEN_EMPTY_DATUM
         ),
     },
     {
-      title: intl.get("screen.patientvariant.results.table.type"),
+      title: () => intl.get("screen.patientvariant.results.table.type"),
       dataIndex: "variant_class",
     },
     {
-      title: intl.get("screen.patientvariant.results.table.dbsnp"),
+      title: () => intl.get("screen.patientvariant.results.table.dbsnp"),
       dataIndex: "rsnumber",
       render: (rsNumber: string) =>
         rsNumber ? (
@@ -87,7 +93,7 @@ const VariantTableContainer = (props: OwnProps) => {
         ),
     },
     {
-      title: intl.get("screen.patientvariant.results.table.consequence"),
+      title: () => intl.get("screen.patientvariant.results.table.consequence"),
       dataIndex: "consequences",
       width: 300,
       render: (consequences: { hits: { edges: Consequence[] } }) => (
@@ -95,7 +101,7 @@ const VariantTableContainer = (props: OwnProps) => {
       ),
     },
     {
-      title: intl.get("screen.patientvariant.results.table.clinvar"),
+      title: () => intl.get("screen.patientvariant.results.table.clinvar"),
       dataIndex: "clinvar",
       render: (clinVar: ClinVar) =>
         clinVar?.clin_sig && clinVar.clinvar_id ? (
@@ -111,7 +117,7 @@ const VariantTableContainer = (props: OwnProps) => {
         ),
     },
     {
-      title: intl.get("screen.variantsearch.table.gnomAd"),
+      title: () => intl.get("screen.variantsearch.table.gnomAd"),
       dataIndex: "frequencies",
       render: (frequencies: FrequenciesEntity) =>
         frequencies.gnomad_exomes_2_1_1
@@ -119,9 +125,9 @@ const VariantTableContainer = (props: OwnProps) => {
           : DISPLAY_WHEN_EMPTY_DATUM,
     },
     {
-      title: intl.get("screen.patientvariant.results.table.rqdm"),
+      title: () => intl.get("screen.patientvariant.results.table.rqdm"),
       dataIndex: "donors",
-      render: (donors: ESResult<DonorsEntity>) => donors.hits.total,
+      render: (donors: ArrangerResultsTree<DonorsEntity>) => donors.hits.total,
     },
     {
       title: intl.get("screen.patientvariant.results.table.zygosity"),
@@ -134,9 +140,27 @@ const VariantTableContainer = (props: OwnProps) => {
       render: () => DISPLAY_WHEN_EMPTY_DATUM,
     },
     {
-      title: intl.get("screen.patientvariant.results.table.transmission"),
-      dataIndex: "test9",
-      render: () => <div onClick={() => toggleDrawer(true)}>LOL</div>,
+      className: style.userAffectedBtnCell,
+      render: (record: VariantEntity) => {
+        return (
+          <UserAffected
+            onClick={() => {
+              const donors: ArrangerEdge<DonorsEntity>[] =
+                record.donors?.hits?.edges || [];
+              const donor: ArrangerEdge<DonorsEntity> | undefined = donors.find(
+                (donor) => donor.node.patient_id == props.patientId
+              );
+
+              setSelectedDonor(donor?.node);
+              toggleDrawer(true);
+            }}
+            width="16"
+            height="16"
+            className={style.affectedIcon}
+          />
+        );
+      },
+      align: "center",
     },
   ];
 
@@ -170,7 +194,11 @@ const VariantTableContainer = (props: OwnProps) => {
           size: "small",
         }}
       />
-      <OccurenceDrawer opened={drawerOpened} toggle={toggleDrawer} />
+      <OccurenceDrawer
+        data={selectedDonor!}
+        opened={drawerOpened}
+        toggle={toggleDrawer}
+      />
     </>
   );
 };

@@ -10,6 +10,7 @@ export type IconProps = {
   width?: string;
   className?: string;
   svgClass?: string;
+  onClick?: () => void;
 };
 
 export type BaseSvgProps = {

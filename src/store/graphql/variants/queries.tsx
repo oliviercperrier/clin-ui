@@ -1,11 +1,19 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-import { ExtendedMapping } from 'store/graphql/models';
-import { dotToUnderscore, underscoreToDot } from '@ferlab/ui/core/data/arranger/formatting';
-import { MappingResults } from 'store/graphql/variants/actions';
+import { ExtendedMapping } from "store/graphql/models";
+import {
+  dotToUnderscore,
+  underscoreToDot,
+} from "@ferlab/ui/core/data/arranger/formatting";
+import { MappingResults } from "store/graphql/variants/actions";
 
 export const VARIANT_QUERY = gql`
-  query VariantInformation($sqon: JSON, $pageSize: Int, $offset: Int, $sort: [Sort]) {
+  query VariantInformation(
+    $sqon: JSON
+    $pageSize: Int
+    $offset: Int
+    $sort: [Sort]
+  ) {
     Variants {
       hits(filters: $sqon, first: $pageSize, offset: $offset, sort: $sort) {
         total
@@ -23,15 +31,14 @@ export const VARIANT_QUERY = gql`
             rsnumber
             variant_type
             participant_number
-            #participant_frequency
-            #participant_total_number
+            participant_frequency
+            participant_total_number
             max_impact_score
             consequences {
               hits {
                 edges {
                   node {
                     symbol
-                    #canonical
                     vep_impact
                     consequences
                     aa_change
@@ -44,6 +51,30 @@ export const VARIANT_QUERY = gql`
             donors {
               hits {
                 total
+                edges {
+                  node {
+                    patient_id
+                    organization_id
+                    gender
+                    is_proband
+                    family_id
+                    zygosity
+                    transmission
+                    last_update
+                    ad_alt
+                    ad_total
+                    ad_ratio
+                    affected_status
+                    qd
+                    gq
+                    mother_zygosity
+                    mother_affected_status
+                    mother_calls
+                    father_zygosity
+                    father_affected_status
+                    father_calls
+                  }
+                }
               }
             }
 
@@ -60,103 +91,66 @@ export const VARIANT_QUERY = gql`
 `;
 
 export const TAB_FREQUENCIES_QUERY = gql`
-  query GetFrequenciesTabVariant($sqon: JSON, $studiesSize: Int) {
+  query GetFrequenciesTabVariant($sqon: JSON) {
     Variants {
       hits(filters: $sqon) {
         edges {
           node {
             locus
             participant_number
+            frequencies_by_lab {
+              hits {
+                edges {
+                  node {
+                    lab_name
+                    ac
+                    af
+                    an
+                    hom
+                    het
+                  }
+                }
+              }
+            }
             frequencies {
-              topmed {
+              internal {
                 ac
                 af
                 an
-                homozygotes
-                heterozygotes
+                hom
+                het
               }
-              one_thousand_genomes {
+              topmed_bravo {
+                ac
+                af
+                an
+                hom
+                het
+              }
+              thousand_genomes {
                 ac
                 af
                 an
               }
-              gnomad_exomes_2_1 {
+              gnomad_exomes_2_1_1 {
                 ac
                 af
                 an
-                homozygotes
+                hom
               }
-              gnomad_genomes_2_1 {
+              gnomad_genomes_2_1_1 {
                 ac
                 af
                 an
-                homozygotes
+                hom
               }
               gnomad_genomes_3_0 {
                 ac
                 af
                 an
-                homozygotes
-              }
-              internal {
-                lower_bound_kf {
-                  ac
-                  af
-                  an
-                  heterozygotes
-                  homozygotes
-                }
-                upper_bound_kf {
-                  ac
-                  af
-                  an
-                  heterozygotes
-                  homozygotes
-                }
+                hom
               }
             }
-            participant_number
-            participant_number_visible
-            participant_total_number
-            participant_frequency
-            studies {
-              hits {
-                edges {
-                  node {
-                    frequencies {
-                      lower_bound_kf {
-                        ac
-                        af
-                        an
-                        heterozygotes
-                        homozygotes
-                      }
-                      upper_bound_kf {
-                        ac
-                        af
-                        an
-                        heterozygotes
-                        homozygotes
-                      }
-                    }
-                    participant_number
-                    participant_ids
-                    study_id
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    studies {
-      hits(first: $studiesSize) {
-        edges {
-          node {
-            code
-            id
-            domain
           }
         }
       }
@@ -183,9 +177,23 @@ export const TAB_SUMMARY_QUERY = gql`
             rsnumber
             reference
             start
+            variant_type
             participant_number
             participant_frequency
+            participant_total_number
+            max_impact_score
             variant_class
+            assembly_version
+            last_annotation_update
+            frequencies {
+              internal {
+                ac
+                af
+                an
+                hom
+                het
+              }
+            }
             consequences {
               hits {
                 edges {
@@ -206,43 +214,20 @@ export const TAB_SUMMARY_QUERY = gql`
                     ensembl_transcript_id
                     predictions {
                       fathmm_pred
-                      fathmm_converted_rankscore
-                      cadd_rankscore
-                      dann_rankscore
+                      FATHMM_converted_rankscore
+                      cadd_score
+                      dann_score
                       lrt_pred
                       lrt_converted_rankscore
                       revel_rankscore
-                      sift_converted_rankscore
+                      sift_converted_rank_score
                       sift_pred
-                      polyphen2_hvar_rankscore
+                      polyphen2_hvar_score
                       polyphen2_hvar_pred
                     }
                     impact_score
                   }
                 }
-              }
-            }
-            frequencies {
-              internal {
-                lower_bound_kf {
-                  ac
-                  af
-                  an
-                  homozygotes
-                  heterozygotes
-                }
-                upper_bound_kf {
-                  ac
-                  af
-                  an
-                  homozygotes
-                  heterozygotes
-                }
-              }
-            }
-            studies {
-              hits {
-                total
               }
             }
             genes {
@@ -251,6 +236,8 @@ export const TAB_SUMMARY_QUERY = gql`
                   node {
                     omim_gene_id
                     symbol
+                    location
+                    biotype
                   }
                 }
               }
@@ -341,6 +328,46 @@ export const TAB_CLINICAL_QUERY = gql`
   }
 `;
 
+export const TAB_PATIENT_QUERY = gql`
+  query GetPatientTabVariant(
+    $sqon: JSON
+    $pageSize: Int
+    $offset: Int
+    $sort: [Sort]
+  ) {
+    Variants {
+      hits(filters: $sqon, first: $pageSize, offset: $offset, sort: $sort) {
+        edges {
+          node {
+            donors {
+              hits {
+                total
+                edges {
+                  node {
+                    patient_id
+                    organization_id
+                    gender
+                    is_proband
+                    family_id
+                    zygosity
+                    last_update
+                    ad_alt
+                    ad_total
+                    ad_ratio
+                    affected_status
+                    qd
+                    gq
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const VARIANT_STATS_QUERY = gql`
   query VariantStats {
     variantStats {
@@ -358,13 +385,16 @@ export const VARIANT_STATS_QUERY = gql`
   }
 `;
 
-export const VARIANT_AGGREGATION_QUERY = (aggList: string[], mappingResults: MappingResults) => {
+export const VARIANT_AGGREGATION_QUERY = (
+  aggList: string[],
+  mappingResults: MappingResults
+) => {
   if (!mappingResults || mappingResults.loadingMapping) return gql``;
 
   const aggListDotNotation = aggList.map((i) => underscoreToDot(i));
 
   const extendedMappingsFields = aggListDotNotation.flatMap((i) =>
-    (mappingResults?.extendedMapping || []).filter((e) => e.field === i),
+    (mappingResults?.extendedMapping || []).filter((e) => e.field === i)
   );
 
   return gql`
@@ -380,20 +410,23 @@ export const VARIANT_AGGREGATION_QUERY = (aggList: string[], mappingResults: Map
 
 const generateAggregations = (extendedMappingFields: ExtendedMapping[]) => {
   const aggs = extendedMappingFields.map((f) => {
-    if (['keyword', 'id'].includes(f.type)) {
-      return (
-        dotToUnderscore(f.field) + ' {\n     buckets {\n      key\n        doc_count\n    }\n  }'
-      );
-    } else if (['long', 'float', 'integer', 'date'].includes(f.type)) {
-      return dotToUnderscore(f.field) + '{\n    stats {\n  max\n   min\n    }\n    }';
-    } else if (['boolean'].includes(f.type)) {
+    if (["keyword", "id"].includes(f.type)) {
       return (
         dotToUnderscore(f.field) +
-        ' {\n      buckets {\n       key\n       doc_count\n     }\n    }'
+        " {\n     buckets {\n      key\n        doc_count\n    }\n  }"
+      );
+    } else if (["long", "float", "integer", "date"].includes(f.type)) {
+      return (
+        dotToUnderscore(f.field) + "{\n    stats {\n  max\n   min\n    }\n    }"
+      );
+    } else if (["boolean"].includes(f.type)) {
+      return (
+        dotToUnderscore(f.field) +
+        " {\n      buckets {\n       key\n       doc_count\n     }\n    }"
       );
     } else {
-      return '';
+      return "";
     }
   });
-  return aggs.join(' ');
+  return aggs.join(" ");
 };

@@ -1,0 +1,17 @@
+@import "colors";
+
+.patientPanel {
+  .tableTotalTitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: $gray-8;
+    margin-bottom: 16px;
+  }
+
+  .patientPagination {
+    margin-bottom: 0;
+    margin-top: 16px;
+    justify-content: flex-end;
+    display: flex;
+  }
+}
