@@ -16,7 +16,7 @@ const App = () => {
     locales: { [LANG.FR]: locales[LANG.FR] },
   });
 
-  return ( // Replace with redux
+  return (
     <ConfigProvider locale={LANG.FR ? frFR : undefined}>
       <div className="App">
         <Router />

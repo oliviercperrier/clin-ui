@@ -24,12 +24,13 @@
     .navBtn {
       display: flex;
       align-items: center;
-      opacity: 0.5;
       svg {
-        fill: white;
+        fill: rgba(255, 255, 255, 0.71);;
       }
       span {
-        color: white;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.71);
         font-weight: 500;
         margin-left: 8px;
       }
