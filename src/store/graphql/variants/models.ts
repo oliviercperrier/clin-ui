@@ -30,6 +30,8 @@ export type DonorsEntity = {
   affected_status: boolean;
   qd: number;
   gq: number;
+  zygosity?: string;
+  transmission?: string;
 };
 
 export type VariantEntity = {
