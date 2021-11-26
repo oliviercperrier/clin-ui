@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-import { fields } from './models/Prescription';
+import { fields } from "./models/Prescription";
 
 export const PRESCRIPTIONS_QUERY = gql`
   query PrescriptionsInformation ($sqon: JSON, $first: Int, $offset: Int) {
@@ -10,14 +10,32 @@ export const PRESCRIPTIONS_QUERY = gql`
           node {
             id
             cid
+            mrn
+            ethnicity
+            bloodRelationship
             status
             timestamp
-            test
+            analysis{
+              code
+              display
+            }
             submitted
-            practitioner {
+            authoredOn
+            approver{
+              cid
+              lastName
+              firstName
+              lastNameFirstName
+            }
+            prescriber {
               cid
               firstName
               lastName
+              lastNameFirstName
+            }
+            organization {
+              cid
+              name
             }
             familyInfo {
               cid
@@ -25,6 +43,14 @@ export const PRESCRIPTIONS_QUERY = gql`
             }
             patientInfo {
               cid
+              lastName
+              firstName
+              lastNameFirstName
+              gender
+              ramq
+              position
+              fetus
+              birthDate
               organization {
                 cid
                 name
@@ -38,16 +64,15 @@ export const PRESCRIPTIONS_QUERY = gql`
         ${fields.map(
           (f) =>
             f +
-            ' {\n          buckets {\n            key\n            doc_count\n          }\n        }',
+            " {\n          buckets {\n            key\n            doc_count\n          }\n        }"
         )}
       }
     }
   }
 `;
 
-
 export const PRESCRIPTIONS_SEARCH_QUERY = gql`
-  query PrescriptionsInformationSearch ($sqon: JSON, $first: Int, $offset: Int) {
+  query PrescriptionsInformationSearch($sqon: JSON, $first: Int, $offset: Int) {
     Prescriptions {
       hits(filters: $sqon, first: $first, offset: $offset) {
         edges {
@@ -74,7 +99,6 @@ export const PRESCRIPTIONS_SEARCH_QUERY = gql`
         }
         total
       }
-
     }
   }
 `;
