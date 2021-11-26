@@ -1,7 +1,6 @@
 import React from "react";
 import { Menu } from "antd";
 import intl from "react-intl-universal";
-import { useDispatch } from "react-redux";
 import { LANG } from "utils/constants";
 
 interface OwnProps {
