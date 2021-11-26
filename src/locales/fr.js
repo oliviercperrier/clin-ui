@@ -1119,10 +1119,11 @@ const fr = {
   'screen.patientvariant.drawer.parental.origin': "Origine parental",
   'screen.patientvariant.drawer.seq.method': "Métrique de séquençage",
   'screen.patientvariant.drawer.depth.quality': "Qualité de profondeur",
-  'screen.patientvariant.drawer.allprof': "Allegic depth ALT",
-  'screen.patientvariant.drawer.alltotal': "Total depth ALT + REF",
-  'screen.patientvariant.drawer.allratio': "Allegic ratio ALT / (ALT+REF)",
-  'screen.patientvariant.drawer.igv.viewer': "Visionneuse IGV",
+  'screen.patientvariant.drawer.allprof': "Profondeur allégique ALT",
+  'screen.patientvariant.drawer.alltotal': "Profondeur total ALT + REF",
+  'screen.patientvariant.drawer.allratio': "Ratio allégique ALT / (ALT+REF)",
+  'screen.patientvariant.drawer.gq': "Qualité du génotype",
+  'screen.patientvariant.drawer.igv.viewer': "Ouvrir dans IGV",
 };
 
 export default fr;

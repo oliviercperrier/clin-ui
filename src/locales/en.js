@@ -911,10 +911,11 @@ const en = {
   'screen.patientvariant.drawer.parental.origin': "Parental origin",
   'screen.patientvariant.drawer.seq.method': "Sequencing metric",
   'screen.patientvariant.drawer.depth.quality': "Depth quality",
-  'screen.patientvariant.drawer.allprof': "Profondeur allégique ALT",
-  'screen.patientvariant.drawer.alltotal': "Profondeur total ALT + REF",
-  'screen.patientvariant.drawer.allratio': "Ratio allégique ALT / (ALT+REF)",
-  'screen.patientvariant.drawer.igv.viewer': "IGV viewer",
+  'screen.patientvariant.drawer.allprof': "Allegic depth ALT",
+  'screen.patientvariant.drawer.alltotal': "Total depth ALT + REF",
+  'screen.patientvariant.drawer.allratio': "Allegic ratio ALT / (ALT+REF)",
+  'screen.patientvariant.drawer.gq': "Genotype quality",
+  'screen.patientvariant.drawer.igv.viewer': "Open in IGV",
 };
 
 export default en;

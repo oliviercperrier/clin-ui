@@ -43,11 +43,18 @@ const makeRows = (rows: ArrangerEdge<VariantEntity>[]) =>
     key: `${index}`,
   }));
 
+const findDonorById = (
+  donors: ArrangerResultsTree<DonorsEntity>,
+  patientId: string
+) => {
+  return donors.hits?.edges.find((donor) => donor.node.patient_id == patientId);
+};
+
 const VariantTableContainer = (props: OwnProps) => {
   const [drawerOpened, toggleDrawer] = useState(false);
-  const [selectedDonor, setSelectedDonor] = useState<DonorsEntity | undefined>(
-    undefined
-  );
+  const [selectedVariant, setSelectedVariant] = useState<
+    VariantEntity | undefined
+  >(undefined);
   const { results, setCurrentPageCb, currentPageSize, setcurrentPageSize } =
     props;
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
@@ -130,14 +137,20 @@ const VariantTableContainer = (props: OwnProps) => {
       render: (donors: ArrangerResultsTree<DonorsEntity>) => donors.hits.total,
     },
     {
-      title: intl.get("screen.patientvariant.results.table.zygosity"),
-      dataIndex: "test8",
-      render: () => DISPLAY_WHEN_EMPTY_DATUM,
+      title: () => intl.get("screen.patientvariant.results.table.zygosity"),
+      dataIndex: "donors",
+      render: (record: ArrangerResultsTree<DonorsEntity>) => {
+        const donor = findDonorById(record, props.patientId);
+        return donor ? donor.node?.transmission : DISPLAY_WHEN_EMPTY_DATUM;
+      },
     },
     {
-      title: intl.get("screen.patientvariant.results.table.transmission"),
-      dataIndex: "test9",
-      render: () => DISPLAY_WHEN_EMPTY_DATUM,
+      title: () => intl.get("screen.patientvariant.results.table.transmission"),
+      dataIndex: "donors",
+      render: (record: ArrangerResultsTree<DonorsEntity>) => {
+        const donor = findDonorById(record, props.patientId);
+        return donor ? donor.node?.zygosity : DISPLAY_WHEN_EMPTY_DATUM;
+      },
     },
     {
       className: style.userAffectedBtnCell,
@@ -145,13 +158,7 @@ const VariantTableContainer = (props: OwnProps) => {
         return (
           <UserAffected
             onClick={() => {
-              const donors: ArrangerEdge<DonorsEntity>[] =
-                record.donors?.hits?.edges || [];
-              const donor: ArrangerEdge<DonorsEntity> | undefined = donors.find(
-                (donor) => donor.node.patient_id == props.patientId
-              );
-
-              setSelectedDonor(donor?.node);
+              setSelectedVariant(record);
               toggleDrawer(true);
             }}
             width="16"
@@ -195,7 +202,8 @@ const VariantTableContainer = (props: OwnProps) => {
         }}
       />
       <OccurenceDrawer
-        data={selectedDonor!}
+        patientId={props.patientId}
+        data={selectedVariant!}
         opened={drawerOpened}
         toggle={toggleDrawer}
       />

@@ -1,6 +1,7 @@
 import intl from "react-intl-universal";
 import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
 import { Button } from "antd";
+import PatientIdCell from "./cell/PatientId";
 
 import { TColumn } from "./columns";
 
@@ -15,22 +16,7 @@ export const patientsColumns = (
       name: "cid",
       summary: false,
       title: intl.get("screen.patientsearch.table.id"),
-      render: (cid: string) => (
-        <Button
-          type="link"
-          onClick={() => {
-            /* eslint no-restricted-globals: ["off"] */
-            if (top && top.window) {
-              // iframe support
-              top.window.location.href = `/patient/${cid}`;
-            } else {
-              window.location.href = `/patient/${cid}`;
-            }
-          }}
-        >
-          {cid}
-        </Button>
-      ),
+      render: (cid: string) => <PatientIdCell patientId={cid} />,
     },
     {
       name: "ramq",
