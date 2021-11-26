@@ -165,6 +165,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
             setCurrentPageCb={setCurrentPageNum}
             currentPageSize={currentPageSize}
             setcurrentPageSize={setcurrentPageSize}
+            patientId={patientid}
           />
         </Tabs.TabPane>
         <Tabs.TabPane
