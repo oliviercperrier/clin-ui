@@ -11,6 +11,10 @@ import {
 import intl from "react-intl-universal";
 import { CloseOutlined } from "@ant-design/icons";
 import ExternalLinkIcon from "components/icons/ExternalLinkIcon";
+import MaleAffectedIcon from "components/icons/MaleAffectedIcon";
+import MaleNotAffectedIcon from "components/icons/MaleNotAffectedIcon";
+import FemaleAffectedIcon from "components/icons/FemaleAffectedIcon";
+import FemaleNotAffectedIcon from "components/icons/FemaleNotAffectedIcon";
 import { getTopBodyElement } from "utils/helper";
 import { DonorsEntity, VariantEntity } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
@@ -32,6 +36,43 @@ const getDonor = (patientId: string, data: VariantEntity) => {
     (donor) => donor.node.patient_id == patientId
   );
   return donor?.node;
+};
+
+const getParentTitle = (
+  who: "mother" | "father",
+  id: string,
+  affected: boolean
+) => {
+  let AffectedIcon = null;
+
+  if (affected) {
+    AffectedIcon = who == "mother" ? FemaleAffectedIcon : MaleAffectedIcon;
+  } else {
+    AffectedIcon =
+      who == "mother" ? FemaleNotAffectedIcon : MaleNotAffectedIcon;
+  }
+
+  return (
+    <span className={style.parentStatusTitle}>
+      {`${intl.get(`screen.patientvariant.drawer.${who}.genotype`)} ${
+        id ? `(${id})` : ""
+      }`}
+      {affected !== null ? (
+        <Tooltip
+          placement="right"
+          title={
+            affected
+              ? intl.get("screen.patientvariant.drawer.affected")
+              : intl.get("screen.patientvariant.drawer.notaffected")
+          }
+        >
+          <span className={style.parentStatusIconWrapper}>
+            <AffectedIcon className={style.parentStatusIcon} />
+          </span>
+        </Tooltip>
+      ) : undefined}
+    </span>
+  );
 };
 
 const OccurenceDrawer = ({
@@ -68,18 +109,22 @@ const OccurenceDrawer = ({
             className={style.description}
           >
             <Descriptions.Item
-              label={`${intl.get(
-                "screen.patientvariant.drawer.mother.genotype"
-              )} ${donor?.mother_id ? "(" + donor.mother_id + ")" : ""}`}
+              label={getParentTitle(
+                "mother",
+                donor?.mother_id!,
+                donor?.mother_affected_status!
+              )}
             >
               {donor?.mother_calls
                 ? donor?.mother_calls.join("/")
                 : DISPLAY_WHEN_EMPTY_DATUM}
             </Descriptions.Item>
             <Descriptions.Item
-              label={`${intl.get(
-                "screen.patientvariant.drawer.father.genotype"
-              )} ${donor?.father_id ? "(" + donor.father_id + ")" : ""}`}
+              label={getParentTitle(
+                "father",
+                donor?.father_id!,
+                donor?.father_affected_status!
+              )}
             >
               {donor?.father_calls
                 ? donor?.father_calls.join("/")
@@ -140,6 +185,7 @@ const OccurenceDrawer = ({
         width="90vw"
         visible={modalOpened}
         footer={false}
+        title={intl.get("screen.patientvariant.drawer.igv.title")}
         onCancel={() => toggleModal(false)}
         getContainer={() => getTopBodyElement()}
         className={style.igvModal}

@@ -916,6 +916,9 @@ const en = {
   'screen.patientvariant.drawer.allratio': "Allegic ratio ALT / (ALT+REF)",
   'screen.patientvariant.drawer.gq': "Genotype quality",
   'screen.patientvariant.drawer.igv.viewer': "Open in IGV",
+  'screen.patientvariant.drawer.affected': 'Affected',
+  'screen.patientvariant.drawer.notaffected': 'Not affected',
+  'screen.patientvariant.drawer.igv.title': "Alignment and variant",
 };
 
 export default en;

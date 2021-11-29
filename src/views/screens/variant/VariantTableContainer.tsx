@@ -141,7 +141,7 @@ const VariantTableContainer = (props: OwnProps) => {
       dataIndex: "donors",
       render: (record: ArrangerResultsTree<DonorsEntity>) => {
         const donor = findDonorById(record, props.patientId);
-        return donor ? donor.node?.transmission : DISPLAY_WHEN_EMPTY_DATUM;
+        return donor ? donor.node?.zygosity : DISPLAY_WHEN_EMPTY_DATUM;
       },
     },
     {
@@ -149,7 +149,7 @@ const VariantTableContainer = (props: OwnProps) => {
       dataIndex: "donors",
       render: (record: ArrangerResultsTree<DonorsEntity>) => {
         const donor = findDonorById(record, props.patientId);
-        return donor ? donor.node?.zygosity : DISPLAY_WHEN_EMPTY_DATUM;
+        return donor ? donor.node?.transmission : DISPLAY_WHEN_EMPTY_DATUM;
       },
     },
     {

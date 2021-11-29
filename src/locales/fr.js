@@ -1124,6 +1124,9 @@ const fr = {
   'screen.patientvariant.drawer.allratio': "Ratio allégique ALT / (ALT+REF)",
   'screen.patientvariant.drawer.gq': "Qualité du génotype",
   'screen.patientvariant.drawer.igv.viewer': "Ouvrir dans IGV",
+  'screen.patientvariant.drawer.affected': 'Atteint',
+  'screen.patientvariant.drawer.notaffected': 'Pas atteint',
+  'screen.patientvariant.drawer.igv.title': "Alignement et variant",
 };
 
 export default fr;

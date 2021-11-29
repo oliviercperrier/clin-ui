@@ -8,10 +8,14 @@
       width: 50%;
     }
   }
-}
 
-.igvModal {
-  .igvContainer {
-    padding: 8px;
+  .parentStatusTitle,
+  .parentStatusIconWrapper {
+    display: flex;
+    align-items: center;
+
+    .parentStatusIcon {
+      margin-left: 4px;
+    }
   }
 }
