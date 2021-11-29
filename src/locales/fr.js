@@ -677,7 +677,7 @@ const fr = {
   'screen.patientsearch.table.organization': 'Établissement',
   'screen.patientsearch.table.patientId': 'ID patient',
   'screen.patientsearch.table.position': 'Position',
-  'screen.patientsearch.table.practitioner': 'Prescripteur',
+  'screen.patientsearch.table.prescriber': 'Prescripteur',
   'screen.patientsearch.table.prescription': 'Prescription',
   'screen.patientsearch.table.ramq': 'RAMQ',
   'screen.patientsearch.table.request': 'ID prescription',
