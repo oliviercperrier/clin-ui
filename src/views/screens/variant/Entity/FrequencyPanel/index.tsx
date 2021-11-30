@@ -17,6 +17,7 @@ import { ArrangerEdge, ArrangerResultsTree } from "store/graphql/models";
 import styles from "./index.module.scss";
 
 interface OwnProps {
+  className?: string;
   hash: string;
 }
 
@@ -168,7 +169,7 @@ const makeRowFromFrequencies = (
   ].map((row, index) => ({ ...row, key: `${index}` }));
 };
 
-const FrequencyPanel = ({ hash }: OwnProps) => {
+const FrequencyPanel = ({ hash, className = "" }: OwnProps) => {
   const { loading, data, error } = useTabFrequenciesData(hash);
 
   if (error) {
@@ -186,7 +187,7 @@ const FrequencyPanel = ({ hash }: OwnProps) => {
 
   return (
     <StackLayout
-      className={cx(styles.frequencyPanel, "page-container")}
+      className={cx(styles.frequencyPanel, className)}
       vertical
     >
       <Space direction="vertical" size={12}>

@@ -1,6 +1,9 @@
+import './index.css';
+import "style/themes/clin/dist/antd.css";
+import "style/themes/clin/main.scss";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

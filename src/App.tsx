@@ -7,8 +7,6 @@ import { ConfigProvider } from "antd";
 import frFR from "antd/lib/locale/fr_FR";
 import { LANG } from "utils/constants";
 
-import "style/themes/clin/main.scss";
-import "style/themes/clin/dist/antd.css";
 
 const App = () => {
   intl.init({
