@@ -22,6 +22,7 @@ import { ArrangerEdge, ArrangerResultsTree } from "store/graphql/models";
 import styles from "./index.module.scss";
 
 interface OwnProps {
+  className?: string;
   data: {
     loading: boolean;
     variantData: VariantEntity | null;
@@ -325,7 +326,7 @@ const columns = [
   },
 ];
 
-const ResumePanel = ({ data }: OwnProps) => {
+const ResumePanel = ({ data, className = "" }: OwnProps) => {
   const variantData = data.variantData;
   const consequences = (
     variantData?.consequences as ArrangerResultsTree<ConsequenceEntity>
@@ -336,7 +337,7 @@ const ResumePanel = ({ data }: OwnProps) => {
   const hasTables = tables.length > 0;
 
   return (
-    <StackLayout className={cx(styles.resumePanel, "page-container")} vertical>
+    <StackLayout className={cx(styles.resumePanel, className)} vertical>
       <Space direction="vertical" size={16}>
         <SummaryCard
           loading={data.loading}
