@@ -14,6 +14,7 @@ import { ArrangerEdge, ArrangerResultsTree } from "store/graphql/models";
 import styles from "./index.module.scss";
 
 interface OwnProps {
+  className?: string;
   hash: string;
 }
 
@@ -37,7 +38,7 @@ const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
     affected_status: donor.node.affected_status,
   }));
 
-const PatientPanel = ({ hash }: OwnProps) => {
+const PatientPanel = ({ hash, className = "" }: OwnProps) => {
   const [currentTotal, setTotal] = useState(0);
   const { loading, data, error } = useTabPatientData(hash);
   const donorsHits = (data?.donors as ArrangerResultsTree<DonorsEntity>)?.hits;
@@ -153,7 +154,7 @@ const PatientPanel = ({ hash }: OwnProps) => {
   ];
 
   return (
-    <StackLayout className={cx(styles.patientPanel, "page-container")} vertical>
+    <StackLayout className={cx(styles.patientPanel, className)} vertical>
       <Spin spinning={loading}>
         <Card>
           <div className={styles.tableTotalTitle}>
