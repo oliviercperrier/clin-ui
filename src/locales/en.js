@@ -919,6 +919,11 @@ const en = {
   'screen.patientvariant.drawer.affected': 'Affected',
   'screen.patientvariant.drawer.notaffected': 'Not affected',
   'screen.patientvariant.drawer.igv.title': "Alignment and variant",
+  'screen.patientvariant.transmission.unknown_proband_genotype': 'Unknown proband genotype',
+  'screen.patientvariant.transmission.non_carrier_proband': 'Non carrier proband',
+  'screen.patientvariant.transmission.unknown_father_genotype': 'Unknown father genotype',
+  'screen.patientvariant.transmission.unknown_mother_genotype': 'Unknown mother genotype',
+  'screen.patientvariant.transmission.unknown_parents_genotype': 'Unknown parents genotype'
 };
 
 export default en;

@@ -133,7 +133,9 @@ const OccurenceDrawer = ({
             <Descriptions.Item
               label={intl.get("screen.patientvariant.drawer.transmission")}
             >
-              {donor?.transmission || DISPLAY_WHEN_EMPTY_DATUM}
+              {intl.get(
+                `screen.patientvariant.transmission.${donor?.transmission}`
+              ) || DISPLAY_WHEN_EMPTY_DATUM}
             </Descriptions.Item>
             <Descriptions.Item
               label={intl.get("screen.patientvariant.drawer.parental.origin")}

@@ -1127,6 +1127,11 @@ const fr = {
   'screen.patientvariant.drawer.affected': 'Atteint',
   'screen.patientvariant.drawer.notaffected': 'Pas atteint',
   'screen.patientvariant.drawer.igv.title': "Alignement et variant",
+  'screen.patientvariant.transmission.unknown_proband_genotype': 'Génotype du proband inconnu',
+  'screen.patientvariant.transmission.non_carrier_proband': 'Proband non porteur',
+  'screen.patientvariant.transmission.unknown_father_genotype': 'Génotype du père inconnu',
+  'screen.patientvariant.transmission.unknown_mother_genotype': 'Génotype de la mère inconnu',
+  'screen.patientvariant.transmission.unknown_parents_genotype': 'Génotype des parents inconnu'
 };
 
 export default fr;
