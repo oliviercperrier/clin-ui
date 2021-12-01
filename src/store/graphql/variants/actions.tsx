@@ -1,10 +1,10 @@
-import { DocumentNode, TypedDocumentNode } from "@apollo/client";
+import { DocumentNode, TypedDocumentNode } from '@apollo/client';
 
-import { INDEX_EXTENDED_MAPPING, QueryVariable } from "store/graphql/queries";
-import { ExtendedMapping, GqlResults } from "store/graphql/models";
-import { useLazyResultQuery } from "store/graphql/utils/query";
-import { VARIANT_QUERY } from "store/graphql/variants/queries";
-import { VARIANT_INDEX } from "views/screens/variant/constants";
+import { INDEX_EXTENDED_MAPPING, QueryVariable } from 'store/graphql/queries';
+import { ExtendedMapping, GqlResults } from 'store/graphql/models';
+import { useLazyResultQuery } from 'store/graphql/utils/query';
+import { VARIANT_QUERY } from 'store/graphql/variants/queries';
+import { VARIANT_INDEX } from 'views/screens/variant/constants';
 
 export type MappingResults = {
   loadingMapping: boolean;
@@ -14,12 +14,9 @@ export type MappingResults = {
 type VariantQueryVariables = QueryVariable & { studiesSize?: number };
 
 export const useGetVariantExtendedMappings = (): MappingResults => {
-  const { loading, result } = useLazyResultQuery<any>(
-    INDEX_EXTENDED_MAPPING(VARIANT_INDEX),
-    {
-      variables: [],
-    }
-  );
+  const { loading, result } = useLazyResultQuery<any>(INDEX_EXTENDED_MAPPING(VARIANT_INDEX), {
+    variables: [],
+  });
 
   return {
     loadingMapping: loading,
@@ -45,7 +42,7 @@ export const useGetVariantPageData = (variables: VariantQueryVariables) => {
 
 export const useGetVariantAggregations = (
   variables: VariantQueryVariables,
-  query: DocumentNode | TypedDocumentNode
+  query: DocumentNode | TypedDocumentNode,
 ): GqlResults<any> => {
   const { loading, result } = useLazyResultQuery<any>(query, {
     variables: variables,

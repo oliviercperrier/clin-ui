@@ -1,4 +1,4 @@
-import { ArrangerNodeData } from "store/graphql/models";
+import { ArrangerNodeData } from 'store/graphql/models';
 
 export type DataCategory = {
   data_category: string;
@@ -10,7 +10,7 @@ type HitsResultsDataCategory = {
     edges: [
       {
         node: DataCategory;
-      }
+      },
     ];
   };
 };
@@ -28,9 +28,9 @@ export interface PrescriptionResult extends ArrangerNodeData {
 }
 
 export const fields = [
-  "status",
-  "analysis__code",
-  "prescriber__lastNameFirstName",
-  "approver__lastNameFirstName",
-  "organization__name",
+  'status',
+  'analysis__code',
+  'prescriber__lastNameFirstName',
+  'approver__lastNameFirstName',
+  'organization__name',
 ];

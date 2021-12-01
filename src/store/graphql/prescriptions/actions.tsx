@@ -1,17 +1,11 @@
-import {
-  ExtendedMappingResults,
-  GqlResults,
-  hydrateResults,
-} from "store/graphql/models";
-import { PrescriptionResult } from "store/graphql/prescriptions/models/Prescription";
-import { INDEX_EXTENDED_MAPPING, QueryVariable } from "store/graphql/queries";
-import { useLazyResultQuery } from "store/graphql/utils/query";
+import { ExtendedMappingResults, GqlResults, hydrateResults } from 'store/graphql/models';
+import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
+import { INDEX_EXTENDED_MAPPING, QueryVariable } from 'store/graphql/queries';
+import { useLazyResultQuery } from 'store/graphql/utils/query';
 
-import { PRESCRIPTIONS_QUERY } from "./queries";
+import { PRESCRIPTIONS_QUERY } from './queries';
 
-export const usePrescription = (
-  variables: QueryVariable
-): GqlResults<PrescriptionResult> => {
+export const usePrescription = (variables: QueryVariable): GqlResults<PrescriptionResult> => {
   const { loading, result } = useLazyResultQuery<any>(PRESCRIPTIONS_QUERY, {
     variables: variables,
   });
@@ -25,12 +19,9 @@ export const usePrescription = (
 };
 
 export const usePrescriptionMapping = (): ExtendedMappingResults => {
-  const { loading, result } = useLazyResultQuery<any>(
-    INDEX_EXTENDED_MAPPING("Prescriptions"),
-    {
-      variables: [],
-    }
-  );
+  const { loading, result } = useLazyResultQuery<any>(INDEX_EXTENDED_MAPPING('Prescriptions'), {
+    variables: [],
+  });
 
   return {
     data: result?.Prescriptions.extended || [],
