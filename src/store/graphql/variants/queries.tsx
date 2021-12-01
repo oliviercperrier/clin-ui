@@ -30,9 +30,6 @@ export const VARIANT_QUERY = gql`
             }
             rsnumber
             variant_type
-            participant_number
-            participant_frequency
-            participant_total_number
             max_impact_score
             consequences {
               hits {
@@ -98,29 +95,94 @@ export const TAB_FREQUENCIES_QUERY = gql`
         edges {
           node {
             locus
-            participant_number
-            frequencies_by_lab {
+            frequencies_by_analysis {
               hits {
                 edges {
                   node {
-                    lab_name
-                    ac
-                    af
-                    an
-                    hom
-                    het
+                    DI {
+                      affected {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                      non_affected {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                      total {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                    }
+
+                    MM_PG {
+                      affected {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                      non_affected {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                      total {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                    }
+                    MMG {
+                      affected {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                      non_affected {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                      total {
+                        ac
+                        af
+                        an
+                        pn
+                        pf
+                        pc
+                      }
+                    }
                   }
                 }
               }
             }
-            frequencies {
-              internal {
-                ac
-                af
-                an
-                hom
-                het
-              }
+            external_frequencies {
               topmed_bravo {
                 ac
                 af
@@ -146,6 +208,14 @@ export const TAB_FREQUENCIES_QUERY = gql`
                 hom
               }
               gnomad_genomes_3_0 {
+                ac
+                af
+                an
+                hom
+              }
+            }
+            frequency_RQDM {
+              total {
                 ac
                 af
                 an
@@ -179,20 +249,19 @@ export const TAB_SUMMARY_QUERY = gql`
             reference
             start
             variant_type
-            participant_number
-            participant_frequency
-            participant_total_number
             max_impact_score
             variant_class
             assembly_version
             last_annotation_update
-            frequencies {
-              internal {
+            frequency_RQDM {
+              total {
                 ac
                 af
                 an
                 hom
-                het
+                pn
+                pc
+                pf
               }
             }
             consequences {

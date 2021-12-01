@@ -130,9 +130,9 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
                   history.push(`/variant/entity/${variant?.hash}/patients`)
                 }
               >
-                {variant?.participant_total_number}
+                {variant?.frequency_RQDM.total.pn}
               </a>
-              /{variant?.frequencies.internal.an}
+              /{variant?.frequency_RQDM.total.an}
             </Text>
           </Row>
           <Row className={styles.row}>
@@ -142,7 +142,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
               )}
             </Text>
             <Text className={styles.contentValue}>
-              {variant?.frequencies?.internal?.af.toExponential(2)}
+              {variant?.frequency_RQDM?.total?.af.toExponential(2)}
             </Text>
           </Row>
           <Row className={styles.row}>

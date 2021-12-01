@@ -3,6 +3,7 @@ import {
   useLazyResultQuery,
   useLazyResultQueryOnLoadOnly,
 } from "store/graphql/utils/query";
+import { VariantEntity } from "store/graphql/variants/models";
 
 import {
   TAB_CLINICAL_QUERY,

@@ -5,10 +5,7 @@ import { useTabFrequenciesData } from "store/graphql/variants/tabActions";
 import intl from "react-intl-universal";
 import { Card, Table, Spin, Space } from "antd";
 import { toExponentialNotation } from "utils/helper";
-import {
-  FrequenciesEntity,
-  FrequencyByLabEntity,
-} from "store/graphql/variants/models";
+import { FrequenciesEntity } from "store/graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import ServerError from "components/Results/ServerError";
 import NoData from "views/screens/variant/Entity/NoData";
@@ -18,6 +15,7 @@ import styles from "./index.module.scss";
 
 interface OwnProps {
   hash: string;
+  className?: string;
 }
 
 type ExternalCohortDatum = number | string | null;
@@ -85,24 +83,6 @@ const cohortsColumns = [
   },
 ];
 
-const makeInternalCohortsRows = (
-  frequencies_by_lab: ArrangerResultsTree<FrequencyByLabEntity>
-) => {
-  const labs: ArrangerEdge<FrequencyByLabEntity>[] =
-    frequencies_by_lab?.hits?.edges || [];
-  return labs.map((element, index) => ({
-    key: `${index}`,
-    cohort: {
-      cohortName: element.node.lab_name,
-    },
-    alt: element.node.ac,
-    altRef: element.node.an,
-    homozygotes: element.node.hom,
-    frequency: toExponentialNotation(element.node.af),
-    ...element.node,
-  }));
-};
-
 const makeRowFromFrequencies = (
   frequencies: FrequenciesEntity,
   locus: string
@@ -168,7 +148,7 @@ const makeRowFromFrequencies = (
   ].map((row, index) => ({ ...row, key: `${index}` }));
 };
 
-const FrequencyPanel = ({ hash }: OwnProps) => {
+const FrequencyPanel = ({ hash, className = "" }: OwnProps) => {
   const { loading, data, error } = useTabFrequenciesData(hash);
 
   if (error) {
@@ -181,31 +161,10 @@ const FrequencyPanel = ({ hash }: OwnProps) => {
   );
   const hasEmptyCohorts = isExternalCohortsTableEmpty(externalCohortsRows);
 
-  const internalCohortRows = makeInternalCohortsRows(data.frequencies_by_lab);
-  const hasInternalCohorts = internalCohortRows.length > 0;
 
   return (
-    <StackLayout
-      className={cx(styles.frequencyPanel, "page-container")}
-      vertical
-    >
+    <StackLayout className={cx(styles.frequencyPanel, className)} vertical>
       <Space direction="vertical" size={12}>
-        <Spin spinning={loading}>
-          <Card
-            title={intl.get("screen.variantDetails.summaryTab.rqdmTable.title")}
-          >
-            {hasInternalCohorts ? (
-              <Table
-                size="small"
-                dataSource={internalCohortRows}
-                columns={cohortsColumns}
-                pagination={false}
-              />
-            ) : (
-              <NoData />
-            )}
-          </Card>
-        </Spin>
         <Spin spinning={loading}>
           <Card
             title={intl.get(

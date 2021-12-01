@@ -39,17 +39,15 @@ export type VariantEntity = {
   hash: string;
   hgvsg: string;
   locus: string;
-  participant_frequency: number;
-  participant_total_number: number;
-  participant_number: number;
   variant_class: string;
   rsnumber: string;
   variant_type: string;
-  frequencies: {
-    [key: string]: BoundType;
+  frequency_RQDM: {
+    total: BoundType;
   };
   consequences?: ArrangerResultsTree<ConsequenceEntity>;
   genes?: ArrangerResultsTree<GeneEntity>;
+  donors?: ArrangerResultsTree<DonorsEntity>;
   chromosome: string;
   start: string;
   alternate: string;
@@ -125,8 +123,10 @@ export type BoundType = {
   ac: number;
   af: number;
   an: number;
-  het: number;
   hom: number;
+  pn: number;
+  pc: number;
+  pf: number;
 };
 
 export type OmimCondition = {
@@ -210,8 +210,3 @@ export enum ClinicalGenesTableSource {
   ddd = "DDD",
   cosmic = "Cosmic",
 }
-
-export type FrequencyByLabEntity = BoundType & {
-  id: string;
-  lab_name: string;
-};
