@@ -1111,6 +1111,11 @@ const fr = {
   'result.server.error.description': "Une erreur s'est produite et nous ne sommes pas en mesure de charger le contenu pour le moment.",
   'result.notfound.error.title': "Pas trouvé",
   'result.notfound.error.description': "Ressource introuvable",
+  'filter.suggester.search.variants': "Recherche par variant",
+  'filter.suggester.search.variants.tooltip': "Entrer un Locus de Variant, Symbol de gène, Alias de gène, Gène AA Change, dbSNP ID, Clinvar ID, Ensembl ID, refseq ID",
+  'filter.suggester.search.noresults': "Aucune résultat",
+  'filter.suggester.search.genes': "Recherche par gène",
+  'filter.suggester.search.genes.tooltip': "Entrer un Symbole de gène, Alias de gène ou Ensembl ID"
 };
 
 export default fr;
