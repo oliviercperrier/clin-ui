@@ -1,0 +1,22 @@
+@import "colors";
+
+.searchBarWrapper {
+  padding: 0 2px;
+}
+
+.suggesterTitleWrapper {
+  margin-bottom: 2px;
+  margin-left: 0;
+  margin-right: 0;
+
+  .searchTitle {
+    color: $body-1;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 22px;
+  }
+  
+  .searchIconsDisabled {
+    color: $body-3;
+  }
+}

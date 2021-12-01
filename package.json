@@ -5,7 +5,7 @@
   "dependencies": {
     "@apollo/client": "^3.4.17",
     "@ferlab/style": "^1.9.9",
-    "@ferlab/ui": "^2.2.4",
+    "@ferlab/ui": "^2.2.6",
     "@react-keycloak/web": "^3.4.0",
     "@testing-library/jest-dom": "^5.15.0",
     "antd": "^4.16.13",

@@ -903,6 +903,11 @@ const en = {
   'result.server.error.description': "An error has occured and we are not able to load content at this time.",
   'result.notfound.error.title': "Not found",
   'result.notfound.error.description': "Resource not found",
+  'filter.suggester.search.variants': "Search by Variant",
+  'filter.suggester.search.variants.tooltip': "Enter Variant Locus, Gene Symbol, Gene Alias, Gene AA Change, dbSNP ID, Clinvar ID, Ensembl ID, refseq ID",
+  'filter.suggester.search.noresults': "No results found",
+  'filter.suggester.search.genes': "Search by gene",
+  'filter.suggester.search.genes.tooltip': "Enter Gene Symbol, Gene Alias or Ensembl ID"
 };
 
 export default en;
