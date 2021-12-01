@@ -59,6 +59,7 @@ export type VariantEntity = {
   consequences?: ArrangerResultsTree<ConsequenceEntity>;
   genes?: ArrangerResultsTree<GeneEntity>;
   donors?: ArrangerResultsTree<DonorsEntity>;
+  external_frequencies?: FrequenciesEntity;
   chromosome: string;
   start: string;
   alternate: string;

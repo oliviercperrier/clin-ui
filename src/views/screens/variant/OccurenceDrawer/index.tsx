@@ -191,6 +191,7 @@ const OccurenceDrawer = ({
         onCancel={() => toggleModal(false)}
         getContainer={() => getTopBodyElement()}
         className={style.igvModal}
+        wrapClassName={style.igvModalWrapper}
       >
         <Igv
           className={style.igvContainer}
