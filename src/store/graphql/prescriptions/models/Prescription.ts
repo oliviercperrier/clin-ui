@@ -27,4 +27,10 @@ export interface PrescriptionResult extends ArrangerNodeData {
   external_id: string;
 }
 
-export const fields = ["status", "test", "practitioner__lastNameFirstName"];
+export const fields = [
+  "status",
+  "analysis__code",
+  "prescriber__lastNameFirstName",
+  "approver__lastNameFirstName",
+  "organization__name",
+];

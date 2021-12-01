@@ -12,10 +12,11 @@ import { columnsClinVar, columnsPhenotypes } from "./columns";
 import styles from "./index.module.scss";
 
 interface OwnProps {
+  className?: string;
   hash: string;
 }
 
-const ClinicalPanel = ({ hash }: OwnProps) => {
+const ClinicalPanel = ({ hash, className = "" }: OwnProps) => {
   const { loading, data, error } = useTabClinicalData(hash);
 
   if (error) {
@@ -34,7 +35,7 @@ const ClinicalPanel = ({ hash }: OwnProps) => {
 
   return (
     <StackLayout
-      className={cx(styles.clinicalPanel, "page-container")}
+      className={cx(styles.clinicalPanel, className)}
       vertical
     >
       <Space direction="vertical" size={12}>

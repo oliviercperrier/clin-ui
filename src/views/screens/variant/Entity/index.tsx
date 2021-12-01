@@ -100,6 +100,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
           key={TAB_ID.SUMMARY}
         >
           <ResumePanel
+            className={styles.pageContainer}
             data={{
               loading: loading,
               variantData: data,
@@ -115,7 +116,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
           }
           key={TAB_ID.FREQUENCY}
         >
-          <FrequencyPanel hash={hash} />
+          <FrequencyPanel className={styles.pageContainer} hash={hash} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -126,7 +127,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
           }
           key={TAB_ID.CLINICAL}
         >
-          <ClinicalPanel hash={hash} />
+          <ClinicalPanel className={styles.pageContainer} hash={hash} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={
@@ -137,7 +138,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
           }
           key={TAB_ID.PATIENTS}
         >
-          <PatientPanel hash={hash} />
+          <PatientPanel className={styles.pageContainer} hash={hash} />
         </Tabs.TabPane>
       </Tabs>
     </StackLayout>

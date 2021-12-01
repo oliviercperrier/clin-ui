@@ -484,7 +484,7 @@ const en = {
   'screen.patientsearch.table.organization': 'Hospital',
   'screen.patientsearch.table.patientId': 'Patient ID',
   'screen.patientsearch.table.position': 'Position',
-  'screen.patientsearch.table.practitioner': 'Referring Practitioner',
+  'screen.patientsearch.table.prescriber': 'Referring Practitioner',
   'screen.patientsearch.table.prescription': 'Prescription',
   'screen.patientsearch.table.ramq': 'RAMQ',
   'screen.patientsearch.table.request': 'Request',

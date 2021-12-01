@@ -64,15 +64,15 @@ export const prescriptionsColumns = (
       title: intl.get("screen.patientsearch.table.date"),
     },
     {
-      name: "test",
+      name: ["analysis", "code"],
       summary: true,
       title: intl.get("screen.patientsearch.table.test"),
     },
     {
-      name: "practitioner",
+      name: "prescriber",
       render: (p: Record<string, string>) => `${p.lastName}, ${p.firstName}`,
       summary: true,
-      title: intl.get("screen.patientsearch.table.practitioner"),
+      title: intl.get("screen.patientsearch.table.prescriber"),
     },
     {
       name: ["patientInfo", "organization", "cid"],

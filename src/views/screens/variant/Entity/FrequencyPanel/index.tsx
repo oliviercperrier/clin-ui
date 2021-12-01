@@ -14,8 +14,8 @@ import { ArrangerEdge, ArrangerResultsTree } from "store/graphql/models";
 import styles from "./index.module.scss";
 
 interface OwnProps {
-  hash: string;
   className?: string;
+  hash: string;
 }
 
 type ExternalCohortDatum = number | string | null;
@@ -160,7 +160,6 @@ const FrequencyPanel = ({ hash, className = "" }: OwnProps) => {
     data.locus
   );
   const hasEmptyCohorts = isExternalCohortsTableEmpty(externalCohortsRows);
-
 
   return (
     <StackLayout className={cx(styles.frequencyPanel, className)} vertical>
