@@ -23,6 +23,15 @@
     }
   }
 
+  .transcriptLink {
+    display: flex;
+    align-items: center;
+
+    .canonicalIcon {
+      margin-left: 4px;
+    }
+  }
+
   .cellList {
     :not(:last-child) {
       margin-right: 5px;

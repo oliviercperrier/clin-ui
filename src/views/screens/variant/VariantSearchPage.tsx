@@ -3,7 +3,10 @@ import intl from "react-intl-universal";
 import SidebarMenu, {
   ISidebarMenuItem,
 } from "@ferlab/ui/core/components/sidebarMenu";
-import { FilterGroup } from "views/screens/variant/filters/types";
+import {
+  FilterInfo,
+  SUGGESTION_TYPE,
+} from "views/screens/variant/filters/types";
 import FilterList from "views/screens/variant/filters/FilterList";
 import ScrollView from "@ferlab/ui/core/layout/ScrollView";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
@@ -30,85 +33,106 @@ enum FilterTypes {
   Occurrence,
 }
 
-const filterGroups: { [type: string]: FilterGroup[] } = {
-  [FilterTypes.Variant]: [
-    {
-      fields: [
-        "variant_class",
-        "consequences__consequences",
-        "variant_external_reference",
-        "chromosome",
-        "start",
-      ],
+const filterGroups: {
+  [type: string]: FilterInfo;
+} = {
+  [FilterTypes.Variant]: {
+    groups: [
+      {
+        fields: [
+          "variant_class",
+          "consequences__consequences",
+          "variant_external_reference",
+          "chromosome",
+          "start",
+        ],
+      },
+    ],
+    suggester: {
+      suggestionType: SUGGESTION_TYPE.VARIANTS,
+      title: () => intl.get("filter.suggester.search.variants"),
+      placeholder: () => "e.g. 10-100063679-T-C, rs341",
+      tooltipTitle: () => intl.get("filter.suggester.search.variants.tooltip"),
     },
-  ],
-  [FilterTypes.Gene]: [
-    { fields: ["consequences__biotype", "gene_external_reference"] },
-    {
-      title: "screen.patientvariant.filter.grouptitle.genepanel",
-      fields: [
-        "genes__hpo__hpo_term_label",
-        "genes__orphanet__panel",
-        "genes__omim__name",
-        "genes__ddd__disease_name",
-        "genes__cosmic__tumour_types_germline",
-      ],
+  },
+  [FilterTypes.Gene]: {
+    groups: [
+      { fields: ["consequences__biotype", "gene_external_reference"] },
+      {
+        title: "screen.patientvariant.filter.grouptitle.genepanel",
+        fields: [
+          "genes__hpo__hpo_term_label",
+          "genes__orphanet__panel",
+          "genes__omim__name",
+          "genes__ddd__disease_name",
+          "genes__cosmic__tumour_types_germline",
+        ],
+      },
+    ],
+    suggester: {
+      suggestionType: SUGGESTION_TYPE.GENES,
+      title: () => intl.get("filter.suggester.search.genes"),
+      placeholder: () => "e.g. BRAF, ENSG00000157764",
+      tooltipTitle: () => intl.get("filter.suggester.search.genes.tooltip")
     },
-  ],
-  [FilterTypes.Pathogenicity]: [
-    {
-      fields: ["clinvar__clin_sig", "consequences__vep_impact"],
-    },
-    {
-      title: "screen.patientvariant.filter.grouptitle.predictions",
-      fields: [
-        "consequences__predictions__sift_pred",
-        "consequences__predictions__polyphen2_hvar_pred",
-        "consequences__predictions__fathmm_pred",
-        "consequences__predictions__cadd_score",
-        "consequences__predictions__dann_score",
-        "consequences__predictions__lrt_pred",
-        "consequences__predictions__revel_rankscore",
-      ],
-    },
-  ],
-  [FilterTypes.Frequency]: [
-    {
-      title: "screen.patientvariant.filter.grouptitle.rqdmpatient",
-      fields: [
-        "frequencies__internal__af",
-        "frequencies_by_lab__CHUSJ__af",
-        //"frequencies_by_lab__CHUS__af",
-        //"frequencies_by_lab__CUSM__af",
-      ],
-    },
-    {
-      title: "screen.patientvariant.filter.grouptitle.publiccohorts",
-      fields: [
-        "frequencies__gnomad_genomes_2_1_1__af",
-        "frequencies__gnomad_genomes_3_0__af",
-        "frequencies__gnomad_genomes_3_1_1__af",
-        "frequencies__gnomad_exomes_2_1_1__af",
-        "frequencies__topmed_bravo__af",
-        "frequencies__thousand_genomes__af",
-      ],
-    },
-  ],
-  [FilterTypes.Occurrence]: [
-    {
-      fields: ["donors__zygosity" /*'donors__transmission'*/],
-    },
-    {
-      title: "screen.patientvariant.category_metric",
-      fields: [
-        "donors__qd",
-        "donors__ad_alt",
-        "donors__ad_total",
-        "donors__ad_ratio",
-        "donors__gq",
-      ],
-    },
-  ],
+  },
+  [FilterTypes.Pathogenicity]: {
+    groups: [
+      {
+        fields: ["clinvar__clin_sig", "consequences__vep_impact"],
+      },
+      {
+        title: "screen.patientvariant.filter.grouptitle.predictions",
+        fields: [
+          "consequences__predictions__sift_pred",
+          "consequences__predictions__polyphen2_hvar_pred",
+          "consequences__predictions__fathmm_pred",
+          "consequences__predictions__cadd_score",
+          "consequences__predictions__dann_score",
+          "consequences__predictions__lrt_pred",
+          "consequences__predictions__revel_rankscore",
+        ],
+      },
+    ],
+  },
+  [FilterTypes.Frequency]: {
+    groups: [
+      {
+        title: "screen.patientvariant.filter.grouptitle.rqdmpatient",
+        fields: [
+          "frequencies__internal__af",
+        ],
+      },
+      {
+        title: "screen.patientvariant.filter.grouptitle.publiccohorts",
+        fields: [
+          "frequencies__gnomad_genomes_2_1_1__af",
+          "frequencies__gnomad_genomes_3_0__af",
+          "frequencies__gnomad_genomes_3_1_1__af",
+          "frequencies__gnomad_exomes_2_1_1__af",
+          "frequencies__topmed_bravo__af",
+          "frequencies__thousand_genomes__af",
+        ],
+      },
+    ],
+  },
+  [FilterTypes.Occurrence]: {
+    groups: [
+      {
+        fields: ["donors__zygosity" /*'donors__transmission'*/],
+      },
+      {
+        title: "screen.patientvariant.category_metric",
+        fields: [
+          "donors__qd",
+          "donors__ad_alt",
+          "donors__ad_total",
+          "donors__ad_ratio",
+          "donors__gq",
+        ],
+      },
+    ],
+  },
 };
 
 const filtersContainer = (
@@ -122,7 +146,7 @@ const filtersContainer = (
   return (
     <FilterList
       mappingResults={mappingResults}
-      filterGroups={filterGroups[type]}
+      filterInfo={filterGroups[type]}
     />
   );
 };

@@ -4,11 +4,11 @@
 /* eslint-disable react/jsx-curly-spacing */
 
 import React, { useState } from "react";
-import { Table } from "antd";
+import { Tooltip, Table } from "antd";
 import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
 import { VariantPageResults } from "./VariantPageContainer";
 import intl from "react-intl-universal";
-import { Tooltip } from "antd";
+import UserAffected from "components/icons/UserAffectedIcon";
 import {
   VariantEntity,
   ClinVar,
@@ -22,6 +22,8 @@ import { ArrangerResultsTree, ArrangerEdge } from "store/graphql/models";
 import { navigateTo } from "utils/helper";
 
 import style from "./VariantTableContainer.module.scss";
+import OccurenceDrawer from "./OccurenceDrawer";
+import { ColumnType } from "antd/lib/table";
 
 const DEFAULT_PAGE_NUM = 1;
 const DEFAULT_PAGE_SIZE = 10;
@@ -49,6 +51,10 @@ const findDonorById = (
 };
 
 const VariantTableContainer = (props: OwnProps) => {
+  const [drawerOpened, toggleDrawer] = useState(false);
+  const [selectedVariant, setSelectedVariant] = useState<
+    VariantEntity | undefined
+  >(undefined);
   const { results, setCurrentPageCb, currentPageSize, setcurrentPageSize } =
     props;
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
@@ -58,7 +64,7 @@ const VariantTableContainer = (props: OwnProps) => {
   const variants = variantsResults?.hits?.edges || [];
   const total = variantsResults?.hits?.total || 0;
 
-  const columns = [
+  const columns: ColumnType<VariantEntity>[] = [
     {
       title: () => intl.get("screen.patientvariant.results.table.variant"),
       dataIndex: "hgvsg",
@@ -121,14 +127,14 @@ const VariantTableContainer = (props: OwnProps) => {
       title: () => intl.get("screen.variantsearch.table.gnomAd"),
       dataIndex: "frequencies",
       render: (frequencies: FrequenciesEntity) =>
-        frequencies.gnomad_exomes_2_1_1
+      frequencies.gnomad_exomes_2_1_1
           ? frequencies.gnomad_exomes_2_1_1.af
           : DISPLAY_WHEN_EMPTY_DATUM,
     },
     {
       title: () => intl.get("screen.patientvariant.results.table.rqdm"),
       dataIndex: "donors",
-      render: (donors: ArrangerResultsTree<DonorsEntity>) => donors.hits?.total,
+      render: (donors: ArrangerResultsTree<DonorsEntity>) => donors.hits.total,
     },
     {
       title: () => intl.get("screen.patientvariant.results.table.zygosity"),
@@ -143,8 +149,29 @@ const VariantTableContainer = (props: OwnProps) => {
       dataIndex: "donors",
       render: (record: ArrangerResultsTree<DonorsEntity>) => {
         const donor = findDonorById(record, props.patientId);
-        return donor ? donor.node?.transmission : DISPLAY_WHEN_EMPTY_DATUM;
+        return donor
+          ? intl.get(
+              `screen.patientvariant.transmission.${donor.node?.transmission}`
+            )
+          : DISPLAY_WHEN_EMPTY_DATUM;
       },
+    },
+    {
+      className: style.userAffectedBtnCell,
+      render: (record: VariantEntity) => {
+        return (
+          <UserAffected
+            onClick={() => {
+              setSelectedVariant(record);
+              toggleDrawer(true);
+            }}
+            width="16"
+            height="16"
+            className={style.affectedIcon}
+          />
+        );
+      },
+      align: "center",
     },
   ];
 
@@ -177,6 +204,12 @@ const VariantTableContainer = (props: OwnProps) => {
           },
           size: "small",
         }}
+      />
+      <OccurenceDrawer
+        patientId={props.patientId}
+        data={selectedVariant!}
+        opened={drawerOpened}
+        toggle={toggleDrawer}
       />
     </>
   );

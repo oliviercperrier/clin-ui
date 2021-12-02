@@ -110,7 +110,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={`https://www.ncbi.nlm.nih.gov/snp/${variant?.rsnumbermber}`}
+                  href={`https://www.ncbi.nlm.nih.gov/snp/${variant?.rsnumber}`}
                 >
                   {variant?.rsnumber}
                 </a>

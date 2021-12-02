@@ -1,4 +1,4 @@
-@import 'style/themes/clin/_colors';
+@import 'colors';
 
 .variantTableCell {
   min-width: 160px;
@@ -18,6 +18,16 @@
     > div {
       // need !important because antd add padding-top: 0 in inline style
       padding: 8px 24px 8px 24px !important;
+    }
+  }
+
+  .userAffectedBtnCell {
+    .affectedIcon {
+      display: flex;
+      fill: $blue-8;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

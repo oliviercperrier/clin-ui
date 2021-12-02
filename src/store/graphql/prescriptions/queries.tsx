@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
-import { fields } from "./models/Prescription";
+import { fields } from './models/Prescription';
 
 export const PRESCRIPTIONS_QUERY = gql`
   query PrescriptionsInformation ($sqon: JSON, $first: Int, $offset: Int) {
@@ -64,7 +64,7 @@ export const PRESCRIPTIONS_QUERY = gql`
         ${fields.map(
           (f) =>
             f +
-            " {\n          buckets {\n            key\n            doc_count\n          }\n        }"
+            ' {\n          buckets {\n            key\n            doc_count\n          }\n        }',
         )}
       }
     }
