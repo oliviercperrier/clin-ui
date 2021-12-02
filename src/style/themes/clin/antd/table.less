@@ -27,20 +27,25 @@
     > tr {
       > th {
         background-color: @gray-3;
-        height: 40px;
       }
     }
   }
 
   &-tbody {
-    > tr {
-      > td {
-        height: 40px;
-        border: none;
-      }
-    }
     > tr:nth-child(even) {
       background-color: @gray-2;
+    }
+    > tr {
+      border-bottom: 1px solid @gray-4;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      > td {
+        color: @primary-color;
+        border: none;
+      }
     }
   }
 
