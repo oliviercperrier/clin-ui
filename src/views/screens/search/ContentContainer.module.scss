@@ -9,10 +9,11 @@
 
 .tableContainer {
   background-color: $card-background;
+  padding: $default-padding;
 }
 
 .tableContainer > * {
-  margin: $default-padding;
+  margin: $default-margin;
 }
 
 .queryBuilderIcon {

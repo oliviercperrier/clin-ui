@@ -72,11 +72,11 @@ const ContentContainer = ({
       />
       <StackLayout className={styles.tableContainer} vertical>
         <Tabs onChange={(v) => tabs.setCurrentTab(v as TableTabs)}>
-          <TabPane key={TableTabs.Patients} tab={intl.get('header.navigation.patient')}>
-            <PatientsTable pagination={pagination} results={patients} total={total} />
-          </TabPane>
           <TabPane key={TableTabs.Prescriptions} tab={intl.get('screen.patient.tab.prescriptions')}>
             <PrescriptionsTable pagination={pagination} results={prescriptions} total={total} />
+          </TabPane>
+          <TabPane key={TableTabs.Patients} tab={intl.get('header.navigation.patient')}>
+            <PatientsTable pagination={pagination} results={patients} total={total} />
           </TabPane>
         </Tabs>
       </StackLayout>

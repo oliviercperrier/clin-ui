@@ -22,7 +22,7 @@ export const MAX_NUMBER_RESULTS = 1000;
 const PrescriptionSearch = (): React.ReactElement => {
   useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentTab, setCurrentTab] = useState(TableTabs.Patients);
+  const [currentTab, setCurrentTab] = useState(TableTabs.Prescriptions);
   const { filters: sqonFilters } = useFilters();
   const allSqons = getQueryBuilderCache('prescription-repo').state;
 
