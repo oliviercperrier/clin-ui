@@ -2,7 +2,6 @@
 
 .variantTableCell {
   min-width: 160px;
-  width: 14%;
 }
 
 .dbSnpTableCell {
@@ -11,6 +10,14 @@
 }
 
 .variantSearchTable {
+  .variantTableCellElipsis {
+    max-width: 200px;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: unset;
+    white-space: nowrap;
+  }
 
   div[class$='-card-bordered'] {
     border-top: none;
