@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client';
-import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types'
+import { gql } from "@apollo/client";
+import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
 
 export type Sort = {
   field: string;
@@ -9,7 +9,7 @@ export type Sort = {
 export type QueryVariable = {
   sqon: ISyntheticSqon;
   first?: number;
-  offset?: number
+  offset?: number;
   sort?: Sort[];
   pageSize?: number;
 };

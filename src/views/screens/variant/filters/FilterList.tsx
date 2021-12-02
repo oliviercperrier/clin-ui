@@ -3,20 +3,34 @@ import { Button, Layout } from "antd";
 import { MappingResults } from "store/graphql/variants/actions";
 import CustomFilterContainer from "./CustomFilterContainer";
 import intl from "react-intl-universal";
-import { FilterGroup } from "./types";
+import { FilterGroup, FilterInfo } from "./types";
+import SuggesterWrapper from "views/screens/variant/Suggester/Wrapper";
+import Suggester from "views/screens/variant/Suggester";
 
 import styles from "./Filters.module.scss";
 
 type OwnProps = {
   mappingResults: MappingResults;
-  filterGroups: FilterGroup[];
+  filterInfo: FilterInfo;
 };
 
-const FilterList = ({ mappingResults, filterGroups }: OwnProps) => {
+const FilterList = ({ mappingResults, filterInfo }: OwnProps) => {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   return (
     <>
+      {filterInfo.suggester && (
+        <SuggesterWrapper
+          tooltipMessage={filterInfo.suggester.tooltipTitle()}
+          title={filterInfo.suggester.title()}
+        >
+          <Suggester
+            suggestionType={filterInfo.suggester.suggestionType}
+            title={filterInfo.suggester.title()}
+            placeholderText={filterInfo.suggester.placeholder()}
+          />
+        </SuggesterWrapper>
+      )}
       <div className={styles.expandButtonContainerVariant}>
         <Button onClick={() => setFiltersOpen(!filtersOpen)} type="link">
           {filtersOpen
@@ -25,7 +39,7 @@ const FilterList = ({ mappingResults, filterGroups }: OwnProps) => {
         </Button>
       </div>
       <Layout className={styles.variantFilterWrapper}>
-        {filterGroups.map((group: FilterGroup, index) => (
+        {filterInfo.groups.map((group: FilterGroup, index) => (
           <div key={index}>
             {group.title ? (
               <div className={styles.filterGroupTitle}>

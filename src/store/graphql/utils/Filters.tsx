@@ -1,25 +1,22 @@
-import intl from "react-intl-universal";
+import intl from 'react-intl-universal';
 
-import FilterContainer from "@ferlab/ui/core/components/filters/FilterContainer";
-import FilterSelector from "@ferlab/ui/core/components/filters/FilterSelector";
-import {
-  IFilter,
-  IFilterGroup,
-} from "@ferlab/ui/core/components/filters/types";
-import { Aggregations } from "store/graphql/models";
-import { ExtendedMapping, ExtendedMappingResults } from "store/graphql/models";
+import FilterContainer from '@ferlab/ui/core/components/filters/FilterContainer';
+import FilterSelector from '@ferlab/ui/core/components/filters/FilterSelector';
+import { IFilter, IFilterGroup } from '@ferlab/ui/core/components/filters/types';
+import { Aggregations } from 'store/graphql/models';
+import { ExtendedMapping, ExtendedMappingResults } from 'store/graphql/models';
 import {
   getFilterType,
   getSelectedFilters,
   updateFilters,
-} from "@ferlab/ui/core/data/filters/utils";
-import history from "utils/history";
+} from '@ferlab/ui/core/data/filters/utils';
+import history from 'utils/history';
 import {
   keyEnhance,
   keyEnhanceBooleanOnly,
   underscoreToDot,
-} from "@ferlab/ui/core/data/arranger/formatting";
-import { VariantEntity } from "store/graphql/variants/models";
+} from '@ferlab/ui/core/data/arranger/formatting';
+import { VariantEntity } from 'store/graphql/variants/models';
 
 export interface RangeAggs {
   stats: {
@@ -45,28 +42,21 @@ const isRangeAgg = (obj: RangeAggs) => !!obj.stats;
 export const generateFilters = (
   aggregations: Aggregations,
   extendedMapping: ExtendedMappingResults,
-  className: string = "",
+  className: string = '',
   filtersOpen: boolean = true,
   filterFooter: boolean = false,
   showSearchInput: boolean = false,
-  useFilterSelector: boolean = false
+  useFilterSelector: boolean = false,
 ) =>
   Object.keys(aggregations || []).map((key) => {
     const found = (extendedMapping?.data || []).find(
-      (f: ExtendedMapping) => f.field === underscoreToDot(key)
+      (f: ExtendedMapping) => f.field === underscoreToDot(key),
     );
 
-    const filterGroup = getFilterGroup(
-      found,
-      aggregations[key],
-      [],
-      filterFooter
-    );
+    const filterGroup = getFilterGroup(found, aggregations[key], [], filterFooter);
     const filters = getFilters(aggregations, key);
     const selectedFilters = getSelectedFilters(filters, filterGroup);
-    const FilterComponent = useFilterSelector
-      ? FilterSelector
-      : FilterContainer;
+    const FilterComponent = useFilterSelector ? FilterSelector : FilterContainer;
 
     return (
       <div className={className} key={`${key}_${filtersOpen}`}>
@@ -85,10 +75,7 @@ export const generateFilters = (
     );
   });
 
-export const getFilters = (
-  aggregations: Aggregations | null,
-  key: string
-): IFilter[] => {
+export const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] => {
   if (!aggregations || !key) return [];
   if (isTermAgg(aggregations[key])) {
     return aggregations[key!].buckets.map((f: any) => {
@@ -119,13 +106,13 @@ export const getFilterGroup = (
   extendedMapping: ExtendedMapping | undefined,
   aggregation: any,
   rangeTypes: string[],
-  filterFooter: boolean
+  filterFooter: boolean,
 ): IFilterGroup => {
   if (isRangeAgg(aggregation)) {
     return {
-      field: extendedMapping?.field || "",
-      title: extendedMapping?.displayName || "",
-      type: getFilterType(extendedMapping?.type || ""),
+      field: extendedMapping?.field || '',
+      title: extendedMapping?.displayName || '',
+      type: getFilterType(extendedMapping?.type || ''),
       config: {
         min: aggregation.stats.min,
         max: aggregation.stats.max,
@@ -139,9 +126,9 @@ export const getFilterGroup = (
   }
 
   return {
-    field: extendedMapping?.field || "",
-    title: extendedMapping?.displayName || "",
-    type: getFilterType(extendedMapping?.type || ""),
+    field: extendedMapping?.field || '',
+    title: extendedMapping?.displayName || '',
+    type: getFilterType(extendedMapping?.type || ''),
     config: {
       nameMapping: [],
       withFooter: filterFooter,

@@ -923,7 +923,12 @@ const en = {
   'screen.patientvariant.transmission.non_carrier_proband': 'Non carrier proband',
   'screen.patientvariant.transmission.unknown_father_genotype': 'Unknown father genotype',
   'screen.patientvariant.transmission.unknown_mother_genotype': 'Unknown mother genotype',
-  'screen.patientvariant.transmission.unknown_parents_genotype': 'Unknown parents genotype'
+  'screen.patientvariant.transmission.unknown_parents_genotype': 'Unknown parents genotype',
+  'filter.suggester.search.variants': "Search by Variant",
+  'filter.suggester.search.variants.tooltip': "Enter Variant Locus, Gene Symbol, Gene Alias, Gene AA Change, dbSNP ID, Clinvar ID, Ensembl ID, refseq ID",
+  'filter.suggester.search.noresults': "No results found",
+  'filter.suggester.search.genes': "Search by gene",
+  'filter.suggester.search.genes.tooltip': "Enter Gene Symbol, Gene Alias or Ensembl ID"
 };
 
 export default en;

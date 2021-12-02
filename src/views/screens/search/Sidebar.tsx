@@ -5,7 +5,7 @@ import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 
 import { Aggregations } from 'store/graphql/models';
 import { ExtendedMappingResults } from 'store/graphql/models';
-import {PrescriptionResult} from "store/graphql/prescriptions/models/Prescription";
+import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 
 import SidebarFilters from './SidebarFilters';
 
@@ -25,7 +25,7 @@ const PrescriptionSidebar = ({
   aggregations,
   extendedMapping,
   filters,
-  results
+  results,
 }: PrescriptionSidebarProps): React.ReactElement => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   return (

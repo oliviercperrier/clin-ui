@@ -1131,7 +1131,12 @@ const fr = {
   'screen.patientvariant.transmission.non_carrier_proband': 'Proband non porteur',
   'screen.patientvariant.transmission.unknown_father_genotype': 'Génotype du père inconnu',
   'screen.patientvariant.transmission.unknown_mother_genotype': 'Génotype de la mère inconnu',
-  'screen.patientvariant.transmission.unknown_parents_genotype': 'Génotype des parents inconnu'
+  'screen.patientvariant.transmission.unknown_parents_genotype': 'Génotype des parents inconnu',
+  'filter.suggester.search.variants': "Recherche par variant",
+  'filter.suggester.search.variants.tooltip': "Entrer un Locus de Variant, Symbol de gène, Alias de gène, Gène AA Change, dbSNP ID, Clinvar ID, Ensembl ID, refseq ID",
+  'filter.suggester.search.noresults': "Aucune résultat",
+  'filter.suggester.search.genes': "Recherche par gène",
+  'filter.suggester.search.genes.tooltip': "Entrer un Symbole de gène, Alias de gène ou Ensembl ID"
 };
 
 export default fr;

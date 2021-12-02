@@ -1,29 +1,29 @@
-import React from "react";
-import intl from "react-intl-universal";
-import { InfoCircleFilled } from "@ant-design/icons";
-import QueryBuilder from "@ferlab/ui/core/components/QueryBuilder";
-import { IDictionary } from "@ferlab/ui/core/components/QueryBuilder/types";
-import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
-import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import { TablePaginationConfig, Tabs } from "antd";
+import React from 'react';
+import intl from 'react-intl-universal';
+import { InfoCircleFilled } from '@ant-design/icons';
+import QueryBuilder from '@ferlab/ui/core/components/QueryBuilder';
+import { IDictionary } from '@ferlab/ui/core/components/QueryBuilder/types';
+import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
+import StackLayout from '@ferlab/ui/core/layout/StackLayout';
+import { TablePaginationConfig, Tabs } from 'antd';
 
-import { GqlResults } from "store/graphql/models";
-import { ExtendedMapping, ExtendedMappingResults } from "store/graphql/models";
-import { PatientResult } from "store/graphql/patients/models/Patient";
-import { PrescriptionResult } from "store/graphql/prescriptions/models/Prescription";
+import { GqlResults } from 'store/graphql/models';
+import { ExtendedMapping, ExtendedMappingResults } from 'store/graphql/models';
+import { PatientResult } from 'store/graphql/patients/models/Patient';
+import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 
-import PatientsTable from "./table/PatientsTable";
-import PrescriptionsTable from "./table/PrescriptionsTable";
-import ContentHeader from "./ContentHeader";
-import history from "utils/history";
+import PatientsTable from './table/PatientsTable';
+import PrescriptionsTable from './table/PrescriptionsTable';
+import ContentHeader from './ContentHeader';
+import history from 'utils/history';
 
-import styles from "./ContentContainer.module.scss";
+import styles from './ContentContainer.module.scss';
 
 const { TabPane } = Tabs;
 
 export enum TableTabs {
-  Patients = "patients",
-  Prescriptions = "prescriptions",
+  Patients = 'patients',
+  Prescriptions = 'prescriptions',
 }
 export type PrescriptionResultsContainerProps = {
   prescriptions: GqlResults<PrescriptionResult>;
@@ -51,9 +51,8 @@ const ContentContainer = ({
   const dictionary: IDictionary = {
     query: {
       facet: (key) =>
-        extendedMapping?.data?.find(
-          (filter: ExtendedMapping) => key === filter.field
-        )?.displayName || key,
+        extendedMapping?.data?.find((filter: ExtendedMapping) => key === filter.field)
+          ?.displayName || key,
     },
   };
 
@@ -73,25 +72,11 @@ const ContentContainer = ({
       />
       <StackLayout className={styles.tableContainer} vertical>
         <Tabs onChange={(v) => tabs.setCurrentTab(v as TableTabs)}>
-          <TabPane
-            key={TableTabs.Patients}
-            tab={intl.get("header.navigation.patient")}
-          >
-            <PatientsTable
-              pagination={pagination}
-              results={patients}
-              total={total}
-            />
+          <TabPane key={TableTabs.Prescriptions} tab={intl.get('screen.patient.tab.prescriptions')}>
+            <PrescriptionsTable pagination={pagination} results={prescriptions} total={total} />
           </TabPane>
-          <TabPane
-            key={TableTabs.Prescriptions}
-            tab={intl.get("screen.patient.tab.prescriptions")}
-          >
-            <PrescriptionsTable
-              pagination={pagination}
-              results={prescriptions}
-              total={total}
-            />
+          <TabPane key={TableTabs.Patients} tab={intl.get('header.navigation.patient')}>
+            <PatientsTable pagination={pagination} results={patients} total={total} />
           </TabPane>
         </Tabs>
       </StackLayout>

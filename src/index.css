@@ -6,6 +6,7 @@ body {
 }
 
 #root,
+#clin-ui,
 .App {
   height: 100%;
 }

@@ -125,10 +125,10 @@ const VariantTableContainer = (props: OwnProps) => {
     },
     {
       title: () => intl.get("screen.variantsearch.table.gnomAd"),
-      dataIndex: "external_frequencies",
-      render: (external_frequencies: FrequenciesEntity) =>
-        external_frequencies.gnomad_exomes_2_1_1
-          ? external_frequencies.gnomad_exomes_2_1_1.af
+      dataIndex: "frequencies",
+      render: (frequencies: FrequenciesEntity) =>
+      frequencies.gnomad_exomes_2_1_1
+          ? frequencies.gnomad_exomes_2_1_1.af
           : DISPLAY_WHEN_EMPTY_DATUM,
     },
     {

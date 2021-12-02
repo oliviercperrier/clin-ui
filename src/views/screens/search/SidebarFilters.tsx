@@ -1,14 +1,14 @@
-import React from "react";
-import { ReadOutlined } from "@ant-design/icons";
-import { ISqonGroupFilter } from "@ferlab/ui/core/data/sqon/types";
-import { Col, Row } from "antd";
+import React from 'react';
+import { ReadOutlined } from '@ant-design/icons';
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
+import { Col, Row } from 'antd';
 
-import { Aggregations } from "store/graphql/models";
-import { ExtendedMappingResults } from "store/graphql/models";
-import { generateFilters } from "store/graphql/utils/Filters";
+import { Aggregations } from 'store/graphql/models';
+import { ExtendedMappingResults } from 'store/graphql/models';
+import { generateFilters } from 'store/graphql/utils/Filters';
 
-import style from "./SidebarFilter.module.scss";
-import { PrescriptionResult } from "store/graphql/prescriptions/models/Prescription";
+import style from './SidebarFilter.module.scss';
+import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 
 export type SidebarFilterProps = {
   aggregations: Aggregations;
@@ -46,7 +46,7 @@ const SidebarFilters = ({
           </>
         ),
         value: `${n.code}|${n.name}`,
-      })
+      }),
     );
   }
 

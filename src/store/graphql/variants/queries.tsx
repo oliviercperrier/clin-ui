@@ -75,7 +75,7 @@ query VariantInformation($sqon: JSON, $pageSize: Int, $offset: Int, $sort: [Sort
               }
             }
             
-            external_frequencies {
+            frequencies {
               gnomad_exomes_2_1_1 {
                 af
               }
