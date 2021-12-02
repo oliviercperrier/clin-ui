@@ -8,12 +8,7 @@ import {
 import { MappingResults } from "store/graphql/variants/actions";
 
 export const VARIANT_QUERY = gql`
-  query VariantInformation(
-    $sqon: JSON
-    $pageSize: Int
-    $offset: Int
-    $sort: [Sort]
-  ) {
+query VariantInformation($sqon: JSON, $pageSize: Int, $offset: Int, $sort: [Sort]) {
     Variants {
       hits(filters: $sqon, first: $pageSize, offset: $offset, sort: $sort) {
         total
@@ -28,17 +23,18 @@ export const VARIANT_QUERY = gql`
               clinvar_id
               clin_sig
             }
-            rsnumber
             variant_type
+            rsnumber
             participant_number
             participant_frequency
             participant_total_number
-            max_impact_score
+                            
+          	max_impact_score
             consequences {
               hits {
                 edges {
                   node {
-                    symbol
+                  	symbol
                     #canonical
                     vep_impact
                     consequences
@@ -48,7 +44,7 @@ export const VARIANT_QUERY = gql`
                 }
               }
             }
-
+            
             donors {
               hits {
                 total
@@ -78,10 +74,21 @@ export const VARIANT_QUERY = gql`
                 }
               }
             }
-
+            
             frequencies {
               gnomad_exomes_2_1_1 {
                 af
+              }
+            }
+            
+            genes {
+              hits {
+                edges {
+                  node {
+                    symbol,
+                    biotype
+                  }
+                }
               }
             }
           }

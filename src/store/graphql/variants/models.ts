@@ -32,6 +32,14 @@ export type DonorsEntity = {
   gq: number;
   zygosity?: string;
   transmission?: string;
+  mother_id?: string;
+  mother_zygosity?: string;
+  mother_affected_status?: boolean;
+  mother_calls?: number[];
+  father_id?: string;
+  father_zygosity?: string;
+  father_affected_status?: boolean;
+  father_calls?: number[];
 };
 
 export type VariantEntity = {
@@ -50,6 +58,8 @@ export type VariantEntity = {
   };
   consequences?: ArrangerResultsTree<ConsequenceEntity>;
   genes?: ArrangerResultsTree<GeneEntity>;
+  donors?: ArrangerResultsTree<DonorsEntity>;
+  external_frequencies?: FrequenciesEntity;
   chromosome: string;
   start: string;
   alternate: string;

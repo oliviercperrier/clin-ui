@@ -17,9 +17,8 @@ import {
   useGetVariantPageData,
 } from "store/graphql/variants/actions";
 import { VariantEntity } from "store/graphql/variants/models";
-import { VARIANT_QUERY } from "store/graphql/variants/queries";
 
-import { VARIANT_INDEX, VARIANT_REPO_CACHE_KEY } from "./constants";
+import { VARIANT_REPO_CACHE_KEY } from "./constants";
 import VariantTableContainer from "./VariantTableContainer";
 import GeneTableContainer from "./GeneTableContainer";
 import history from "utils/history";
@@ -65,17 +64,15 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
     op: "in",
   });
 
-  const results = useGetVariantPageData(
-    {
-      sqon: resolvedSqon,
-      pageSize: currentPageSize,
-      offset: currentPageSize * (currentPageNum - 1),
-      sort: [
-        { field: "max_impact_score", order: "desc" },
-        { field: "hgvsg", order: "asc" },
-      ],
-    }
-  );
+  const results = useGetVariantPageData({
+    sqon: resolvedSqon,
+    pageSize: currentPageSize,
+    offset: currentPageSize * (currentPageNum - 1),
+    sort: [
+      { field: "max_impact_score", order: "desc" },
+      { field: "hgvsg", order: "asc" },
+    ],
+  });
   const [selectedFilterContent, setSelectedFilterContent] = useState<
     React.ReactElement | undefined
   >(undefined);

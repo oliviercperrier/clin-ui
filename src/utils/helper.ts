@@ -56,3 +56,17 @@ export const navigateTo = (href: string) => {
     window.location.href = href;
   }
 };
+
+export const isDevelopmentEnv = () => {
+  return process.env.NODE_ENV == "development";
+};
+
+export const getTopBodyElement = () => {
+  /* eslint no-restricted-globals: ["off"] */
+  if (top && top.window) {
+    try {
+      return top?.window.document.body
+    } catch {}
+  }
+  return window.document.body;
+};

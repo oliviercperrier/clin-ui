@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const PATIENTS_QUERY = gql`
   query PatientsInformation($sqon: JSON, $first: Int, $offset: Int) {
@@ -40,6 +40,33 @@ export const PATIENTS_QUERY = gql`
           }
         }
         total
+      }
+    }
+  }
+`;
+
+export const PATIENT_FILES_QUERY = (patientID: string) => gql`
+  {
+    Patient(id: "${patientID}") {
+      id
+      docs: DocumentReferenceList(_reference: subject) {
+        id
+        type @flatten {
+          coding @flatten {
+            type: code @first @singleton
+          }
+        }
+        content {
+          attachment {
+            url
+            size
+            hash
+            title
+          }
+          format @flatten {
+            format: code
+          }
+        }
       }
     }
   }

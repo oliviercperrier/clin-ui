@@ -4,8 +4,9 @@ import { PatientResult } from 'store/graphql/patients/models/Patient';
 import { QueryVariable } from 'store/graphql/queries';
 import { INDEX_EXTENDED_MAPPING } from 'store/graphql/queries';
 import { useLazyResultQuery } from 'store/graphql/utils/query';
+
 import { IValueContent, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
-import { PATIENTS_QUERY } from './queries';
+import { PATIENTS_QUERY, PATIENT_FILES_QUERY } from './queries';
 
 export const mappedFilters = (sqonFilters: ISyntheticSqon): ISyntheticSqon => {
   const mappedPrescriptionsToPatients = {
@@ -58,5 +59,18 @@ export const usePatientsMapping = (): ExtendedMappingResults => {
   return {
     data: result?.Patients.extended,
     loading: loading,
+  };
+};
+
+export const usePatientFilesData = (patientId: string): any => {
+  const {  loading, result, } = useLazyResultQuery<any>(PATIENT_FILES_QUERY(patientId), {
+    variables: {
+      patientId: patientId
+    },
+  });
+
+  return {
+    loading,
+    results: result?.Patient || [],
   };
 };
