@@ -1,8 +1,8 @@
-import React from "react";
-import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
-import { OmimConditions, OmimCondition } from "store/graphql/variants/models";
-import { Typography } from "antd";
+import React from 'react';
+import StackLayout from '@ferlab/ui/core/layout/StackLayout';
+import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
+import { OmimConditions, OmimCondition } from 'store/graphql/variants/models';
+import { Typography } from 'antd';
 
 interface OwnProps {
   conditions: OmimConditions;
@@ -19,7 +19,7 @@ const OmimConditionCell = ({ conditions }: OwnProps) => (
 
         return (
           <StackLayout key={index}>
-            <Text>{geneOmimName}</Text> &nbsp; (MIM:
+            <Text>{geneOmimName}</Text>&nbsp;(MIM:
             <a
               key={index}
               target="_blank"

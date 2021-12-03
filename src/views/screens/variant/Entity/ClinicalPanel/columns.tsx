@@ -65,7 +65,7 @@ export const columnsPhenotypes = [
         const [geneName, omimId] = record.gene as OmimGene;
         return (
           <>
-            <Text>{geneName}</Text> &nbsp; (MIM:
+            <Text>{geneName}</Text>&nbsp;(MIM:
             <a
               target="_blank"
               rel="noopener noreferrer"
