@@ -11,10 +11,17 @@
   & {
     color: @gray-8;
     border: 1px solid @gray-5;
+    box-shadow: none;
+    border-radius: 2px;
+    box-sizing: border-box;
+    
+
+    &-hover, &:hover {
+      border: 1px solid @blue-7;
+    }
 
     &-focused, &:focus {
       border: 1px solid @blue-7;
-      box-shadow: 0px 0px 0px 2px #91D1EB
     }
 
     &-disabled, &[disabled] {
