@@ -976,6 +976,7 @@ const fr = {
   'screen.variantDetails.patientsTab.changeStatus.notification.success': 'Statut mis à jour',
   'screen.variantDetails.patientsTab.count': '{qty} patient(s)',
   'screen.variantDetails.patientsTab.donor': 'Patient',
+  'screen.variantDetails.patientsTab.analysis': 'Analyse',
   'screen.variantDetails.patientsTab.exomiserScore': 'Score Exomiser',
   'screen.variantDetails.patientsTab.familyId': 'Famille',
   'screen.variantDetails.patientsTab.female': 'Femme',

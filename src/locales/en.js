@@ -770,6 +770,7 @@ const en = {
   'screen.variantDetails.patientsTab.changeStatus.notification.success': 'Status updated',
   'screen.variantDetails.patientsTab.count': '{qty} patient(s)',
   'screen.variantDetails.patientsTab.donor': 'Patient',
+  'screen.variantDetails.patientsTab.analysis': 'Analysis',
   'screen.variantDetails.patientsTab.exomiserScore': 'Exomiser Score',
   'screen.variantDetails.patientsTab.familyId': 'Family',
   'screen.variantDetails.patientsTab.female': 'Female',

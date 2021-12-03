@@ -46,6 +46,7 @@ export type DonorsEntity = {
   gq: number;
   zygosity?: string;
   transmission?: string;
+  analysis_code?: string;
   mother_id?: string;
   mother_zygosity?: string;
   mother_affected_status?: boolean;

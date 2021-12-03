@@ -384,6 +384,7 @@ export const TAB_PATIENT_QUERY = gql`
                   node {
                     patient_id
                     organization_id
+                    analysis_code
                     gender
                     is_proband
                     family_id
