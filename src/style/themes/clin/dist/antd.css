@@ -25519,10 +25519,15 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-table-thead > tr > th {
   background-color: #f1f5f9;
-  height: 40px;
 }
-.ant-table-tbody > tr > td {
-  height: 40px;
+.ant-table:not(.ant-table-bordered) .ant-table-tbody > tr {
+  border-bottom: 1px solid #e1e8ef;
+}
+.ant-table:not(.ant-table-bordered) .ant-table-tbody > tr:last-child {
+  border-bottom: none;
+}
+.ant-table:not(.ant-table-bordered) .ant-table-tbody > tr > td {
+  color: #0a5085;
   border: none;
 }
 .ant-table-tbody > tr:nth-child(even) {

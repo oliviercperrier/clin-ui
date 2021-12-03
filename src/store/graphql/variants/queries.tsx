@@ -110,6 +110,7 @@ export const TAB_FREQUENCIES_QUERY = gql`
                       pn
                       pf
                       pc
+                      hom
                     }
                     non_affected {
                       ac
@@ -118,6 +119,7 @@ export const TAB_FREQUENCIES_QUERY = gql`
                       pn
                       pf
                       pc
+                      hom
                     }
                     total {
                       ac
@@ -126,6 +128,7 @@ export const TAB_FREQUENCIES_QUERY = gql`
                       pn
                       pf
                       pc
+                      hom
                     }
                   }
                 }
@@ -164,10 +167,31 @@ export const TAB_FREQUENCIES_QUERY = gql`
               }
             }
             frequency_RQDM {
+              affected {
+                ac
+                af
+                an
+                pn
+                pf
+                pc
+                hom
+              }
+              non_affected {
+                ac
+                af
+                an
+                pn
+                pf
+                pc
+                hom
+              }
               total {
                 ac
                 af
                 an
+                pn
+                pf
+                pc
                 hom
               }
             }

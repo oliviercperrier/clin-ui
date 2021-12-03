@@ -928,7 +928,14 @@ const en = {
   'filter.suggester.search.variants.tooltip': "Enter Variant Locus, Gene Symbol, Gene Alias, Gene AA Change, dbSNP ID, Clinvar ID, Ensembl ID, refseq ID",
   'filter.suggester.search.noresults': "No results found",
   'filter.suggester.search.genes': "Search by gene",
-  'filter.suggester.search.genes.tooltip': "Enter Gene Symbol, Gene Alias or Ensembl ID"
+  'filter.suggester.search.genes.tooltip': "Enter Gene Symbol, Gene Alias or Ensembl ID",
+  'screen.variant.entity.frequencyTab.all.patients': "All patients",
+  'screen.variant.entity.frequencyTab.affected.patients': "Affected patients",
+  'screen.variant.entity.frequencyTab.nonaffected.patients': "Unaffected patients",
+  'screen.variant.entity.frequencyTab.frequency.abbv': "Freq.",
+  'screen.variant.entity.frequencyTab.homozygote.abbv': "Homo",
+  'screen.variant.entity.frequencyTab.analysis': "Analysis",
+  'screen.variant.entity.frequencyTab.card.title': "Number of patients with the variant {variant}",
 };
 
 export default en;

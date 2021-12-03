@@ -1,180 +1,115 @@
-import React from "react";
-import cx from "classnames";
-import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import { useTabFrequenciesData } from "store/graphql/variants/tabActions";
-import intl from "react-intl-universal";
-import { Card, Table, Spin, Space } from "antd";
-import { toExponentialNotation } from "utils/helper";
-import { FrequenciesEntity } from "store/graphql/variants/models";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
-import ServerError from "components/Results/ServerError";
-import NoData from "views/screens/variant/Entity/NoData";
-import { ArrangerEdge, ArrangerResultsTree } from "store/graphql/models";
+import React from 'react';
+import cx from 'classnames';
+import StackLayout from '@ferlab/ui/core/layout/StackLayout';
+import { useTabFrequenciesData } from 'store/graphql/variants/tabActions';
+import intl from 'react-intl-universal';
+import { Card, Table, Spin, Space } from 'antd';
+import { BoundType, FrequencyByAnalysisEntity } from 'store/graphql/variants/models';
+import ServerError from 'components/Results/ServerError';
+import NoData from 'views/screens/variant/Entity/NoData';
+import { ArrangerEdge } from 'store/graphql/models';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
 interface OwnProps {
   className?: string;
   hash: string;
 }
 
-type ExternalCohortDatum = number | string | null;
-
-type Row = {
-  cohort: {
-    cohortName: string;
-    link?: string;
-  };
-  alt: ExternalCohortDatum;
-  altRef: ExternalCohortDatum;
-  homozygotes: ExternalCohortDatum;
-  frequency: ExternalCohortDatum;
-  key: string;
+const formatFractionPercent = (nominator: number, denominator: number, total: number) => {
+  return `${nominator} / ${denominator} ${
+    nominator + denominator ? `(${(total * 100).toFixed(1)}%)` : ''
+  }`;
 };
 
-const hasAtLeastOneTruthyProperty = (obj: Omit<Row, "key" | "cohort">) =>
-  Object.values(obj).some((e) => e);
-
-const displayDefaultIfNeeded = (datum: ExternalCohortDatum) =>
-  datum == null ? DISPLAY_WHEN_EMPTY_DATUM : datum;
-
-const isExternalCohortsTableEmpty = (rows: Row[]) =>
-  rows.every(
-    ({ cohort, key, ...visibleRow }: Row) =>
-      !hasAtLeastOneTruthyProperty(visibleRow)
-  );
-
-const cohortsColumns = [
+const columns = [
   {
-    title: () => intl.get("screen.variantDetails.frequenciesTab.LDMColumn"),
-    dataIndex: "cohort",
-    render: (cohort: { cohortName: string; link?: string }) => {
-      const cohortName = cohort.cohortName;
-      if (["TopMed", "Gnomad Genomes (v3)"].includes(cohortName)) {
-        return (
-          <a href={cohort.link} target="_blank" rel="noopener noreferrer">
-            {cohortName}
-          </a>
-        );
-      }
-      return cohortName;
-    },
+    title: () => intl.get('screen.variant.entity.frequencyTab.analysis'),
+    dataIndex: 'analysis_code',
   },
   {
-    title: () => intl.get("screen.variantDetails.frequenciesTab.nbAllelesAlt"),
-    dataIndex: "alt",
-    render: displayDefaultIfNeeded,
+    title: () => intl.get('screen.variant.entity.frequencyTab.all.patients'),
+    children: [
+      {
+        title: () => intl.get('screen.variant.entity.frequencyTab.frequency.abbv'),
+        dataIndex: 'total',
+        render: (total: BoundType) => formatFractionPercent(total?.pc, total?.pn, total?.pf),
+      },
+      {
+        title: () => intl.get('screen.variant.entity.frequencyTab.homozygote.abbv'),
+        dataIndex: 'total',
+        render: (total: BoundType) => total?.hom,
+      },
+    ],
   },
   {
-    title: () =>
-      intl.get("screen.variantDetails.frequenciesTab.nbAllelesAltRef"),
-    dataIndex: "altRef",
-    render: displayDefaultIfNeeded,
+    title: () => intl.get('screen.variant.entity.frequencyTab.affected.patients'),
+    children: [
+      {
+        title: () => intl.get('screen.variant.entity.frequencyTab.frequency.abbv'),
+        dataIndex: 'affected',
+        render: (affected: BoundType) =>
+          formatFractionPercent(affected?.pc, affected?.pn, affected?.pf),
+      },
+      {
+        title: () => intl.get('screen.variant.entity.frequencyTab.homozygote.abbv'),
+        dataIndex: 'affected',
+        render: (affected: BoundType) => affected?.hom,
+      },
+    ],
   },
   {
-    title: () => intl.get("screen.variantDetails.frequenciesTab.nbHomozygotes"),
-    dataIndex: "homozygotes",
-    render: displayDefaultIfNeeded,
-  },
-  {
-    title: () => intl.get("screen.variantDetails.frequenciesTab.frequencies"),
-    dataIndex: "frequency",
-    render: displayDefaultIfNeeded,
+    title: () => intl.get('screen.variant.entity.frequencyTab.nonaffected.patients'),
+    children: [
+      {
+        title: () => intl.get('screen.variant.entity.frequencyTab.frequency.abbv'),
+        dataIndex: 'non_affected',
+        render: (non_affected: BoundType) =>
+          formatFractionPercent(non_affected?.pc, non_affected?.pn, non_affected?.pf),
+      },
+      {
+        title: () => intl.get('screen.variant.entity.frequencyTab.homozygote.abbv'),
+        dataIndex: 'non_affected',
+        render: (non_affected: BoundType) => non_affected?.hom,
+      },
+    ],
   },
 ];
 
-const makeRowFromFrequencies = (
-  frequencies: FrequenciesEntity,
-  locus: string
-): Row[] => {
-  if (!frequencies || Object.keys(frequencies).length === 0) {
-    return [];
-  }
+const makeRows = (freqByAnalysis: ArrangerEdge<FrequencyByAnalysisEntity>[]) =>
+  freqByAnalysis.map((analysis) => ({
+    key: analysis.node.analysis_code,
+    ...analysis.node,
+  }));
 
-  const topmed = frequencies.topmed_bravo || {};
-  const gnomadGenomes3 = frequencies.gnomad_genomes_3_0 || {};
-  const gnomadGenomes2_1_1 = frequencies.gnomad_genomes_2_1_1 || {};
-  const gnomadExomes2_1_1 = frequencies.gnomad_exomes_2_1_1 || {};
-  const oneThousandsGenomes = frequencies.thousand_genomes || {};
-
-  return [
-    {
-      cohort: {
-        cohortName: "TopMed",
-        link: `https://bravo.sph.umich.edu/freeze8/hg38/variant/snv/${locus}`,
-      },
-      alt: topmed.ac,
-      altRef: topmed.an,
-      homozygotes: topmed.hom,
-      frequency: toExponentialNotation(topmed.af),
-    },
-    {
-      cohort: {
-        cohortName: "Gnomad Genomes (v3)",
-        link: `https://gnomad.broadinstitute.org/variant/${locus}?dataset=gnomad_r3`,
-      },
-      alt: gnomadGenomes3.ac,
-      altRef: gnomadGenomes3.an,
-      homozygotes: gnomadGenomes3.hom,
-      frequency: toExponentialNotation(gnomadGenomes3.af),
-    },
-    {
-      cohort: {
-        cohortName: "Gnomad Genomes (v2.1.1)",
-      },
-      alt: gnomadGenomes2_1_1.ac,
-      altRef: gnomadGenomes2_1_1.an,
-      homozygotes: gnomadGenomes2_1_1.hom,
-      frequency: toExponentialNotation(gnomadGenomes2_1_1.af),
-    },
-    {
-      cohort: {
-        cohortName: "Gnomad Exomes (v2.1.1)",
-      },
-      alt: gnomadExomes2_1_1.ac,
-      altRef: gnomadExomes2_1_1.an,
-      homozygotes: gnomadExomes2_1_1.hom,
-      frequency: toExponentialNotation(gnomadExomes2_1_1.af),
-    },
-    {
-      cohort: {
-        cohortName: "1000 Genomes",
-      },
-      alt: oneThousandsGenomes.ac,
-      altRef: oneThousandsGenomes.an,
-      homozygotes: oneThousandsGenomes.hom,
-      frequency: toExponentialNotation(oneThousandsGenomes.af),
-    },
-  ].map((row, index) => ({ ...row, key: `${index}` }));
-};
-
-const FrequencyPanel = ({ hash, className = "" }: OwnProps) => {
+const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
   const { loading, data, error } = useTabFrequenciesData(hash);
 
   if (error) {
     return <ServerError />;
   }
 
-  const externalCohortsRows = makeRowFromFrequencies(
-    data.frequencies,
-    data.locus
-  );
-  const hasEmptyCohorts = isExternalCohortsTableEmpty(externalCohortsRows);
+  let frequencies_by_analysis = makeRows(data.frequencies_by_analysis);
+  frequencies_by_analysis.push({
+    analysis_code: 'RQDM',
+    ...data.frequency_RQDM,
+  });
 
   return (
     <StackLayout className={cx(styles.frequencyPanel, className)} vertical>
       <Space direction="vertical" size={12}>
         <Spin spinning={loading}>
           <Card
-            title={intl.get(
-              "screen.variantDetails.summaryTab.externalCohortsTable.title"
-            )}
+            title={intl.get('screen.variant.entity.frequencyTab.card.title', {
+              variant: data.locus,
+            })}
           >
-            {!hasEmptyCohorts ? (
+            {true ? (
               <Table
+                bordered
                 size="small"
-                dataSource={externalCohortsRows}
-                columns={cohortsColumns}
+                dataSource={frequencies_by_analysis}
+                columns={columns}
                 pagination={false}
               />
             ) : (

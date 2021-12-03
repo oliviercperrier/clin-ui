@@ -27,18 +27,28 @@
     > tr {
       > th {
         background-color: @gray-3;
-        height: 40px;
+      }
+    }
+  }
+
+  &:not(.@{table-prefix-cls}-bordered) {
+    .@{table-prefix-cls}-tbody {
+      > tr {
+        border-bottom: 1px solid @gray-4;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        > td {
+          color: @primary-color;
+          border: none;
+        }
       }
     }
   }
 
   &-tbody {
-    > tr {
-      > td {
-        height: 40px;
-        border: none;
-      }
-    }
     > tr:nth-child(even) {
       background-color: @gray-2;
     }
@@ -55,7 +65,7 @@
       }
 
       &-menu-item {
-        .@{ant-prefix}-checkbox { 
+        .@{ant-prefix}-checkbox {
           &-wrapper {
             display: flex;
             align-items: center;

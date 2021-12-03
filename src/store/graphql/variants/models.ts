@@ -16,6 +16,20 @@ export type FrequenciesEntity = {
   gnomad_genomes_3_0: BoundType;
 };
 
+export type FrequencyByAnalysisEntity = {
+  id: string;
+  analysis_code: string;
+  affected: BoundType;
+  non_affected: BoundType;
+  total: BoundType;
+}
+
+export type frequency_RQDMEntity = {
+  affected: BoundType;
+  non_affected: BoundType;
+  total: BoundType;
+}
+
 export type DonorsEntity = {
   id: string;
   patient_id: string;
@@ -50,13 +64,12 @@ export type VariantEntity = {
   variant_class: string;
   rsnumber: string;
   variant_type: string;
-  frequency_RQDM: {
-    total: BoundType;
-  };
+  frequency_RQDM: frequency_RQDMEntity;
   consequences?: ArrangerResultsTree<ConsequenceEntity>;
   genes?: ArrangerResultsTree<GeneEntity>;
   donors?: ArrangerResultsTree<DonorsEntity>;
   external_frequencies?: FrequenciesEntity;
+  frequencies_by_analysis?: FrequencyByAnalysisEntity;
   chromosome: string;
   start: string;
   alternate: string;
