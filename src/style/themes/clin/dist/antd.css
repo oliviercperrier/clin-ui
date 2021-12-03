@@ -25710,6 +25710,15 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-tabs-nav .ant-tabs-tab:not(.ant-tabs-nav .ant-tabs-tab-active) span svg {
   fill: #8b9db2;
 }
+.ant-tabs-card .ant-tabs-content-holder {
+  padding: 24px;
+  padding-bottom: 8px;
+  border: 1px solid #e1e8ef;
+  border-top: none;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-color: white;
+}
 .ant-drawer-header-title {
   overflow: hidden;
 }
