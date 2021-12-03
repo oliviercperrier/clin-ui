@@ -976,6 +976,7 @@ const fr = {
   'screen.variantDetails.patientsTab.changeStatus.notification.success': 'Statut mis à jour',
   'screen.variantDetails.patientsTab.count': '{qty} patient(s)',
   'screen.variantDetails.patientsTab.donor': 'Patient',
+  'screen.variantDetails.patientsTab.analysis': 'Analyse',
   'screen.variantDetails.patientsTab.exomiserScore': 'Score Exomiser',
   'screen.variantDetails.patientsTab.familyId': 'Famille',
   'screen.variantDetails.patientsTab.female': 'Femme',
@@ -1136,7 +1137,14 @@ const fr = {
   'filter.suggester.search.variants.tooltip': "Entrer un Locus de Variant, Symbol de gène, Alias de gène, Gène AA Change, dbSNP ID, Clinvar ID, Ensembl ID, refseq ID",
   'filter.suggester.search.noresults': "Aucune résultat",
   'filter.suggester.search.genes': "Recherche par gène",
-  'filter.suggester.search.genes.tooltip': "Entrer un Symbole de gène, Alias de gène ou Ensembl ID"
+  'filter.suggester.search.genes.tooltip': "Entrer un Symbole de gène, Alias de gène ou Ensembl ID",
+  'screen.variant.entity.frequencyTab.all.patients': "Tous les patients",
+  'screen.variant.entity.frequencyTab.affected.patients': "Patients affectés",
+  'screen.variant.entity.frequencyTab.nonaffected.patients': "Patients non-affectés",
+  'screen.variant.entity.frequencyTab.frequency.abbv': "Fréq.",
+  'screen.variant.entity.frequencyTab.homozygote.abbv': "Homo",
+  'screen.variant.entity.frequencyTab.analysis': "Analyse",
+  'screen.variant.entity.frequencyTab.card.title': "Nombre de patients avec le variant {variant}",
 };
 
 export default fr;

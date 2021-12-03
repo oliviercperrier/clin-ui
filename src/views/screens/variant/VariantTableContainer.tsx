@@ -104,6 +104,7 @@ const VariantTableContainer = (props: OwnProps) => {
     {
       title: () => intl.get('screen.patientvariant.results.table.clinvar'),
       dataIndex: 'clinvar',
+      className: cx(style.variantTableCell, style.variantTableCellElipsis),
       render: (clinVar: ClinVar) =>
         clinVar?.clin_sig && clinVar.clinvar_id ? (
           <a
@@ -119,10 +120,10 @@ const VariantTableContainer = (props: OwnProps) => {
     },
     {
       title: () => intl.get('screen.variantsearch.table.gnomAd'),
-      dataIndex: 'frequencies',
-      render: (frequencies: FrequenciesEntity) =>
-        frequencies.gnomad_exomes_2_1_1
-          ? frequencies.gnomad_exomes_2_1_1.af.toPrecision(4)
+      dataIndex: 'external_frequencies',
+      render: (external_frequencies: FrequenciesEntity) =>
+      external_frequencies.gnomad_exomes_2_1_1
+          ? external_frequencies.gnomad_exomes_2_1_1.af.toPrecision(4)
           : DISPLAY_WHEN_EMPTY_DATUM,
     },
     {

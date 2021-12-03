@@ -28,6 +28,7 @@ const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
     organization_id: donor.node.organization_id,
     gender: donor.node.gender.toLowerCase(),
     is_proband: donor.node.is_proband,
+    analysis_code: donor.node.analysis_code,
     family_id: donor.node.family_id,
     last_update: formatTimestampToISODate(donor.node.last_update as number),
     qd: donor.node.qd,
@@ -55,6 +56,10 @@ const PatientPanel = ({ hash, className = "" }: OwnProps) => {
     {
       dataIndex: "patient_id",
       title: () => intl.get("screen.variantDetails.patientsTab.donor"),
+    },
+    {
+      dataIndex: "analysis_code",
+      title: () => intl.get("screen.variantDetails.patientsTab.analysis"),
     },
     {
       dataIndex: "gender",
