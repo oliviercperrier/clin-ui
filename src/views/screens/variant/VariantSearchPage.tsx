@@ -100,18 +100,18 @@ const filterGroups: {
       {
         title: "screen.patientvariant.filter.grouptitle.rqdmpatient",
         fields: [
-          "frequencies__internal__af",
+          "frequency_RQDM__total__af",
         ],
       },
       {
         title: "screen.patientvariant.filter.grouptitle.publiccohorts",
         fields: [
-          "frequencies__gnomad_genomes_2_1_1__af",
-          "frequencies__gnomad_genomes_3_0__af",
-          "frequencies__gnomad_genomes_3_1_1__af",
-          "frequencies__gnomad_exomes_2_1_1__af",
-          "frequencies__topmed_bravo__af",
-          "frequencies__thousand_genomes__af",
+          "external_frequencies__gnomad_genomes_2_1_1__af",
+          "external_frequencies__gnomad_genomes_3_0__af",
+          "external_frequencies__gnomad_genomes_3_1_1__af",
+          "external_frequencies__gnomad_exomes_2_1_1__af",
+          "external_frequencies__topmed_bravo__af",
+          "external_frequencies__thousand_genomes__af",
         ],
       },
     ],
