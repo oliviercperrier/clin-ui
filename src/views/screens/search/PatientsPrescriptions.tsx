@@ -46,6 +46,7 @@ const PrescriptionSearch = (): React.ReactElement => {
       <ContentHeader title={intl.get('screen.patientsearch.title')} />
       <StackLayout className={styles.pageWrapper} orientation={StackOrientation.Horizontal}>
         <Sidebar
+          isLoading={prescriptions.loading}
           aggregations={prescriptions.aggregations}
           extendedMapping={extendedMapping}
           filters={sqonFilters}
