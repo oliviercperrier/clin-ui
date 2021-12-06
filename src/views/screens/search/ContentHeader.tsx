@@ -56,10 +56,12 @@ const ContentHeader = ({
           redirectParent(`/patient/${id}`);
         }}
         options={autoCompleteResults(searchResults?.data || [])}
+        size="large"
       >
         <Input
           placeholder={intl.get('screen.patientsearch.placeholder')}
           prefix={<SearchOutlined />}
+          size="large"
         />
       </AutoComplete>
       <Button
