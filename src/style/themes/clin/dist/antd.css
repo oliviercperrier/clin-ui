@@ -25546,6 +25546,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-collapse-content {
   border-top: 1px solid #e1e8ef;
 }
+.ant-collapse-header {
+  border-radius: 2px;
+}
 .ant-collapse > .ant-collapse-item {
   border: none !important;
 }

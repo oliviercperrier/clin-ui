@@ -10,6 +10,7 @@ import { ColumnType } from 'antd/lib/table';
 import { DonorsEntity } from 'store/graphql/variants/models';
 import { formatTimestampToISODate } from 'utils/helper';
 import { ArrangerEdge, ArrangerResultsTree } from 'store/graphql/models';
+import { ItemsCount } from 'components/table/ItemsCount';
 
 import styles from './index.module.scss';
 
@@ -43,12 +44,16 @@ const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
 
 const PatientPanel = ({ hash, className = '' }: OwnProps) => {
   const [currentTotal, setTotal] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageSize, setCurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
   const { loading, data, error } = useTabPatientData(hash);
   const donorsHits = (data?.donors as ArrangerResultsTree<DonorsEntity>)?.hits;
 
   useEffect(() => {
-    setTotal(donorsHits?.total!);
-  }, [donorsHits]);
+    if (!loading) {
+      setTotal(donorsHits?.total!);
+    }
+  }, [donorsHits, loading]);
 
   if (error) {
     return <ServerError />;
@@ -168,9 +173,7 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
     <StackLayout className={cx(styles.patientPanel, className)} vertical>
       <Spin spinning={loading}>
         <Card>
-          <div className={styles.tableTotalTitle}>
-            Résultats <strong>1 - {DEFAULT_PAGE_SIZE}</strong> sur <strong>{currentTotal}</strong>
-          </div>
+          <ItemsCount page={currentPage} size={currentPageSize} total={currentTotal} />
           <Table
             dataSource={dataSource}
             columns={columns}
@@ -179,6 +182,12 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
               defaultPageSize: DEFAULT_PAGE_SIZE,
               className: styles.patientPagination,
               hideOnSinglePage: true,
+              onChange: (page, pageSize) => {
+                if (currentPage !== page || currentPageSize !== pageSize) {
+                  setCurrentPage(page);
+                  setCurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
+                }
+              },
             }}
             onChange={(pagination, filters, sorter, extra) => {
               setTotal(extra.currentDataSource.length);

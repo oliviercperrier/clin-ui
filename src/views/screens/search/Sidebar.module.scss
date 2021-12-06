@@ -1,15 +1,17 @@
 @import 'style/themes/clin/_colors.scss';
 
 .siderContainer {
-  margin-right: 16px;
+  padding: 16px;
+  padding-bottom: 0;
   overflow: visible !important;
-  max-height: 100%;
-  height: calc(100% - 18px);
+  height: 100%;
+  border-right: 1px solid $gray-5;
 
   &:first-child > span {
     display: flex;
     justify-content: flex-start;
     color: $gray-8;
+    font-size: 21px;
   }
 
   & > .scrollView {
@@ -20,7 +22,7 @@
     width: 320px;
 
     & > :not(:first-child) > div {
-      margin-top: 16px;
+      margin-top: 8px;
     }
 
     & > .filters {

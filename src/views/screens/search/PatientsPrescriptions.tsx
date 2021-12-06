@@ -45,9 +45,9 @@ const PrescriptionSearch = (): React.ReactElement => {
   const extendedMapping = usePrescriptionMapping();
 
   return (
-    <StackLayout orientation={StackOrientation.Vertical}>
+    <StackLayout className={styles.layout} orientation={StackOrientation.Vertical}>
       <ContentHeader title={intl.get('screen.patientsearch.title')} />
-      <StackLayout className={styles.layout} orientation={StackOrientation.Horizontal}>
+      <StackLayout className={styles.pageWrapper} orientation={StackOrientation.Horizontal}>
         <Sidebar
           aggregations={prescriptions.aggregations}
           extendedMapping={extendedMapping}
@@ -55,23 +55,21 @@ const PrescriptionSearch = (): React.ReactElement => {
           results={prescriptions.data}
         />
         <ScrollView className={styles.scrollContent}>
-          <div title="Studies">
-            <ContentContainer
-              extendedMapping={extendedMapping}
-              filters={sqonFilters}
-              pagination={{
-                current: currentPage,
-                onChange: (page, pageSize) => setCurrentPage(page),
-              }}
-              patients={patients}
-              prescriptions={prescriptions}
-              searchResults={searchResults}
-              tabs={{
-                currentTab,
-                setCurrentTab,
-              }}
-            />
-          </div>
+          <ContentContainer
+            extendedMapping={extendedMapping}
+            filters={sqonFilters}
+            pagination={{
+              current: currentPage,
+              onChange: (page, pageSize) => setCurrentPage(page),
+            }}
+            patients={patients}
+            prescriptions={prescriptions}
+            searchResults={searchResults}
+            tabs={{
+              currentTab,
+              setCurrentTab,
+            }}
+          />
         </ScrollView>
       </StackLayout>
     </StackLayout>
