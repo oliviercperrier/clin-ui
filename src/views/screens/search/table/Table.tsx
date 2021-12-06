@@ -10,26 +10,21 @@ import { TColumn } from './columns';
 
 import styles from './table.module.scss';
 
-export type Props =  {
-  results: GqlResults<PrescriptionResult|PatientResult> | null,
-  total: number,
-  pagination: TablePaginationConfig
+export type Props = {
+  results: GqlResults<PrescriptionResult | PatientResult> | null;
+  total: number;
+  pagination: TablePaginationConfig;
 };
 
 type TableProps = Props & {
-  columns: TColumn[],
+  columns: TColumn[];
 };
 
 const ITEM_PER_PAGE = 25;
 
 const Table = ({ columns, pagination, results, total }: TableProps): React.ReactElement => (
   <>
-    <ItemsCount
-      className={styles.headerInfo}
-      page={pagination.current || 1}
-      size={ITEM_PER_PAGE}
-      total={total}
-    />
+    <ItemsCount page={pagination.current || 1} size={ITEM_PER_PAGE} total={total} />
     <AntTable
       className={styles.table}
       columns={columns}
@@ -37,7 +32,7 @@ const Table = ({ columns, pagination, results, total }: TableProps): React.React
       pagination={{
         ...pagination,
         pageSize: ITEM_PER_PAGE,
-        position: ['bottomLeft']
+        position: ['bottomLeft'],
       }}
     />
   </>

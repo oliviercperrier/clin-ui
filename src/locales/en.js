@@ -939,6 +939,8 @@ const en = {
   'screen.variant.entity.frequencyTab.analysis': "Analysis",
   'screen.variant.entity.frequencyTab.card.title': "Number of patients with the variant {variant}",
   'screen.variant.entity.frequencyTab.RQDM.title': "Quebec molecular diagnostic network",
+  'component.table.itemcount.results': 'Results',
+  'component.table.itemcount.of': 'of',
 };
 
 export default en;

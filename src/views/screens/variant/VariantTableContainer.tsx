@@ -25,6 +25,7 @@ import { navigateTo } from 'utils/helper';
 import style from './VariantTableContainer.module.scss';
 import OccurenceDrawer from './OccurenceDrawer';
 import { ColumnType } from 'antd/lib/table';
+import { ItemsCount } from 'components/table/ItemsCount';
 
 const DEFAULT_PAGE_NUM = 1;
 const DEFAULT_PAGE_SIZE = 10;
@@ -170,9 +171,11 @@ const VariantTableContainer = (props: OwnProps) => {
 
   return (
     <>
-      <div className={style.tabletotalTitle}>
-        Résultats <strong>1 - {DEFAULT_PAGE_SIZE}</strong> sur <strong>{total}</strong>
-      </div>
+      <ItemsCount
+        page={currentPageNum}
+        size={currentPageSize}
+        total={total}
+      />
       <Table
         size="small"
         loading={results.loading}
