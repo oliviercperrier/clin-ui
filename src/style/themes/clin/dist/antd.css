@@ -21192,7 +21192,7 @@ span.ant-radio + * {
   margin: -8px -8px -8px 25px;
 }
 .ant-table-small .ant-table-thead > tr > th {
-  background-color: #f8fafc;
+  background-color: #f1f5f9;
 }
 .ant-table-small .ant-table-selection-column {
   width: 46px;
@@ -21464,23 +21464,23 @@ div.ant-table-summary {
   transition: all 0.3s;
 }
 .ant-table-thead th.ant-table-column-has-sorters:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background: #e1e8ef;
 }
 .ant-table-thead th.ant-table-column-has-sorters:hover::before {
   background-color: transparent !important;
 }
 .ant-table-thead th.ant-table-column-has-sorters.ant-table-cell-fix-left:hover,
 .ant-table-thead th.ant-table-column-has-sorters.ant-table-cell-fix-right:hover {
-  background: #f5f5f5;
+  background: #eaf3fa;
 }
 .ant-table-thead th.ant-table-column-sort {
-  background: #f5f5f5;
+  background: #eaf3fa;
 }
 .ant-table-thead th.ant-table-column-sort::before {
   background-color: transparent !important;
 }
 td.ant-table-column-sort {
-  background: #f8fafc;
+  background: #eaf3fa;
 }
 .ant-table-column-title {
   position: relative;
@@ -21546,7 +21546,7 @@ td.ant-table-column-sort {
 }
 .ant-table-filter-trigger:hover {
   color: rgba(0, 0, 0, 0.45);
-  background: rgba(0, 0, 0, 0.04);
+  background: #eaf3fa;
 }
 .ant-table-filter-trigger.active {
   color: #0a5085;
@@ -25505,9 +25505,6 @@ div.ant-typography-edit-content.ant-typography-rtl {
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fBBc9.ttf) format('truetype');
 }
-.ant-table {
-  font-size: 14px;
-}
 .ant-table-cell a {
   text-decoration: underline;
 }
@@ -25517,8 +25514,8 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-table-content {
   overflow: auto;
 }
-.ant-table-thead > tr > th {
-  background-color: #f1f5f9;
+.ant-table-thead th.ant-table-column-sort {
+  background: #eaf3fa !important;
 }
 .ant-table:not(.ant-table-bordered) .ant-table-tbody > tr {
   border-bottom: 1px solid #e1e8ef;

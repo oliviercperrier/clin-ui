@@ -183,6 +183,7 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
               className: styles.patientPagination,
               hideOnSinglePage: true,
               onChange: (page, pageSize) => {
+                console.log(pageSize)
                 if (currentPage !== page || currentPageSize !== pageSize) {
                   setCurrentPage(page);
                   setCurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);

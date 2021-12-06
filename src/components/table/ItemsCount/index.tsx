@@ -13,12 +13,14 @@ type Props = {
 };
 
 export const ItemsCount = ({ className = '', page, size, total }: Props): React.ReactElement => {
+  const isLastPage = page >= total / size;
+  const hasLessThanPageSize = total % size > 0;
   const from = (page - 1) * size + 1;
-  const to = from + size - 1;
+  const to = from + (isLastPage && hasLessThanPageSize ? total % size : size) - 1;
 
   return (
     <div className={cx(className, style.itemCount)}>
-      {total < to ? (
+      {to < size && page === 1 || total == 0 ? (
         <>
           <Typography.Text strong>{total} </Typography.Text>
           <Typography.Text>
