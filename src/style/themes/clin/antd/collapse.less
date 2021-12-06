@@ -6,12 +6,12 @@
     border-top: 1px solid @gray-4;
   }
 
-  &-header {
-    border-radius: 2px;
-  }
-
   & > &-item {
     border: none !important;
+
+    &:last-child {
+      border-radius: 2px;
+    }
 
     > .@{collapse-prefix-cls}-header {
       display: flex;
