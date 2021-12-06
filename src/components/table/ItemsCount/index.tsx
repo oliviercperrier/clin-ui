@@ -20,7 +20,7 @@ export const ItemsCount = ({ className = '', page, size, total }: Props): React.
       <Typography.Text>{intl.get('component.table.itemcount.results')}</Typography.Text>
       <Typography.Text strong>
         {' '}
-        {from}-{to}
+        {from} - {to}
       </Typography.Text>
       <Typography.Text> {intl.get('component.table.itemcount.of')}</Typography.Text>
       <Typography.Text strong> {total}</Typography.Text>
