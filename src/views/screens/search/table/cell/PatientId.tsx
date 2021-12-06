@@ -1,4 +1,3 @@
-import { Button } from 'antd';
 import { redirectParent } from 'utils/bridge';
 
 type PatientIdCellProps = {
@@ -6,14 +5,13 @@ type PatientIdCellProps = {
 };
 
 const PatientIdCell = ({ patientId }: PatientIdCellProps) => (
-  <Button
-    type="link"
+  <a
     onClick={() => {
       redirectParent(`/patient/${patientId}`);
     }}
   >
     {patientId}
-  </Button>
+  </a>
 );
 
 export default PatientIdCell;
