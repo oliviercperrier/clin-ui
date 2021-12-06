@@ -4,7 +4,7 @@ import intl from 'react-intl-universal';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { useTabPatientData } from 'store/graphql/variants/tabActions';
 import ServerError from 'components/Results/ServerError';
-import { Card, Table, Spin, Tag } from 'antd';
+import { Card, Table, Spin, Tag, Tooltip } from 'antd';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 import { ColumnType } from 'antd/lib/table';
 import { DonorsEntity } from 'store/graphql/variants/models';
@@ -29,10 +29,12 @@ const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
     gender: donor.node.gender.toLowerCase(),
     is_proband: donor.node.is_proband,
     analysis_code: donor.node.analysis_code,
+    analysis_display_name: donor.node.analysis_display_name,
     family_id: donor.node.family_id,
     last_update: formatTimestampToISODate(donor.node.last_update as number),
     qd: donor.node.qd,
     gq: donor.node.gq,
+    filters: donor.node.filters,
     ad_alt: donor.node.ad_alt,
     ad_total: donor.node.ad_total,
     ad_ratio: donor.node.ad_ratio,
@@ -58,8 +60,13 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
       title: () => intl.get('screen.variantDetails.patientsTab.donor'),
     },
     {
-      dataIndex: 'analysis_code',
       title: () => intl.get('screen.variantDetails.patientsTab.analysis'),
+      render: (data) =>
+        data.analysis_display_name ? (
+          <Tooltip title={data.analysis_display_name}>{data.analysis_code}</Tooltip>
+        ) : (
+          data.analysis_code
+        ),
     },
     {
       dataIndex: 'gender',
@@ -117,6 +124,11 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
       dataIndex: 'family_id',
       title: () => intl.get('screen.variantDetails.patientsTab.familyId'),
       render: (family_id) => (family_id ? family_id : DISPLAY_WHEN_EMPTY_DATUM),
+    },
+    {
+      dataIndex: 'filters',
+      title: () => intl.get('screen.variantDetails.patientsTab.filter'),
+      render: (filters) => (filters ? filters[0] : DISPLAY_WHEN_EMPTY_DATUM),
     },
     {
       dataIndex: 'qd',

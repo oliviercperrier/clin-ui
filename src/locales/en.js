@@ -790,6 +790,7 @@ const en = {
   'screen.variantDetails.patientsTab.affected': 'Affected',
   'screen.variantDetails.patientsTab.notaffected': 'Not affected',
   'screen.variantDetails.patientsTab.status': 'Status',
+  'screen.variantDetails.patientsTab.filter': 'Filter',
   'screen.variantdetails.seeLess': 'See Less',
   'screen.variantdetails.seeMore': 'See More',
   'screen.variantDetails.panel.emptyTable': 'No data Available',

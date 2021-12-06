@@ -110,11 +110,12 @@ const filterGroups: {
   [FilterTypes.Occurrence]: {
     groups: [
       {
-        fields: ['donors__zygosity' /*'donors__transmission'*/],
+        fields: ['donors__zygosity', 'donors__transmission'],
       },
       {
         title: 'screen.patientvariant.category_metric',
         fields: [
+          'donors__filters',
           'donors__qd',
           'donors__ad_alt',
           'donors__ad_total',

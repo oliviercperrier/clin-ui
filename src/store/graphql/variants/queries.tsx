@@ -57,6 +57,7 @@ export const VARIANT_QUERY = gql`
                     affected_status
                     qd
                     gq
+                    filters
                     mother_zygosity
                     mother_affected_status
                     mother_calls
@@ -388,6 +389,7 @@ export const TAB_PATIENT_QUERY = gql`
                     analysis_code
                     analysis_display_name
                     gender
+                    filters
                     is_proband
                     family_id
                     zygosity
