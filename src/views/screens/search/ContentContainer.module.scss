@@ -2,7 +2,7 @@
 @import "style/themes/clin/_layout.scss";
 
 .containerLayout {
-  & > * {
+  & > *:first-child {
     margin-bottom: 24px;
   }
 }
