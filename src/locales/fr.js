@@ -1148,6 +1148,7 @@ const fr = {
   'screen.variant.entity.frequencyTab.card.title': "Nombre de patients avec le variant {variant}",
   'screen.variant.entity.frequencyTab.RQDM.title': "Réseau québecois de diagnostic moléculaire",
   'component.table.itemcount.results': 'Résultats',
+  'component.table.itemcount.result': 'Résultat',
   'component.table.itemcount.of': 'sur',
 };
 
