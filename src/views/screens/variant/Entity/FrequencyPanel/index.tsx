@@ -47,15 +47,14 @@ const formatFractionPercent = (nominator: number, denominator: number, total: nu
 const freqByAnalysisColumns = [
   {
     title: () => intl.get('screen.variant.entity.frequencyTab.analysis'),
-    render: (freqByAnalysis: FrequencyByAnalysisEntity) => {
-      return freqByAnalysis.analysis_display_name ? (
+    render: (freqByAnalysis: FrequencyByAnalysisEntity) =>
+      freqByAnalysis.analysis_display_name ? (
         <Tooltip title={freqByAnalysis.analysis_display_name}>
           {freqByAnalysis.analysis_code}
         </Tooltip>
       ) : (
         freqByAnalysis.analysis_code
-      );
-    },
+      ),
   },
   {
     title: () => intl.get('screen.variant.entity.frequencyTab.all.patients'),
