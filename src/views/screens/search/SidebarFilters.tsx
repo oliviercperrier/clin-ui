@@ -50,7 +50,7 @@ const SidebarFilters = ({
     );
   }
 
-  return <>{generateFilters(aggregations, extendedMapping)}</>;
+  return <>{generateFilters(aggregations, extendedMapping, style.facetCollapse)}</>;
 };
 
 export default SidebarFilters;
