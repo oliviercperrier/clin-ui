@@ -1,10 +1,11 @@
+@input-placeholder-color: @gray-6;
+@input-border-color: @border;
+@input-hover-border-color: @blue-7;
+@input-icon-hover-color: @gray-6;
+
 .@{input-prefix-cls} {
   &::placeholder {
     color: @gray-6 !important;
-  }
-
-  &:hover {
-      border-color: @blue-7;
   }
 
   &-number,
@@ -14,11 +15,6 @@
     box-shadow: none;
     border-radius: 2px;
     box-sizing: border-box;
-    
-
-    &-hover, &:hover {
-      border: 1px solid @blue-7;
-    }
 
     &-focused, &:focus {
       border: 1px solid @blue-7;
