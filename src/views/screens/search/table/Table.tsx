@@ -35,6 +35,7 @@ const Table = ({ columns, pagination, results, total }: TableProps): React.React
         position: ['bottomRight'],
         size: 'small',
       }}
+      size="small"
     />
   </>
 );
