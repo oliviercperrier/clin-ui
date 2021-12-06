@@ -163,12 +163,11 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
             dataSource={dataSource}
             columns={columns}
             size="small"
-            pagination={
-              dataSource.length > DEFAULT_PAGE_SIZE && {
-                defaultPageSize: DEFAULT_PAGE_SIZE,
-                className: styles.patientPagination,
-              }
-            }
+            pagination={{
+              defaultPageSize: DEFAULT_PAGE_SIZE,
+              className: styles.patientPagination,
+              hideOnSinglePage: true,
+            }}
             onChange={(pagination, filters, sorter, extra) => {
               setTotal(extra.currentDataSource.length);
             }}
