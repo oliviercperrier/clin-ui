@@ -3,11 +3,17 @@ import cx from 'classnames';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { useTabFrequenciesData } from 'store/graphql/variants/tabActions';
 import intl from 'react-intl-universal';
-import { Card, Table, Spin, Space } from 'antd';
-import { BoundType, FrequencyByAnalysisEntity } from 'store/graphql/variants/models';
+import { Card, Table, Spin, Space, Tooltip } from 'antd';
+import {
+  BoundType,
+  ExternalFrequenciesEntity,
+  FrequencyByAnalysisEntity,
+} from 'store/graphql/variants/models';
 import ServerError from 'components/Results/ServerError';
 import NoData from 'views/screens/variant/Entity/NoData';
 import { ArrangerEdge } from 'store/graphql/models';
+import { toExponentialNotation } from 'utils/helper';
+import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 
 import styles from './index.module.scss';
 
@@ -16,16 +22,40 @@ interface OwnProps {
   hash: string;
 }
 
+type ExternalFreqDatum = number | string | null;
+type ExternalFreqRow = {
+  cohort: {
+    cohortName: string;
+    link?: string;
+  };
+  alt: ExternalFreqDatum;
+  altRef: ExternalFreqDatum;
+  homozygotes: ExternalFreqDatum;
+  frequency: ExternalFreqDatum;
+  key: string;
+};
+
+const displayDefaultIfNeeded = (datum: ExternalFreqDatum) =>
+  datum == null ? DISPLAY_WHEN_EMPTY_DATUM : datum;
+
 const formatFractionPercent = (nominator: number, denominator: number, total: number) => {
   return `${nominator} / ${denominator} ${
     nominator + denominator ? `(${(total * 100).toFixed(1)}%)` : ''
   }`;
 };
 
-const columns = [
+const freqByAnalysisColumns = [
   {
     title: () => intl.get('screen.variant.entity.frequencyTab.analysis'),
-    dataIndex: 'analysis_code',
+    render: (freqByAnalysis: FrequencyByAnalysisEntity) => {
+      return freqByAnalysis.analysis_display_name ? (
+        <Tooltip title={freqByAnalysis.analysis_display_name}>
+          {freqByAnalysis.analysis_code}
+        </Tooltip>
+      ) : (
+        freqByAnalysis.analysis_code
+      );
+    },
   },
   {
     title: () => intl.get('screen.variant.entity.frequencyTab.all.patients'),
@@ -82,6 +112,114 @@ const makeRows = (freqByAnalysis: ArrangerEdge<FrequencyByAnalysisEntity>[]) =>
     ...analysis.node,
   }));
 
+const externalFreqColumns = [
+  {
+    title: () => intl.get('screen.variantDetails.frequenciesTab.LDMColumn'),
+    dataIndex: 'cohort',
+    render: (cohort: { cohortName: string; link?: string }) => {
+      const cohortName = cohort.cohortName;
+      if (['TopMed', 'Gnomad Genomes (v3)'].includes(cohortName)) {
+        return (
+          <a href={cohort.link} target="_blank" rel="noopener noreferrer">
+            {cohortName}
+          </a>
+        );
+      }
+      return cohortName;
+    },
+  },
+  {
+    title: () => intl.get('screen.variantDetails.frequenciesTab.nbAllelesAlt'),
+    dataIndex: 'alt',
+    render: displayDefaultIfNeeded,
+  },
+  {
+    title: () => intl.get('screen.variantDetails.frequenciesTab.nbAllelesAltRef'),
+    dataIndex: 'altRef',
+    render: displayDefaultIfNeeded,
+  },
+  {
+    title: () => intl.get('screen.variantDetails.frequenciesTab.nbHomozygotes'),
+    dataIndex: 'homozygotes',
+    render: displayDefaultIfNeeded,
+  },
+  {
+    title: () => intl.get('screen.variantDetails.frequenciesTab.frequencies'),
+    dataIndex: 'frequency',
+    render: displayDefaultIfNeeded,
+  },
+];
+
+const makeRowForExternalFreq = (
+  frequencies: ExternalFrequenciesEntity,
+  locus: string,
+): ExternalFreqRow[] => {
+  if (!frequencies || Object.keys(frequencies).length === 0) {
+    return [];
+  }
+
+  const topmed = frequencies.topmed_bravo || {};
+  const gnomadGenomes3 = frequencies.gnomad_genomes_3_0 || {};
+  const gnomadGenomes2_1_1 = frequencies.gnomad_genomes_2_1_1 || {};
+  const gnomadExomes2_1_1 = frequencies.gnomad_exomes_2_1_1 || {};
+  const oneThousandsGenomes = frequencies.thousand_genomes || {};
+
+  return [
+    {
+      cohort: {
+        cohortName: 'TopMed',
+        link: `https://bravo.sph.umich.edu/freeze8/hg38/variant/snv/${locus}`,
+      },
+      alt: topmed.ac,
+      altRef: topmed.an,
+      homozygotes: topmed.hom,
+      frequency: toExponentialNotation(topmed.af),
+    },
+    {
+      cohort: {
+        cohortName: 'Gnomad Genomes (v3)',
+        link: `https://gnomad.broadinstitute.org/variant/${locus}?dataset=gnomad_r3`,
+      },
+      alt: gnomadGenomes3.ac,
+      altRef: gnomadGenomes3.an,
+      homozygotes: gnomadGenomes3.hom,
+      frequency: toExponentialNotation(gnomadGenomes3.af),
+    },
+    {
+      cohort: {
+        cohortName: 'Gnomad Genomes (v2.1.1)',
+      },
+      alt: gnomadGenomes2_1_1.ac,
+      altRef: gnomadGenomes2_1_1.an,
+      homozygotes: gnomadGenomes2_1_1.hom,
+      frequency: toExponentialNotation(gnomadGenomes2_1_1.af),
+    },
+    {
+      cohort: {
+        cohortName: 'Gnomad Exomes (v2.1.1)',
+      },
+      alt: gnomadExomes2_1_1.ac,
+      altRef: gnomadExomes2_1_1.an,
+      homozygotes: gnomadExomes2_1_1.hom,
+      frequency: toExponentialNotation(gnomadExomes2_1_1.af),
+    },
+    {
+      cohort: {
+        cohortName: '1000 Genomes',
+      },
+      alt: oneThousandsGenomes.ac,
+      altRef: oneThousandsGenomes.an,
+      homozygotes: oneThousandsGenomes.hom,
+      frequency: toExponentialNotation(oneThousandsGenomes.af),
+    },
+  ].map((row, index) => ({ ...row, key: `${index}` }));
+};
+
+const isExternalFreqTableEmpty = (rows: ExternalFreqRow[]) =>
+  rows.every(
+    ({ cohort, key, ...visibleRow }: ExternalFreqRow) => !Object.values(visibleRow).some((e) => e),
+  );
+
 const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
   const { loading, data, error } = useTabFrequenciesData(hash);
 
@@ -92,8 +230,12 @@ const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
   let frequencies_by_analysis = makeRows(data.frequencies_by_analysis);
   frequencies_by_analysis.push({
     analysis_code: 'RQDM',
+    analysis_display_name: intl.get('screen.variant.entity.frequencyTab.RQDM.title'),
     ...data.frequency_RQDM,
   });
+
+  const externalCohortsRows = makeRowForExternalFreq(data.external_frequencies, data.locus);
+  const hasEmptyCohorts = isExternalFreqTableEmpty(externalCohortsRows);
 
   return (
     <StackLayout className={cx(styles.frequencyPanel, className)} vertical>
@@ -109,7 +251,21 @@ const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
                 bordered
                 size="small"
                 dataSource={frequencies_by_analysis}
-                columns={columns}
+                columns={freqByAnalysisColumns}
+                pagination={false}
+              />
+            ) : (
+              <NoData />
+            )}
+          </Card>
+        </Spin>
+        <Spin spinning={loading}>
+          <Card title={intl.get('screen.variantDetails.summaryTab.externalCohortsTable.title')}>
+            {!hasEmptyCohorts ? (
+              <Table
+                size="small"
+                dataSource={externalCohortsRows}
+                columns={externalFreqColumns}
                 pagination={false}
               />
             ) : (
