@@ -1145,6 +1145,7 @@ const fr = {
   'screen.variant.entity.frequencyTab.homozygote.abbv': "Homo",
   'screen.variant.entity.frequencyTab.analysis': "Analyse",
   'screen.variant.entity.frequencyTab.card.title': "Nombre de patients avec le variant {variant}",
+  'screen.variant.entity.frequencyTab.RQDM.title': "Réseau québecois de diagnostic moléculaire",
 };
 
 export default fr;

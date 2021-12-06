@@ -9,6 +9,7 @@
   &:first-child > span {
     display: flex;
     justify-content: flex-start;
+    color: $gray-8;
   }
 
   & > .scrollView {

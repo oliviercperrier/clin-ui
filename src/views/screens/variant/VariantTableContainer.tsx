@@ -14,7 +14,7 @@ import {
   VariantEntity,
   ClinVar,
   Consequence,
-  FrequenciesEntity,
+  ExternalFrequenciesEntity,
   DonorsEntity,
 } from 'store/graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
@@ -121,8 +121,8 @@ const VariantTableContainer = (props: OwnProps) => {
     {
       title: () => intl.get('screen.variantsearch.table.gnomAd'),
       dataIndex: 'external_frequencies',
-      render: (external_frequencies: FrequenciesEntity) =>
-      external_frequencies.gnomad_exomes_2_1_1
+      render: (external_frequencies: ExternalFrequenciesEntity) =>
+        external_frequencies.gnomad_exomes_2_1_1
           ? external_frequencies.gnomad_exomes_2_1_1.af.toPrecision(4)
           : DISPLAY_WHEN_EMPTY_DATUM,
     },
