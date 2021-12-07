@@ -85,13 +85,14 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
     },
     {
       title: () => intl.get('screen.variantDetails.patientsTab.analysis'),
-      filters: findAllAnalysis(donorsHits?.edges || []),
       render: (data) =>
         data.analysis_display_name ? (
           <Tooltip title={data.analysis_display_name}>{data.analysis_code}</Tooltip>
         ) : (
           data.analysis_code
         ),
+      filters: findAllAnalysis(donorsHits?.edges || []),
+      onFilter: (value, record: DonorsEntity) => value === record.analysis_code,
     },
     {
       dataIndex: 'gender',
