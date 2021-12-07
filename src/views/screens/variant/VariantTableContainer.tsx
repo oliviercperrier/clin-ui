@@ -129,8 +129,10 @@ const VariantTableContainer = (props: OwnProps) => {
     },
     {
       title: () => intl.get('screen.patientvariant.results.table.rqdm'),
-      dataIndex: 'donors',
-      render: (donors: ArrangerResultsTree<DonorsEntity>) => donors.hits.total,
+      render: (record: VariantEntity) =>
+        `${record.frequency_RQDM.total.pc} / ${record.frequency_RQDM.total.pn} (${(
+          record.frequency_RQDM.total.pf * 100
+        ).toPrecision(3)}%)`,
     },
     {
       title: () => intl.get('screen.patientvariant.results.table.zygosity'),
@@ -171,11 +173,7 @@ const VariantTableContainer = (props: OwnProps) => {
 
   return (
     <>
-      <ItemsCount
-        page={currentPageNum}
-        size={currentPageSize}
-        total={total}
-      />
+      <ItemsCount page={currentPageNum} size={currentPageSize} total={total} />
       <Table
         size="small"
         loading={results.loading}
