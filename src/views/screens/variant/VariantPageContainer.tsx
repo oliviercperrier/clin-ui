@@ -153,19 +153,21 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
             patientId={patientid}
           />
         </Tabs.TabPane>
-        <Tabs.TabPane
-          disabled
-          tab={intl.get('screen.patientvariant.results.table.genes') || 'Genes'}
-          key="genes"
-        >
-          <GeneTableContainer
-            results={results}
-            filters={filters}
-            setCurrentPageCb={setCurrentPageNum}
-            currentPageSize={currentPageSize}
-            setcurrentPageSize={setcurrentPageSize}
-          />
-        </Tabs.TabPane>
+        {/**
+          <Tabs.TabPane
+           disabled
+           tab={intl.get('screen.patientvariant.results.table.genes') || 'Genes'}
+           key="genes"
+          >
+           <GeneTableContainer
+             results={results}
+             filters={filters}
+             setCurrentPageCb={setCurrentPageNum}
+             currentPageSize={currentPageSize}
+             setcurrentPageSize={setcurrentPageSize}
+           />
+          </Tabs.TabPane>
+         */}
       </Tabs>
     </StackLayout>
   );

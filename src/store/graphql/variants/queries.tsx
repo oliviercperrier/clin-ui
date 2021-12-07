@@ -58,9 +58,11 @@ export const VARIANT_QUERY = gql`
                     qd
                     gq
                     filters
+                    mother_id
                     mother_zygosity
                     mother_affected_status
                     mother_calls
+                    father_id
                     father_zygosity
                     father_affected_status
                     father_calls
