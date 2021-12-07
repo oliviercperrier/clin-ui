@@ -69,6 +69,14 @@ export const VARIANT_QUERY = gql`
               }
             }
 
+            frequency_RQDM {
+              total {
+                pc
+                pn
+                pf
+              }
+            }
+
             external_frequencies {
               gnomad_exomes_2_1_1 {
                 af

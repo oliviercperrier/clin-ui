@@ -271,12 +271,17 @@ const columns = [
     dataIndex: 'transcript',
     render: (transcript: { id: string; isCanonical?: boolean }) =>
       transcript.id ? (
-        <div className={styles.transcriptLink}>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={`https://www.ncbi.nlm.nih.gov/nuccore/${transcript.id}.3?report=graph`}
+          className={styles.transcriptLink}
+        >
           {transcript.id}
           {transcript.isCanonical && (
             <CanonicalIcon className={styles.canonicalIcon} height="14" width="14" />
           )}
-        </div>
+        </a>
       ) : (
         DISPLAY_WHEN_EMPTY_DATUM
       ),
