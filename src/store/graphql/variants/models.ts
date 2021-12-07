@@ -104,9 +104,10 @@ export type ConsequenceEntity = {
   vep_impact: Impact;
   aa_change: string | undefined | null;
   impact_score: number | null;
-  canonical: string;
+  canonical: boolean;
   coding_dna_change: string;
   strand: string;
+  refseq_mrna_id: string;
   ensembl_transcript_id: string;
   ensembl_gene_id: string;
   predictions: PredictionEntity;

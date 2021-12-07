@@ -165,6 +165,7 @@ const makeRowForExternalFreq = (
 
   return [
     {
+      key: 'TopMed',
       cohort: {
         cohortName: 'TopMed',
         link: `https://bravo.sph.umich.edu/freeze8/hg38/variant/snv/${locus}`,
@@ -175,6 +176,7 @@ const makeRowForExternalFreq = (
       frequency: toExponentialNotation(topmed.af),
     },
     {
+      key: 'Gnomad Genomes (v3)',
       cohort: {
         cohortName: 'Gnomad Genomes (v3)',
         link: `https://gnomad.broadinstitute.org/variant/${locus}?dataset=gnomad_r3`,
@@ -185,6 +187,7 @@ const makeRowForExternalFreq = (
       frequency: toExponentialNotation(gnomadGenomes3.af),
     },
     {
+      key: 'Gnomad Genomes (v2.1.1)',
       cohort: {
         cohortName: 'Gnomad Genomes (v2.1.1)',
       },
@@ -194,6 +197,7 @@ const makeRowForExternalFreq = (
       frequency: toExponentialNotation(gnomadGenomes2_1_1.af),
     },
     {
+      key: 'Gnomad Exomes (v2.1.1)',
       cohort: {
         cohortName: 'Gnomad Exomes (v2.1.1)',
       },
@@ -203,6 +207,7 @@ const makeRowForExternalFreq = (
       frequency: toExponentialNotation(gnomadExomes2_1_1.af),
     },
     {
+      key: '1000 Genomes',
       cohort: {
         cohortName: '1000 Genomes',
       },

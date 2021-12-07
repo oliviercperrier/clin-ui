@@ -20,25 +20,18 @@ export const ItemsCount = ({ className = '', page, size, total }: Props): React.
 
   return (
     <div className={cx(className, style.itemCount)}>
-      {to < size && page === 1 || total == 0 ? (
-        <>
-          <Typography.Text strong>{total} </Typography.Text>
-          <Typography.Text>
-            {total > 1
-              ? intl.get('component.table.itemcount.results')
-              : intl.get('component.table.itemcount.result')}
-          </Typography.Text>
-        </>
+      {(to < size && page === 1) || total == 0 ? (
+        <Typography.Text>
+          {intl.getHTML('component.table.itemcount.results.one.page', { count: total || 0 })}
+        </Typography.Text>
       ) : (
-        <>
-          <Typography.Text>{intl.get('component.table.itemcount.results')}</Typography.Text>
-          <Typography.Text strong>
-            {' '}
-            {from} - {to}
-          </Typography.Text>
-          <Typography.Text> {intl.get('component.table.itemcount.of')}</Typography.Text>
-          <Typography.Text strong> {total}</Typography.Text>
-        </>
+        <Typography.Text>
+          {intl.getHTML('component.table.itemcount.results.multiple.pages', {
+            from: from,
+            to: to,
+            total: total,
+          })}
+        </Typography.Text>
       )}
     </div>
   );
