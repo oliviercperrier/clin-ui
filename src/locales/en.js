@@ -850,7 +850,7 @@ const en = {
   'screen.variantDetails.summaryTab.patientTable.title': 'Patients',
   'screen.variantDetails.summaryTab.rqdmTable.empty': 'No data available',
   'screen.variantDetails.summaryTab.rqdmTable.title': 'RQDM',
-  'screen.variantDetails.summaryTab.summaryTable.start': 'Start',
+  'screen.variantDetails.summaryTab.summaryTable.start': 'Position',
   'screen.variantDetails.summaryTab.summaryTable.alleleAlt': 'Allele Alt.',
   'screen.variantDetails.summaryTab.summaryTable.alleleRef': 'Allele Ref.',
   'screen.variantDetails.summaryTab.summaryTable.annotationsData': 'Annotaions Data',
@@ -858,7 +858,7 @@ const en = {
     'Clinical Significance (Clinvar)',
   'screen.variantDetails.summaryTab.summaryTable.cytoband': 'Cytoband',
   'screen.variantDetails.summaryTab.summaryTable.genes': 'Gene(s)',
-  'screen.variantDetails.summaryTab.summaryTable.genomeRef': 'Genome Ref.',
+  'screen.variantDetails.summaryTab.summaryTable.genomeRef': 'Reference genome',
   'screen.variantDetails.summaryTab.summaryTable.type': 'Type',
   'screen.variantDetails.summaryTab.summaryTable.variant': 'Variant',
   'screen.variantDetails.summaryTab.summaryTable.vepImpact': 'VEP Impact',
@@ -933,7 +933,7 @@ const en = {
   'querybuilder.filters.operators.greaterthanorequal': 'Greater than or equal',
   'querybuilder.filters.range.is': 'Is',
   'screen.variant.entity.table.hidetranscript': 'Hide Transcripts',
-  'screen.variant.entity.table.showtranscript': 'Show Transcripts',
+  'screen.variant.entity.table.showtranscript': 'Show all transcripts',
   'screen.variant.entity.table.gene': 'Gene',
   'result.server.error.title': 'Server Error',
   'result.server.error.description':
@@ -975,8 +975,10 @@ const en = {
   'screen.variant.entity.frequencyTab.analysis': 'Analysis',
   'screen.variant.entity.frequencyTab.card.title': 'Number of patients with the variant {variant}',
   'screen.variant.entity.frequencyTab.RQDM.title': 'Quebec molecular diagnostic network',
-  'component.table.itemcount.results': 'Results',
-  'component.table.itemcount.result': 'Result',
+  'component.table.itemcount.results.one.page':
+    '{count, plural, =0 {No result} other {<strong>#</strong> results}}',
+  'component.table.itemcount.results.multiple.pages':
+    'Results <strong>{from}</strong> - <strong>{to}</strong> of <strong>{total}</strong>',
   'component.table.itemcount.of': 'of',
 };
 

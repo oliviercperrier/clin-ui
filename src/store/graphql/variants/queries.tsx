@@ -256,6 +256,7 @@ export const TAB_SUMMARY_QUERY = gql`
                     conservations {
                       phylo_p17way_primate_rankscore
                     }
+                    refseq_mrna_id
                     ensembl_transcript_id
                     predictions {
                       fathmm_pred

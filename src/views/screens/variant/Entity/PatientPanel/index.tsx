@@ -11,6 +11,8 @@ import { DonorsEntity } from 'store/graphql/variants/models';
 import { formatTimestampToISODate } from 'utils/helper';
 import { ArrangerEdge, ArrangerResultsTree } from 'store/graphql/models';
 import { ItemsCount } from 'components/table/ItemsCount';
+import { redirectParent } from 'utils/bridge';
+import { ColumnFilterItem } from 'antd/lib/table/interface';
 
 import styles from './index.module.scss';
 
@@ -22,7 +24,7 @@ interface OwnProps {
 const DEFAULT_PAGE_SIZE = 20;
 
 const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
-  donors?.map((donor: ArrangerEdge<DonorsEntity>, index) => ({
+  donors?.map((donor, index) => ({
     key: index,
     id: donor.node.id,
     patient_id: donor.node.patient_id,
@@ -41,6 +43,22 @@ const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
     ad_ratio: donor.node.ad_ratio,
     affected_status: donor.node.affected_status,
   }));
+
+const findAllAnalysis = (donors: ArrangerEdge<DonorsEntity>[]) => {
+  let analysisList: ColumnFilterItem[] = [];
+  donors.map((donor) => {
+    if (
+      donor.node.analysis_code &&
+      !analysisList.find((analysis) => analysis.value === donor.node.analysis_code)
+    ) {
+      analysisList.push({
+        value: donor.node.analysis_code,
+        text: donor.node.analysis_display_name!,
+      });
+    }
+  });
+  return analysisList;
+};
 
 const PatientPanel = ({ hash, className = '' }: OwnProps) => {
   const [currentTotal, setTotal] = useState(0);
@@ -63,9 +81,11 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
     {
       dataIndex: 'patient_id',
       title: () => intl.get('screen.variantDetails.patientsTab.donor'),
+      render: (id) => <a onClick={() => redirectParent(`/patient/${id}`)}>{id}</a>,
     },
     {
       title: () => intl.get('screen.variantDetails.patientsTab.analysis'),
+      filters: findAllAnalysis(donorsHits?.edges || []),
       render: (data) =>
         data.analysis_display_name ? (
           <Tooltip title={data.analysis_display_name}>{data.analysis_code}</Tooltip>
@@ -129,6 +149,7 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
       dataIndex: 'family_id',
       title: () => intl.get('screen.variantDetails.patientsTab.familyId'),
       render: (family_id) => (family_id ? family_id : DISPLAY_WHEN_EMPTY_DATUM),
+      sorter: (a, b) => a.family_id.localeCompare(b.family_id),
     },
     {
       dataIndex: 'filters',

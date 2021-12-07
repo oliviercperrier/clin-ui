@@ -10,7 +10,6 @@ import ExpandableCell from 'components/table/ExpandableCell';
 import NoData from 'views/screens/variant/Entity/NoData';
 import CanonicalIcon from 'components/icons/CanonicalIcon';
 import {
-  Consequence,
   ConsequenceEntity,
   GeneEntity,
   Impact,
@@ -31,7 +30,7 @@ interface OwnProps {
 }
 
 type TableGroup = {
-  consequences: Consequence[];
+  consequences: ArrangerEdge<ConsequenceEntity>[];
   omim: string;
   symbol: string;
   biotype: string;
@@ -173,7 +172,7 @@ const makeRows = (consequences: ArrangerEdge<ConsequenceEntity>[]) =>
     ].filter(([, , score]) => score),
     conservation: consequence.node.conservations?.phylo_p17way_primate_rankscore,
     transcript: {
-      id: consequence.node.ensembl_transcript_id,
+      id: consequence.node.refseq_mrna_id,
       isCanonical: consequence.node.canonical,
     },
   }));
@@ -272,22 +271,22 @@ const columns = [
     dataIndex: 'transcript',
     render: (transcript: { id: string; isCanonical?: boolean }) =>
       transcript.id ? (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`https://www.ensembl.org/id/${transcript.id}`}
-          className={styles.transcriptLink}
-        >
+        <div className={styles.transcriptLink}>
           {transcript.id}
           {transcript.isCanonical && (
             <CanonicalIcon className={styles.canonicalIcon} height="14" width="14" />
           )}
-        </a>
+        </div>
       ) : (
         DISPLAY_WHEN_EMPTY_DATUM
       ),
   },
 ];
+
+const sortConsequences = (data: ArrangerEdge<ConsequenceEntity>[]) =>
+  data
+    .sort((a, b) => b.node.impact_score! - a.node.impact_score!)
+    .sort((a, b) => (a.node.canonical === b.node.canonical ? 0 : a.node.canonical ? -1 : 1));
 
 const ResumePanel = ({ data, className = '' }: OwnProps) => {
   const variantData = data.variantData;
@@ -311,7 +310,7 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
                 const symbol = tableData.symbol;
                 const omim = tableData.omim;
                 const biotype = tableData.biotype;
-                const orderedConsequences = tableData.consequences;
+                const orderedConsequences = sortConsequences(tableData.consequences);
 
                 return (
                   <Card

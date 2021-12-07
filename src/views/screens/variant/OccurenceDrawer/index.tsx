@@ -63,6 +63,7 @@ const getParentTitle = (who: 'mother' | 'father', id: string, affected: boolean)
 const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) => {
   const [modalOpened, toggleModal] = useState(false);
   const donor = getDonor(patientId, data);
+  const hasAParent = donor?.father_id || donor?.mother_id;
 
   return (
     <>
@@ -82,26 +83,43 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
               {donor?.zygosity || DISPLAY_WHEN_EMPTY_DATUM}
             </Descriptions.Item>
           </Descriptions>
-
-          <Descriptions title="Famille" column={1} className={cx(style.description, 'description')}>
-            <Descriptions.Item
-              label={getParentTitle('mother', donor?.mother_id!, donor?.mother_affected_status!)}
+          {hasAParent && (
+            <Descriptions
+              title="Famille"
+              column={1}
+              className={cx(style.description, 'description')}
             >
-              {donor?.mother_calls ? donor?.mother_calls.join('/') : DISPLAY_WHEN_EMPTY_DATUM}
-            </Descriptions.Item>
-            <Descriptions.Item
-              label={getParentTitle('father', donor?.father_id!, donor?.father_affected_status!)}
-            >
-              {donor?.father_calls ? donor?.father_calls.join('/') : DISPLAY_WHEN_EMPTY_DATUM}
-            </Descriptions.Item>
-            <Descriptions.Item label={intl.get('screen.patientvariant.drawer.transmission')}>
-              {intl.get(`screen.patientvariant.transmission.${donor?.transmission}`) ||
-                DISPLAY_WHEN_EMPTY_DATUM}
-            </Descriptions.Item>
-            <Descriptions.Item label={intl.get('screen.patientvariant.drawer.parental.origin')}>
-              {DISPLAY_WHEN_EMPTY_DATUM}
-            </Descriptions.Item>
-          </Descriptions>
+              {donor?.mother_id && (
+                <Descriptions.Item
+                  label={getParentTitle(
+                    'mother',
+                    donor?.mother_id!,
+                    donor?.mother_affected_status!,
+                  )}
+                >
+                  {donor?.mother_calls ? donor?.mother_calls.join('/') : DISPLAY_WHEN_EMPTY_DATUM}
+                </Descriptions.Item>
+              )}
+              {donor?.father_id && (
+                <Descriptions.Item
+                  label={getParentTitle(
+                    'father',
+                    donor?.father_id!,
+                    donor?.father_affected_status!,
+                  )}
+                >
+                  {donor?.father_calls ? donor?.father_calls.join('/') : DISPLAY_WHEN_EMPTY_DATUM}
+                </Descriptions.Item>
+              )}
+              <Descriptions.Item label={intl.get('screen.patientvariant.drawer.transmission')}>
+                {intl.get(`screen.patientvariant.transmission.${donor?.transmission}`) ||
+                  DISPLAY_WHEN_EMPTY_DATUM}
+              </Descriptions.Item>
+              <Descriptions.Item label={intl.get('screen.patientvariant.drawer.parental.origin')}>
+                {DISPLAY_WHEN_EMPTY_DATUM}
+              </Descriptions.Item>
+            </Descriptions>
+          )}
           <Descriptions
             title={intl.get('screen.patientvariant.drawer.seq.method')}
             column={1}
