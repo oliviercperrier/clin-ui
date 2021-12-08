@@ -104,7 +104,7 @@ export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) =
       DDN: patientInfo.birthDate,
       sexe: patientInfo.gender.toLowerCase() || 'unknown',
       family_id: familyInfo.cid,
-      position: patientInfo.position,
+      position: patientInfo.position.toLowerCase(),
     })),
   };
   downloadJSONFile(
