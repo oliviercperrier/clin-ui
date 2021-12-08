@@ -53,6 +53,7 @@ const PrescriptionSearch = (): React.ReactElement => {
         />
         <ScrollView className={styles.scrollContent}>
           <ContentContainer
+            isLoading={prescriptions.loading}
             extendedMapping={extendedMapping}
             filters={sqonFilters}
             patients={patients}

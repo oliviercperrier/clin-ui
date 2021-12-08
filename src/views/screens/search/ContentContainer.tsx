@@ -34,6 +34,7 @@ export type PrescriptionResultsContainerProps = {
   filters: ISyntheticSqon;
   patients: GqlResults<PatientResult> | null;
   searchResults: GqlResults<PatientResult> | null;
+  isLoading?: boolean;
   tabs: {
     currentTab: TableTabs;
     setCurrentTab: (t: TableTabs) => void;
@@ -47,6 +48,7 @@ const ContentContainer = ({
   prescriptions,
   searchResults,
   tabs,
+  isLoading = false,
 }: PrescriptionResultsContainerProps): React.ReactElement => {
   const dictionary: IDictionary = {
     query: {
@@ -70,7 +72,7 @@ const ContentContainer = ({
           }
         >
           <StackLayout className={styles.tableContainer} vertical>
-            <PrescriptionsTable results={prescriptions} />
+            <PrescriptionsTable results={prescriptions} isLoading={isLoading} />
           </StackLayout>
         </TabPane>
         <TabPane
@@ -83,7 +85,7 @@ const ContentContainer = ({
           }
         >
           <StackLayout className={styles.tableContainer} vertical>
-            <PatientsTable results={patients} />
+            <PatientsTable results={patients} isLoading={isLoading} />
           </StackLayout>
         </TabPane>
       </Tabs>
