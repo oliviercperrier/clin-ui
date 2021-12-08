@@ -12,12 +12,10 @@ const globalSlice = createSlice({
   name: 'global',
   initialState: GlobalState,
   reducers: {
-    changeLang: (state, action: PayloadAction<LANG>) => {
-      return {
-        ...state,
-        lang: action.payload,
-      };
-    },
+    changeLang: (state, action: PayloadAction<LANG>) => ({
+      ...state,
+      lang: action.payload,
+    }),
   },
 });
 
