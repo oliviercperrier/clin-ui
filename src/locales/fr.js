@@ -1156,6 +1156,7 @@ const fr = {
   'component.table.itemcount.results.multiple.pages':
     'Résultats <strong>{from}</strong> - <strong>{to}</strong> sur <strong>{total}</strong>',
   'component.table.itemcount.of': 'sur',
+  'report.nanuq.success': 'Votre fichier a été téléchargé'
 };
 
 export default fr;

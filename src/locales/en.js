@@ -980,6 +980,7 @@ const en = {
   'component.table.itemcount.results.multiple.pages':
     'Results <strong>{from}</strong> - <strong>{to}</strong> of <strong>{total}</strong>',
   'component.table.itemcount.of': 'of',
+  'report.nanuq.success': 'Your file has been downloaded'
 };
 
 export default en;

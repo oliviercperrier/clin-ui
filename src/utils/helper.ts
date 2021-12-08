@@ -1,3 +1,6 @@
+import { v4 as uuid } from 'uuid';
+import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
+
 // JWT
 
 export const parseJwt = (token: string) => {
@@ -58,15 +61,54 @@ export const navigateTo = (href: string) => {
 };
 
 export const isDevelopmentEnv = () => {
-  return process.env.NODE_ENV == "development";
+  return process.env.NODE_ENV == 'development';
 };
 
 export const getTopBodyElement = () => {
   /* eslint no-restricted-globals: ["off"] */
   if (top && top.window) {
     try {
-      return top?.window.document.body
+      return top?.window.document.body;
     } catch {}
   }
   return window.document.body;
+};
+
+export const downloadJSONFile = (content: string, filename: string) => {
+  const windowToUser = top && top.window ? top.window : window;
+  const fileBlob = new Blob([content], { type: 'text/json' });
+  const downloadLinkElement = windowToUser.document.createElement('a');
+  downloadLinkElement.href = windowToUser.URL.createObjectURL(fileBlob);
+  downloadLinkElement.download = filename;
+  document.body.appendChild(downloadLinkElement);
+  downloadLinkElement.click();
+  document.body.removeChild(downloadLinkElement);
+};
+
+export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
+  const nanuqFileContent = {
+    export_id: uuid(),
+    version_id: '1.0',
+    test_genomique: 'exome',
+    LDM: 'CHU Sainte-Justine',
+    patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
+      type_echantillon: 'ADN',
+      tissue_source: 'Sang',
+      type_specimen: 'Normal',
+      nom_patient: patientInfo.lastName,
+      prenom_patient: patientInfo.firstName,
+      patient_id: patientInfo.cid,
+      service_request_id: cid,
+      dossier_medical: patientInfo.ramq || '--',
+      institution: patientInfo.organization.cid,
+      DDN: patientInfo.birthDate,
+      sexe: patientInfo.gender.toLowerCase() || 'unknown',
+      family_id: familyInfo.cid,
+      position: patientInfo.position,
+    })),
+  };
+  downloadJSONFile(
+    JSON.stringify(nanuqFileContent, null, 2),
+    `${Intl.DateTimeFormat(navigator.language).format(new Date())}-clin-nanuq.json`,
+  );
 };
