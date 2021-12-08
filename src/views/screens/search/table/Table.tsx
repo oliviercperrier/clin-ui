@@ -1,41 +1,35 @@
 import React from 'react';
-import { Table as AntTable, TablePaginationConfig } from 'antd';
+import { Table as AntTable, TableProps } from 'antd';
 
 import { ItemsCount } from 'components/table/ItemsCount';
 import { GqlResults } from 'store/graphql/models';
 import { PatientResult } from 'store/graphql/patients/models/Patient';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 
-import { TColumn } from './columns';
-
 import styles from './table.module.scss';
 
-export type Props = {
+export type Props = TableProps<any> & {
   results: GqlResults<PrescriptionResult | PatientResult> | null;
-  isLoading?: boolean;
-};
-
-type TableProps = Props & {
-  total: number;
-  pagination: TablePaginationConfig;
-  columns: TColumn[];
+  total?: number;
+  extra?: React.ReactElement;
 };
 
 const ITEM_PER_PAGE = 25;
 
 const Table = ({
-  columns,
   pagination,
   results,
-  total,
-  isLoading,
-}: TableProps): React.ReactElement => (
+  total = 0,
+  extra = <></>,
+  ...rest
+}: Props): React.ReactElement => (
   <>
-    <ItemsCount page={pagination?.current || 1} size={ITEM_PER_PAGE} total={total} />
+    <div className={styles.tableHeader}>
+      <ItemsCount page={pagination ? pagination?.current! : 1} size={ITEM_PER_PAGE} total={total} />
+      {extra}
+    </div>
     <AntTable
-      loading={isLoading}
       className={styles.table}
-      columns={columns}
       dataSource={results?.data || []}
       pagination={{
         ...pagination,
@@ -44,6 +38,7 @@ const Table = ({
         size: 'small',
       }}
       size="small"
+      {...rest}
     />
   </>
 );

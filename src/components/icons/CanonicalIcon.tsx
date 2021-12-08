@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
+import cx from "classnames";
 import { IconProps } from '.';
 
 const CanonicalIcon = ({ className = '', width = '18', height = '18', fill }: IconProps) => (
   <svg
-    className={className}
+  className={cx('anticon', className)}
     width={width}
     height={height}
     viewBox="0 0 18 18"

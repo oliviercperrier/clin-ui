@@ -51,6 +51,8 @@ export const PRESCRIPTIONS_QUERY = gql`
               position
               fetus
               birthDate
+              familyId
+              cidText
               organization {
                 cid
                 name

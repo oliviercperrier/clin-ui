@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 import { IconProps } from ".";
 
 const UserAffectedIcon = ({
@@ -9,7 +10,7 @@ const UserAffectedIcon = ({
 }: IconProps) => (
   <svg
     onClick={onClick}
-    className={className}
+      className={cx('anticon', className)}
     width={width}
     height={height}
     viewBox="0 0 16 16"

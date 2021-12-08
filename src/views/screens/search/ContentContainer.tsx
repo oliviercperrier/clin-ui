@@ -72,7 +72,7 @@ const ContentContainer = ({
           }
         >
           <StackLayout className={styles.tableContainer} vertical>
-            <PrescriptionsTable results={prescriptions} isLoading={isLoading} />
+            <PrescriptionsTable results={prescriptions} loading={isLoading} />
           </StackLayout>
         </TabPane>
         <TabPane
@@ -85,7 +85,7 @@ const ContentContainer = ({
           }
         >
           <StackLayout className={styles.tableContainer} vertical>
-            <PatientsTable results={patients} isLoading={isLoading} />
+            <PatientsTable results={patients} loading={isLoading} />
           </StackLayout>
         </TabPane>
       </Tabs>

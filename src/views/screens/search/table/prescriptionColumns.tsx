@@ -2,7 +2,6 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { Badge } from 'antd';
-import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 
 import { TColumn } from './columns';
 import { PatientIdCell, PrescriptionIdCell } from './cell/LinkCell';
