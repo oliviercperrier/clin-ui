@@ -5,7 +5,7 @@ import Table, { Props } from './Table';
 import DocumentIcon from 'components/icons/DocumentIcon';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 import { generateAndDownloadNanuqExport } from 'utils/helper';
-import intl from "react-intl-universal";
+import intl from 'react-intl-universal';
 
 const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactElement => {
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionResult[]>([]);
@@ -24,12 +24,13 @@ const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactEle
       total={results?.total || 0}
       extra={
         <Button
+          disabled={!selectedPrescription.length}
           size="small"
           type="link"
           icon={<DocumentIcon height="14" width="14" />}
           onClick={() => {
-            generateAndDownloadNanuqExport(selectedPrescription)
-            message.success(intl.get("report.nanuq.success"))
+            generateAndDownloadNanuqExport(selectedPrescription);
+            message.success(intl.get('report.nanuq.success'));
           }}
         >
           Nanuq
