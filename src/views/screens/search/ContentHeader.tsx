@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import intl from 'react-intl-universal';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
@@ -44,6 +44,8 @@ const autoCompleteResults = (data: PatientResult[]) => {
 const ContentHeader = ({
   searchResults,
 }: PrescriptionResultsContainerProps): React.ReactElement => {
+  const [filteredResults, setFilteredResults] = useState<PatientResult[]>([]);
+
   return (
     <StackLayout horizontal>
       <AutoComplete
@@ -51,11 +53,23 @@ const ContentHeader = ({
         autoFocus
         className="auto-complete"
         defaultActiveFirstOption={false}
-        onChange={() => {}}
+        onChange={(value) => {
+          if (!value) {
+            setFilteredResults([]);
+            return;
+          }
+          const searchValues = value.split(' ').map((value) => value.toLowerCase());
+          const results = searchResults?.data!.filter((patient) =>
+            searchValues.some((searchValue) =>
+              JSON.stringify(Object.values(patient)).toLowerCase().includes(searchValue),
+            ),
+          );
+          setFilteredResults(results!);
+        }}
         onSelect={(id) => {
           redirectParent(`/patient/${id}`);
         }}
-        options={autoCompleteResults(searchResults?.data || [])}
+        options={autoCompleteResults(filteredResults)}
         size="large"
       >
         <Input
