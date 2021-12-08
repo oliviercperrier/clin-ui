@@ -4,7 +4,7 @@ import { prescriptionsColumns } from './prescriptionColumns';
 import Table, { Props } from './Table';
 import DocumentIcon from 'components/icons/DocumentIcon';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
-import { generateAndDownloadNanuqExport } from 'utils/helper';
+import { generateAndDownloadNanuqExport, getTopBodyElement } from 'utils/helper';
 import intl from 'react-intl-universal';
 
 const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactElement => {
@@ -30,7 +30,10 @@ const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactEle
           icon={<DocumentIcon height="14" width="14" />}
           onClick={() => {
             generateAndDownloadNanuqExport(selectedPrescription);
-            message.success(intl.get('report.nanuq.success'));
+            message.success({
+              content: intl.get('report.nanuq.success'),
+              getPopupContainer: () => getTopBodyElement()
+            });
           }}
         >
           Nanuq
