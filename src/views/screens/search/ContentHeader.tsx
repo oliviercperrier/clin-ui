@@ -59,11 +59,21 @@ const ContentHeader = ({
             return;
           }
           const searchValues = value.split(' ').map((value) => value.toLowerCase());
-          const results = searchResults?.data!.filter((patient) =>
-            searchValues.some((searchValue) =>
-              JSON.stringify(Object.values(patient)).toLowerCase().includes(searchValue),
-            ),
-          );
+          const results = searchResults?.data!.filter((patient) => {
+            const infoToSearch = [
+              patient.cid,
+              patient.ramq,
+              patient.firstName,
+              patient.lastName,
+              patient.familyId,
+              patient.birthDate,
+              patient.mrn,
+            ]
+              .join(',')
+              .toLowerCase();
+
+            return searchValues.some((searchValue) => infoToSearch.includes(searchValue));
+          });
           setFilteredResults(results!);
         }}
         onSelect={(id) => {
