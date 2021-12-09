@@ -40,3 +40,25 @@ export interface PatientResult extends ArrangerNodeData {
   requests: ArrangerResultsTree<Requests>;
   practitioner: ArrangerResultsTree<HealthProfessional>;
 }
+
+export interface FhirDocAttachment {
+  hash: string;
+  title: string;
+  url: string;
+}
+
+export interface FhirDocContent {
+  format: string;
+  attachment: FhirDocAttachment;
+}
+
+export interface FhirDoc {
+  id: string;
+  type: string;
+  content: FhirDocContent[];
+}
+
+export interface PatientFileResults {
+  id: string;
+  docs: FhirDoc[];
+}

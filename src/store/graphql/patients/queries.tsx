@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const PATIENTS_QUERY = gql`
   query PatientsInformation($sqon: JSON, $first: Int, $offset: Int) {
@@ -60,7 +60,6 @@ export const PATIENT_FILES_QUERY = (patientID: string) => gql`
         content {
           attachment {
             url
-            size
             hash
             title
           }

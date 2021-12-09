@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Descriptions, Divider, Space, Drawer, Modal, Tooltip } from 'antd';
+import { Button, Descriptions, Divider, Space, Drawer, Tooltip } from 'antd';
 import intl from 'react-intl-universal';
 import cx from 'classnames';
 import { CloseOutlined } from '@ant-design/icons';
@@ -11,10 +11,10 @@ import FemaleNotAffectedIcon from 'components/icons/FemaleNotAffectedIcon';
 import { getTopBodyElement } from 'utils/helper';
 import { DonorsEntity, VariantEntity } from 'store/graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
-import Igv from 'views/screens/variant/Igv';
+import { ArrangerEdge } from 'store/graphql/models';
+import IGVModal from 'views/screens/variant/OccurenceDrawer/IGVModal';
 
 import style from './index.module.scss';
-import { ArrangerEdge } from 'store/graphql/models';
 
 interface OwnProps {
   patientId: string;
@@ -149,38 +149,12 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
           </Button>
         </Space>
       </Drawer>
-      <Modal
-        width="90vw"
-        visible={modalOpened}
-        footer={false}
-        title={intl.get('screen.patientvariant.drawer.igv.title')}
-        onCancel={() => toggleModal(false)}
-        getContainer={() => getTopBodyElement()}
-        className={cx(style.igvModal, 'igvModal')}
-        wrapClassName={cx(style.igvModalWrapper, 'igvModalWrapper')}
-      >
-        <Igv
-          className={cx(style.igvContainer, 'igvContainer')}
-          options={{
-            palette: ['#00A0B0', '#6A4A3C', '#CC333F', '#EB6841'],
-            genome: 'hg19',
-            locus: 'chr8:127,736,588-127,739,371',
-            tracks: [
-              {
-                name: 'Genes',
-                type: 'annotation',
-                format: 'bed',
-                url: 'https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz',
-                indexURL:
-                  'https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz.tbi',
-                order: Number.MAX_VALUE,
-                visibilityWindow: 300000000,
-                displayMode: 'EXPANDED',
-              },
-            ],
-          }}
-        />
-      </Modal>
+      <IGVModal
+        patientId={patientId}
+        variantEntity={data}
+        isOpen={modalOpened}
+        toggleModal={toggleModal}
+      />
     </>
   );
 };
