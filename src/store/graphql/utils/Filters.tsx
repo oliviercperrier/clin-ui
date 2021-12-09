@@ -116,7 +116,6 @@ export const getFilterGroup = (
       config: {
         min: aggregation.stats.min,
         max: aggregation.stats.max,
-        step: extendedMapping?.rangeStep || 1,
         rangeTypes: rangeTypes.map((r) => ({
           name: r,
           key: r,

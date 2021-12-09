@@ -1,20 +1,23 @@
+@input-placeholder-color: @gray-6;
+@input-border-color: @border;
+@input-hover-border-color: @blue-7;
+@input-icon-hover-color: @gray-6;
+
 .@{input-prefix-cls} {
   &::placeholder {
     color: @gray-6 !important;
-  }
-
-  &:hover {
-      border-color: @blue-7;
   }
 
   &-number,
   & {
     color: @gray-8;
     border: 1px solid @gray-5;
+    box-shadow: none;
+    border-radius: 2px;
+    box-sizing: border-box;
 
     &-focused, &:focus {
       border: 1px solid @blue-7;
-      box-shadow: 0px 0px 0px 2px #91D1EB
     }
 
     &-disabled, &[disabled] {

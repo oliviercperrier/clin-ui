@@ -21,6 +21,7 @@ export const PATIENTS_QUERY = gql`
             position
             ramq
             timestamp
+            mrn
             organization {
               cid
               name

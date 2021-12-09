@@ -1,0 +1,32 @@
+@import 'style/themes/clin/_colors.scss';
+
+.auto-complete {
+  width: 100%;
+}
+
+.ant-row.autocomplete-row {
+  border-bottom: 1px solid $gray-5;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: -5px;
+  
+  &__name {
+    font-weight: 500;
+  }
+  &__mrn {
+    font-size: 12px;
+  }
+}
+
+.autocomplete-row {
+  &__name {
+    font-weight: 500;
+  }
+  &__mrn {
+    font-size: 12px;
+  }
+}
+
+.buttonCreatePrescription {
+  margin-left: 14px;
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 import { IconProps } from ".";
 
 const FrequencyIcon = ({
@@ -7,7 +8,7 @@ const FrequencyIcon = ({
   height = "24",
 }: IconProps) => (
   <svg
-    className={className}
+      className={cx('anticon', className)}
     width={width}
     height={height}
     viewBox="0 0 24 24"

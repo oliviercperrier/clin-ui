@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
+import cx from 'classnames';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
+import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 
 import { Aggregations } from 'store/graphql/models';
 import { ExtendedMappingResults } from 'store/graphql/models';
-import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 
 import SidebarFilters from './SidebarFilters';
 
 import styles from './Sidebar.module.scss';
+import { Spin } from 'antd';
 
 export type SidebarData = {
   aggregations: Aggregations;
-  results: PrescriptionResult[];
   extendedMapping: ExtendedMappingResults;
+  isLoading?: boolean;
 };
 
 type PrescriptionSidebarProps = SidebarData & {
@@ -25,26 +27,30 @@ const PrescriptionSidebar = ({
   aggregations,
   extendedMapping,
   filters,
-  results,
+  isLoading = false,
 }: PrescriptionSidebarProps): React.ReactElement => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   return (
-    <StackLayout center={false} className={styles.siderContainer} flexContent vertical>
+    <StackLayout
+      center={false}
+      className={cx(styles.siderContainer, collapsed ? styles.collapsed : '')}
+      flexContent
+      vertical
+    >
       {collapsed ? (
         <MenuUnfoldOutlined onClick={() => setCollapsed(!collapsed)} />
       ) : (
         <MenuFoldOutlined onClick={() => setCollapsed(!collapsed)} />
       )}
-      {!collapsed && (
-        <div className={`${styles.scrollView} ${styles.filters}`}>
+      <ScrollContent className={cx(styles.scrollWrapper, collapsed ? styles.collapsed : '')}>
+        <Spin className={styles.loader} spinning={isLoading}>
           <SidebarFilters
             aggregations={aggregations}
             extendedMapping={extendedMapping}
             filters={filters}
-            results={results}
           />
-        </div>
-      )}
+        </Spin>
+      </ScrollContent>
     </StackLayout>
   );
 };

@@ -1,11 +1,13 @@
+@import "colors";
+
 .patientVariantLayout {
   display: flex;
   flex-direction: row;
-  background: #f0f2f5;
   height: 100vh;
 
   .filterLoader {
     padding: 24px;
+    width: 100%;
   }
 
   .patientVariantSideMenu {

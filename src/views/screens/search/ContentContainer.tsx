@@ -6,6 +6,9 @@ import { IDictionary } from '@ferlab/ui/core/components/QueryBuilder/types';
 import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { TablePaginationConfig, Tabs } from 'antd';
+import { MedicineBoxFilled } from '@ant-design/icons';
+import { ic_people } from 'react-icons-kit/md';
+import IconKit from 'react-icons-kit';
 
 import { GqlResults } from 'store/graphql/models';
 import { ExtendedMapping, ExtendedMappingResults } from 'store/graphql/models';
@@ -29,9 +32,9 @@ export type PrescriptionResultsContainerProps = {
   prescriptions: GqlResults<PrescriptionResult>;
   extendedMapping: ExtendedMappingResults;
   filters: ISyntheticSqon;
-  pagination: TablePaginationConfig;
   patients: GqlResults<PatientResult> | null;
   searchResults: GqlResults<PatientResult> | null;
+  isLoading?: boolean;
   tabs: {
     currentTab: TableTabs;
     setCurrentTab: (t: TableTabs) => void;
@@ -41,13 +44,12 @@ export type PrescriptionResultsContainerProps = {
 const ContentContainer = ({
   extendedMapping,
   filters,
-  pagination,
   patients,
   prescriptions,
   searchResults,
   tabs,
+  isLoading = false,
 }: PrescriptionResultsContainerProps): React.ReactElement => {
-  const total = prescriptions.total || 0;
   const dictionary: IDictionary = {
     query: {
       facet: (key) =>
@@ -59,27 +61,34 @@ const ContentContainer = ({
   return (
     <StackLayout className={styles.containerLayout} vertical>
       <ContentHeader searchResults={searchResults} />
-      <QueryBuilder
-        IconTotal={<InfoCircleFilled className={styles.queryBuilderIcon} />}
-        cacheKey="prescription-repo"
-        className="file-repo__query-builder"
-        currentQuery={filters?.content?.length ? filters : {}}
-        dictionary={dictionary}
-        enableCombine={true}
-        history={history}
-        loading={prescriptions?.loading}
-        total={total}
-      />
-      <StackLayout className={styles.tableContainer} vertical>
-        <Tabs onChange={(v) => tabs.setCurrentTab(v as TableTabs)}>
-          <TabPane key={TableTabs.Prescriptions} tab={intl.get('screen.patient.tab.prescriptions')}>
-            <PrescriptionsTable pagination={pagination} results={prescriptions} total={total} />
-          </TabPane>
-          <TabPane key={TableTabs.Patients} tab={intl.get('header.navigation.patient')}>
-            <PatientsTable pagination={pagination} results={patients} total={total} />
-          </TabPane>
-        </Tabs>
-      </StackLayout>
+      <Tabs onChange={(v) => tabs.setCurrentTab(v as TableTabs)} type="card">
+        <TabPane
+          key={TableTabs.Prescriptions}
+          tab={
+            <>
+              <MedicineBoxFilled />
+              {intl.get('screen.patient.tab.prescriptions')}
+            </>
+          }
+        >
+          <StackLayout className={styles.tableContainer} vertical>
+            <PrescriptionsTable results={prescriptions} loading={isLoading} />
+          </StackLayout>
+        </TabPane>
+        <TabPane
+          key={TableTabs.Patients}
+          tab={
+            <>
+              <IconKit icon={ic_people} />
+              {intl.get('header.navigation.patient')}
+            </>
+          }
+        >
+          <StackLayout className={styles.tableContainer} vertical>
+            <PatientsTable results={patients} loading={isLoading} />
+          </StackLayout>
+        </TabPane>
+      </Tabs>
     </StackLayout>
   );
 };

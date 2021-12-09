@@ -25,7 +25,7 @@ const HpoConditionCell = ({ conditions }: OwnProps) => (
 
       return (
         <StackLayout key={id}>
-          <Text>{condition}</Text> &nbsp; (
+          <Text>{condition}</Text>&nbsp;(
           <a
             key={id}
             target="_blank"

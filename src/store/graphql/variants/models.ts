@@ -1,19 +1,33 @@
-import { ArrangerResultsTree } from "store/graphql/models";
+import { ArrangerResultsTree } from 'store/graphql/models';
 
 export enum Impact {
-  High = "HIGH",
-  Moderate = "MODERATE",
-  Low = "LOW",
-  Modifier = "MODIFIER",
+  High = 'HIGH',
+  Moderate = 'MODERATE',
+  Low = 'LOW',
+  Modifier = 'MODIFIER',
 }
 
-export type FrequenciesEntity = {
-  internal: BoundType;
+export type ExternalFrequenciesEntity = {
   topmed_bravo: BoundType;
   thousand_genomes: BoundType;
   gnomad_exomes_2_1_1: BoundType;
   gnomad_genomes_2_1_1: BoundType;
   gnomad_genomes_3_0: BoundType;
+};
+
+export type FrequencyByAnalysisEntity = {
+  id: string;
+  analysis_code: string;
+  analysis_display_name: string;
+  affected: BoundType;
+  non_affected: BoundType;
+  total: BoundType;
+};
+
+export type frequency_RQDMEntity = {
+  affected: BoundType;
+  non_affected: BoundType;
+  total: BoundType;
 };
 
 export type DonorsEntity = {
@@ -30,8 +44,11 @@ export type DonorsEntity = {
   affected_status: boolean;
   qd: number;
   gq: number;
+  filters?: string[];
   zygosity?: string;
   transmission?: string;
+  analysis_code?: string;
+  analysis_display_name?: string;
   mother_id?: string;
   mother_zygosity?: string;
   mother_affected_status?: boolean;
@@ -47,19 +64,16 @@ export type VariantEntity = {
   hash: string;
   hgvsg: string;
   locus: string;
-  participant_frequency: number;
-  participant_total_number: number;
-  participant_number: number;
   variant_class: string;
   rsnumber: string;
   variant_type: string;
-  frequencies: {
-    [key: string]: BoundType;
-  };
+  frequency_RQDM: frequency_RQDMEntity;
   consequences?: ArrangerResultsTree<ConsequenceEntity>;
   genes?: ArrangerResultsTree<GeneEntity>;
   donors?: ArrangerResultsTree<DonorsEntity>;
-  external_frequencies?: FrequenciesEntity;
+  external_frequencies?: ExternalFrequenciesEntity;
+  frequencies_by_analysis?: FrequencyByAnalysisEntity;
+  analysis_display_name?: string;
   chromosome: string;
   start: string;
   alternate: string;
@@ -90,9 +104,10 @@ export type ConsequenceEntity = {
   vep_impact: Impact;
   aa_change: string | undefined | null;
   impact_score: number | null;
-  canonical: string;
+  canonical: boolean;
   coding_dna_change: string;
   strand: string;
+  refseq_mrna_id: string;
   ensembl_transcript_id: string;
   ensembl_gene_id: string;
   predictions: PredictionEntity;
@@ -135,8 +150,10 @@ export type BoundType = {
   ac: number;
   af: number;
   an: number;
-  het: number;
   hom: number;
+  pn: number;
+  pc: number;
+  pf: number;
 };
 
 export type OmimCondition = {
@@ -176,10 +193,7 @@ export type OmimInheritance = string[][];
 
 export type SingleValuedInheritance = string;
 
-export type Inheritance =
-  | SingleValuedInheritance
-  | OrphanetInheritance
-  | OmimInheritance;
+export type Inheritance = SingleValuedInheritance | OrphanetInheritance | OmimInheritance;
 
 export type OmimGene = string[][];
 
@@ -214,11 +228,11 @@ export type OmimEntity = {
 };
 
 export enum ClinicalGenesTableSource {
-  orphanet = "Orphanet",
-  omim = "OMIM",
-  hpo = "HPO",
-  ddd = "DDD",
-  cosmic = "Cosmic",
+  orphanet = 'Orphanet',
+  omim = 'OMIM',
+  hpo = 'HPO',
+  ddd = 'DDD',
+  cosmic = 'Cosmic',
 }
 
 export type FrequencyByLabEntity = BoundType & {
@@ -227,8 +241,8 @@ export type FrequencyByLabEntity = BoundType & {
 };
 
 export enum GenomicFeatureType {
-  Variant = "variant",
-  GENE = "gene",
+  Variant = 'variant',
+  GENE = 'gene',
 }
 
 export type SearchText = string;

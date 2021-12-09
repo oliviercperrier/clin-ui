@@ -2,18 +2,13 @@
 @import "style/themes/clin/_layout.scss";
 
 .containerLayout {
-  & > * {
+  & > *:first-child {
     margin-bottom: 24px;
   }
 }
 
 .tableContainer {
   background-color: $card-background;
-  padding: $default-padding;
-}
-
-.tableContainer > * {
-  margin: $default-margin;
 }
 
 .queryBuilderIcon {

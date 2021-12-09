@@ -1,44 +1,44 @@
 import React from 'react';
-import { Table as AntTable, TablePaginationConfig } from 'antd';
+import { Table as AntTable, TableProps } from 'antd';
 
 import { ItemsCount } from 'components/table/ItemsCount';
 import { GqlResults } from 'store/graphql/models';
 import { PatientResult } from 'store/graphql/patients/models/Patient';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 
-import { TColumn } from './columns';
-
 import styles from './table.module.scss';
 
-export type Props =  {
-  results: GqlResults<PrescriptionResult|PatientResult> | null,
-  total: number,
-  pagination: TablePaginationConfig
-};
-
-type TableProps = Props & {
-  columns: TColumn[],
+export type Props = TableProps<any> & {
+  results: GqlResults<PrescriptionResult | PatientResult> | null;
+  total?: number;
+  extra?: React.ReactElement;
 };
 
 const ITEM_PER_PAGE = 25;
 
-const Table = ({ columns, pagination, results, total }: TableProps): React.ReactElement => (
+const Table = ({
+  pagination,
+  results,
+  total = 0,
+  extra = <></>,
+  ...rest
+}: Props): React.ReactElement => (
   <>
-    <ItemsCount
-      className={styles.headerInfo}
-      page={pagination.current || 1}
-      size={ITEM_PER_PAGE}
-      total={total}
-    />
+    <div className={styles.tableHeader}>
+      <ItemsCount page={pagination ? pagination?.current! : 1} size={ITEM_PER_PAGE} total={total} />
+      {extra}
+    </div>
     <AntTable
       className={styles.table}
-      columns={columns}
       dataSource={results?.data || []}
       pagination={{
         ...pagination,
         pageSize: ITEM_PER_PAGE,
-        position: ['bottomLeft']
+        position: ['bottomRight'],
+        size: 'small',
       }}
+      size="small"
+      {...rest}
     />
   </>
 );

@@ -3,27 +3,29 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-curly-spacing */
 
-import React, { useState } from "react";
-import { Tooltip, Table } from "antd";
-import { ISyntheticSqon } from "@ferlab/ui/core/data/sqon/types";
-import { VariantPageResults } from "./VariantPageContainer";
-import intl from "react-intl-universal";
-import UserAffected from "components/icons/UserAffectedIcon";
+import React, { useState } from 'react';
+import { Tooltip, Table } from 'antd';
+import cx from 'classnames';
+import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
+import { VariantPageResults } from './VariantPageContainer';
+import intl from 'react-intl-universal';
+import UserAffected from 'components/icons/UserAffectedIcon';
 import {
   VariantEntity,
   ClinVar,
   Consequence,
-  FrequenciesEntity,
+  ExternalFrequenciesEntity,
   DonorsEntity,
-} from "store/graphql/variants/models";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
-import ConsequencesCell from "./ConsequencesCell";
-import { ArrangerResultsTree, ArrangerEdge } from "store/graphql/models";
-import { navigateTo } from "utils/helper";
+} from 'store/graphql/variants/models';
+import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
+import ConsequencesCell from './ConsequencesCell';
+import { ArrangerResultsTree, ArrangerEdge } from 'store/graphql/models';
+import { navigateTo } from 'utils/helper';
 
-import style from "./VariantTableContainer.module.scss";
-import OccurenceDrawer from "./OccurenceDrawer";
-import { ColumnType } from "antd/lib/table";
+import style from './VariantTableContainer.module.scss';
+import OccurenceDrawer from './OccurenceDrawer';
+import { ColumnType } from 'antd/lib/table';
+import { ItemsCount } from 'components/table/ItemsCount';
 
 const DEFAULT_PAGE_NUM = 1;
 const DEFAULT_PAGE_SIZE = 10;
@@ -43,49 +45,42 @@ const makeRows = (rows: ArrangerEdge<VariantEntity>[]) =>
     key: `${index}`,
   }));
 
-const findDonorById = (
-  donors: ArrangerResultsTree<DonorsEntity>,
-  patientId: string
-) => {
+const findDonorById = (donors: ArrangerResultsTree<DonorsEntity>, patientId: string) => {
   return donors.hits?.edges.find((donor) => donor.node.patient_id == patientId);
 };
 
 const VariantTableContainer = (props: OwnProps) => {
   const [drawerOpened, toggleDrawer] = useState(false);
-  const [selectedVariant, setSelectedVariant] = useState<
-    VariantEntity | undefined
-  >(undefined);
-  const { results, setCurrentPageCb, currentPageSize, setcurrentPageSize } =
-    props;
+  const [selectedVariant, setSelectedVariant] = useState<VariantEntity | undefined>(undefined);
+  const { results, setCurrentPageCb, currentPageSize, setcurrentPageSize } = props;
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
 
-  const variantsResults = results.data
-    ?.Variants as ArrangerResultsTree<VariantEntity>;
+  const variantsResults = results.data?.Variants as ArrangerResultsTree<VariantEntity>;
   const variants = variantsResults?.hits?.edges || [];
   const total = variantsResults?.hits?.total || 0;
 
   const columns: ColumnType<VariantEntity>[] = [
     {
-      title: () => intl.get("screen.patientvariant.results.table.variant"),
-      dataIndex: "hgvsg",
+      title: () => intl.get('screen.patientvariant.results.table.variant'),
+      dataIndex: 'hgvsg',
+      className: cx(style.variantTableCell, style.variantTableCellElipsis),
       render: (hgvsg: string, entity: VariantEntity) =>
         hgvsg ? (
           <Tooltip placement="topLeft" title={hgvsg}>
-            <a onClick={() => navigateTo(`/variant/entity/${entity.hash}`)}>
-              {hgvsg}
-            </a>
+            <a onClick={() => navigateTo(`/variant/entity/${entity.hash}`)}>{hgvsg}</a>
           </Tooltip>
         ) : (
           DISPLAY_WHEN_EMPTY_DATUM
         ),
     },
     {
-      title: () => intl.get("screen.patientvariant.results.table.type"),
-      dataIndex: "variant_class",
+      title: () => intl.get('screen.patientvariant.results.table.type'),
+      dataIndex: 'variant_class',
     },
     {
-      title: () => intl.get("screen.patientvariant.results.table.dbsnp"),
-      dataIndex: "rsnumber",
+      title: () => intl.get('screen.patientvariant.results.table.dbsnp'),
+      dataIndex: 'rsnumber',
+      className: style.dbSnpTableCell,
       render: (rsNumber: string) =>
         rsNumber ? (
           <a
@@ -100,16 +95,17 @@ const VariantTableContainer = (props: OwnProps) => {
         ),
     },
     {
-      title: () => intl.get("screen.patientvariant.results.table.consequence"),
-      dataIndex: "consequences",
+      title: () => intl.get('screen.patientvariant.results.table.consequence'),
+      dataIndex: 'consequences',
       width: 300,
       render: (consequences: { hits: { edges: Consequence[] } }) => (
         <ConsequencesCell consequences={consequences?.hits?.edges || []} />
       ),
     },
     {
-      title: () => intl.get("screen.patientvariant.results.table.clinvar"),
-      dataIndex: "clinvar",
+      title: () => intl.get('screen.patientvariant.results.table.clinvar'),
+      dataIndex: 'clinvar',
+      className: cx(style.variantTableCell, style.variantTableCellElipsis),
       render: (clinVar: ClinVar) =>
         clinVar?.clin_sig && clinVar.clinvar_id ? (
           <a
@@ -117,42 +113,42 @@ const VariantTableContainer = (props: OwnProps) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {clinVar.clin_sig.join(", ")}
+            {clinVar.clin_sig.join(', ')}
           </a>
         ) : (
           DISPLAY_WHEN_EMPTY_DATUM
         ),
     },
     {
-      title: () => intl.get("screen.variantsearch.table.gnomAd"),
-      dataIndex: "frequencies",
-      render: (frequencies: FrequenciesEntity) =>
-      frequencies.gnomad_exomes_2_1_1
-          ? frequencies.gnomad_exomes_2_1_1.af
+      title: () => intl.get('screen.variantsearch.table.gnomAd'),
+      dataIndex: 'external_frequencies',
+      render: (external_frequencies: ExternalFrequenciesEntity) =>
+        external_frequencies.gnomad_exomes_2_1_1
+          ? external_frequencies.gnomad_exomes_2_1_1.af.toPrecision(4)
           : DISPLAY_WHEN_EMPTY_DATUM,
     },
     {
-      title: () => intl.get("screen.patientvariant.results.table.rqdm"),
-      dataIndex: "donors",
-      render: (donors: ArrangerResultsTree<DonorsEntity>) => donors.hits.total,
+      title: () => intl.get('screen.patientvariant.results.table.rqdm'),
+      render: (record: VariantEntity) =>
+        `${record.frequency_RQDM.total.pc} / ${record.frequency_RQDM.total.pn} (${(
+          record.frequency_RQDM.total.pf * 100
+        ).toPrecision(3)}%)`,
     },
     {
-      title: () => intl.get("screen.patientvariant.results.table.zygosity"),
-      dataIndex: "donors",
+      title: () => intl.get('screen.patientvariant.results.table.zygosity'),
+      dataIndex: 'donors',
       render: (record: ArrangerResultsTree<DonorsEntity>) => {
         const donor = findDonorById(record, props.patientId);
         return donor ? donor.node?.zygosity : DISPLAY_WHEN_EMPTY_DATUM;
       },
     },
     {
-      title: () => intl.get("screen.patientvariant.results.table.transmission"),
-      dataIndex: "donors",
+      title: () => intl.get('screen.patientvariant.results.table.transmission'),
+      dataIndex: 'donors',
       render: (record: ArrangerResultsTree<DonorsEntity>) => {
         const donor = findDonorById(record, props.patientId);
         return donor
-          ? intl.get(
-              `screen.patientvariant.transmission.${donor.node?.transmission}`
-            )
+          ? intl.get(`screen.patientvariant.transmission.${donor.node?.transmission}`)
           : DISPLAY_WHEN_EMPTY_DATUM;
       },
     },
@@ -171,16 +167,13 @@ const VariantTableContainer = (props: OwnProps) => {
           />
         );
       },
-      align: "center",
+      align: 'center',
     },
   ];
 
   return (
     <>
-      <div className={style.tabletotalTitle}>
-        Résultats <strong>1 - {DEFAULT_PAGE_SIZE}</strong> sur{" "}
-        <strong>{total}</strong>
-      </div>
+      <ItemsCount page={currentPageNum} size={currentPageSize} total={total} />
       <Table
         size="small"
         loading={results.loading}
@@ -202,7 +195,7 @@ const VariantTableContainer = (props: OwnProps) => {
               setcurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
             }
           },
-          size: "small",
+          size: 'small',
         }}
       />
       <OccurenceDrawer
