@@ -31,7 +31,7 @@ export interface PatientResult extends ArrangerNodeData {
   firstName: string;
   gender: string;
   lastName: string;
-  mrn: string;
+  mrn: string[];
   position: string;
   ramq: string;
   timestamp: string;
