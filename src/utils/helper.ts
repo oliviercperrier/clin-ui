@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
+import { PARENT_TYPE, PATIENT_POSITION, GENDER, UNKNOWN_TAG } from './constants';
 
 // JWT
 
@@ -85,6 +86,15 @@ export const downloadJSONFile = (content: string, filename: string) => {
   document.body.removeChild(downloadLinkElement);
 };
 
+const getPatientPosition = (gender: string, position: string) => {
+  const loweredPosition = position.toLowerCase() || UNKNOWN_TAG;
+  const loweredSex = gender.toLowerCase() || UNKNOWN_TAG;
+  if (loweredPosition === PATIENT_POSITION.PARENT && loweredSex !== UNKNOWN_TAG) {
+    return loweredSex === GENDER.FEMALE ? PARENT_TYPE.MOTHER : PARENT_TYPE.FATHER;
+  }
+  return loweredPosition;
+};
+
 export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
   const nanuqFileContent = {
     export_id: uuid(),
@@ -102,9 +112,9 @@ export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) =
       dossier_medical: patientInfo.ramq || '--',
       institution: patientInfo.organization.cid,
       DDN: patientInfo.birthDate,
-      sexe: patientInfo.gender.toLowerCase() || 'unknown',
+      sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
       family_id: familyInfo.cid,
-      position: patientInfo.position.toLowerCase(),
+      position: getPatientPosition(patientInfo.gender, patientInfo.position),
     })),
   };
   downloadJSONFile(
