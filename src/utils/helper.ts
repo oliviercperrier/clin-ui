@@ -101,23 +101,21 @@ export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) =
     version_id: '1.0',
     test_genomique: 'exome',
     LDM: 'CHU Sainte-Justine',
-    patients: patients.map(({ patientInfo, familyInfo, cid }) => {
-      return {
-        type_echantillon: 'ADN',
-        tissue_source: 'Sang',
-        type_specimen: 'Normal',
-        nom_patient: patientInfo.lastName,
-        prenom_patient: patientInfo.firstName,
-        patient_id: patientInfo.cid,
-        service_request_id: cid,
-        dossier_medical: patientInfo.ramq || '--',
-        institution: patientInfo.organization.cid,
-        DDN: patientInfo.birthDate,
-        sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
-        family_id: familyInfo.cid,
-        position: getPatientPosition(patientInfo.gender, patientInfo.position),
-      };
-    }),
+    patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
+      type_echantillon: 'ADN',
+      tissue_source: 'Sang',
+      type_specimen: 'Normal',
+      nom_patient: patientInfo.lastName,
+      prenom_patient: patientInfo.firstName,
+      patient_id: patientInfo.cid,
+      service_request_id: cid,
+      dossier_medical: patientInfo.ramq || '--',
+      institution: patientInfo.organization.cid,
+      DDN: patientInfo.birthDate,
+      sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
+      family_id: familyInfo.cid,
+      position: getPatientPosition(patientInfo.gender, patientInfo.position),
+    })),
   };
   downloadJSONFile(
     JSON.stringify(nanuqFileContent, null, 2),
