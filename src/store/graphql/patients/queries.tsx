@@ -57,6 +57,14 @@ export const PATIENT_FILES_QUERY = (patientID: string) => gql`
             type: code @first @singleton
           }
         }
+        context @flatten
+        {
+          related@first @flatten {
+            sample:resource @flatten {
+              accessionIdentifier @flatten{value}
+            }
+          }
+        }
         content {
           attachment {
             url

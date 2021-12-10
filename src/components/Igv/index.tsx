@@ -19,8 +19,6 @@ const IGV = ({ id = 'igvContainer', className = '', options, loading = false }: 
   const [browser, setBrowser] = useState<IIGVBrowser | null>(null);
   const [previousOptions, setPreviousOptions] = useState<IIGVBrowserOptions | null>(null);
 
-  console.log(options);
-
   useEffect(() => {
     if (igvContainerRef.current && !browser && options.tracks?.length! > 0) {
       window.igv.createBrowser(igvContainerRef.current, options).then((browser: any) => {
@@ -32,13 +30,6 @@ const IGV = ({ id = 'igvContainer', className = '', options, loading = false }: 
   }, [options.tracks]);
 
   useEffect(() => {
-    //if (browser && options.tracks && previousOptions?.tracks) {
-    //  options.tracks.forEach((track) => {
-    //    browser.removeTrackByName(track.name);
-    //  });
-    //  browser.loadTrackList(options.tracks);
-    //}
-
     if (browser && previousOptions?.locus !== options.locus) {
       browser.search(options.locus);
     }

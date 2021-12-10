@@ -3,7 +3,7 @@ import { ExtendedMapping } from 'store/graphql/models';
 import { PatientFileResults, PatientResult } from 'store/graphql/patients/models/Patient';
 import { QueryVariable } from 'store/graphql/queries';
 import { INDEX_EXTENDED_MAPPING } from 'store/graphql/queries';
-import { useLazyResultQuery } from 'store/graphql/utils/query';
+import { useLazyResultQuery, useLazyResultQueryOnLoadOnly } from 'store/graphql/utils/query';
 
 import { IValueContent, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { PATIENTS_QUERY, PATIENT_FILES_QUERY } from './queries';
@@ -67,15 +67,20 @@ export const usePatientFilesData = (
 ): {
   loading: boolean;
   results: PatientFileResults;
+  error: any;
 } => {
-  const { loading, result } = useLazyResultQuery<any>(PATIENT_FILES_QUERY(patientId), {
-    variables: {
-      patientId: patientId,
+  const { loading, data, error } = useLazyResultQueryOnLoadOnly<any>(
+    PATIENT_FILES_QUERY(patientId),
+    {
+      variables: {
+        patientId: patientId,
+      },
     },
-  });
+  );
 
   return {
     loading,
-    results: result?.Patient || [],
+    results: data?.Patient || [],
+    error,
   };
 };

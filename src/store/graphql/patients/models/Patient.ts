@@ -55,6 +55,9 @@ export interface FhirDocContent {
 export interface FhirDoc {
   id: string;
   type: string;
+  sample: {
+    value: string;
+  }
   content: FhirDocContent[];
 }
 
