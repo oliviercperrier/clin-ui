@@ -1,4 +1,22 @@
 const fr = {
+  global: {
+    filters: {
+      actions: {
+        all: 'Sélectionner tout',
+        none: 'Effacer',
+        clear: 'Effacer',
+        less: 'Voir -',
+        more: 'De plus',
+        apply: 'Appliquer',
+      },
+      messages: {
+        empty: 'Aucune valeur trouvée pour cette requête',
+      },
+      checkbox: {
+        placeholder: 'Recherche...',
+      },
+    },
+  },
   'clinvar.value.Affects': 'Effets non pathologiques',
   'clinvar.value.Association': 'Association',
   'clinvar.value.benign': 'Bénin',
@@ -1156,7 +1174,7 @@ const fr = {
   'component.table.itemcount.results.multiple.pages':
     'Résultats <strong>{from}</strong> - <strong>{to}</strong> sur <strong>{total}</strong>',
   'component.table.itemcount.of': 'sur',
-  'report.nanuq.success': 'Votre fichier a été téléchargé'
+  'report.nanuq.success': 'Votre fichier a été téléchargé',
 };
 
 export default fr;
