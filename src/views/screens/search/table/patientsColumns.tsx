@@ -41,6 +41,7 @@ export const patientsColumns = (
       name: 'birthDate',
       summary: false,
       title: intl.get('screen.patientsearch.table.dob'),
+      render: (date: string) => Intl.DateTimeFormat(navigator.language).format(new Date(date)),
     },
     {
       name: 'timestamp',

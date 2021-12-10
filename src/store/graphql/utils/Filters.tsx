@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import getFiltersDictionary from 'utils/translation';
 
 import FilterContainer from '@ferlab/ui/core/components/filters/FilterContainer';
 import FilterSelector from '@ferlab/ui/core/components/filters/FilterSelector';
@@ -61,6 +62,7 @@ export const generateFilters = (
     return (
       <div className={className} key={`${key}_${filtersOpen}`}>
         <FilterComponent
+          dictionary={getFiltersDictionary()}
           maxShowing={5}
           isOpen={filtersOpen}
           filterGroup={filterGroup}
