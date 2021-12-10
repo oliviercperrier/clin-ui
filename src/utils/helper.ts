@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
+import { PARENT_TYPE, PATIENT_POSITION, GENDER, UNKNOWN_TAG } from './constants';
 
 // JWT
 
@@ -85,27 +86,38 @@ export const downloadJSONFile = (content: string, filename: string) => {
   document.body.removeChild(downloadLinkElement);
 };
 
+const getPatientPosition = (gender: string, position: string) => {
+  const loweredPosition = position.toLowerCase() || UNKNOWN_TAG;
+  const loweredSex = gender.toLowerCase() || UNKNOWN_TAG;
+  if (loweredPosition === PATIENT_POSITION.PARENT && loweredSex !== UNKNOWN_TAG) {
+    return loweredSex === GENDER.FEMALE ? PARENT_TYPE.MOTHER : PARENT_TYPE.FATHER;
+  }
+  return loweredPosition;
+};
+
 export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
   const nanuqFileContent = {
     export_id: uuid(),
     version_id: '1.0',
     test_genomique: 'exome',
     LDM: 'CHU Sainte-Justine',
-    patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
-      type_echantillon: 'ADN',
-      tissue_source: 'Sang',
-      type_specimen: 'Normal',
-      nom_patient: patientInfo.lastName,
-      prenom_patient: patientInfo.firstName,
-      patient_id: patientInfo.cid,
-      service_request_id: cid,
-      dossier_medical: patientInfo.ramq || '--',
-      institution: patientInfo.organization.cid,
-      DDN: patientInfo.birthDate,
-      sexe: patientInfo.gender.toLowerCase() || 'unknown',
-      family_id: familyInfo.cid,
-      position: patientInfo.position.toLowerCase(),
-    })),
+    patients: patients.map(({ patientInfo, familyInfo, cid }) => {
+      return {
+        type_echantillon: 'ADN',
+        tissue_source: 'Sang',
+        type_specimen: 'Normal',
+        nom_patient: patientInfo.lastName,
+        prenom_patient: patientInfo.firstName,
+        patient_id: patientInfo.cid,
+        service_request_id: cid,
+        dossier_medical: patientInfo.ramq || '--',
+        institution: patientInfo.organization.cid,
+        DDN: patientInfo.birthDate,
+        sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
+        family_id: familyInfo.cid,
+        position: getPatientPosition(patientInfo.gender, patientInfo.position),
+      };
+    }),
   };
   downloadJSONFile(
     JSON.stringify(nanuqFileContent, null, 2),
