@@ -11,9 +11,10 @@ import FemaleNotAffectedIcon from 'components/icons/FemaleNotAffectedIcon';
 import { getTopBodyElement } from 'utils/helper';
 import { DonorsEntity, VariantEntity } from 'store/graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
+import { ArrangerEdge } from 'store/graphql/models';
+import IGVModal from 'views/screens/variant/OccurenceDrawer/IGVModal';
 
 import style from './index.module.scss';
-import { ArrangerEdge } from 'store/graphql/models';
 
 interface OwnProps {
   patientId: string;
@@ -142,12 +143,18 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
             </Descriptions.Item>
           </Descriptions>
           <Divider style={{ margin: 0 }} />
-          <Button disabled type="primary" onClick={() => toggleModal(true)}>
+          <Button type="primary" onClick={() => toggleModal(true)}>
             {intl.get('screen.patientvariant.drawer.igv.viewer')}
             <ExternalLinkIcon height="14" width="14" className="anticon" />
           </Button>
         </Space>
       </Drawer>
+      <IGVModal
+        patientId={patientId}
+        variantEntity={data}
+        isOpen={modalOpened}
+        toggleModal={toggleModal}
+      />
     </>
   );
 };

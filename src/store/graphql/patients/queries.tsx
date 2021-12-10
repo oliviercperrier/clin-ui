@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const PATIENTS_QUERY = gql`
   query PatientsInformation($sqon: JSON, $first: Int, $offset: Int) {
@@ -57,10 +57,17 @@ export const PATIENT_FILES_QUERY = (patientID: string) => gql`
             type: code @first @singleton
           }
         }
+        context @flatten
+        {
+          related@first @flatten {
+            sample:resource @flatten {
+              accessionIdentifier @flatten{value}
+            }
+          }
+        }
         content {
           attachment {
             url
-            size
             hash
             title
           }
