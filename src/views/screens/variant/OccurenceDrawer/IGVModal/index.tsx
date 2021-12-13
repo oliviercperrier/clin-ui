@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import cx from 'classnames';
 import intl from 'react-intl-universal';
 import Igv from 'components/Igv';
-import { getTopBodyElement } from 'utils/helper';
+import { formatLocus, getTopBodyElement } from 'utils/helper';
 import axios from 'axios';
 import { usePatientFilesData } from 'store/graphql/patients/actions';
 import { GraphqlBackend } from 'store/providers';
@@ -12,9 +12,9 @@ import ApolloProvider from 'store/providers/apollo';
 import { VariantEntity } from 'store/graphql/variants/models';
 import { FhirDoc, PatientFileResults } from 'store/graphql/patients/models/Patient';
 import { IIGVTrack } from 'components/Igv/type';
+import ServerError from 'components/Results/ServerError';
 
 import style from './index.module.scss';
-import ServerError from 'components/Results/ServerError';
 
 interface OwnProps {
   patientId: string;
@@ -99,7 +99,7 @@ const IGVModal = ({ patientId, variantEntity, isOpen = false, toggleModal, token
           options={{
             palette: ['#00A0B0', '#6A4A3C', '#CC333F', '#EB6841'],
             genome: 'hg38',
-            locus: variantEntity?.locus, // Working locus ex: 'chr8:127,736,588-127,739,371'
+            locus: formatLocus(variantEntity?.locus, 500),
             tracks: buildTrack(results!, token, patientId),
           }}
           loading={loading}
