@@ -115,10 +115,14 @@ export const getFilterGroup = (
   rangeTypes: string[],
   filterFooter: boolean,
 ): IFilterGroup => {
+  console.log(extendedMapping?.field)
+
   if (isRangeAgg(aggregation)) {
     return {
       field: extendedMapping?.field || '',
-      title: extendedMapping?.displayName || '',
+      title: intl
+        .get(`filters.group.${extendedMapping?.field}`)
+        .defaultMessage(extendedMapping?.displayName || ''),
       type: getFilterType(extendedMapping?.type || ''),
       config: {
         min: aggregation.stats.min,
@@ -133,10 +137,9 @@ export const getFilterGroup = (
 
   return {
     field: extendedMapping?.field || '',
-    title:
-      intl.get(`filters.group.${extendedMapping?.field}` || '') ||
-      extendedMapping?.displayName ||
-      '',
+    title: intl
+      .get(`filters.group.${extendedMapping?.field}`)
+      .defaultMessage(extendedMapping?.displayName || ''),
     type: getFilterType(extendedMapping?.type || ''),
     config: {
       nameMapping: [],
