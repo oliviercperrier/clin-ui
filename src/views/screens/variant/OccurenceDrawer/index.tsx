@@ -118,7 +118,7 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
                   DISPLAY_WHEN_EMPTY_DATUM}
               </Descriptions.Item>
               <Descriptions.Item label={intl.get('screen.patientvariant.drawer.parental.origin')}>
-                {donor?.parental_origin! || DISPLAY_WHEN_EMPTY_DATUM}
+                {intl.get(`screen.patientvariant.drawer.${donor?.parental_origin}`)|| DISPLAY_WHEN_EMPTY_DATUM}
               </Descriptions.Item>
             </Descriptions>
           )}
