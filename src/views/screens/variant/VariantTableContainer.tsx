@@ -10,6 +10,7 @@ import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { VariantPageResults } from './VariantPageContainer';
 import intl from 'react-intl-universal';
 import UserAffected from 'components/icons/UserAffectedIcon';
+import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 import {
   VariantEntity,
   ClinVar,
@@ -148,7 +149,7 @@ const VariantTableContainer = (props: OwnProps) => {
       render: (record: ArrangerResultsTree<DonorsEntity>) => {
         const donor = findDonorById(record, props.patientId);
         return donor
-          ? intl.get(`screen.patientvariant.transmission.${donor.node?.transmission}`)
+          ? removeUnderscoreAndCapitalize(donor.node?.transmission || "")
           : DISPLAY_WHEN_EMPTY_DATUM;
       },
     },
