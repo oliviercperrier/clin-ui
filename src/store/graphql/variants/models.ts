@@ -57,6 +57,7 @@ export type DonorsEntity = {
   father_zygosity?: string;
   father_affected_status?: boolean;
   father_calls?: number[];
+  parental_origin?: string;
 };
 
 export type VariantEntity = {

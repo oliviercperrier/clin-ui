@@ -13,6 +13,7 @@ import { DonorsEntity, VariantEntity } from 'store/graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 import { ArrangerEdge } from 'store/graphql/models';
 import IGVModal from 'views/screens/variant/OccurenceDrawer/IGVModal';
+import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 
 import style from './index.module.scss';
 
@@ -113,11 +114,11 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
                 </Descriptions.Item>
               )}
               <Descriptions.Item label={intl.get('screen.patientvariant.drawer.transmission')}>
-                {intl.get(`screen.patientvariant.transmission.${donor?.transmission}`) ||
+                {removeUnderscoreAndCapitalize(donor?.transmission! || '') ||
                   DISPLAY_WHEN_EMPTY_DATUM}
               </Descriptions.Item>
               <Descriptions.Item label={intl.get('screen.patientvariant.drawer.parental.origin')}>
-                {DISPLAY_WHEN_EMPTY_DATUM}
+                {donor?.parental_origin! || DISPLAY_WHEN_EMPTY_DATUM}
               </Descriptions.Item>
             </Descriptions>
           )}

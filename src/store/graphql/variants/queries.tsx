@@ -68,6 +68,7 @@ export const VARIANT_QUERY = gql`
                     father_zygosity
                     father_affected_status
                     father_calls
+                    parental_origin
                   }
                 }
               }
