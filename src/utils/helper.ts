@@ -123,14 +123,5 @@ export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) =
   );
 };
 
-/**
- *
- * @param locus Must be of format: 11-1018261-TG-T
- */
-export const formatLocus = (locus: string, bound?: number) => {
-  const parts = locus.split('-');
-  const prefix = `chr${parts[0]}`;
-  const position = parseInt(parts[1]);
-
-  return `${prefix}:${bound ? `${position - bound}-${position + bound}` : position}`;
-};
+export const formatLocus = (start: number, chromosome: string, bound?: number) =>
+  `chr${chromosome}:${bound ? `${start - bound}-${start + bound}` : start}`;

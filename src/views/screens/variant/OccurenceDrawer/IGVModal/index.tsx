@@ -99,7 +99,7 @@ const IGVModal = ({ patientId, variantEntity, isOpen = false, toggleModal, token
           options={{
             palette: ['#00A0B0', '#6A4A3C', '#CC333F', '#EB6841'],
             genome: 'hg38',
-            locus: formatLocus(variantEntity?.locus, 500),
+            locus: formatLocus(variantEntity?.start, variantEntity?.chromosome, 500),
             tracks: buildTrack(results!, token, patientId),
           }}
           loading={loading}
