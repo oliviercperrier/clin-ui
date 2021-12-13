@@ -1,11 +1,12 @@
 import { ArrangerNodeData, ArrangerResultsTree } from 'store/graphql/models';
 
 export interface Requests extends ArrangerNodeData {
-  prescription: string;
-  request: string;
   status: string;
   submitted: string;
-  test: string;
+  analysis: {
+    code: string;
+    display: string;
+  };
 }
 
 export interface Organization extends ArrangerNodeData {
@@ -57,7 +58,7 @@ export interface FhirDoc {
   type: string;
   sample: {
     value: string;
-  }
+  };
   content: FhirDocContent[];
 }
 

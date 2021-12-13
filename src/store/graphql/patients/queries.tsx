@@ -27,11 +27,12 @@ export const PATIENTS_QUERY = gql`
               name
             }
             requests {
-              prescription
-              request
               status
               submitted
-              test
+              analysis {
+                code
+                display
+              }
             }
             practitioner {
               cid
