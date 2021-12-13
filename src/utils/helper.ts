@@ -122,3 +122,6 @@ export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) =
     `${Intl.DateTimeFormat(navigator.language).format(new Date())}-clin-nanuq.json`,
   );
 };
+
+export const formatLocus = (start: number, chromosome: string, bound?: number) =>
+  `chr${chromosome}:${bound ? `${start - bound}-${start + bound}` : start}`;

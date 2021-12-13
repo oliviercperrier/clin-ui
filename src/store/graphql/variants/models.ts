@@ -75,7 +75,7 @@ export type VariantEntity = {
   frequencies_by_analysis?: FrequencyByAnalysisEntity;
   analysis_display_name?: string;
   chromosome: string;
-  start: string;
+  start: number;
   alternate: string;
   reference: string;
   assembly_version: string;

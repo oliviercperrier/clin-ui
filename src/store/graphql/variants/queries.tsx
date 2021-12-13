@@ -23,6 +23,8 @@ export const VARIANT_QUERY = gql`
             variant_type
             max_impact_score
             rsnumber
+            chromosome
+            start
             consequences {
               hits {
                 edges {
