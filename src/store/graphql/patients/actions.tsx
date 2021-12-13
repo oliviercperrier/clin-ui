@@ -23,7 +23,7 @@ export const mappedFilters = (sqonFilters: ISyntheticSqon): ISyntheticSqon => {
       ...c,
       content: {
         ...cc,
-        field: `requests.${cc.field}.keyword`,
+        field: `requests.${cc.field}`,
       },
     };
   });
