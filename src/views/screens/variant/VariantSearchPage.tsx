@@ -92,7 +92,7 @@ const filterGroups: {
     groups: [
       {
         title: 'screen.patientvariant.filter.grouptitle.rqdmpatient',
-        fields: ['frequency_RQDM__total__af'],
+        fields: ['frequency_RQDM__total__af', 'frequency_RQDM__affected__af', 'frequency_RQDM__non_affected__af'],
       },
       {
         title: 'screen.patientvariant.filter.grouptitle.publiccohorts',
