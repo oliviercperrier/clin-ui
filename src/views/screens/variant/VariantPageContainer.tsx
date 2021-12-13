@@ -82,13 +82,14 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
       noQuery: intl.get('querybuilder.query.noQuery'),
       facet: (key) => {
         if (key === 'locus') return 'Variant';
+        const title = intl.get(`filters.group.${key}`);
 
-        return (
-          mappingResults?.extendedMapping?.find((mapping: ExtendedMapping) => key === mapping.field)
-            ?.displayName || key
-        );
+        return title
+          ? title
+          : mappingResults?.extendedMapping?.find(
+              (mapping: ExtendedMapping) => key === mapping.field,
+            )?.displayName || key;
       },
-      //facetValueMapping: fieldMappings,
     },
     actions: {
       new: intl.get('querybuilder.actions.new'),
