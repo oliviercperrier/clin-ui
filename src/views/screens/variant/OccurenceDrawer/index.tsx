@@ -114,11 +114,14 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
                 </Descriptions.Item>
               )}
               <Descriptions.Item label={intl.get('screen.patientvariant.drawer.transmission')}>
-                {removeUnderscoreAndCapitalize(donor?.transmission! || '') ||
-                  DISPLAY_WHEN_EMPTY_DATUM}
+                {removeUnderscoreAndCapitalize(donor?.transmission! || '').defaultMessage(
+                  DISPLAY_WHEN_EMPTY_DATUM,
+                )}
               </Descriptions.Item>
               <Descriptions.Item label={intl.get('screen.patientvariant.drawer.parental.origin')}>
-                {donor?.parental_origin! || DISPLAY_WHEN_EMPTY_DATUM}
+                {intl
+                  .get(`screen.patientvariant.drawer.${donor?.parental_origin}`)
+                  .defaultMessage(DISPLAY_WHEN_EMPTY_DATUM)}
               </Descriptions.Item>
             </Descriptions>
           )}

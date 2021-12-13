@@ -964,6 +964,8 @@ const en = {
   'screen.patientvariant.drawer.affected': 'Affected',
   'screen.patientvariant.drawer.notaffected': 'Not affected',
   'screen.patientvariant.drawer.igv.title': 'Alignment and variant',
+  'screen.patientvariant.drawer.father': 'Father',
+  'screen.patientvariant.drawer.mother': 'Mother',
   'screen.patientvariant.transmission.unknown_proband_genotype': 'Unknown proband genotype',
   'screen.patientvariant.transmission.non_carrier_proband': 'Non carrier proband',
   'screen.patientvariant.transmission.unknown_father_genotype': 'Unknown father genotype',
