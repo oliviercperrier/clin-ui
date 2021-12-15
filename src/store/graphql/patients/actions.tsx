@@ -64,6 +64,7 @@ export const usePatientsMapping = (): ExtendedMappingResults => {
 
 export const usePatientFilesData = (
   patientId: string,
+  skip?: boolean
 ): {
   loading: boolean;
   results: PatientFileResults;
@@ -75,12 +76,13 @@ export const usePatientFilesData = (
       variables: {
         patientId: patientId,
       },
+      skip: skip
     },
   );
 
   return {
     loading,
-    results: data?.Patient || [],
+    results: data?.Patient,
     error,
   };
 };

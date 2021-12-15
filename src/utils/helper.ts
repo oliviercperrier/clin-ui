@@ -86,7 +86,7 @@ export const downloadJSONFile = (content: string, filename: string) => {
   document.body.removeChild(downloadLinkElement);
 };
 
-const getPatientPosition = (gender: string, position: string) => {
+export const getPatientPosition = (gender: string, position: string) => {
   const loweredPosition = position.toLowerCase() || UNKNOWN_TAG;
   const loweredSex = gender.toLowerCase() || UNKNOWN_TAG;
   if (loweredPosition === PATIENT_POSITION.PARENT && loweredSex !== UNKNOWN_TAG) {

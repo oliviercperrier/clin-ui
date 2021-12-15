@@ -3,21 +3,22 @@ import { Modal } from 'antd';
 import cx from 'classnames';
 import intl from 'react-intl-universal';
 import Igv from 'components/Igv';
-import { formatLocus, getTopBodyElement } from 'utils/helper';
+import { formatLocus, getPatientPosition, getTopBodyElement } from 'utils/helper';
 import axios from 'axios';
 import { usePatientFilesData } from 'store/graphql/patients/actions';
 import { GraphqlBackend } from 'store/providers';
 import useQueryString from 'utils/useQueryString';
 import ApolloProvider from 'store/providers/apollo';
-import { VariantEntity } from 'store/graphql/variants/models';
+import { DonorsEntity, VariantEntity } from 'store/graphql/variants/models';
 import { FhirDoc, PatientFileResults } from 'store/graphql/patients/models/Patient';
 import { IIGVTrack } from 'components/Igv/type';
 import ServerError from 'components/Results/ServerError';
 
 import style from './index.module.scss';
+import { GENDER, PARENT_TYPE, PATIENT_POSITION } from 'utils/constants';
 
 interface OwnProps {
-  patientId: string;
+  donor: DonorsEntity;
   variantEntity: VariantEntity;
   isOpen?: boolean;
   toggleModal: (visible: boolean) => void;
@@ -48,37 +49,86 @@ const findCramAndCraiFiles = (doc: FhirDoc): ITrackFiles => ({
   mainFile: doc?.content!.find((content) => content.format === FHIR_CRAM_TYPE)?.attachment.url,
 });
 
-const generateCramTrack = (urls: ITrackFiles, trackName: string, token: string): IIGVTrack => ({
-  type: 'alignment',
-  format: 'cram',
-  url: getPresignedUrl(urls.mainFile!, token),
-  indexURL: getPresignedUrl(urls.indexFile!, token),
-  name: trackName,
-  height: 600,
-  sort: {
-    chr: 'chr8',
-    option: 'BASE',
-    position: 128750986,
-    direction: 'ASC',
-  },
-});
+const generateCramTrack = (
+  files: PatientFileResults,
+  patientId: string,
+  gender: GENDER,
+  position: PATIENT_POSITION | PARENT_TYPE,
+  token: string,
+): IIGVTrack => {
+  const cramDoc = files.docs.find((doc) => doc.type === FHIR_CRAM_CRAI_DOC_TYPE);
+  const cramCraiFiles = findCramAndCraiFiles(cramDoc!);
+  const cramTrackName = `${cramDoc?.sample.value!} (${patientId} : ${getPatientPosition(
+    gender,
+    position,
+  )})`;
 
-const buildTrack = (patientFiles: PatientFileResults, token: string, patientId: string) => {
+  return {
+    type: 'alignment',
+    format: 'cram',
+    url: getPresignedUrl(cramCraiFiles.mainFile!, token),
+    indexURL: getPresignedUrl(cramCraiFiles.indexFile!, token),
+    name: cramTrackName,
+    height: 450,
+    sort: {
+      chr: 'chr8',
+      option: 'BASE',
+      position: 128750986,
+      direction: 'ASC',
+    },
+  };
+};
+
+const buildTracks = (
+  patientFiles: PatientFileResults,
+  motherFiles: PatientFileResults,
+  fatherFiles: PatientFileResults,
+  token: string,
+  donor: DonorsEntity,
+) => {
   if (!patientFiles.docs) {
     return [];
   }
 
   let tracks: IIGVTrack[] = [];
-  const cramDoc = patientFiles.docs.find((doc) => doc.type === FHIR_CRAM_CRAI_DOC_TYPE);
-  const cramCraiFiles = findCramAndCraiFiles(cramDoc!);
 
-  tracks.push(generateCramTrack(cramCraiFiles, cramDoc?.sample.value!, token));
+  tracks.push(
+    generateCramTrack(
+      patientFiles,
+      donor.patient_id,
+      donor.gender as GENDER,
+      donor.is_proband ? PATIENT_POSITION.PROBAND : PATIENT_POSITION.PARENT,
+      token,
+    ),
+  );
+
+  if (donor.mother_id && motherFiles) {
+    tracks.push(
+      generateCramTrack(motherFiles, donor.mother_id, GENDER.FEMALE, PARENT_TYPE.MOTHER, token),
+    );
+  }
+
+  if (donor.father_id && fatherFiles) {
+    tracks.push(
+      generateCramTrack(fatherFiles, donor.father_id, GENDER.MALE, PARENT_TYPE.FATHER, token),
+    );
+  }
 
   return tracks;
 };
 
-const IGVModal = ({ patientId, variantEntity, isOpen = false, toggleModal, token }: OwnProps) => {
-  const { loading, results, error } = usePatientFilesData(patientId);
+const IGVModal = ({ donor, variantEntity, isOpen = false, toggleModal, token }: OwnProps) => {
+  const { loading, results, error } = usePatientFilesData(donor?.patient_id, !isOpen);
+  const {
+    loading: motherLoading,
+    results: motherResults,
+    error: motherError,
+  } = usePatientFilesData(donor?.mother_id!, !isOpen || !donor?.mother_id);
+  const {
+    loading: fatherLoading,
+    results: fatherResults,
+    error: fatherError,
+  } = usePatientFilesData(donor?.father_id!, !isOpen || !donor?.father_id);
 
   return (
     <Modal
@@ -91,19 +141,21 @@ const IGVModal = ({ patientId, variantEntity, isOpen = false, toggleModal, token
       className={cx(style.igvModal, 'igvModal')}
       wrapClassName={cx(style.igvModalWrapper, 'igvModalWrapper')}
     >
-      {error ? (
+      {error || motherError || fatherError ? (
         <ServerError />
       ) : (
-        <Igv
-          className={cx(style.igvContainer, 'igvContainer')}
-          options={{
-            palette: ['#00A0B0', '#6A4A3C', '#CC333F', '#EB6841'],
-            genome: 'hg38',
-            locus: formatLocus(variantEntity?.start, variantEntity?.chromosome, 500),
-            tracks: buildTrack(results!, token, patientId),
-          }}
-          loading={loading}
-        />
+        isOpen &&
+        !(loading || motherLoading || fatherLoading) && (
+          <Igv
+            className={cx(style.igvContainer, 'igvContainer')}
+            options={{
+              palette: ['#00A0B0', '#6A4A3C', '#CC333F', '#EB6841'],
+              genome: 'hg38',
+              locus: formatLocus(variantEntity?.start, variantEntity?.chromosome, 20),
+              tracks: buildTracks(results!, motherResults, fatherResults, token, donor!),
+            }}
+          />
+        )
       )}
     </Modal>
   );
@@ -111,7 +163,7 @@ const IGVModal = ({ patientId, variantEntity, isOpen = false, toggleModal, token
 
 const IGVModalWrapper = (props: Omit<OwnProps, 'token'>) => {
   const { token } = useQueryString();
-
+  
   return (
     <ApolloProvider backend={GraphqlBackend.FHIR} token={token as string}>
       <IGVModal {...props} token={token as string} />
