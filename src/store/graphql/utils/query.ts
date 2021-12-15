@@ -46,7 +46,7 @@ export const useLazyResultQueryOnLoadOnly = <TData = any, TVariables = Operation
   }>({});
   const { loading, result, error } = useLazyResultQuery(query, {
     ...options,
-    skip: customOptions.skip,
+    skip: options?.skip || customOptions.skip,
   });
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export const useLazyResultQueryOnLoadOnly = <TData = any, TVariables = Operation
 
   return {
     loading,
-    data: customOptions?.skip ? customOptions.dataToReturn : result,
+    data: options?.skip || customOptions?.skip ? customOptions.dataToReturn : result,
     error,
   };
 };

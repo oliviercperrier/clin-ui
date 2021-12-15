@@ -153,12 +153,14 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
           </Button>
         </Space>
       </Drawer>
-      <IGVModal
-        patientId={patientId}
-        variantEntity={data}
-        isOpen={modalOpened}
-        toggleModal={toggleModal}
-      />
+      {donor && (
+        <IGVModal
+          donor={donor}
+          variantEntity={data}
+          isOpen={modalOpened}
+          toggleModal={toggleModal}
+        />
+      )}
     </>
   );
 };

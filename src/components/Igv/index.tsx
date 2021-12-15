@@ -14,13 +14,14 @@ type OwnProps = {
   loading?: boolean;
 };
 
-const IGV = ({ id = 'igvContainer', className = '', options, loading = false }: OwnProps) => {
+const IGV = ({ id = 'igvContainer', className = '', options }: OwnProps) => {
   const igvContainerRef = useRef<HTMLDivElement>(null);
   const [browser, setBrowser] = useState<IIGVBrowser | null>(null);
   const [previousOptions, setPreviousOptions] = useState<IIGVBrowserOptions | null>(null);
 
   useEffect(() => {
-    if (igvContainerRef.current && !browser && options.tracks?.length! > 0) {
+    if (igvContainerRef.current && !window.igv.browser && options.tracks?.length! > 0) {
+      window.igv.browser = true;
       window.igv.createBrowser(igvContainerRef.current, options).then((browser: any) => {
         window.igv.browser = browser;
         setBrowser(browser);
