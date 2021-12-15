@@ -21,7 +21,7 @@ const GenericFilters: FunctionComponent<OwnProps> = ({ field, mappingResults }) 
   const { filters } = useFilters();
   const { patientid } = useParams<{ patientid: string }>();
   const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
-  let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters));
+  let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, 'donors'));
   resolvedSqon.content.push({
     content: { field: 'donors.patient_id', value: [patientid] },
     op: 'in',
