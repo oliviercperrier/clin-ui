@@ -70,6 +70,7 @@ const generateCramTrack = (
     indexURL: getPresignedUrl(cramCraiFiles.indexFile!, token),
     name: cramTrackName,
     height: 450,
+    colorBy: 'strand',
     sort: {
       chr: 'chr8',
       option: 'BASE',
@@ -163,7 +164,7 @@ const IGVModal = ({ donor, variantEntity, isOpen = false, toggleModal, token }: 
 
 const IGVModalWrapper = (props: Omit<OwnProps, 'token'>) => {
   const { token } = useQueryString();
-  
+
   return (
     <ApolloProvider backend={GraphqlBackend.FHIR} token={token as string}>
       <IGVModal {...props} token={token as string} />
