@@ -34,9 +34,6 @@ const IGV = ({ id = 'igvContainer', className = '', options }: OwnProps) => {
   }, [options.tracks]);
 
   useEffect(() => {
-    console.log(previousOptions?.locus)
-    console.log(options?.locus)
-
     if (browser && previousOptions?.locus !== options.locus) {
       browser.search(options.locus);
       setPreviousOptions(options)
