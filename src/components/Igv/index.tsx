@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { IIGVBrowser, IIGVBrowserOptions } from './type';
+import cx from "classnames";
+
+import style from "./index.module.scss";
 
 declare global {
   interface Window {
@@ -31,12 +34,16 @@ const IGV = ({ id = 'igvContainer', className = '', options }: OwnProps) => {
   }, [options.tracks]);
 
   useEffect(() => {
+    console.log(previousOptions?.locus)
+    console.log(options?.locus)
+
     if (browser && previousOptions?.locus !== options.locus) {
       browser.search(options.locus);
+      setPreviousOptions(options)
     }
   }, [options, previousOptions]);
 
-  return <div id={id} ref={igvContainerRef} className={className}></div>;
+  return <div id={id} ref={igvContainerRef} className={cx(className, style.igvContainer)}></div>;
 };
 
 export default IGV;
