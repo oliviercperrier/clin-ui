@@ -7,9 +7,13 @@ import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescript
 import { generateAndDownloadNanuqExport, getTopBodyElement } from 'utils/helper';
 import intl from 'react-intl-universal';
 
+const DEFAULT_PAGE_SIZE = 20;
+const DEFAULT_PAGE = 1;
+
 const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactElement => {
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionResult[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
+  const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE);
   const columns = prescriptionsColumns([]);
 
   return (
@@ -18,7 +22,13 @@ const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactEle
       loading={loading}
       pagination={{
         current: currentPage,
-        onChange: (page, _pageSize) => setCurrentPage(page),
+        defaultPageSize: currentPageSize,
+        onChange: (page, pageSize) => {
+          if (currentPage !== page || currentPageSize !== pageSize) {
+            setCurrentPage(page);
+            setcurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
+          }
+        },
       }}
       results={results}
       total={results?.total || 0}

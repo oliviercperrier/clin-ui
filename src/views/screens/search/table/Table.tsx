@@ -14,7 +14,7 @@ export type Props = TableProps<any> & {
   extra?: React.ReactElement;
 };
 
-const ITEM_PER_PAGE = 25;
+const DEFAULT_PAGE_SIZE = 20;
 
 const Table = ({
   pagination,
@@ -25,7 +25,7 @@ const Table = ({
 }: Props): React.ReactElement => (
   <>
     <div className={styles.tableHeader}>
-      <ItemsCount page={pagination ? pagination?.current! : 1} size={ITEM_PER_PAGE} total={total} />
+      <ItemsCount page={pagination ? pagination?.current! : 1} size={pagination ? pagination?.defaultPageSize! : DEFAULT_PAGE_SIZE} total={total} />
       {extra}
     </div>
     <AntTable
@@ -33,7 +33,6 @@ const Table = ({
       dataSource={results?.data || []}
       pagination={{
         ...pagination,
-        pageSize: ITEM_PER_PAGE,
         position: ['bottomRight'],
         size: 'small',
       }}
