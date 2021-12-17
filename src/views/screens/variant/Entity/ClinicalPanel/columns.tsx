@@ -1,7 +1,6 @@
 import React from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { Typography } from "antd";
-import ExpandableCell from "components/table/ExpandableCell";
 import intl from "react-intl-universal";
 import {
   ClinicalGenesTableSource,

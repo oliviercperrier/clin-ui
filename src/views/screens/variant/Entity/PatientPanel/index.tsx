@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import intl from 'react-intl-universal';
@@ -46,7 +47,7 @@ const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
 
 const findAllAnalysis = (donors: ArrangerEdge<DonorsEntity>[]) => {
   let analysisList: ColumnFilterItem[] = [];
-  donors.map((donor) => {
+  donors.forEach((donor) => {
     if (
       donor.node.analysis_code &&
       !analysisList.find((analysis) => analysis.value === donor.node.analysis_code)

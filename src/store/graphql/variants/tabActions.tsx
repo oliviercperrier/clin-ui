@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useLazyResultQuery, useLazyResultQueryOnLoadOnly } from 'store/graphql/utils/query';
-import { VariantEntity } from 'store/graphql/variants/models';
+import { useLazyResultQueryOnLoadOnly } from 'store/graphql/utils/query';
 
 import {
   TAB_CLINICAL_QUERY,

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { IIGVBrowser, IIGVBrowserOptions } from './type';
-import cx from "classnames";
+import cx from 'classnames';
 
-import style from "./index.module.scss";
+import style from './index.module.scss';
 
 declare global {
   interface Window {
@@ -31,13 +31,15 @@ const IGV = ({ id = 'igvContainer', className = '', options }: OwnProps) => {
         setPreviousOptions(options);
       });
     }
+    // eslint-disable-next-line
   }, [options.tracks]);
 
   useEffect(() => {
     if (browser && previousOptions?.locus !== options.locus) {
       browser.search(options.locus);
-      setPreviousOptions(options)
+      setPreviousOptions(options);
     }
+    // eslint-disable-next-line
   }, [options, previousOptions]);
 
   return <div id={id} ref={igvContainerRef} className={cx(className, style.igvContainer)}></div>;

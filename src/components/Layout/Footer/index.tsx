@@ -1,28 +1,16 @@
-import React from "react";
-import { Col, Layout, Row, Typography } from "antd";
-import intl from "react-intl-universal";
-import get from "lodash/get";
-import IconKit from "react-icons-kit";
-import {
-  ic_email,
-  ic_launch,
-  ic_location_on,
-  ic_phone,
-} from "react-icons-kit/md";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
+import { Col, Layout, Row, Typography } from 'antd';
+import intl from 'react-intl-universal';
+import get from 'lodash/get';
+import IconKit from 'react-icons-kit';
+import { ic_email, ic_launch, ic_location_on, ic_phone } from 'react-icons-kit/md';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
 const { Text } = Typography;
-const ZEPLIN_URL = get(
-  window,
-  "CLIN.zeplinUrl",
-  process.env.REACT_APP_ZEPLIN_URL
-);
-const FHIR_CONSOLE_URL = get(
-  window,
-  "CLIN.fhirConsoleUrl",
-  process.env.REACT_APP_FHIR_CONSOLE_URL
-);
+const ZEPLIN_URL = get(window, 'CLIN.zeplinUrl', process.env.REACT_APP_ZEPLIN_URL);
+const FHIR_CONSOLE_URL = get(window, 'CLIN.fhirConsoleUrl', process.env.REACT_APP_FHIR_CONSOLE_URL);
 
 const Footer = () => (
   <Layout.Footer id="footer" className={styles.footer}>
@@ -30,21 +18,19 @@ const Footer = () => (
       <div className={styles.footerNav}>
         <Col>
           <Text className={styles.navTitle}>
-            {intl.get("footer.navigation.primary.information")}
+            {intl.get('footer.navigation.primary.information')}
           </Text>
           <nav>
             <ul>
               <li>
-                <a href="#">
-                  {intl.get("footer.navigation.primary.documentation")}
-                </a>
+                <a href="#">{intl.get('footer.navigation.primary.documentation')}</a>
               </li>
               <li>
-                <a href="#">{intl.get("footer.navigation.primary.faq")}</a>
+                <a href="#">{intl.get('footer.navigation.primary.faq')}</a>
               </li>
               <li className={styles.externalLink}>
                 <a href="#">
-                  {intl.get("footer.navigation.primary.link")}
+                  {intl.get('footer.navigation.primary.link')}
                   <IconKit icon={ic_launch} size={16} />
                 </a>
               </li>
@@ -52,32 +38,26 @@ const Footer = () => (
           </nav>
         </Col>
         <Col>
-          <Text className={styles.navTitle}>
-            {intl.get("footer.navigation.primary.contact")}
-          </Text>
+          <Text className={styles.navTitle}>{intl.get('footer.navigation.primary.contact')}</Text>
           <nav>
             <ul>
               <li>
                 <IconKit icon={ic_phone} size={16} />
-                {intl.get("footer.navigation.primary.phone")}
+                {intl.get('footer.navigation.primary.phone')}
               </li>
               <li>
                 <IconKit icon={ic_email} size={16} />
-                {intl.get("footer.navigation.primary.email")}
+                {intl.get('footer.navigation.primary.email')}
               </li>
               <li>
                 <IconKit icon={ic_location_on} size={16} />
-                {intl.get("footer.navigation.primary.address")}
+                {intl.get('footer.navigation.primary.address')}
               </li>
             </ul>
           </nav>
         </Col>
         <Col>
-          <img
-            alt="Saint-Justine"
-            className={styles.logo}
-            src="/assets/logos/chujs-white.svg"
-          />
+          <img alt="Saint-Justine" className={styles.logo} src="/assets/logos/chujs-white.svg" />
         </Col>
       </div>
     </Row>
@@ -86,38 +66,30 @@ const Footer = () => (
         <nav>
           <ul>
             <li>
-              <a href="#">
-                {intl.get("footer.navigation.secondary.accessibility")}
-              </a>
+              <a href="#">{intl.get('footer.navigation.secondary.accessibility')}</a>
             </li>
             <li>
-              <a href="#">{intl.get("footer.navigation.secondary.access")}</a>
+              <a href="#">{intl.get('footer.navigation.secondary.access')}</a>
             </li>
             <li>
-              <a href="#">
-                {intl.get("footer.navigation.secondary.confidentiality")}
-              </a>
+              <a href="#">{intl.get('footer.navigation.secondary.confidentiality')}</a>
             </li>
             <li>
-              <a href="#">{intl.get("footer.navigation.secondary.about")}</a>
+              <a href="#">{intl.get('footer.navigation.secondary.about')}</a>
             </li>
             <li>
-              <a href={ZEPLIN_URL} target="_blank">
+              <a href={ZEPLIN_URL} target="_blank" rel="noreferrer">
                 Zeppelin
               </a>
             </li>
             <li>
-              <a href={FHIR_CONSOLE_URL} target="_blank">
+              <a href={FHIR_CONSOLE_URL} target="_blank" rel="noreferrer">
                 Fhir
               </a>
             </li>
           </ul>
         </nav>
-        <img
-          alt="Saint-Justine"
-          className={styles.logo}
-          src="/assets/logos/msssq.svg"
-        />
+        <img alt="Saint-Justine" className={styles.logo} src="/assets/logos/msssq.svg" />
       </div>
     </Row>
   </Layout.Footer>

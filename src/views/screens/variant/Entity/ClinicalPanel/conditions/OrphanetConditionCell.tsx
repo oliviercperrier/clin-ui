@@ -4,13 +4,10 @@ import {
   OrphanetCondition,
   OrphanetConditions,
 } from "store/graphql/variants/models";
-import { Typography } from "antd";
 
 interface OwnProps {
   conditions: OrphanetConditions;
 }
-
-const { Text } = Typography;
 
 const OrphanetConditionCell = ({ conditions }: OwnProps) => (
   <div>

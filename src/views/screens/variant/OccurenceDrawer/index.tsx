@@ -27,7 +27,7 @@ interface OwnProps {
 const getDonor = (patientId: string, data: VariantEntity) => {
   const donors: ArrangerEdge<DonorsEntity>[] = data?.donors?.hits?.edges || [];
   const donor: ArrangerEdge<DonorsEntity> | undefined = donors.find(
-    (donor) => donor.node.patient_id == patientId,
+    (donor) => donor.node.patient_id === patientId,
   );
   return donor?.node;
 };
@@ -36,9 +36,9 @@ const getParentTitle = (who: 'mother' | 'father', id: string, affected: boolean)
   let AffectedIcon = null;
 
   if (affected) {
-    AffectedIcon = who == 'mother' ? FemaleAffectedIcon : MaleAffectedIcon;
+    AffectedIcon = who === 'mother' ? FemaleAffectedIcon : MaleAffectedIcon;
   } else {
-    AffectedIcon = who == 'mother' ? FemaleNotAffectedIcon : MaleNotAffectedIcon;
+    AffectedIcon = who === 'mother' ? FemaleNotAffectedIcon : MaleNotAffectedIcon;
   }
 
   return (
