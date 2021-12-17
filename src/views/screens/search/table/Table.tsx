@@ -14,6 +14,7 @@ export type Props = TableProps<any> & {
   extra?: React.ReactElement;
 };
 
+const DEFAULT_PAGE_SIZE = 20;
 
 const Table = ({
   pagination,
@@ -24,7 +25,7 @@ const Table = ({
 }: Props): React.ReactElement => (
   <>
     <div className={styles.tableHeader}>
-      <ItemsCount page={pagination ? pagination?.current! : 1} size={pagination ? pagination?.defaultPageSize! : 10} total={total} />
+      <ItemsCount page={pagination ? pagination?.current! : 1} size={pagination ? pagination?.defaultPageSize! : DEFAULT_PAGE_SIZE} total={total} />
       {extra}
     </div>
     <AntTable
