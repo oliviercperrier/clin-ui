@@ -24,7 +24,7 @@ const Table = ({
 }: Props): React.ReactElement => (
   <>
     <div className={styles.tableHeader}>
-      <ItemsCount page={pagination ? pagination?.current! : 1} size={pagination ? pagination?.defaultPageSize! : 11} total={total} />
+      <ItemsCount page={pagination ? pagination?.current! : 1} size={pagination ? pagination?.defaultPageSize! : 10} total={total} />
       {extra}
     </div>
     <AntTable
