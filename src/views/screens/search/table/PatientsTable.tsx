@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { patientsColumns } from './patientsColumns';
 import Table, { Props } from './Table';
 
+const DEFAULT_PAGE_SIZE = 20;
+const DEFAULT_PAGE = 1;
+
 const PatientsTable = ({ results, loading = false }: Props): React.ReactElement => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
+  const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE);
   const columns = patientsColumns([]);
 
   return (
@@ -12,7 +16,13 @@ const PatientsTable = ({ results, loading = false }: Props): React.ReactElement 
       loading={loading}
       pagination={{
         current: currentPage,
-        onChange: (page, _pageSize) => setCurrentPage(page),
+        defaultPageSize: currentPageSize,
+        onChange: (page, pageSize) => {
+          if (currentPage !== page || currentPageSize !== pageSize) {
+            setCurrentPage(page);
+            setcurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
+          }
+        },
       }}
       results={results}
       total={results?.total || 0}
