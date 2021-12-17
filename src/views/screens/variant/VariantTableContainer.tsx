@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-curly-spacing */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React, { useState } from 'react';
 import { Tooltip, Table } from 'antd';
@@ -47,7 +44,7 @@ const makeRows = (rows: ArrangerEdge<VariantEntity>[]) =>
   }));
 
 const findDonorById = (donors: ArrangerResultsTree<DonorsEntity>, patientId: string) => {
-  return donors.hits?.edges.find((donor) => donor.node.patient_id == patientId);
+  return donors.hits?.edges.find((donor) => donor.node.patient_id === patientId);
 };
 
 const VariantTableContainer = (props: OwnProps) => {

@@ -20,7 +20,7 @@ export const ItemsCount = ({ className = '', page, size, total }: Props): React.
 
   return (
     <div className={cx(className, style.itemCount)}>
-      {(to < size && page === 1) || total == 0 ? (
+      {(to < size && page === 1) || total === 0 ? (
         <Typography.Text>
           {intl.getHTML('component.table.itemcount.results.one.page', { count: total || 0 })}
         </Typography.Text>

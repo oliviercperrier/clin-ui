@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { Card, Col, Divider, Row, Spin, Typography } from "antd";
 import { GeneEntity, VariantEntity } from "store/graphql/variants/models";

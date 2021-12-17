@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cx from 'classnames';
 import { Button, Divider, Dropdown, PageHeader } from 'antd';
 import intl from 'react-intl-universal';

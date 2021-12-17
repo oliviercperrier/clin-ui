@@ -62,7 +62,7 @@ export const navigateTo = (href: string) => {
 };
 
 export const isDevelopmentEnv = () => {
-  return process.env.NODE_ENV == 'development';
+  return process.env.NODE_ENV === 'development';
 };
 
 export const getTopBodyElement = () => {

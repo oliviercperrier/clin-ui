@@ -4,7 +4,7 @@ import locales from 'locales';
 // import keycloak from 'auth/keycloak-api/keycloak';
 // import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { ConfigProvider } from 'antd';
-import { Provider as ReduxProvider, useSelector } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import frFR from 'antd/lib/locale/fr_FR';
 import enUS from 'antd/lib/locale/en_US';
@@ -23,7 +23,7 @@ persistor.subscribe(function () {
 const App = () => {
   const { lang } = useGlobals();
   return (
-    <ConfigProvider locale={lang == LANG.FR ? frFR : enUS}>
+    <ConfigProvider locale={lang === LANG.FR ? frFR : enUS}>
       <div className="App">
         <Router />
       </div>
@@ -31,10 +31,12 @@ const App = () => {
   );
 };
 
-export default () => (
+const AppWrapper = () => (
   <ReduxProvider store={store}>
     <PersistGate persistor={persistor}>
       <App />
     </PersistGate>
   </ReduxProvider>
 );
+
+export default AppWrapper;

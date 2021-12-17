@@ -85,7 +85,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
         className={styles.entitySections}
         activeKey={tabid}
         onChange={(key) => {
-          if (history.location.hash != key) {
+          if (history.location.hash !== key) {
             history.push(`/variant/entity/${hash}/${key}`);
           }
         }}

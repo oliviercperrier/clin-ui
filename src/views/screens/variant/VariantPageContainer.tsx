@@ -14,7 +14,6 @@ import { VariantEntity } from 'store/graphql/variants/models';
 
 import { VARIANT_REPO_CACHE_KEY } from './constants';
 import VariantTableContainer from './VariantTableContainer';
-import GeneTableContainer from './GeneTableContainer';
 import history from 'utils/history';
 import { useParams } from 'react-router';
 import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
