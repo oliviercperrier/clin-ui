@@ -96,6 +96,11 @@ export const getPatientPosition = (gender: string, position: string) => {
 };
 
 export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
+  const changeDateFormat = (date:string) => {
+    const splitDate = date.split('-')
+    return splitDate.reverse().join('/')
+  }
+  
   const nanuqFileContent = {
     export_id: uuid(),
     version_id: '1.0',
@@ -111,9 +116,9 @@ export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) =
       service_request_id: cid,
       dossier_medical: patientInfo.ramq || '--',
       institution: patientInfo.organization.cid,
-      DDN: patientInfo.birthDate,
+      DDN: changeDateFormat(patientInfo.birthDate),
       sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
-      family_id: familyInfo.cid,
+      famille_id: familyInfo.cid,
       position: getPatientPosition(patientInfo.gender, patientInfo.position),
     })),
   };
