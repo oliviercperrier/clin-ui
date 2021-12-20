@@ -94,12 +94,12 @@ export const getPatientPosition = (gender: string, position: string) => {
   }
   return loweredPosition;
 };
+const changeDateFormat = (date:string) => {
+  const splitDate = date.split('-')
+  return splitDate.reverse().join('/')
+}
 
 export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
-  const changeDateFormat = (date:string) => {
-    const splitDate = date.split('-')
-    return splitDate.reverse().join('/')
-  }
   
   const nanuqFileContent = {
     export_id: uuid(),
