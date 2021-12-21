@@ -47,6 +47,8 @@ const findDonorById = (donors: ArrangerResultsTree<DonorsEntity>, patientId: str
   return donors.hits?.edges.find((donor) => donor.node.patient_id === patientId);
 };
 
+const formatCalls = (calls: number[]) => (calls ? calls.join('/') : DISPLAY_WHEN_EMPTY_DATUM);
+
 const VariantTableContainer = (props: OwnProps) => {
   const [drawerOpened, toggleDrawer] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<VariantEntity | undefined>(undefined);
@@ -141,13 +143,14 @@ const VariantTableContainer = (props: OwnProps) => {
       },
     },
     {
-      title: () => intl.get('screen.patientvariant.results.table.transmission'),
+      title: () => intl.get('screen.patientvariant.results.table.genotype'),
       dataIndex: 'donors',
       render: (record: ArrangerResultsTree<DonorsEntity>) => {
         const donor = findDonorById(record, props.patientId);
-        return donor
-          ? removeUnderscoreAndCapitalize(donor.node?.transmission || "")
-          : DISPLAY_WHEN_EMPTY_DATUM;
+        const motherCalls = formatCalls(donor?.node.mother_calls!);
+        const fatherCalls = formatCalls(donor?.node.father_calls!);
+        
+        return `${motherCalls} : ${fatherCalls}`;
       },
     },
     {
