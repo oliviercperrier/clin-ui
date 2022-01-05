@@ -1,8 +1,8 @@
 @import "colors";
 
-footer {
-  padding:8px 24px !important;
-  font-size: 12px !important;
+.footer {
+  padding:8px 24px;
+  font-size: 12px;
   background: $gray-4;
   border-top: 1px solid $gray-5;
   ul{
