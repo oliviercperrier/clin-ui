@@ -16,13 +16,10 @@ const Footer = () => (
         <nav>
           <ul>
             <li>
-              <a href={ZEPLIN_URL} target="_blank" rel="noreferrer"> Zeppelin </a>
+              <a href={ZEPLIN_URL} target="_blank" rel="noreferrer">{intl.get('footer.navigation.zepplin')}</a>
             </li>
             <li>
-              <a href={FHIR_CONSOLE_URL} target="_blank" rel="noreferrer"> Fhir </a>
-            </li>
-            <li>
-              <a href="#" target="_blank">{intl.get('footer.navigation.contact')}</a>
+              <a href={FHIR_CONSOLE_URL} target="_blank" rel="noreferrer">{intl.get('footer.navigation.fhir')}</a>
             </li>
           </ul>
         </nav>
