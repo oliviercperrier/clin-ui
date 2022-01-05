@@ -683,6 +683,7 @@ const fr = {
   'screen.patientsearch.table.lastName': 'Nom',
   'screen.patientsearch.table.mrn': 'Dossier',
   'screen.patientsearch.table.nanuq': 'Nanuq',
+  'screen.patientsearch.table.nanuq.tootip': 'Télécharger un fichier json prêt à être importé dans nanuq',
   'screen.patientsearch.table.nbPrescription': 'Nb de prescriptions',
   'screen.patientsearch.table.organization': 'Établissement',
   'screen.patientsearch.table.patient': 'Patient',
