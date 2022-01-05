@@ -7,7 +7,6 @@ import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { VariantPageResults } from './VariantPageContainer';
 import intl from 'react-intl-universal';
 import UserAffected from 'components/icons/UserAffectedIcon';
-import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 import {
   VariantEntity,
   ClinVar,
