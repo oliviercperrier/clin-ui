@@ -496,6 +496,7 @@ const en = {
   'screen.patientsearch.table.mrn': 'MRN',
   'screen.patientsearch.table.myPatients': 'My Patients',
   'screen.patientsearch.table.nanuq': 'Nanuq',
+  'screen.patientsearch.table.nanuq.tootip': 'Download a json file ready to be imported into nanuq',
   'screen.patientsearch.table.nbPrescription': 'Prescription count',
   'screen.patientsearch.table.organization': 'Hospital',
   'screen.patientsearch.table.patient': 'Patient',

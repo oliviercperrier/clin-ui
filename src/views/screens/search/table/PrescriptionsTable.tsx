@@ -1,4 +1,4 @@
-import { Button, message } from 'antd';
+import { Button, message, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { prescriptionsColumns } from './prescriptionColumns';
 import Table, { Props } from './Table';
@@ -33,21 +33,23 @@ const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactEle
       results={results}
       total={results?.total || 0}
       extra={
-        <Button
-          disabled={!selectedPrescription.length}
-          size="small"
-          type="link"
-          icon={<DocumentIcon height="14" width="14" />}
-          onClick={() => {
-            generateAndDownloadNanuqExport(selectedPrescription);
-            message.success({
-              content: intl.get('report.nanuq.success'),
-              getPopupContainer: () => getTopBodyElement()
-            });
-          }}
-        >
-          Nanuq
-        </Button>
+        <Tooltip title={intl.get('screen.patientsearch.table.nanuq.tootip')}>
+          <Button
+            disabled={!selectedPrescription.length}
+            size="small"
+            type="link"
+            icon={<DocumentIcon height="14" width="14" />}
+            onClick={() => {
+              generateAndDownloadNanuqExport(selectedPrescription);
+              message.success({
+                content: intl.get('report.nanuq.success'),
+                getPopupContainer: () => getTopBodyElement()
+              });
+            }}
+          >
+            {intl.get('screen.patientsearch.table.nanuq')}
+          </Button>
+        </Tooltip>
       }
       rowSelection={{
         type: 'checkbox',
