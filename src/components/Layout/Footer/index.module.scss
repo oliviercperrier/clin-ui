@@ -1,6 +1,6 @@
 @import "colors";
 
-footer#footer {
+.footer {
   padding:8px 24px;
   font-size: 12px;
   background: $gray-4;
@@ -18,7 +18,7 @@ footer#footer {
     }
   }
 
-  .logo{
+  img{
     height: 32px;
   }
 }
