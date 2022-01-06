@@ -2,10 +2,10 @@ import { Button, message, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { prescriptionsColumns } from './prescriptionColumns';
 import Table, { Props } from './Table';
-import DocumentIcon from 'components/icons/DocumentIcon';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 import { generateAndDownloadNanuqExport, getTopBodyElement } from 'utils/helper';
 import intl from 'react-intl-universal';
+import { FileTextOutlined } from '@ant-design/icons';
 
 const DEFAULT_PAGE_SIZE = 20;
 const DEFAULT_PAGE = 1;
@@ -38,7 +38,7 @@ const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactEle
             disabled={!selectedPrescription.length}
             size="small"
             type="link"
-            icon={<DocumentIcon height="14" width="14" />}
+            icon={<FileTextOutlined height="14" width="14" />}
             onClick={() => {
               generateAndDownloadNanuqExport(selectedPrescription);
               message.success({
