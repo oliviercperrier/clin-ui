@@ -2,8 +2,6 @@ import React from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { Typography, Tag, Tabs, Skeleton } from "antd";
 import intl from "react-intl-universal";
-import BarChartIcon from "components/icons/BarChartIcon";
-import StockIcon from "components/icons/StockIcon";
 import LibraryIcon from "components/icons/LibraryIcon";
 import TeamIcon from "components/icons/TeamIcon";
 import ServerError from "components/Results/ServerError";
@@ -20,6 +18,7 @@ import PatientPanel from "views/screens/variant/Entity/PatientPanel";
 
 import styles from "./index.module.scss";
 import history from "utils/history";
+import { BarChartOutlined, StockOutlined } from "@ant-design/icons";
 
 export const getVepImpactTag = (score: number | string) => {
   switch (score) {
@@ -93,7 +92,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
         <Tabs.TabPane
           tab={
             <span>
-              <BarChartIcon height="16" width="16" />
+              <BarChartOutlined height="16" width="16" />
               {intl.get("screen.variantdetails.tab.summary")}
             </span>
           }
@@ -110,7 +109,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
         <Tabs.TabPane
           tab={
             <span>
-              <StockIcon height="16" width="16" />
+              <StockOutlined height="16" width="16" />
               {intl.get("screen.variantdetails.tab.frequencies")}
             </span>
           }
