@@ -472,7 +472,7 @@ const en = {
   'screen.patientsearch.male': 'Male',
   'screen.patientsearch.no': 'No',
   'screen.patientsearch.pagination': '%d-%d of %d results',
-  'screen.patientsearch.placeholder': 'File Number, RAMQ, last name, first name,  patient ID',
+  'screen.patientsearch.placeholder': 'MRN, Health Insurance Number, Name, FirstName, Patient ID',
   'filters.options.active': 'Active',
   'filters.options.completed': 'Completed',
   'filters.options.draft': 'Draft',

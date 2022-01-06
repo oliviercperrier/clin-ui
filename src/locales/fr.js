@@ -662,7 +662,7 @@ const fr = {
   'screen.patientsearch.nanuqexport.success': 'Votre fichier a été téléchargé',
   'screen.patientsearch.no': 'Non',
   'screen.patientsearch.pagination': '%d-%d sur %d résulats',
-  'screen.patientsearch.placeholder': 'Numéro de dossier, RAMQ, Nom, Prénom, ID du patient',
+  'screen.patientsearch.placeholder': 'Dossier, RAMQ, Nom, Prénom, ID Patient',
   'filters.options.active': 'Approuvée',
   'filters.options.completed': 'Complétée',
   'filters.options.draft': 'Brouillon',
