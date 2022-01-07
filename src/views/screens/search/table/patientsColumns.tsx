@@ -47,7 +47,7 @@ export const patientsColumns = (
           {intl.get('screen.patientsearch.table.dob')}
         </Tooltip>
       ),
-      render: (date: string) => formatDate(date),
+
     },
     {
       name: 'timestamp',
