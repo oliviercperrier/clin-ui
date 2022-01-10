@@ -1,4 +1,4 @@
-import { Button, message, Tooltip } from 'antd';
+import { Button, message, Tooltip, Modal } from 'antd';
 import React, { useState } from 'react';
 import { prescriptionsColumns } from './prescriptionColumns';
 import Table, { Props } from './Table';
@@ -6,16 +6,29 @@ import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescript
 import { generateAndDownloadNanuqExport, getTopBodyElement } from 'utils/helper';
 import intl from 'react-intl-universal';
 import { FileTextOutlined } from '@ant-design/icons';
+import { getNanuqModalConfigs } from './NanuqModal';
 
 const DEFAULT_PAGE_SIZE = 20;
 const DEFAULT_PAGE = 1;
+const ACTIVE_STATUS = 'active';
+
+const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
+  if (selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS)) {
+    Modal.error(getNanuqModalConfigs());
+  } else {
+    generateAndDownloadNanuqExport(selectedPrescription);
+    message.success({
+      content: intl.get('report.nanuq.success'),
+      getPopupContainer: () => getTopBodyElement(),
+    });
+  }
+};
 
 const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactElement => {
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionResult[]>([]);
   const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE);
   const columns = prescriptionsColumns([]);
-
   return (
     <Table
       columns={columns}
@@ -40,11 +53,7 @@ const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactEle
             type="link"
             icon={<FileTextOutlined height="14" width="14" />}
             onClick={() => {
-              generateAndDownloadNanuqExport(selectedPrescription);
-              message.success({
-                content: intl.get('report.nanuq.success'),
-                getPopupContainer: () => getTopBodyElement()
-              });
+              handleGenerateExportNanuq(selectedPrescription);
             }}
           >
             {intl.get('screen.patientsearch.table.nanuq')}
