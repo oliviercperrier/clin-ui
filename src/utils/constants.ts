@@ -19,3 +19,5 @@ export enum PATIENT_POSITION {
   PARENT = 'parent',
   PROBAND = 'proband',
 }
+
+export const ACTIVE_STATUS = 'active';

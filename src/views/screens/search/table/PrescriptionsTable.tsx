@@ -1,28 +1,12 @@
-import { Button, message, Tooltip, Modal } from 'antd';
 import React, { useState } from 'react';
 import { prescriptionsColumns } from './prescriptionColumns';
 import Table, { Props } from './Table';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
-import { generateAndDownloadNanuqExport, getTopBodyElement } from 'utils/helper';
-import intl from 'react-intl-universal';
-import { FileTextOutlined } from '@ant-design/icons';
-import { getNanuqModalConfigs } from './NanuqModal';
+import NanuqExportButton from './NanuqExportButton';
 
 const DEFAULT_PAGE_SIZE = 20;
 const DEFAULT_PAGE = 1;
-const ACTIVE_STATUS = 'active';
 
-const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
-  if (selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS)) {
-    Modal.error(getNanuqModalConfigs());
-  } else {
-    generateAndDownloadNanuqExport(selectedPrescription);
-    message.success({
-      content: intl.get('report.nanuq.success'),
-      getPopupContainer: () => getTopBodyElement(),
-    });
-  }
-};
 
 const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactElement => {
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionResult[]>([]);
@@ -46,19 +30,7 @@ const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactEle
       results={results}
       total={results?.total || 0}
       extra={
-        <Tooltip title={intl.get('screen.patientsearch.table.nanuq.tootip')}>
-          <Button
-            disabled={!selectedPrescription.length}
-            size="small"
-            type="link"
-            icon={<FileTextOutlined height="14" width="14" />}
-            onClick={() => {
-              handleGenerateExportNanuq(selectedPrescription);
-            }}
-          >
-            {intl.get('screen.patientsearch.table.nanuq')}
-          </Button>
-        </Tooltip>
+        <NanuqExportButton selectedPrescription={selectedPrescription} /> 
       }
       rowSelection={{
         type: 'checkbox',

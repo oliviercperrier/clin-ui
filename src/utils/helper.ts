@@ -84,6 +84,7 @@ export const downloadJSONFile = (content: string, filename: string) => {
   document.body.appendChild(downloadLinkElement);
   downloadLinkElement.click();
   document.body.removeChild(downloadLinkElement);
+  URL.revokeObjectURL(downloadLinkElement.href);
 };
 
 export const getPatientPosition = (gender: string, position: string) => {
@@ -94,38 +95,7 @@ export const getPatientPosition = (gender: string, position: string) => {
   }
   return loweredPosition;
 };
-const changeDateFormat = (date: string) => {
-  const splitDate = date.split('-');
-  return splitDate.reverse().join('/');
-};
 
-export const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
-  const nanuqFileContent = {
-    export_id: uuid(),
-    version_id: '1.0',
-    test_genomique: 'exome',
-    LDM: 'CHU Sainte-Justine',
-    patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
-      type_echantillon: 'ADN',
-      tissue_source: 'Sang',
-      type_specimen: 'Normal',
-      nom_patient: patientInfo.lastName,
-      prenom_patient: patientInfo.firstName,
-      patient_id: patientInfo.cid,
-      service_request_id: cid,
-      dossier_medical: patientInfo.ramq || '--',
-      institution: patientInfo.organization.cid,
-      DDN: changeDateFormat(patientInfo.birthDate),
-      sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
-      famille_id: familyInfo.cid,
-      position: getPatientPosition(patientInfo.gender, patientInfo.position),
-    })),
-  };
-  downloadJSONFile(
-    JSON.stringify(nanuqFileContent, null, 2),
-    `${Intl.DateTimeFormat(navigator.language).format(new Date())}-clin-nanuq.json`,
-  );
-};
 
 export const formatLocus = (start: number, chromosome: string, bound?: number) =>
   `chr${chromosome}:${bound ? `${start - bound}-${start + bound}` : start}`;
