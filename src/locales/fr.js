@@ -1147,6 +1147,7 @@ const fr = {
   'screen.patientvariant.drawer.igv.title': 'Alignement et variant',
   'screen.patientvariant.drawer.father': 'Père',
   'screen.patientvariant.drawer.mother': 'Mère',
+  'screen.patientvariant.drawer.filter': 'Filtre',
   'screen.patientvariant.transmission.unknown_proband_genotype': 'Unknown proband genotype',
   'screen.patientvariant.transmission.non_carrier_proband': 'Non carrier proband',
   'screen.patientvariant.transmission.unknown_father_genotype': 'Unknown father genotype',

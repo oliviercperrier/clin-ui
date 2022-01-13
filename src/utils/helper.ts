@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 import { PARENT_TYPE, PATIENT_POSITION, GENDER, UNKNOWN_TAG } from './constants';
 
 // JWT
@@ -95,7 +93,6 @@ export const getPatientPosition = (gender: string, position: string) => {
   }
   return loweredPosition;
 };
-
 
 export const formatLocus = (start: number, chromosome: string, bound?: number) =>
   `chr${chromosome}:${bound ? `${start - bound}-${start + bound}` : start}`;
