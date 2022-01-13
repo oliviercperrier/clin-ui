@@ -11,10 +11,12 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
+    - name: Set the Staging configuration file
+      run: mv env-staging .env
     - name: Push the image on the docker registry
       uses: Ferlab-Ste-Justine/action-push-image@v2
       with:
         username: ${{ secrets.FERLAB_DOCKER_HUB_USER }}
         password: ${{ secrets.FERLAB_DOCKER_HUB_TOKEN }}
         image: ferlabcrsj/clin-ui
-        tag_format: "{semver}"
+        tag_format: "staging-{semver}"
