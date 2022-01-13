@@ -9,7 +9,6 @@ import { v4 as uuid } from 'uuid';
 import { getPatientPosition, downloadJSONFile } from 'utils/helper';
 import { UNKNOWN_TAG } from 'utils/constants';
 
-
 interface Props {
   selectedPrescription: PrescriptionResult[];
 }
@@ -43,18 +42,17 @@ const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) =
   }
 };
 
-
-const formatBirthDateForNanuq  = (birthDate: string) => {
-    const splitDate = birthDate.split('-');
-    return splitDate.reverse().join('/');
-  };
+const formatBirthDateForNanuq = (birthDate: string) => {
+  const splitDate = birthDate.split('-');
+  return splitDate.reverse().join('/');
+};
 
 const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
   const nanuqFileContent = {
     export_id: uuid(),
     version_id: '1.0',
     test_genomique: 'exome',
-    LDM: 'CHU Sainte-Justine',
+    LDM: patients[0].laboratory.split("/")[1],
     patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
       type_echantillon: 'ADN',
       tissue_source: 'Sang',

@@ -31,6 +31,7 @@ export interface PrescriptionResult extends ArrangerNodeData {
     type: string;
   };
   patientInfo: PatientResult;
+  laboratory: string
 }
 
 export const fields = [
