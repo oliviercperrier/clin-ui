@@ -1180,6 +1180,7 @@ const fr = {
   'filters.group.consequences.biotype': 'Type de gène',
   'filters.group.gene_external_reference': 'Référence externe',
   'filters.group.genes.hpo.hpo_term_label': 'HPO',
+  'filters.group.panels': 'RQDM',
   'filters.group.genes.orphanet.panel': 'ORPHANET',
   'filters.group.genes.omim.name': 'OMIM',
   'filters.group.genes.ddd.disease_name': 'DDD',
@@ -1211,6 +1212,14 @@ const fr = {
   'filters.group.donors.ad_total': 'Profondeur totale ALT +REF',
   'filters.group.donors.ad_ratio': 'Ratio allelique ALT / (ALT+REF)',
   'filters.group.donors.gq': 'Qualité du génotype',
+  'filters.options.MITN': "Mitochondriopathie nucléaire",
+  'filters.options.DYSTM': "Dystrophies Musculaires",
+  'filters.options.MYOPC': "Myopathies congénitales",
+  'filters.options.DI': "Déficience intellectuelle (Trio)",
+  'filters.options.RHAB': "Rhabdomyolyse",
+  'filters.options.MYASC': "Myasthenias congénitales",
+  'filters.options.MMG': "Maladies musculaires (Panel global)",
+  'filters.options.HYPM': "Hyperthermie maligne"
 };
 
 export default fr;

@@ -65,6 +65,7 @@ export type VariantEntity = {
   hash: string;
   hgvsg: string;
   locus: string;
+  panels: string[];
   variant_class: string;
   rsnumber: string;
   variant_type: string;

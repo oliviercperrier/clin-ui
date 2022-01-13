@@ -11,8 +11,12 @@ export class RptManager {
   private static storedRpt?: Rpt;
 
   private static async requestNewRpt() {
-    const data = queryString.encode({ grant_type: KEYCLOAK_AUTH_GRANT_TYPE, audience: KEYCLOAK_CONFIG.authClientId });
-    console.log('>>> data : ', data);
+    const data = encodeURIComponent(
+      JSON.stringify({
+        grant_type: KEYCLOAK_AUTH_GRANT_TYPE,
+        audience: KEYCLOAK_CONFIG.authClientId,
+      }),
+    );
     return rptRequest(data);
   }
 
