@@ -78,7 +78,9 @@ export const generateFilters = (
   });
 
 const translateWhenNeeded = (group: string, key: string) =>
-  group === 'state' ? intl.get(`filters.options.${keyEnhance(key)}`) : `${keyEnhance(key)}`;
+  ['state', 'panels'].includes(group)
+    ? intl.get(`filters.options.${keyEnhance(key)}`)
+    : `${keyEnhance(key)}`;
 
 export const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] => {
   if (!aggregations || !key) return [];

@@ -51,7 +51,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
 
   const { filters } = useFilters();
   const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
-  let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, "donors"));
+  let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, 'donors'));
   resolvedSqon.content.push({
     content: { field: 'donors.patient_id', value: [patientid] },
     op: 'in',
@@ -88,6 +88,18 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
           : mappingResults?.extendedMapping?.find(
               (mapping: ExtendedMapping) => key === mapping.field,
             )?.displayName || key;
+      },
+      facetValueMapping: {
+        panels: {
+          MITN: intl.get('filters.options.MITN'),
+          DYSTM: intl.get('filters.options.DYSTM'),
+          MYOPC: intl.get('filters.options.MYOPC'),
+          DI: intl.get('filters.options.DI'),
+          RHAB: intl.get('filters.options.RHAB'),
+          MYASC: intl.get('filters.options.MYASC'),
+          MMG: intl.get('filters.options.MMG'),
+          HYPM: intl.get('filters.options.HYPM'),
+        },
       },
     },
     actions: {
@@ -131,6 +143,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
         facetFilterConfig={{
           enable: true,
           onFacetClick: (field) => {
+            console.log(field);
             setSelectedFilterContent(
               <GenericFilters field={dotToUnderscore(field)} mappingResults={mappingResults} />,
             );

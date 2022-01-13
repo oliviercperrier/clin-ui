@@ -985,6 +985,7 @@ const en = {
   'filters.group.start': 'Position',
   'filters.group.consequences.biotype': 'Gene type',
   'filters.group.gene_external_reference': 'External reference',
+  'filters.group.panels': 'RQDM',
   'filters.group.genes.hpo.hpo_term_label': 'HPO',
   'filters.group.genes.orphanet.panel': 'ORPHANET',
   'filters.group.genes.omim.name': 'OMIM',
@@ -1017,6 +1018,14 @@ const en = {
   'filters.group.donors.ad_total': 'Total depth ALT + REF',
   'filters.group.donors.ad_ratio': 'Allelic ratio ALT / (ALT+REF)',
   'filters.group.donors.gq': 'Genotype quality',
+  'filters.options.MITN': "Mitochondriopathie nucléaire",
+  'filters.options.DYSTM': "Dystrophies Musculaires",
+  'filters.options.MYOPC': "Myopathies congénitales",
+  'filters.options.DI': "Déficience intellectuelle (Trio)",
+  'filters.options.RHAB': "Rhabdomyolyse",
+  'filters.options.MYASC': "Myasthenias congénitales",
+  'filters.options.MMG': "Maladies musculaires (Panel global)",
+  'filters.options.HYPM': "Hyperthermie maligne"
 };
 
 export default en;

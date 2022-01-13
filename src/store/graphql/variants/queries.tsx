@@ -20,6 +20,7 @@ export const VARIANT_QUERY = gql`
               clinvar_id
               clin_sig
             }
+            panels
             variant_type
             max_impact_score
             rsnumber
