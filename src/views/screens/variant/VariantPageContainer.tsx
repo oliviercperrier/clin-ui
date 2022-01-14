@@ -20,6 +20,7 @@ import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
 import GenericFilters from './filters/GenericFilters';
 
 import styles from './VariantPageContainer.module.scss';
+import { prependPatientSqon } from './utils';
 
 export type VariantPageContainerData = {
   mappingResults: MappingResults;
@@ -52,10 +53,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
   const { filters } = useFilters();
   const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
   let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, 'donors'));
-  resolvedSqon.content.push({
-    content: { field: 'donors.patient_id', value: [patientid] },
-    op: 'in',
-  });
+  resolvedSqon.content = prependPatientSqon(resolvedSqon.content, patientid);
 
   const results = useGetVariantPageData({
     sqon: resolvedSqon,
