@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { MappingResults, useGetVariantAggregations } from 'store/graphql/variants/actions';
 import { VARIANT_AGGREGATION_QUERY } from 'store/graphql/variants/queries';
+import { arrayPrepend } from 'utils/array';
 import { VARIANT_REPO_CACHE_KEY } from 'views/screens/variant/constants';
 
 type OwnProps = FilterSelectorProps & {
@@ -33,10 +34,13 @@ const CustomFilterSelector = ({
   const { patientid } = useParams<{ patientid: string }>();
   const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
   let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, queryFilters));
-  resolvedSqon.content.push({
-    content: { field: 'donors.patient_id', value: [patientid] },
-    op: 'in',
-  });
+  resolvedSqon.content = arrayPrepend(
+    {
+      content: { field: 'donors.patient_id', value: [patientid] },
+      op: 'in',
+    },
+    resolvedSqon.content,
+  );
 
   const results = useGetVariantAggregations(
     {

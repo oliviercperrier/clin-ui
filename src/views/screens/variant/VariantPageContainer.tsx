@@ -18,6 +18,7 @@ import history from 'utils/history';
 import { useParams } from 'react-router';
 import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
 import GenericFilters from './filters/GenericFilters';
+import { arrayPrepend } from 'utils/array';
 
 import styles from './VariantPageContainer.module.scss';
 
@@ -51,11 +52,14 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
 
   const { filters } = useFilters();
   const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
-  let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, "donors"));
-  resolvedSqon.content.push({
-    content: { field: 'donors.patient_id', value: [patientid] },
-    op: 'in',
-  });
+  let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, 'donors'));
+  resolvedSqon.content = arrayPrepend(
+    {
+      content: { field: 'donors.patient_id', value: [patientid] },
+      op: 'in',
+    },
+    resolvedSqon.content,
+  );
 
   const results = useGetVariantPageData({
     sqon: resolvedSqon,
