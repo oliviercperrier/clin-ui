@@ -13,6 +13,7 @@ interface Props {
   selectedPrescription: PrescriptionResult[];
 }
 const MAX_PRESCRIPTION = 96;
+const FETUS_DDN = '11/11/1111';
 
 const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
   if (
@@ -52,7 +53,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
     export_id: uuid(),
     version_id: '1.0',
     test_genomique: 'exome',
-    LDM: patients[0].laboratory.split("/")[1],
+    LDM: patients[0].laboratory.split('/')[1],
     patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
       type_echantillon: 'ADN',
       tissue_source: 'Sang',
@@ -63,7 +64,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
       service_request_id: cid,
       dossier_medical: patientInfo.ramq || '--',
       institution: patientInfo.organization.cid,
-      DDN: formatBirthDateForNanuq(patientInfo.birthDate),
+      DDN: patientInfo.fetus ? FETUS_DDN : formatBirthDateForNanuq(patientInfo.birthDate),
       sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
       famille_id: familyInfo.cid,
       position: getPatientPosition(patientInfo.gender, patientInfo.position),
