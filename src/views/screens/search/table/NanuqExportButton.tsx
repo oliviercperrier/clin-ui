@@ -8,11 +8,13 @@ import { FileTextOutlined } from '@ant-design/icons';
 import { v4 as uuid } from 'uuid';
 import { getPatientPosition, downloadJSONFile } from 'utils/helper';
 import { UNKNOWN_TAG } from 'utils/constants';
+import { PatientResult } from 'store/graphql/patients/models/Patient';
 
 interface Props {
   selectedPrescription: PrescriptionResult[];
 }
 const MAX_PRESCRIPTION = 96;
+const FETUS_DDN = '11/11/1111';
 
 const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
   if (
@@ -42,8 +44,11 @@ const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) =
   }
 };
 
-const formatBirthDateForNanuq = (birthDate: string) => {
-  const splitDate = birthDate.split('-');
+const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
+  if (patientInfo.fetus) {
+    return FETUS_DDN;
+  }
+  const splitDate = patientInfo.birthDate.split('-');
   return splitDate.reverse().join('/');
 };
 
@@ -52,7 +57,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
     export_id: uuid(),
     version_id: '1.0',
     test_genomique: 'exome',
-    LDM: patients[0].laboratory.split("/")[1],
+    LDM: patients[0].laboratory.split('/')[1],
     patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
       type_echantillon: 'ADN',
       tissue_source: 'Sang',
@@ -63,7 +68,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
       service_request_id: cid,
       dossier_medical: patientInfo.ramq || '--',
       institution: patientInfo.organization.cid,
-      DDN: formatBirthDateForNanuq(patientInfo.birthDate),
+      DDN: formatBirthDateForNanuq(patientInfo),
       sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
       famille_id: familyInfo.cid,
       position: getPatientPosition(patientInfo.gender, patientInfo.position),
