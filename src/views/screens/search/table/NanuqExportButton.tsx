@@ -8,6 +8,7 @@ import { FileTextOutlined } from '@ant-design/icons';
 import { v4 as uuid } from 'uuid';
 import { getPatientPosition, downloadJSONFile } from 'utils/helper';
 import { UNKNOWN_TAG } from 'utils/constants';
+import { PatientResult } from 'store/graphql/patients/models/Patient';
 
 interface Props {
   selectedPrescription: PrescriptionResult[];
@@ -43,8 +44,11 @@ const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) =
   }
 };
 
-const formatBirthDateForNanuq = (birthDate: string) => {
-  const splitDate = birthDate.split('-');
+const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
+  if (patientInfo.fetus) {
+    return FETUS_DDN;
+  }
+  const splitDate = patientInfo.birthDate.split('-');
   return splitDate.reverse().join('/');
 };
 
@@ -64,7 +68,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
       service_request_id: cid,
       dossier_medical: patientInfo.ramq || '--',
       institution: patientInfo.organization.cid,
-      DDN: patientInfo.fetus ? FETUS_DDN : formatBirthDateForNanuq(patientInfo.birthDate),
+      DDN: formatBirthDateForNanuq(patientInfo),
       sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
       famille_id: familyInfo.cid,
       position: getPatientPosition(patientInfo.gender, patientInfo.position),
