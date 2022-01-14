@@ -145,6 +145,9 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
             <Descriptions.Item label={intl.get('screen.patientvariant.drawer.gq')}>
               {donor?.gq ? donor.gq : DISPLAY_WHEN_EMPTY_DATUM}
             </Descriptions.Item>
+            <Descriptions.Item label={intl.get('screen.patientvariant.drawer.filter')}>
+              {donor?.filters}
+            </Descriptions.Item>
           </Descriptions>
           <Divider style={{ margin: 0 }} />
           <Button type="primary" onClick={() => toggleModal(true)}>

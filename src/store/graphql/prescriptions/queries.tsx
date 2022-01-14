@@ -16,6 +16,7 @@ export const PRESCRIPTIONS_QUERY = gql`
             status
             state
             timestamp
+            laboratory
             analysis{
               code
               display

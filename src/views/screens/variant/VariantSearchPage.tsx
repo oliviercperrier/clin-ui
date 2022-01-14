@@ -54,6 +54,7 @@ const filterGroups: {
       {
         title: 'screen.patientvariant.filter.grouptitle.genepanel',
         fields: [
+          'panels',
           'genes__hpo__hpo_term_label',
           'genes__orphanet__panel',
           'genes__omim__name',
