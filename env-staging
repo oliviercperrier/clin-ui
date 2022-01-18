@@ -9,7 +9,7 @@ PUBLIC_URL=/clinui
 REACT_APP_KEYCLOAK_CONFIG={"realm": "clin", "url": "https://auth.staging.clin.ferlab.bio/auth/", "clientId": "clin-client", "authClientId": "clin-acl"}
 # API
 REACT_APP_ARRANGER_API=https://data-api.staging.clin.ferlab.bio
-REACT_APP_ARRANGER_PROJECT_ID=clin-staging
+REACT_APP_ARRANGER_PROJECT_ID=clin_staging
 REACT_APP_FHIR_SERVICE_URL=https://fhir-blue.staging.clin.ferlab.bio/fhir
 REACT_APP_ZEPLIN_URL=https://notebook.staging.clin.ferlab.bio
 REACT_APP_FHIR_CONSOLE_URL=https://fhir-console.staging.clin.ferlab.bio/home
