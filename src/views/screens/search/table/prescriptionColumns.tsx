@@ -67,7 +67,7 @@ export const prescriptionsColumns = (
     },
     {
       name: 'prescriber',
-      render: (p: Record<string, string>) => `${p.lastName}, ${p.firstName}`,
+      render: (p: Record<string, string>) => `${p.lastName.toUpperCase()}, ${p.firstName}`,
       summary: true,
       title: intl.get('screen.patientsearch.table.prescriber'),
     },
