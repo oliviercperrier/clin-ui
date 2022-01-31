@@ -89,12 +89,23 @@ export const getFilters = (aggregations: Aggregations | null, key: string): IFil
       .map((f: any) => {
         const translatedKey = translateWhenNeeded(key, f.key);
         const name = translatedKey ? translatedKey : f.key;
-        return {
+        const defaultValue = {
           data: {
             count: f.doc_count,
-            key: keyEnhanceBooleanOnly(f.key),
+            key: f.key,
           },
           id: f.key,
+        }
+        if(key.includes('lastNameFirstName') && f.key){
+          const nameSplit = f.key.split(',')
+          const formatName = `${nameSplit[0].toUpperCase()} ${nameSplit[1]}`
+          return {
+            ...defaultValue,
+            name: formatName,
+          };
+        }
+        return {
+          ...defaultValue,
           name: name,
         };
       })

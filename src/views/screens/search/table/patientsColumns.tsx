@@ -28,6 +28,7 @@ export const patientsColumns = (
       name: 'lastName',
       summary: false,
       title: intl.get('screen.patient.details.edit.lastname'),
+      render: (lastName: string) => lastName.toUpperCase(),
     },
     {
       name: 'firstName',
