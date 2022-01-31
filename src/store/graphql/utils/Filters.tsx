@@ -14,7 +14,6 @@ import {
 import history from 'utils/history';
 import {
   keyEnhance,
-  keyEnhanceBooleanOnly,
   underscoreToDot,
 } from '@ferlab/ui/core/data/arranger/formatting';
 import { VariantEntity } from 'store/graphql/variants/models';
