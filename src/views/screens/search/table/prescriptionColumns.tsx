@@ -1,7 +1,6 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import { Tooltip } from 'antd';
-import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import Status, { StatusOptions } from '@ferlab/ui/core/components/labels/Status';
 
 import { TColumn } from './columns';
@@ -12,8 +11,6 @@ import { formatDate } from 'utils/date';
 import './tableColumn.scss';
 
 export const prescriptionsColumns = (
-  sqons: ISyntheticSqon[],
-  onLinkClick?: (sqons: ISyntheticSqon[]) => void,
 ): TColumn[] => {
   const statusTranslation = {
     [StatusOptions.Active]: intl.get('filters.options.active'),
