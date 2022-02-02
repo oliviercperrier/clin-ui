@@ -12,7 +12,7 @@ const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactEle
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionResult[]>([]);
   const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE);
-  const columns = prescriptionsColumns([]);
+  const columns = prescriptionsColumns();
   return (
     <Table
       columns={columns}
