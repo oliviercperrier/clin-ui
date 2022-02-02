@@ -39,6 +39,7 @@ export const patientsColumns = (
       name: 'gender',
       summary: true,
       title: intl.get('screen.patientsearch.table.gender'),
+      render: (gender: string) => intl.get(`screen.patientsearch.table.gender.${gender.toLowerCase()}`)
     },
     {
       name: 'birthDate',
