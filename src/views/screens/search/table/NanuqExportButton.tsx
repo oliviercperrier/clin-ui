@@ -52,17 +52,17 @@ const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
   return splitDate.reverse().join('/');
 };
 
-const formatDateToLocalISOString = () => {
+const getDatePadValue = (n: number) => `${n}`.padStart(2, '0');
+
+const formatDateToLocalString = () => {
   const date = new Date();
   const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = (date.getDate()).toString().padStart(2, '0');
-  const hour = (date.getHours()).toString().padStart(2, '0');
-  const minute =(date.getMinutes()).toString().padStart(2, '0');
-  const seconde = (date.getSeconds()).toString().padStart(2, '0');
-  return (
-  `${year}-${month}-${day}T${hour}_${minute}_${seconde}`
-  );
+  const month = getDatePadValue(date.getMonth());
+  const day = getDatePadValue(date.getDate());
+  const hour = getDatePadValue(date.getHours());
+  const minute = getDatePadValue(date.getMinutes());
+  const seconde = getDatePadValue(date.getSeconds());
+  return `${year}-${month}-${day}T${hour}_${minute}_${seconde}`;
 };
 
 const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
@@ -89,7 +89,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
   };
   downloadJSONFile(
     JSON.stringify(nanuqFileContent, null, 2),
-    `${formatDateToLocalISOString()}-clin-nanuq.json`,
+    `${formatDateToLocalString()}-clin-nanuq.json`,
   );
 };
 
