@@ -52,6 +52,19 @@ const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
   return splitDate.reverse().join('/');
 };
 
+const getDatePadValue = (n: number) => `${n}`.padStart(2, '0');
+
+const formatDateToLocalString = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = getDatePadValue(date.getMonth());
+  const day = getDatePadValue(date.getDate());
+  const hour = getDatePadValue(date.getHours());
+  const minute = getDatePadValue(date.getMinutes());
+  const seconde = getDatePadValue(date.getSeconds());
+  return `${year}-${month}-${day}T${hour}_${minute}_${seconde}`;
+};
+
 const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
   const nanuqFileContent = {
     export_id: uuid(),
@@ -76,7 +89,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
   };
   downloadJSONFile(
     JSON.stringify(nanuqFileContent, null, 2),
-    `${new Date().toISOString()}-clin-nanuq.json`,
+    `${formatDateToLocalString()}-clin-nanuq.json`,
   );
 };
 
