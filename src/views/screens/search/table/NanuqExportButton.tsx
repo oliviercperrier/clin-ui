@@ -54,22 +54,14 @@ const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
 
 const formatDateToLocalISOString = () => {
   const date = new Date();
-  const pad = function (num: number) {
-    return (num < 10 ? '0' : '') + num;
-  };
-
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = (date.getDate()).toString().padStart(2, '0');
+  const hour = (date.getHours()).toString().padStart(2, '0');
+  const minute =(date.getMinutes()).toString().padStart(2, '0');
+  const seconde = (date.getSeconds()).toString().padStart(2, '0');
   return (
-    date.getFullYear() +
-    '-' +
-    pad(date.getMonth() + 1) +
-    '-' +
-    pad(date.getDate()) +
-    'T' +
-    pad(date.getHours()) +
-    ':' +
-    pad(date.getMinutes()) +
-    ':' +
-    pad(date.getSeconds())
+  `${year}-${month}-${day}T${hour}_${minute}_${seconde}`
   );
 };
 
