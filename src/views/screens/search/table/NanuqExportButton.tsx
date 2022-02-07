@@ -1,5 +1,5 @@
 import { Button, Tooltip, Modal, Typography, message } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 import intl from 'react-intl-universal';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
 import { ACTIVE_STATUS } from 'utils/constants';
@@ -21,14 +21,26 @@ const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) =
     selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS) ||
     selectedPrescription.length > MAX_PRESCRIPTION
   ) {
-    return true
+    Modal.error({
+      title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
+      content: (
+        <div>
+          <Typography.Text>
+            {intl.get('screen.patientsearch.table.nanuq.modal.description')}
+          </Typography.Text>
+          <ul>
+            <li>{intl.get('screen.patientsearch.table.nanuq.modal.status')}</li>
+            <li>{`${intl.get('screen.patientsearch.table.nanuq.modal.number')}`}</li>
+          </ul>
+        </div>
+      ),
+    });
   } else {
     generateAndDownloadNanuqExport(selectedPrescription);
     message.success({
       content: intl.get('screen.patientsearch.table.nanuq.modal.success'),
       getPopupContainer: () => getTopBodyElement(),
     });
-    return false
   }
 };
 
@@ -82,9 +94,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
 };
 
 const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
   return (
-    <>
     <Tooltip title={intl.get('screen.patientsearch.table.nanuq.tootip')}>
       <Button
         disabled={!selectedPrescription.length}
@@ -92,25 +102,13 @@ const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement 
         type="link"
         icon={<FileTextOutlined height="14" width="14" />}
         onClick={() => {
-          setIsModalVisible(handleGenerateExportNanuq(selectedPrescription))
+          handleGenerateExportNanuq(selectedPrescription);
         }}
       >
         {intl.get('screen.patientsearch.table.nanuq')}
       </Button>
     </Tooltip>
-
-    <Modal title="Basic Modal" visible={isModalVisible}>
-        <div>
-          <Typography.Text>
-            {intl.get('screen.patientsearch.table.nanuq.modal.description')}
-          </Typography.Text>
-          <ul>
-            <li>{intl.get('screen.patientsearch.table.nanuq.modal.status')}</li>
-            <li>{`${intl.get('screen.patientsearch.table.nanuq.modal.number')} (${selectedPrescription.length})`}</li>
-          </ul>
-        </div>
-    </Modal>
-    </>
+    
   );
 };
 
