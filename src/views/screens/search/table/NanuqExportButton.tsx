@@ -22,15 +22,15 @@ const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) =
     selectedPrescription.length > MAX_PRESCRIPTION
   ) {
     Modal.error({
-      title: intl.get('components.nanuqModal.title'),
+      title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
       content: (
         <div>
           <Typography.Text>
-            {intl.get('components.nanuqModal.criteria.description')}
+            {intl.get('screen.patientsearch.table.nanuq.modal.description')}
           </Typography.Text>
           <ul>
-            <li>{intl.getHTML('components.nanuqModal.criteria.status')}</li>
-            <li>{intl.getHTML('components.nanuqModal.criteria.number')}</li>
+            <li>{intl.get('screen.patientsearch.table.nanuq.modal.status')}</li>
+            <li>{`${intl.get('screen.patientsearch.table.nanuq.modal.number')}`}</li>
           </ul>
         </div>
       ),
@@ -38,7 +38,7 @@ const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) =
   } else {
     generateAndDownloadNanuqExport(selectedPrescription);
     message.success({
-      content: intl.get('report.nanuq.success'),
+      content: intl.get('screen.patientsearch.table.nanuq.modal.success'),
       getPopupContainer: () => getTopBodyElement(),
     });
   }
@@ -108,6 +108,7 @@ const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement 
         {intl.get('screen.patientsearch.table.nanuq')}
       </Button>
     </Tooltip>
+    
   );
 };
 
