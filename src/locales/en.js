@@ -31,7 +31,7 @@ const en = {
   "screen.patientsearch.table.nanuq": "Nanuq",
   "screen.patientsearch.table.nanuq.tootip": "Download a json file ready to be imported into nanuq",
   "screen.patientsearch.table.nanuq.modal.title": "Request cannot be created",
-  "screen.patientsearch.table.nanuq.modal.description": "yYur selection shall meet the following criteria:",
+  "screen.patientsearch.table.nanuq.modal.description": "Your selection shall meet the following criteria:",
   "screen.patientsearch.table.nanuq.modal.status": "Statut : approved",
   "screen.patientsearch.table.nanuq.modal.number": "You can include a maximum of 96 items per request",
   "screen.patientsearch.table.nanuq.modal.success": "Your file has been downloaded",
