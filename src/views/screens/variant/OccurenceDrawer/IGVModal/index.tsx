@@ -3,7 +3,12 @@ import { Modal } from 'antd';
 import cx from 'classnames';
 import intl from 'react-intl-universal';
 import Igv from 'components/Igv';
-import { formatLocus, getPatientPosition, getTopBodyElement } from 'utils/helper';
+import {
+  appendBearerIfToken,
+  formatLocus,
+  getPatientPosition,
+  getTopBodyElement,
+} from 'utils/helper';
 import axios from 'axios';
 import { usePatientFilesData } from 'store/graphql/patients/actions';
 import { GraphqlBackend } from 'store/providers';
@@ -36,7 +41,7 @@ const FHIR_CRAI_TYPE = 'CRAI';
 const getPresignedUrl = (file: string, rpt: string) => {
   return axios
     .get(`${file}?format=json`, {
-      headers: { Authorization: `Bearer ${rpt}` },
+      headers: { Authorization: appendBearerIfToken(rpt) },
     })
     .then((response) => {
       return response.data.url;
