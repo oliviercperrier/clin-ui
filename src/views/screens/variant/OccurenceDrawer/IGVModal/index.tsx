@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'antd';
+import { Modal, Spin } from 'antd';
 import cx from 'classnames';
 import intl from 'react-intl-universal';
 import Igv from 'components/Igv';
@@ -7,15 +7,15 @@ import { formatLocus, getPatientPosition, getTopBodyElement } from 'utils/helper
 import axios from 'axios';
 import { usePatientFilesData } from 'store/graphql/patients/actions';
 import { GraphqlBackend } from 'store/providers';
-import useQueryString from 'utils/useQueryString';
 import ApolloProvider from 'store/providers/apollo';
 import { DonorsEntity, VariantEntity } from 'store/graphql/variants/models';
 import { FhirDoc, PatientFileResults } from 'store/graphql/patients/models/Patient';
 import { IIGVTrack } from 'components/Igv/type';
 import ServerError from 'components/Results/ServerError';
 
-import style from './index.module.scss';
+import style from 'views/screens/variant/OccurenceDrawer/IGVModal/index.module.scss';
 import { GENDER, PARENT_TYPE, PATIENT_POSITION } from 'utils/constants';
+import { useRpt } from 'hooks/rpt';
 
 interface OwnProps {
   donor: DonorsEntity;
@@ -163,11 +163,14 @@ const IGVModal = ({ donor, variantEntity, isOpen = false, toggleModal, token }: 
 };
 
 const IGVModalWrapper = (props: Omit<OwnProps, 'token'>) => {
-  const { token } = useQueryString();
-  
+  const { loading, rpt } = useRpt();
+  if (loading) {
+    //===================================================TODO
+    return <Spin />;
+  }
   return (
-    <ApolloProvider backend={GraphqlBackend.FHIR} token={token as string}>
-      <IGVModal {...props} token={token as string} />
+    <ApolloProvider backend={GraphqlBackend.FHIR}>
+      <IGVModal {...props} token={rpt} />
     </ApolloProvider>
   );
 };

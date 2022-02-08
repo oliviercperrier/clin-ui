@@ -1,8 +1,8 @@
 import Router from 'views/route';
 import intl from 'react-intl-universal';
 import locales from 'locales';
-// import keycloak from 'auth/keycloak-api/keycloak';
-// import { ReactKeycloakProvider } from "@react-keycloak/web";
+import keycloak from 'auth/keycloak';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { ConfigProvider } from 'antd';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -11,6 +11,9 @@ import enUS from 'antd/lib/locale/en_US';
 import { LANG } from 'utils/constants';
 import getStoreConfig from 'store';
 import { useGlobals } from 'store/global';
+import { useKeycloak } from '@react-keycloak/web';
+import Spinner from 'components/uiKit/Spinner';
+import { useEffect } from 'react';
 
 const { store, persistor } = getStoreConfig();
 persistor.subscribe(function () {
@@ -22,21 +25,35 @@ persistor.subscribe(function () {
 
 const App = () => {
   const { lang } = useGlobals();
-  return (
+  const { keycloak, initialized } = useKeycloak();
+  const keycloakIsReady = keycloak && initialized;
+
+  useEffect(() => {
+    const showLogin = keycloakIsReady && !keycloak.authenticated;
+    if (showLogin) {
+      keycloak.login();
+    }
+  }, [keycloakIsReady, keycloak]);
+
+  return keycloakIsReady ? (
     <ConfigProvider locale={lang === LANG.FR ? frFR : enUS}>
       <div className="App">
         <Router />
       </div>
     </ConfigProvider>
+  ) : (
+    <Spinner size="small" />
   );
 };
 
 const AppWrapper = () => (
-  <ReduxProvider store={store}>
-    <PersistGate persistor={persistor}>
-      <App />
-    </PersistGate>
-  </ReduxProvider>
+  <ReactKeycloakProvider authClient={keycloak}>
+    <ReduxProvider store={store}>
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
+    </ReduxProvider>
+  </ReactKeycloakProvider>
 );
 
 export default AppWrapper;

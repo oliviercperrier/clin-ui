@@ -6,19 +6,20 @@ import TranslateIcon from 'components/icons/TranslateIcon';
 import AccountCircleIcon from 'components/icons/AccountCircleIcon';
 import SupervisorIcon from 'components/icons/SupervisorIcon';
 import LangMenu from 'components/Layout/Header/LangMenu';
-import { getUserFirstname } from 'utils/helper';
-import useQueryString from 'utils/useQueryString';
+
 import { useGlobals } from 'store/global';
 
-import styles from './index.module.scss';
+import styles from 'components/Layout/Header/index.module.scss';
+import { useKeycloak } from '@react-keycloak/web';
 
 const Header = () => {
-  const { token } = useQueryString();
+  const { keycloak } = useKeycloak();
   const { lang } = useGlobals();
 
   const title = intl.get('header.title');
   const langText = intl.get(`lang.${lang}.short`);
-  const userFirstname = getUserFirstname(token as string);
+  // @ts-ignore: custom property not recognized (given_name)
+  const userFirstname = keycloak?.tokenParsed?.given_name || '';
 
   const getExtra = () => {
     let extras = [];
@@ -50,11 +51,7 @@ const Header = () => {
     extras.push(
       <Dropdown
         key="3"
-        overlay={
-          <LangMenu
-            selectedLang={lang!}
-          />
-        }
+        overlay={<LangMenu selectedLang={lang!} />}
         trigger={['click']}
         getPopupContainer={(triggerNode: HTMLElement) => triggerNode.parentNode as HTMLElement}
       >
