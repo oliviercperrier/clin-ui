@@ -48,7 +48,7 @@ const fr = {
     "screen.patientsearch.table.nanuq": "Nanuq",
     "screen.patientsearch.table.nanuq.tootip": "Télécharger un fichier json prêt à être importé dans nanuq",
     "screen.patientsearch.table.nanuq.modal.title": "La requête nanuq ne peut être créée",
-    "screen.patientsearch.table.nanuq.modal.description": "Votre sélection doit répondre aux critères suivants:",
+    "screen.patientsearch.table.nanuq.modal.description": "Votre sélection doit répondre au(x) critère(s) suivant(s):",
     "screen.patientsearch.table.nanuq.modal.status": "Statut : approuvée",
     "screen.patientsearch.table.nanuq.modal.number": "Nombre :  maximum de 96 items à la fois",
     "screen.patientsearch.table.nanuq.modal.success": "Votre fichier a été téléchargé",

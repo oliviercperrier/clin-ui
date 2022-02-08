@@ -16,25 +16,36 @@ interface Props {
 const MAX_PRESCRIPTION = 96;
 const FETUS_DDN = '11/11/1111';
 
+const generateErrorModal = (selectedPrescription: PrescriptionResult[]) => {
+  return Modal.error({
+    title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
+    content: (
+      <div>
+        <Typography.Text>
+          {intl.get('screen.patientsearch.table.nanuq.modal.description')}
+        </Typography.Text>
+        <ul>
+          {selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS) && (
+            <li>{intl.get(`screen.patientsearch.table.nanuq.modal.status`)}</li>
+          )}
+          {selectedPrescription.length > MAX_PRESCRIPTION && (
+            <li>
+              {intl.get(`screen.patientsearch.table.nanuq.modal.number`)} (
+              {selectedPrescription.length})
+            </li>
+          )}
+        </ul>
+      </div>
+    ),
+  });
+};
+
 const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
   if (
     selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS) ||
     selectedPrescription.length > MAX_PRESCRIPTION
   ) {
-    Modal.error({
-      title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
-      content: (
-        <div>
-          <Typography.Text>
-            {intl.get('screen.patientsearch.table.nanuq.modal.description')}
-          </Typography.Text>
-          <ul>
-            <li>{intl.get('screen.patientsearch.table.nanuq.modal.status')}</li>
-            <li>{`${intl.get('screen.patientsearch.table.nanuq.modal.number')}`}</li>
-          </ul>
-        </div>
-      ),
-    });
+    generateErrorModal(selectedPrescription);
   } else {
     generateAndDownloadNanuqExport(selectedPrescription);
     message.success({
@@ -108,7 +119,6 @@ const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement 
         {intl.get('screen.patientsearch.table.nanuq')}
       </Button>
     </Tooltip>
-    
   );
 };
 
