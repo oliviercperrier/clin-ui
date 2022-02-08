@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Spin } from 'antd';
+import { Modal } from 'antd';
 import cx from 'classnames';
 import intl from 'react-intl-universal';
 import Igv from 'components/Igv';
@@ -15,14 +15,13 @@ import ServerError from 'components/Results/ServerError';
 
 import style from 'views/screens/variant/OccurenceDrawer/IGVModal/index.module.scss';
 import { GENDER, PARENT_TYPE, PATIENT_POSITION } from 'utils/constants';
-import { useRpt } from 'hooks/rpt';
 
 interface OwnProps {
   donor: DonorsEntity;
   variantEntity: VariantEntity;
   isOpen?: boolean;
   toggleModal: (visible: boolean) => void;
-  token: string;
+  rpt: string;
 }
 
 interface ITrackFiles {
@@ -34,10 +33,10 @@ const FHIR_CRAM_CRAI_DOC_TYPE = 'AR';
 const FHIR_CRAM_TYPE = 'CRAM';
 const FHIR_CRAI_TYPE = 'CRAI';
 
-const getPresignedUrl = (file: string, token: string) => {
+const getPresignedUrl = (file: string, rpt: string) => {
   return axios
     .get(`${file}?format=json`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${rpt}` },
     })
     .then((response) => {
       return response.data.url;
@@ -54,7 +53,7 @@ const generateCramTrack = (
   patientId: string,
   gender: GENDER,
   position: PATIENT_POSITION | PARENT_TYPE,
-  token: string,
+  rpt: string,
 ): IIGVTrack => {
   const cramDoc = files.docs.find((doc) => doc.type === FHIR_CRAM_CRAI_DOC_TYPE);
   const cramCraiFiles = findCramAndCraiFiles(cramDoc!);
@@ -66,8 +65,8 @@ const generateCramTrack = (
   return {
     type: 'alignment',
     format: 'cram',
-    url: getPresignedUrl(cramCraiFiles.mainFile!, token),
-    indexURL: getPresignedUrl(cramCraiFiles.indexFile!, token),
+    url: getPresignedUrl(cramCraiFiles.mainFile!, rpt),
+    indexURL: getPresignedUrl(cramCraiFiles.indexFile!, rpt),
     name: cramTrackName,
     height: 500,
     colorBy: 'strand',
@@ -84,7 +83,7 @@ const buildTracks = (
   patientFiles: PatientFileResults,
   motherFiles: PatientFileResults,
   fatherFiles: PatientFileResults,
-  token: string,
+  rpt: string,
   donor: DonorsEntity,
 ) => {
   if (!patientFiles.docs) {
@@ -99,26 +98,26 @@ const buildTracks = (
       donor.patient_id,
       donor.gender as GENDER,
       donor.is_proband ? PATIENT_POSITION.PROBAND : PATIENT_POSITION.PARENT,
-      token,
+      rpt,
     ),
   );
 
   if (donor.mother_id && motherFiles) {
     tracks.push(
-      generateCramTrack(motherFiles, donor.mother_id, GENDER.FEMALE, PARENT_TYPE.MOTHER, token),
+      generateCramTrack(motherFiles, donor.mother_id, GENDER.FEMALE, PARENT_TYPE.MOTHER, rpt),
     );
   }
 
   if (donor.father_id && fatherFiles) {
     tracks.push(
-      generateCramTrack(fatherFiles, donor.father_id, GENDER.MALE, PARENT_TYPE.FATHER, token),
+      generateCramTrack(fatherFiles, donor.father_id, GENDER.MALE, PARENT_TYPE.FATHER, rpt),
     );
   }
 
   return tracks;
 };
 
-const IGVModal = ({ donor, variantEntity, isOpen = false, toggleModal, token }: OwnProps) => {
+const IGVModal = ({ donor, variantEntity, isOpen = false, toggleModal, rpt }: OwnProps) => {
   const { loading, results, error } = usePatientFilesData(donor?.patient_id, !isOpen);
   const {
     loading: motherLoading,
@@ -153,7 +152,7 @@ const IGVModal = ({ donor, variantEntity, isOpen = false, toggleModal, token }: 
               palette: ['#00A0B0', '#6A4A3C', '#CC333F', '#EB6841'],
               genome: 'hg38',
               locus: formatLocus(variantEntity?.start, variantEntity?.chromosome, 20),
-              tracks: buildTracks(results!, motherResults, fatherResults, token, donor!),
+              tracks: buildTracks(results!, motherResults, fatherResults, rpt, donor!),
             }}
           />
         )
@@ -162,17 +161,10 @@ const IGVModal = ({ donor, variantEntity, isOpen = false, toggleModal, token }: 
   );
 };
 
-const IGVModalWrapper = (props: Omit<OwnProps, 'token'>) => {
-  const { loading, rpt } = useRpt();
-  if (loading) {
-    //===================================================TODO
-    return <Spin />;
-  }
-  return (
-    <ApolloProvider backend={GraphqlBackend.FHIR}>
-      <IGVModal {...props} token={rpt} />
-    </ApolloProvider>
-  );
-};
+const IGVModalWrapper = (props: OwnProps) => (
+  <ApolloProvider backend={GraphqlBackend.FHIR}>
+    <IGVModal {...props} />
+  </ApolloProvider>
+);
 
 export default IGVModalWrapper;

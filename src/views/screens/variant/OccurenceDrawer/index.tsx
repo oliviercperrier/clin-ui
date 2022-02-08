@@ -16,6 +16,7 @@ import IGVModal from 'views/screens/variant/OccurenceDrawer/IGVModal';
 import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 
 import style from './index.module.scss';
+import { useRpt } from 'hooks/rpt';
 
 interface OwnProps {
   patientId: string;
@@ -64,6 +65,8 @@ const getParentTitle = (who: 'mother' | 'father', id: string, affected: boolean)
 
 const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) => {
   const [modalOpened, toggleModal] = useState(false);
+  const { loading: loadingRpt, rpt } = useRpt();
+
   const donor = getDonor(patientId, data);
   const hasAParent = donor?.father_id || donor?.mother_id;
 
@@ -150,7 +153,12 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
             </Descriptions.Item>
           </Descriptions>
           <Divider style={{ margin: 0 }} />
-          <Button type="primary" onClick={() => toggleModal(true)}>
+          <Button
+            loading={loadingRpt}
+            disabled={loadingRpt || !rpt}
+            type="primary"
+            onClick={() => toggleModal(true)}
+          >
             {intl.get('screen.patientvariant.drawer.igv.viewer')}
             <ExternalLinkIcon height="14" width="14" className="anticon" />
           </Button>
@@ -158,6 +166,7 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
       </Drawer>
       {donor && (
         <IGVModal
+          rpt={rpt}
           donor={donor}
           variantEntity={data}
           isOpen={modalOpened}
