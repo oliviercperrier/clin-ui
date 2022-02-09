@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import React from 'react';
 import { Spin } from 'antd';
 import { SpinProps } from 'antd/lib/spin';
 
@@ -6,17 +6,15 @@ import style from 'components/uiKit/Spinner/index.module.scss';
 
 type SpinnerProps = SpinProps & {
   className?: string;
+  children?: React.ReactNode;
 };
 
 const defaultClassName = style.spinner;
 
-const Spinner: FunctionComponent<SpinnerProps> = (props) => {
-  const { className = defaultClassName, size, children } = props;
-  return (
-    <div className={className}>
-      <Spin size={size}>{children}</Spin>
-    </div>
-  );
-};
+const Spinner = ({ className = defaultClassName, size, children }: SpinnerProps) => (
+  <div className={className}>
+    <Spin size={size}>{children}</Spin>
+  </div>
+);
 
 export default Spinner;

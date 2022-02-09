@@ -6,11 +6,9 @@ import TranslateIcon from 'components/icons/TranslateIcon';
 import AccountCircleIcon from 'components/icons/AccountCircleIcon';
 import SupervisorIcon from 'components/icons/SupervisorIcon';
 import LangMenu from 'components/Layout/Header/LangMenu';
-
 import { useGlobals } from 'store/global';
-
-import styles from 'components/Layout/Header/index.module.scss';
 import { useKeycloak } from '@react-keycloak/web';
+import styles from 'components/Layout/Header/index.module.scss';
 
 const Header = () => {
   const { keycloak } = useKeycloak();

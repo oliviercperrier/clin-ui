@@ -16,6 +16,7 @@ import Spinner from 'components/uiKit/Spinner';
 import { useEffect } from 'react';
 
 const { store, persistor } = getStoreConfig();
+
 persistor.subscribe(function () {
   intl.init({
     currentLocale: store.getState().global.lang || LANG.EN,
@@ -35,14 +36,10 @@ const App = () => {
     }
   }, [keycloakIsReady, keycloak]);
 
-  return keycloakIsReady ? (
+  return (
     <ConfigProvider locale={lang === LANG.FR ? frFR : enUS}>
-      <div className="App">
-        <Router />
-      </div>
+      <div className="App">{keycloakIsReady ? <Router /> : <Spinner size="small" />}</div>
     </ConfigProvider>
-  ) : (
-    <Spinner size="small" />
   );
 };
 
