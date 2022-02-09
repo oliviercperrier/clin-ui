@@ -2,7 +2,6 @@ import { Button, Tooltip, Modal, Typography, message } from 'antd';
 import React from 'react';
 import intl from 'react-intl-universal';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
-import { ACTIVE_STATUS } from 'utils/constants';
 import { getTopBodyElement } from 'utils/helper';
 import { FileTextOutlined } from '@ant-design/icons';
 import { v4 as uuid } from 'uuid';
@@ -16,33 +15,6 @@ interface Props {
 const MAX_PRESCRIPTION = 96;
 const FETUS_DDN = '11/11/1111';
 
-const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
-  if (
-    selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS) ||
-    selectedPrescription.length > MAX_PRESCRIPTION
-  ) {
-    Modal.error({
-      title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
-      content: (
-        <div>
-          <Typography.Text>
-            {intl.get('screen.patientsearch.table.nanuq.modal.description')}
-          </Typography.Text>
-          <ul>
-            <li>{intl.get('screen.patientsearch.table.nanuq.modal.status')}</li>
-            <li>{`${intl.get('screen.patientsearch.table.nanuq.modal.number')}`}</li>
-          </ul>
-        </div>
-      ),
-    });
-  } else {
-    generateAndDownloadNanuqExport(selectedPrescription);
-    message.success({
-      content: intl.get('screen.patientsearch.table.nanuq.modal.success'),
-      getPopupContainer: () => getTopBodyElement(),
-    });
-  }
-};
 
 const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
   if (patientInfo.fetus) {
@@ -93,6 +65,34 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
   );
 };
 
+const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
+  const exceedsMaxNumOfPrescriptions = selectedPrescription.length > MAX_PRESCRIPTION
+  if (exceedsMaxNumOfPrescriptions) {
+    Modal.error({
+      title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
+      content: (
+        <div>
+          <Typography.Text>
+            {intl.get('screen.patientsearch.table.nanuq.modal.description')}
+          </Typography.Text>
+          <ul>
+              <li>
+                {intl.get(`screen.patientsearch.table.nanuq.modal.number`)} (
+                {selectedPrescription.length})
+              </li>
+          </ul>
+        </div>
+      ),
+    });
+  } else {
+    generateAndDownloadNanuqExport(selectedPrescription);
+    message.success({
+      content: intl.get('screen.patientsearch.table.nanuq.modal.success'),
+      getPopupContainer: () => getTopBodyElement(),
+    });
+  }
+};
+
 const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement => {
   return (
     <Tooltip title={intl.get('screen.patientsearch.table.nanuq.tootip')}>
@@ -108,7 +108,6 @@ const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement 
         {intl.get('screen.patientsearch.table.nanuq')}
       </Button>
     </Tooltip>
-    
   );
 };
 
