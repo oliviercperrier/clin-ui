@@ -46,9 +46,9 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
     patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
       type_echantillon: 'ADN',
       tissue_source: 'Sang',
+      numero_echantillon:'',
+      puit:'',
       type_specimen: 'Normal',
-      nom_patient: patientInfo.lastName,
-      prenom_patient: patientInfo.firstName,
       patient_id: patientInfo.cid,
       service_request_id: cid,
       dossier_medical: patientInfo.ramq || '--',
