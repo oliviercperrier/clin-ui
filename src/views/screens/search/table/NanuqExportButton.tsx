@@ -16,44 +16,6 @@ interface Props {
 const MAX_PRESCRIPTION = 96;
 const FETUS_DDN = '11/11/1111';
 
-const generateErrorModal = (selectedPrescription: PrescriptionResult[]) => {
-  return Modal.error({
-    title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
-    content: (
-      <div>
-        <Typography.Text>
-          {intl.get('screen.patientsearch.table.nanuq.modal.description')}
-        </Typography.Text>
-        <ul>
-          {selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS) && (
-            <li>{intl.get(`screen.patientsearch.table.nanuq.modal.status`)}</li>
-          )}
-          {selectedPrescription.length > MAX_PRESCRIPTION && (
-            <li>
-              {intl.get(`screen.patientsearch.table.nanuq.modal.number`)} (
-              {selectedPrescription.length})
-            </li>
-          )}
-        </ul>
-      </div>
-    ),
-  });
-};
-
-const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
-  if (
-    selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS) ||
-    selectedPrescription.length > MAX_PRESCRIPTION
-  ) {
-    generateErrorModal(selectedPrescription);
-  } else {
-    generateAndDownloadNanuqExport(selectedPrescription);
-    message.success({
-      content: intl.get('screen.patientsearch.table.nanuq.modal.success'),
-      getPopupContainer: () => getTopBodyElement(),
-    });
-  }
-};
 
 const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
   if (patientInfo.fetus) {
@@ -102,6 +64,40 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
     JSON.stringify(nanuqFileContent, null, 2),
     `${formatDateToLocalString()}-clin-nanuq.json`,
   );
+};
+
+const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
+  const statusError = selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS);
+  const numberError = selectedPrescription.length > MAX_PRESCRIPTION
+  if (statusError || numberError) {
+    Modal.error({
+      title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
+      content: (
+        <div>
+          <Typography.Text>
+            {intl.get('screen.patientsearch.table.nanuq.modal.description')}
+          </Typography.Text>
+          <ul>
+            {statusError && (
+              <li>{intl.get(`screen.patientsearch.table.nanuq.modal.status`)}</li>
+            )}
+            {numberError && (
+              <li>
+                {intl.get(`screen.patientsearch.table.nanuq.modal.number`)} (
+                {selectedPrescription.length})
+              </li>
+            )}
+          </ul>
+        </div>
+      ),
+    });
+  } else {
+    generateAndDownloadNanuqExport(selectedPrescription);
+    message.success({
+      content: intl.get('screen.patientsearch.table.nanuq.modal.success'),
+      getPopupContainer: () => getTopBodyElement(),
+    });
+  }
 };
 
 const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement => {
