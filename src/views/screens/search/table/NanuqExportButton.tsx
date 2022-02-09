@@ -2,7 +2,6 @@ import { Button, Tooltip, Modal, Typography, message } from 'antd';
 import React from 'react';
 import intl from 'react-intl-universal';
 import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
-import { ACTIVE_STATUS } from 'utils/constants';
 import { getTopBodyElement } from 'utils/helper';
 import { FileTextOutlined } from '@ant-design/icons';
 import { v4 as uuid } from 'uuid';
@@ -67,9 +66,8 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
 };
 
 const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
-  const statusError = selectedPrescription.find((p: PrescriptionResult) => p.status !== ACTIVE_STATUS);
-  const numberError = selectedPrescription.length > MAX_PRESCRIPTION
-  if (statusError || numberError) {
+  const exceedsMaxNumOfPrescriptions = selectedPrescription.length > MAX_PRESCRIPTION
+  if (exceedsMaxNumOfPrescriptions) {
     Modal.error({
       title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
       content: (
@@ -78,15 +76,10 @@ const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) =
             {intl.get('screen.patientsearch.table.nanuq.modal.description')}
           </Typography.Text>
           <ul>
-            {statusError && (
-              <li>{intl.get(`screen.patientsearch.table.nanuq.modal.status`)}</li>
-            )}
-            {numberError && (
               <li>
                 {intl.get(`screen.patientsearch.table.nanuq.modal.number`)} (
                 {selectedPrescription.length})
               </li>
-            )}
           </ul>
         </div>
       ),
