@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { IFilter, VisualType } from "@ferlab/ui/core/components/filters/types";
-import { updateFilters } from "@ferlab/ui/core/data/filters/utils";
-import { AutoComplete, Input, notification, Spin } from "antd";
-import history from "utils/history";
-import generateSuggestionOptions from "views/screens/variant/Suggester/Options";
-import axios from "axios";
-import useQueryString from "utils/useQueryString";
-import intl from "react-intl-universal";
+import React, { useEffect, useState } from 'react';
+import { IFilter, VisualType } from '@ferlab/ui/core/components/filters/types';
+import { updateFilters } from '@ferlab/ui/core/data/filters/utils';
+import { AutoComplete, Input, notification, Spin } from 'antd';
+import history from 'utils/history';
+import generateSuggestionOptions from 'views/screens/variant/Suggester/Options';
+import intl from 'react-intl-universal';
 
-import style from "./index.module.scss";
+import style from 'views/screens/variant/Suggester/index.module.scss';
+import { useAxiosBasicWithAuth } from 'hooks/axios';
 
 type SuggesterProps = {
   suggestionType: string;
@@ -20,28 +19,19 @@ const MIN_N_OF_CHARS_BEFORE_SEARCH = 2;
 const MAX_N_OF_CHARS = 50;
 
 const Suggester = ({ suggestionType, placeholderText }: SuggesterProps) => {
-  const { token } = useQueryString(); // Change with keycloak
   const [options, setOptions] = useState<{ value: string }[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const axiosInstance = useAxiosBasicWithAuth();
   const handleSearch = async (userRawInput: string, suggestionType: string) => {
     if (userRawInput && userRawInput.length >= MIN_N_OF_CHARS_BEFORE_SEARCH) {
       setLoading(true);
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           `${process.env.REACT_APP_ARRANGER_API}/${suggestionType}Feature/suggestions/${userRawInput}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
         );
 
-        setOptions(
-          generateSuggestionOptions(
-            response.data.searchText,
-            response.data.suggestions
-          )
-        );
+        setOptions(generateSuggestionOptions(response.data.searchText, response.data.suggestions));
       } catch (e) {
         setError(true);
       } finally {
@@ -52,16 +42,16 @@ const Suggester = ({ suggestionType, placeholderText }: SuggesterProps) => {
 
   const onSelectSuggestion = (featureType: string, displayType: string) => {
     let fg;
-    if (featureType === "variant") {
+    if (featureType === 'variant') {
       fg = {
-        field: "locus",
-        title: "",
+        field: 'locus',
+        title: '',
         type: VisualType.Checkbox,
       };
     } else {
       fg = {
-        field: "genes.symbol",
-        title: "",
+        field: 'genes.symbol',
+        title: '',
         type: VisualType.Checkbox,
       };
     }
@@ -72,7 +62,7 @@ const Suggester = ({ suggestionType, placeholderText }: SuggesterProps) => {
           count: 1,
           key: displayType,
         },
-        name: "",
+        name: '',
         id: displayType,
       },
     ];
@@ -82,8 +72,8 @@ const Suggester = ({ suggestionType, placeholderText }: SuggesterProps) => {
   useEffect(() => {
     if (error) {
       notification.error({
-        message: "Error",
-        description: "An error occurred while fetching suggestions",
+        message: 'Error',
+        description: 'An error occurred while fetching suggestions',
         duration: null,
         onClose: () => setError(false),
       });
@@ -96,10 +86,10 @@ const Suggester = ({ suggestionType, placeholderText }: SuggesterProps) => {
       style={{ width: style.autoCompleteWidth }}
       onSearch={(searchText) => handleSearch(searchText, suggestionType)}
       options={options}
-      notFoundContent={loading ? <Spin /> : intl.get("filter.suggester.search.noresults")}
+      notFoundContent={loading ? <Spin /> : intl.get('filter.suggester.search.noresults')}
       filterOption={(inputValue, option) =>
         //  make sure we show suggestions for corresponding search only.
-        (inputValue || "").trim() === option?.meta?.searchText
+        (inputValue || '').trim() === option?.meta?.searchText
       }
       onSelect={(value, option) => {
         onSelectSuggestion(option.meta.featureType, option.meta.displayName);

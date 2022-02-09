@@ -1,7 +1,6 @@
 import Keycloak from 'keycloak-js';
 import { keycloakConfig } from 'utils/config';
 
-const keyCloakConfig = JSON.parse(keycloakConfig);
-const keycloak = Keycloak(keyCloakConfig);
+const keycloak = Keycloak(keycloakConfig);
 
 export default keycloak;
