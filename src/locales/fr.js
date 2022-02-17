@@ -163,7 +163,7 @@ const fr = {
     "screen.patientvariant.drawer.depth.quality": "Qualité de profondeur",
     "screen.patientvariant.drawer.allprof": "Profondeur allégique ALT",
     "screen.patientvariant.drawer.alltotal": "Profondeur total ALT + REF",
-    "screen.patientvariant.drawer.allratio": "Ratio allégique ALT / (ALT+REF)",
+    "screen.patientvariant.drawer.allratio": "Ratio allélique ALT / (ALT+REF)",
     "screen.patientvariant.drawer.gq": "Qualité du génotype",
     "screen.patientvariant.drawer.igv.viewer": "Ouvrir dans IGV",
     "screen.patientvariant.drawer.affected": "Atteint",
