@@ -216,7 +216,7 @@ const fr = {
     "filters.group.donors.zygosity": "Zygosité",
     "filters.group.donors.transmission": "Transmission",
     "filters.group.donors.parental_origin": "Origine Parentale",
-    "filters.group.donors.filters": "Filtres (Dragen)",
+    "filters.group.donors.filters": "Filtre (Dragen)",
     "filters.group.donors.qd": "Qualité de profondeur",
     "filters.group.donors.ad_alt": "Profondeur allélique ALT",
     "filters.group.donors.ad_total": "Profondeur totale ALT +REF",

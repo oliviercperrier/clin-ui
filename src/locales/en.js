@@ -199,7 +199,7 @@ const en = {
   "filters.group.donors.zygosity": "Zygosity",
   "filters.group.donors.transmission": "Transmission",
   "filters.group.donors.parental_origin": "Parental Origin",
-  "filters.group.donors.filters": "Filters (Dragen)",
+  "filters.group.donors.filters": "Filter (Dragen)",
   "filters.group.donors.qd": "Quality of depth",
   "filters.group.donors.ad_alt": "ALT allele depth",
   "filters.group.donors.ad_total": "Total depth ALT + REF",
