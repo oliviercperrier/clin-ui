@@ -15,7 +15,6 @@ interface Props {
 const MAX_PRESCRIPTION = 96;
 const FETUS_DDN = '11/11/1111';
 
-
 const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
   if (patientInfo.fetus) {
     return FETUS_DDN;
@@ -43,15 +42,18 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
     version_id: '1.0',
     test_genomique: 'exome',
     LDM: patients[0].laboratory.split('/')[1],
-    patients: patients.map(({ patientInfo, familyInfo, cid }) => ({
+    patients: patients.map(({ patientInfo, familyInfo, cid, mrn }) => ({
       type_echantillon: 'ADN',
       tissue_source: 'Sang',
-      numero_echantillon:'',
-      puit:'',
+      numero_echantillon: '',
+      puit: '',
+      nom_patient: patientInfo.lastName,
+      prenom_patient: patientInfo.firstName,
       type_specimen: 'Normal',
       patient_id: patientInfo.cid,
       service_request_id: cid,
-      dossier_medical: patientInfo.ramq || '--',
+      RAMQ: patientInfo.ramq || '--',
+      dossier_medical: mrn,
       institution: patientInfo.organization.cid,
       DDN: formatBirthDateForNanuq(patientInfo),
       sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
@@ -66,7 +68,7 @@ const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
 };
 
 const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
-  const exceedsMaxNumOfPrescriptions = selectedPrescription.length > MAX_PRESCRIPTION
+  const exceedsMaxNumOfPrescriptions = selectedPrescription.length > MAX_PRESCRIPTION;
   if (exceedsMaxNumOfPrescriptions) {
     Modal.error({
       title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
@@ -76,10 +78,10 @@ const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) =
             {intl.get('screen.patientsearch.table.nanuq.modal.description')}
           </Typography.Text>
           <ul>
-              <li>
-                {intl.get(`screen.patientsearch.table.nanuq.modal.number`)} (
-                {selectedPrescription.length})
-              </li>
+            <li>
+              {intl.get(`screen.patientsearch.table.nanuq.modal.number`)} (
+              {selectedPrescription.length})
+            </li>
           </ul>
         </div>
       ),
