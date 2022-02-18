@@ -1,11 +1,11 @@
 import { bridgeOrigin } from 'utils/config';
 
 export const createPrescription = () => {
-  window.postMessage({ action: 'createNewPrescription' }, window.origin);
+  window.parent.postMessage({ action: 'createNewPrescription' }, window.origin);
 };
 
 export const createNanuqReport = (e: React.ChangeEvent) => {
-  window.postMessage({ action: 'createNanuqReport' }, window.origin);
+  window.parent.postMessage({ action: 'createNanuqReport' }, window.origin);
 };
 
 export const redirectParent = (path: string) => {
