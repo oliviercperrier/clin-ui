@@ -161,7 +161,7 @@ const fr = {
     "screen.patientvariant.drawer.parental.origin": "Origine parentale",
     "screen.patientvariant.drawer.seq.method": "Métrique de séquençage",
     "screen.patientvariant.drawer.depth.quality": "Qualité de profondeur",
-    "screen.patientvariant.drawer.allprof": "Profondeur allégique ALT",
+    "screen.patientvariant.drawer.allprof": "Profondeur allélique ALT",
     "screen.patientvariant.drawer.alltotal": "Profondeur total ALT + REF",
     "screen.patientvariant.drawer.allratio": "Ratio allélique ALT / (ALT+REF)",
     "screen.patientvariant.drawer.gq": "Qualité du génotype",
