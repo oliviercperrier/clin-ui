@@ -179,7 +179,7 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
     {
       dataIndex: 'ad_ratio',
       title: () => intl.get('screen.variantDetails.patientsTab.adFreq'),
-      render: (ratio: number) => `${(ratio * 100).toFixed(1)}%`,
+      render: (ratio: number) => ratio.toFixed(2),
       sorter: (a, b) => a.ad_ratio - b.ad_ratio,
     },
     {
