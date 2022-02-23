@@ -1,3 +1,5 @@
+@import "colors";
+
 .variantEntity {
   .entityHeader {
     width: 100%;
@@ -11,6 +13,11 @@
         margin: 0; 
         height: 24px;
       }
+    }
+
+    .previous {
+      color: $blue-9;
+      margin-right: 0.5rem;
     }
 
     .title {
