@@ -66,7 +66,7 @@ const VariantTableContainer = (props: OwnProps) => {
       render: (hgvsg: string, entity: VariantEntity) =>
         hgvsg ? (
           <Tooltip placement="topLeft" title={hgvsg}>
-            <a onClick={() => navigateTo(`/variant/entity/${entity.hash}`)}>{hgvsg}</a>
+            <a onClick={() => navigateTo(`/variant/entity/${entity.hash}?patientid=${props.patientId}`)}>{hgvsg}</a>
           </Tooltip>
         ) : (
           DISPLAY_WHEN_EMPTY_DATUM
