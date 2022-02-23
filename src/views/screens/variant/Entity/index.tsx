@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { Typography, Tag, Tabs, Skeleton, Button } from 'antd';
@@ -60,9 +60,11 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
   const location = useLocation();
   const patientIdSearch = new URLSearchParams(location.search).get('patientid');
 
-  if (!patientId && patientIdSearch) {
-    setPatientId(patientIdSearch);
-  }
+  useEffect(() => {
+    if (!patientId && patientIdSearch) {
+      setPatientId(patientIdSearch);
+    }
+  }, [patientId, patientIdSearch]);
 
   if (error) {
     return <ServerError />;
