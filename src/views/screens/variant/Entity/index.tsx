@@ -56,15 +56,8 @@ interface OwnProps {
 
 const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
   const { loading, data, error } = useTabSummaryData(hash);
-  const [ patientId, setPatientId ] = useState<string>();
   const location = useLocation();
-  const patientIdSearch = new URLSearchParams(location.search).get('patientid');
-
-  useEffect(() => {
-    if (!patientId && patientIdSearch) {
-      setPatientId(patientIdSearch);
-    }
-  }, [patientId, patientIdSearch]);
+  const patientId = new URLSearchParams(location.search).get('patientid');
 
   if (error) {
     return <ServerError />;
@@ -97,7 +90,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
         activeKey={tabid}
         onChange={(key) => {
           if (history.location.hash !== key) {
-            history.push(`/variant/entity/${hash}/${key}`);
+            history.push(`/variant/entity/${hash}/${key}?patientid=${patientId || ''}`);
           }
         }}
       >
