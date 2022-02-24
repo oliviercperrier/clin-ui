@@ -90,7 +90,7 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
         activeKey={tabid}
         onChange={(key) => {
           if (history.location.hash !== key) {
-            history.push(`/variant/entity/${hash}/${key}?patientid=${patientId}`);
+            history.push(`/variant/entity/${hash}/${key}?patientid=${patientId || ''}`);
           }
         }}
       >
