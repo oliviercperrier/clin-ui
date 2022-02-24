@@ -54,17 +54,19 @@ interface OwnProps {
   tabid: string;
 }
 
+const LOCAL_STORAGE_VARIANT_PREVIOUS_PATIENT_ID = 'VARIANT_PREVIOUS_PATIENT_ID';
+
 const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
   const { loading, data, error } = useTabSummaryData(hash);
-  const [ patientId, setPatientId ] = useState<string>();
+  const patientId = localStorage.getItem(LOCAL_STORAGE_VARIANT_PREVIOUS_PATIENT_ID);
   const location = useLocation();
   const patientIdSearch = new URLSearchParams(location.search).get('patientid');
 
   useEffect(() => {
-    if (!patientId && patientIdSearch) {
-      setPatientId(patientIdSearch);
+    if (patientIdSearch) {
+      localStorage.setItem(LOCAL_STORAGE_VARIANT_PREVIOUS_PATIENT_ID, patientIdSearch);
     }
-  }, [patientId, patientIdSearch]);
+  }, [patientIdSearch]);
 
   if (error) {
     return <ServerError />;
