@@ -37,7 +37,8 @@
     "theme:scss": "npm run theme:clean; less2sass ./src/style/themes/clin/colors.less; mv ./src/style/themes/clin/colors.scss ./src/style/themes/clin/dist/_colors.scss",
     "theme:clean": "find ./src/style/themes/clin/dist/* -type f -exec rm {} \\; || true",
     "theme": "npm run theme:scss && npm run theme:antd",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "add-translation": "node scripts/add-translation.js"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
