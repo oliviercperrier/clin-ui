@@ -1,18 +1,18 @@
 NODE_ENV=production
-REACT_APP_TITLE=CLIN-UI
+REACT_APP_TITLE=CQGC-UI
 REACT_APP_RELEASE_ID=$npm_package_version
 REACT_APP_RELEASE_NAME=$npm_package_versionName
 REACT_APP_NOSCRIPT_CONTENT=JavaScript is required.
 REACT_APP_NAMESPACE=qa
 PUBLIC_URL=/clinui
 #AUTH
-REACT_APP_KEYCLOAK_CONFIG={"realm": "clin", "url": "https://auth.qa.clin.ferlab.bio/auth/", "clientId": "clin-client", "authClientId": "clin-acl"}
+REACT_APP_KEYCLOAK_CONFIG={"realm": "clin", "url": "https://auth.qa.cqgc.hsj.rtss.qc.ca/auth/", "clientId": "clin-client", "authClientId": "clin-acl"}
 # API
-REACT_APP_ARRANGER_API=https://data-api.qa.clin.ferlab.bio
+REACT_APP_ARRANGER_API=https://data-api.qa.cqgc.hsj.rtss.qc.ca
 REACT_APP_ARRANGER_PROJECT_ID=clin_2021_12_16_v1
-REACT_APP_FHIR_SERVICE_URL=https://fhir-blue.qa.clin.ferlab.bio/fhir
-REACT_APP_ZEPLIN_URL=https://notebook.qa.clin.ferlab.bio
-REACT_APP_FHIR_CONSOLE_URL=https://fhir-console.qa.clin.ferlab.bio/home
+REACT_APP_FHIR_SERVICE_URL=https://fhir-blue.qa.cqgc.hsj.rtss.qc.ca/fhir
+REACT_APP_ZEPLIN_URL=https://notebook.qa.cqgc.hsj.rtss.qc.ca
+REACT_APP_FHIR_CONSOLE_URL=https://fhir-console.qa.cqgc.hsj.rtss.qc.ca/home
 
 # Style
 SASS_PATH=/code/src/style/themes/clin
