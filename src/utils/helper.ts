@@ -48,16 +48,19 @@ export const getTopBodyElement = () => {
   return window.document.body;
 };
 
-export const downloadJSONFile = (content: string, filename: string) => {
-  const windowToUser = top && top.window ? top.window : window;
-  const fileBlob = new Blob([content], { type: 'text/json' });
-  const downloadLinkElement = windowToUser.document.createElement('a');
-  downloadLinkElement.href = windowToUser.URL.createObjectURL(fileBlob);
+export const downloadFile = (blob: Blob, filename: string) => {
+  const downloadLinkElement = document.createElement('a');
+  downloadLinkElement.href = window.URL.createObjectURL(blob);
   downloadLinkElement.download = filename;
   document.body.appendChild(downloadLinkElement);
   downloadLinkElement.click();
   document.body.removeChild(downloadLinkElement);
   URL.revokeObjectURL(downloadLinkElement.href);
+}
+
+export const downloadJSONFile = (content: string, filename: string) => {
+  const fileBlob = new Blob([content], { type: 'text/json' });
+  downloadFile(fileBlob, filename)
 };
 
 export const getPatientPosition = (gender: string, position: string) => {

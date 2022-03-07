@@ -19,3 +19,7 @@ export enum PATIENT_POSITION {
   PARENT = 'parent',
   PROBAND = 'proband',
 }
+
+export const enum MIME_TYPES {
+  APPLICATION_XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+}

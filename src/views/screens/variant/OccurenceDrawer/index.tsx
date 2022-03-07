@@ -17,6 +17,7 @@ import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils
 
 import style from './index.module.scss';
 import { useRpt } from 'hooks/rpt';
+import ReportDownloadButton from './ReportDownloadButton';
 
 interface OwnProps {
   patientId: string;
@@ -70,10 +71,12 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
   const donor = getDonor(patientId, data);
   const hasAParent = donor?.father_id || donor?.mother_id;
 
+  const variantId = data?.hgvsg;
+
   return (
     <>
       <Drawer
-        title={<Tooltip title={data?.hgvsg}>{data?.hgvsg}</Tooltip>}
+        title={<Tooltip title={variantId}>{variantId}</Tooltip>}
         placement="right"
         onClose={() => toggle(!opened)}
         visible={opened}
@@ -153,15 +156,18 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
             </Descriptions.Item>
           </Descriptions>
           <Divider style={{ margin: 0 }} />
-          <Button
-            loading={loadingRpt}
-            disabled={loadingRpt || !rpt}
-            type="primary"
-            onClick={() => toggleModal(true)}
-          >
-            {intl.get('screen.patientvariant.drawer.igv.viewer')}
-            <ExternalLinkIcon height="14" width="14" className="anticon" />
-          </Button>
+          <Space>
+            <Button
+              loading={loadingRpt}
+              disabled={loadingRpt || !rpt}
+              type="primary"
+              onClick={() => toggleModal(true)}
+            >
+              {intl.get('screen.patientvariant.drawer.igv.viewer')}
+              <ExternalLinkIcon height="14" width="14" className="anticon" />
+            </Button>
+            <ReportDownloadButton rpt={rpt} patientId={patientId} variantId={variantId} />
+          </Space>
         </Space>
       </Drawer>
       {donor && (

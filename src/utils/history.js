@@ -3,10 +3,7 @@ import { createBrowserHistory } from 'history';
 
 const history = createBrowserHistory();
 
-export const withHistory = WrappedComponent => props => (
-  <WrappedComponent {...{ history, ...props }} />
-);
-
-export const HistoryContext = React.createContext(history);
+export const withHistory = (WrappedComponent) => (props) =>
+  <WrappedComponent {...{ history, ...props }} />;
 
 export default history;

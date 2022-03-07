@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { RootState } from 'store/types';
 // Reducers
 import GlobalReducer from 'store/global';
+import ReportReducer from 'store/reports';
 
 const devMode = process.env.NODE_ENV === 'development';
 
@@ -13,13 +14,14 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: [
-    'global'
+    'global',
     /* Add reducer to persist in local storage */
   ],
 };
 
 const rootReducer = combineReducers<RootState>({
   global: GlobalReducer,
+  report: ReportReducer,
 });
 
 const store: any = configureStore({
