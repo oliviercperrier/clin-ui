@@ -9,7 +9,7 @@ import { MIME_TYPES } from 'utils/constants';
 
 const extractFilename = (contentDisposition: string = '') => {
   const split = contentDisposition.split(';');
-  const filenameEntry = split.find((e) => e.startsWith('filename=')) || '';
+  const filenameEntry = split.find((e) => e?.startsWith(' filename=')) || '';
   return filenameEntry.split('=')?.[1] || '';
 };
 
