@@ -1,6 +1,10 @@
 {
   "component.table.itemcount.results.multiple.pages": "Results <strong>{from}</strong> - <strong>{to}</strong> of <strong>{total}</strong>",
   "component.table.itemcount.results.one.page": "{count, plural, =0 {No result} other {<strong>#</strong> results}}",
+  "compound.heterozygous": "{num, plural, =0 {compound heterozygous} other {compound heterozygous}}",
+  "compound.heterozygous.abbrev": "{num, plural, =0 {compound het.} other {compound het.}}",
+  "family": "family",
+  "father": "father",
   "filter.suggester.search.genes": "Search by gene",
   "filter.suggester.search.genes.tooltip": "Enter Gene Symbol, Gene Alias or Ensembl ID",
   "filter.suggester.search.noresults": "No results found",
@@ -72,8 +76,11 @@
   "lang.en.short": "EN",
   "lang.fr.long": "Français",
   "lang.fr.short": "FR",
+  "mother": "mother",
   "notification.error": "error",
   "notification.success": "success",
+  "potential.compound.heterozygous": "{num, plural, =0 {potential compound heterozygous} other {potential compound heterozygous}}",
+  "potential.compound.heterozygous.abbrev": "{num, plural, =0 {potential compound het.} other {potential compound het.}}",
   "querybuilder.actions.addQuery": "New query",
   "querybuilder.actions.changeOperatorTo": "Change operator to",
   "querybuilder.actions.clear.buttonTitle": "Clear all",
@@ -222,5 +229,6 @@
   "screen.variantdetails.tab.patients": "Patients",
   "screen.variantdetails.tab.summary": "Summary",
   "screen.variantsearch.table.gnomAd": "gnomAD ",
-  "standard.format.date": "Format YYYY-MM-DD"
+  "standard.format.date": "Format YYYY-MM-DD",
+  "zygosity": "zygozity"
 }

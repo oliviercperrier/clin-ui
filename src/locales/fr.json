@@ -1,6 +1,10 @@
 {
   "component.table.itemcount.results.multiple.pages": "Résultats <strong>{from}</strong> - <strong>{to}</strong> sur <strong>{total}</strong>",
   "component.table.itemcount.results.one.page": "{count, plural, =0 {Aucun résultat} other {<strong>#</strong> résultats}}",
+  "compound.heterozygous": "{num, plural, =0 {hétérozygote composé} other {hétérozygotes composés}}",
+  "compound.heterozygous.abbrev": "{num, plural, =0 {het. composé} other {het. composés}}",
+  "family": "famille",
+  "father": "père",
   "filter.suggester.search.genes": "Recherche par gène",
   "filter.suggester.search.genes.tooltip": "Entrer un Symbole de gène, Alias de gène ou Ensembl ID",
   "filter.suggester.search.noresults": "Aucune résultat",
@@ -72,8 +76,11 @@
   "lang.en.short": "EN",
   "lang.fr.long": "Français",
   "lang.fr.short": "FR",
+  "mother": "mère",
   "notification.error": "erreur",
   "notification.success": "succès",
+  "potential.compound.heterozygous": "{num, plural, =0 {hétérozygote composé potentiel} other {hétérozygotes composés potentiels}}",
+  "potential.compound.heterozygous.abbrev": "{num, plural, =0 {hét. composé potentiel} other {hét. composés potentiels}}",
   "querybuilder.actions.addQuery": "Nouvelle requête",
   "querybuilder.actions.changeOperatorTo": "Changer l'opérateur à",
   "querybuilder.actions.clear.buttonTitle": "Tout effacer",
@@ -222,5 +229,6 @@
   "screen.variantdetails.tab.patients": "Patients",
   "screen.variantdetails.tab.summary": "Résumé",
   "screen.variantsearch.table.gnomAd": "gnomAD ",
-  "standard.format.date": "Format AAAA-MM-JJ"
+  "standard.format.date": "Format AAAA-MM-JJ",
+  "zygosity": "zigosité"
 }

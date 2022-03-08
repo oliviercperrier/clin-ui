@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Descriptions, Divider, Space, Drawer, Tooltip } from 'antd';
+import { Button, Descriptions, Divider, Drawer, Space, Tooltip } from 'antd';
 import intl from 'react-intl-universal';
 import cx from 'classnames';
 import { CloseOutlined } from '@ant-design/icons';
@@ -18,6 +18,7 @@ import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils
 import style from './index.module.scss';
 import { useRpt } from 'hooks/rpt';
 import ReportDownloadButton from './ReportDownloadButton';
+import capitalize from 'lodash/capitalize';
 
 interface OwnProps {
   patientId: string;
@@ -69,6 +70,7 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
   const { loading: loadingRpt, rpt } = useRpt();
 
   const donor = getDonor(patientId, data);
+
   const hasAParent = donor?.father_id || donor?.mother_id;
 
   const variantId = data?.hgvsg;
@@ -76,7 +78,7 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
   return (
     <>
       <Drawer
-        title={<Tooltip title={variantId}>{variantId}</Tooltip>}
+        title={<Tooltip title={variantId}>Occurrence</Tooltip>}
         placement="right"
         onClose={() => toggle(!opened)}
         visible={opened}
@@ -87,13 +89,35 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
       >
         <Space size={24} direction="vertical">
           <Descriptions column={1} className={cx(style.description, 'description')}>
-            <Descriptions.Item label="Zygosité">
+            <Descriptions.Item label={'Variant'}>
+              {variantId || DISPLAY_WHEN_EMPTY_DATUM}
+            </Descriptions.Item>
+            <Descriptions.Item label={'Patient'}>
+              {patientId || DISPLAY_WHEN_EMPTY_DATUM}
+            </Descriptions.Item>
+          </Descriptions>
+          <Descriptions
+            column={1}
+            className={cx(style.description, 'description')}
+            title={capitalize(intl.get('zygosity'))}
+          >
+            <Descriptions.Item label={capitalize(intl.get('zygosity'))}>
               {donor?.zygosity || DISPLAY_WHEN_EMPTY_DATUM}
+            </Descriptions.Item>
+            <Descriptions.Item
+              label={capitalize(intl.get('compound.heterozygous.abbrev', { num: 0 }))}
+            >
+              {DISPLAY_WHEN_EMPTY_DATUM}
+            </Descriptions.Item>
+            <Descriptions.Item
+              label={capitalize(intl.get('potential.compound.heterozygous.abbrev', { num: 0 }))}
+            >
+              {DISPLAY_WHEN_EMPTY_DATUM}
             </Descriptions.Item>
           </Descriptions>
           {hasAParent && (
             <Descriptions
-              title="Famille"
+              title={capitalize(intl.get('family'))}
               column={1}
               className={cx(style.description, 'description')}
             >
@@ -125,9 +149,9 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
                 )}
               </Descriptions.Item>
               <Descriptions.Item label={intl.get('screen.patientvariant.drawer.parental.origin')}>
-                {intl
-                  .get(`screen.patientvariant.drawer.${donor?.parental_origin}`)
-                  .defaultMessage(DISPLAY_WHEN_EMPTY_DATUM)}
+                {donor?.parental_origin
+                  ? capitalize(intl.get(donor?.parental_origin))
+                  : DISPLAY_WHEN_EMPTY_DATUM}
               </Descriptions.Item>
             </Descriptions>
           )}
