@@ -7,8 +7,8 @@ const fr = {
         all: 'Sélectionner tout',
         none: 'Effacer',
         clear: 'Effacer',
-        less: 'Voir -',
-        more: 'De plus',
+        less: 'Voir moins',
+        more: 'de plus',
         apply: 'Appliquer',
       },
       messages: {
