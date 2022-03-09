@@ -25,13 +25,17 @@ const fetchTranscriptsReport = createAsyncThunk<
     const blob = new Blob([data as BlobPart], { type: MIME_TYPES.APPLICATION_XLSX });
     downloadFile(blob, filename);
     notification.success({
+      placement: 'topLeft',
       message: capitalize(intl.get('notification.success')),
       description: intl.get('screen.patientvariant.drawer.download.report.notification.success'),
+      getContainer: () => window.parent.document.body,
     });
   } catch (e) {
     notification.error({
+      placement: 'topLeft',
       message: capitalize(intl.get('notification.error')),
       description: intl.get('screen.patientvariant.drawer.download.report.notification.error'),
+      getContainer: () => window.parent.document.body,
     });
   }
 });
