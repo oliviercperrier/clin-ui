@@ -197,7 +197,7 @@
   "screen.variantDetails.panel.emptyTable": "Aucune donnée disponible",
   "screen.variantDetails.patientsTab.adAlt": "Profondeur allélique ALT",
   "screen.variantDetails.patientsTab.adFreq": "Ratio allélique ALT / (ALT+REF)",
-  "screen.variantDetails.patientsTab.adTotal": "Profondeur total ALT + REF",
+  "screen.variantDetails.patientsTab.adTotal": "Profondeur totale ALT + REF",
   "screen.variantDetails.patientsTab.affected": "Atteint",
   "screen.variantDetails.patientsTab.analysis": "Analyse",
   "screen.variantDetails.patientsTab.donor": "Patient",
