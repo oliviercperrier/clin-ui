@@ -143,7 +143,7 @@ const externalFreqColumns = [
     render: displayDefaultIfNeeded,
   },
   {
-    title: () => intl.get('screen.variantDetails.frequenciesTab.frequencies'),
+    title: () => intl.get('screen.variantDetails.frequenciesTab.frequency'),
     dataIndex: 'frequency',
     render: displayDefaultIfNeeded,
   },
