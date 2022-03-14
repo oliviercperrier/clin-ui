@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
-import { Card, Col, Divider, Row, Spin, Typography } from "antd";
-import { GeneEntity, VariantEntity } from "store/graphql/variants/models";
-import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
-import intl from "react-intl-universal";
-import { formatTimestampToISODate } from "utils/helper";
-import history from "utils/history";
-import { ArrangerEdge } from "store/graphql/models";
+import React from 'react';
+import { Card, Col, Divider, Row, Spin, Typography } from 'antd';
+import { GeneEntity, VariantEntity } from 'store/graphql/variants/models';
+import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
+import intl from 'react-intl-universal';
+import { formatTimestampToISODate } from 'utils/helper';
+import history from 'utils/history';
+import { ArrangerEdge } from 'store/graphql/models';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
 interface OwnProps {
   loading: boolean;
@@ -25,30 +25,26 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
         <Col>
           <Card className={styles.infoCard}>
             <Row className={styles.row}>
-              <Text className={styles.infoTitle}>Chr</Text>
+              <Text className={styles.infoTitle}>
+                {intl.get('chromosome')}:
+              </Text>
               <Text className={styles.infoValue}>{variant?.chromosome}</Text>
             </Row>
             <Row className={styles.row}>
               <Text className={styles.infoTitle}>
-                {intl.get(
-                  "screen.variantDetails.summaryTab.summaryTable.start"
-                )}
+                {intl.get('screen.variantDetails.summaryTab.summaryTable.start')}:
               </Text>
               <Text className={styles.infoValue}>{variant?.start}</Text>
             </Row>
             <Row className={styles.row}>
               <Text className={styles.infoTitle}>
-                {intl.get(
-                  "screen.variantDetails.summaryTab.summaryTable.alleleAlt"
-                )}
+                {intl.get('screen.variantDetails.summaryTab.summaryTable.alleleAlt')}:
               </Text>
               <Text className={styles.infoValue}>{variant?.alternate}</Text>
             </Row>
             <Row className={styles.row}>
               <Text className={styles.infoTitle}>
-                {intl.get(
-                  "screen.variantDetails.summaryTab.summaryTable.alleleRef"
-                )}
+                {intl.get('screen.variantDetails.summaryTab.summaryTable.alleleRef')}:
               </Text>
               <Text className={styles.infoValue}>{variant?.reference}</Text>
             </Row>
@@ -57,17 +53,13 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
         <Col className={styles.resumeContent}>
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>
-              {intl.get("screen.variantDetails.summaryTab.summaryTable.type")}
+              {intl.get('screen.variantDetails.summaryTab.summaryTable.type')}
             </Text>
-            <Text className={styles.contentValue}>
-              {variant?.variant_class}
-            </Text>
+            <Text className={styles.contentValue}>{variant?.variant_class}</Text>
           </Row>
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>
-              {intl.get(
-                "screen.variantDetails.summaryTab.summaryTable.cytoband"
-              )}
+              {intl.get('screen.variantDetails.summaryTab.summaryTable.cytoband')}
             </Text>
             <Text className={styles.contentValue}>
               {genes && genes[0]
@@ -77,13 +69,9 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
           </Row>
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>
-              {intl.get(
-                "screen.variantDetails.summaryTab.summaryTable.genomeRef"
-              )}
+              {intl.get('screen.variantDetails.summaryTab.summaryTable.genomeRef')}
             </Text>
-            <Text className={styles.contentValue}>
-              {variant?.assembly_version}
-            </Text>
+            <Text className={styles.contentValue}>{variant?.assembly_version}</Text>
           </Row>
         </Col>
         <Divider className={styles.divider} type="vertical" />
@@ -97,7 +85,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {variant?.clinVar.clin_sig.join(", ")}
+                  {variant?.clinVar.clin_sig.join(', ')}
                 </a>
               ) : (
                 DISPLAY_WHEN_EMPTY_DATUM
@@ -126,11 +114,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>Patients</Text>
             <Text className={styles.contentValue}>
-              <a
-                onClick={() =>
-                  history.push(`/variant/entity/${variant?.hash}/patients`)
-                }
-              >
+              <a onClick={() => history.push(`/variant/entity/${variant?.hash}/patients`)}>
                 {variant?.frequency_RQDM.total.pn}
               </a>
               /{variant?.frequency_RQDM.total.an}
@@ -138,9 +122,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
           </Row>
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>
-              {intl.get(
-                "screen.variantDetails.summaryTab.patientTable.frequencies"
-              )}
+              {intl.get('screen.variantDetails.summaryTab.patientTable.frequencies')}
             </Text>
             <Text className={styles.contentValue}>
               {variant?.frequency_RQDM?.total?.af.toExponential(2)}
