@@ -172,7 +172,7 @@
   "screen.patientvariant.filter.selection.all": "Tout sélectionner",
   "screen.patientvariant.filter.selection.none": "Aucun",
   "screen.patientvariant.results.table.clinvar": "ClinVar",
-  "screen.patientvariant.results.table.consequence": "Conséquence(s)",
+  "screen.patientvariant.results.table.consequence": "Conséquences",
   "screen.patientvariant.results.table.dbsnp": "dbSNP",
   "screen.patientvariant.results.table.genotype": "Génotypes (M : P)",
   "screen.patientvariant.results.table.rqdm": "RQDM",
