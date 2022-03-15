@@ -76,7 +76,7 @@ const filterGroups: {
         fields: ['clinvar__clin_sig', 'consequences__vep_impact'],
       },
       {
-        title: 'screen.patientvariant.filter.grouptitle.predictions',
+        title: 'predictions',
         fields: [
           'consequences__predictions__sift_pred',
           'consequences__predictions__polyphen2_hvar_pred',

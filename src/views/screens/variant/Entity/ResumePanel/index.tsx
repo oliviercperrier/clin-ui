@@ -225,7 +225,7 @@ const columns = [
     },
   },
   {
-    title: () => intl.get('screen.variantDetails.summaryTab.consequencesTable.ImpactColumn'),
+    title: () => intl.get('predictions'),
     dataIndex: 'impact',
     render: (impacts: string[][]) => {
       if (impacts.length === 0) {
@@ -267,7 +267,7 @@ const columns = [
       conservation == null ? DISPLAY_WHEN_EMPTY_DATUM : conservation,
   },
   {
-    title: () => intl.get('screen.variantDetails.summaryTab.consequencesTable.TranscriptsColumn'),
+    title: () => intl.get('refSeq'),
     dataIndex: 'transcript',
     render: (transcript: { id: string; isCanonical?: boolean }) =>
       transcript.id ? (
