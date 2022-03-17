@@ -115,7 +115,7 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
       dataIndex: 'is_proband',
       title: () => intl.get('screen.variantDetails.patientsTab.relation'),
       render: (is_proband: boolean) =>
-        is_proband ? <Tag color="error">Proband</Tag> : <Tag color="geekblue">Parent</Tag>,
+        is_proband ? <Tag color="red">{intl.get('proband')}</Tag> :<Tag color="geekblue">{intl.get('parent')}</Tag>,
       filters: [
         {
           text: 'Proband',

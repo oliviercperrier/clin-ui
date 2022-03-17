@@ -232,5 +232,7 @@
   "screen.variantdetails.tab.summary": "Summary",
   "screen.variantsearch.table.gnomAd": "gnomAD ",
   "standard.format.date": "Format YYYY-MM-DD",
-  "zygosity": "zygozity"
+  "zygosity": "zygozity",
+  "proband": "Proband",
+  "parent": "Parent"
 }
