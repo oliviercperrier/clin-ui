@@ -124,7 +124,7 @@
   "screen.patient.tab.prescriptions": "Prescriptions",
   "screen.patientsearch.placeholder": "Dossier, RAMQ, Nom, Prénom, ID Patient",
   "screen.patientsearch.table.date": "Date",
-  "screen.patientsearch.table.dateCreation": "Date de Création",
+  "screen.patientsearch.table.dateCreation": "Date de création",
   "screen.patientsearch.table.dob": "Date de naissance",
   "screen.patientsearch.table.establishment": "Établissement",
   "screen.patientsearch.table.gender": "Sexe",
