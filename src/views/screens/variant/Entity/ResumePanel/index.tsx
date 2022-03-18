@@ -225,7 +225,7 @@ const columns = [
     },
   },
   {
-    title: () => intl.get('predictions'),
+    title: () => intl.get('prediction'),
     dataIndex: 'impact',
     render: (impacts: string[][]) => {
       if (impacts.length === 0) {

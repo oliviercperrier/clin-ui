@@ -81,6 +81,7 @@
   "notification.success": "success",
   "potential.compound.heterozygous": "{num, plural, =0 {potential compound heterozygous} other {potential compound heterozygous}}",
   "potential.compound.heterozygous.abbrev": "{num, plural, =0 {potential compound het.} other {potential compound het.}}",
+  "prediction": "Prediction",
   "predictions": "Predictions",
   "querybuilder.actions.addQuery": "New query",
   "querybuilder.actions.changeOperatorTo": "Change operator to",
