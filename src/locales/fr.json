@@ -85,6 +85,7 @@
   "parent": "Parent",
   "potential.compound.heterozygous": "{num, plural, =0 {hétérozygote composé potentiel} other {hétérozygotes composés potentiels}}",
   "potential.compound.heterozygous.abbrev": "{num, plural, =0 {hét. composé potentiel} other {hét. composés potentiels}}",
+  "prediction": "Prédiction",
   "predictions": "Prédictions",
   "proband": "Cas-index",
   "querybuilder.actions.addQuery": "Nouvelle requête",

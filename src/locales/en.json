@@ -85,6 +85,7 @@
   "parent": "Parent",
   "potential.compound.heterozygous": "{num, plural, =0 {potential compound heterozygous} other {potential compound heterozygous}}",
   "potential.compound.heterozygous.abbrev": "{num, plural, =0 {potential compound het.} other {potential compound het.}}",
+  "prediction": "Prediction",
   "predictions": "Predictions",
   "proband": "Proband",
   "querybuilder.actions.addQuery": "New query",
