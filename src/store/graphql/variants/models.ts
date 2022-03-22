@@ -82,7 +82,7 @@ export type VariantEntity = {
   alternate: string;
   reference: string;
   assembly_version: string;
-  clinVar: ClinVar;
+  clinvar: ClinVar;
   rsnumbermber: string;
   last_annotation_update: number;
 };

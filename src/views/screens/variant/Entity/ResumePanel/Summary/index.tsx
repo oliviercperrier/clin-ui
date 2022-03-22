@@ -18,7 +18,8 @@ interface OwnProps {
 
 const { Text } = Typography;
 
-const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
+const SummaryCard = ({ loading, variant, genes }: OwnProps) => {
+  return(
   <Card className={styles.summaryCard}>
     <Spin spinning={loading}>
       <Row>
@@ -79,13 +80,13 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
           <Row className={styles.row}>
             <Text className={styles.contentTitle}>ClinVar</Text>
             <Text className={styles.contentValue}>
-              {variant?.clinVar?.clin_sig && variant?.clinVar.clinvar_id ? (
+              {variant?.clinvar?.clin_sig && variant?.clinvar.clinvar_id ? (
                 <a
-                  href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${variant?.clinVar.clinvar_id}`}
+                  href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${variant?.clinvar.clinvar_id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {variant?.clinVar.clin_sig.join(', ')}
+                  {variant?.clinvar.clin_sig.join(', ')}
                 </a>
               ) : (
                 DISPLAY_WHEN_EMPTY_DATUM
@@ -140,6 +141,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => (
       </Row>
     </Spin>
   </Card>
-);
+  )
+};
 
 export default SummaryCard;
