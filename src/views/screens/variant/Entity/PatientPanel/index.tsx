@@ -118,11 +118,11 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
         is_proband ? <Tag color="red">{intl.get('proband')}</Tag> :<Tag color="geekblue">{intl.get('parent')}</Tag>,
       filters: [
         {
-          text: 'Proband',
+          text: intl.get('proband'),
           value: true,
         },
         {
-          text: 'Parent',
+          text: intl.get('parent'),
           value: false,
         },
       ],
