@@ -9,6 +9,7 @@ import LangMenu from 'components/Layout/Header/LangMenu';
 import { useGlobals } from 'store/global';
 import { useKeycloak } from '@react-keycloak/web';
 import styles from 'components/Layout/Header/index.module.scss';
+import { showTranslationBtn } from 'utils/config';
 
 const Header = () => {
   const { keycloak } = useKeycloak();
@@ -46,19 +47,20 @@ const Header = () => {
         </Button>,
       );
     }
-
-    extras.push(
-      <Dropdown
-        key="3"
-        overlay={<LangMenu selectedLang={lang!} />}
-        trigger={['click']}
-        getPopupContainer={(triggerNode: HTMLElement) => triggerNode.parentNode as HTMLElement}
-      >
-        <Button size="small" className={styles.navBtn} type="text" icon={<TranslateIcon />}>
-          {langText}
-        </Button>
-      </Dropdown>,
-    );
+    if (showTranslationBtn) {
+      extras.push(
+        <Dropdown
+          key="3"
+          overlay={<LangMenu selectedLang={lang!} />}
+          trigger={['click']}
+          getPopupContainer={(triggerNode: HTMLElement) => triggerNode.parentNode as HTMLElement}
+        >
+          <Button size="small" className={styles.navBtn} type="text" icon={<TranslateIcon />}>
+            {langText}
+          </Button>
+        </Dropdown>,
+      );
+    }
 
     return extras;
   };

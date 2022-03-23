@@ -16,3 +16,5 @@ REACT_APP_FHIR_CONSOLE_URL=https://fhir-console.qa.cqgc.hsj.rtss.qc.ca/home
 
 # Style
 SASS_PATH=/code/src/style/themes/clin
+
+REACT_APP_SHOW_TRANSLATION_BTN=false
