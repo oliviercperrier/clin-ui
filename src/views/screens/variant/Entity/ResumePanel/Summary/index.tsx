@@ -27,25 +27,25 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => {
           <Card className={styles.infoCard}>
             <Row className={styles.row}>
               <Text className={styles.infoTitle}>
-                {intl.get('chromosome')}:
+                {intl.get('screen.variantDetails.summaryTab.summaryTable.chromosome')}
               </Text>
               <Text className={styles.infoValue}>{variant?.chromosome}</Text>
             </Row>
             <Row className={styles.row}>
               <Text className={styles.infoTitle}>
-                {intl.get('screen.variantDetails.summaryTab.summaryTable.start')}:
+                {intl.get('screen.variantDetails.summaryTab.summaryTable.start')}
               </Text>
               <Text className={styles.infoValue}>{variant?.start}</Text>
             </Row>
             <Row className={styles.row}>
               <Text className={styles.infoTitle}>
-                {intl.get('screen.variantDetails.summaryTab.summaryTable.alleleAlt')}:
+                {intl.get('screen.variantDetails.summaryTab.summaryTable.alleleAlt')}
               </Text>
               <Text className={styles.infoValue}>{variant?.alternate}</Text>
             </Row>
             <Row className={styles.row}>
               <Text className={styles.infoTitle}>
-                {intl.get('screen.variantDetails.summaryTab.summaryTable.alleleRef')}:
+                {intl.get('screen.variantDetails.summaryTab.summaryTable.alleleRef')}
               </Text>
               <Text className={styles.infoValue}>{variant?.reference}</Text>
             </Row>
