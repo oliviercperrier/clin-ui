@@ -10,7 +10,7 @@ REACT_APP_KEYCLOAK_CONFIG={"realm": "clin", "url": "https://auth.qa.cqgc.hsj.rts
 # API
 REACT_APP_ARRANGER_API=https://data-api.qa.cqgc.hsj.rtss.qc.ca
 REACT_APP_ARRANGER_PROJECT_ID=clin_2021_12_16_v1
-REACT_APP_FHIR_SERVICE_URL=https://fhir-blue.qa.cqgc.hsj.rtss.qc.ca/fhir
+REACT_APP_FHIR_SERVICE_URL=https://fhir.qa.cqgc.hsj.rtss.qc.ca/fhir
 REACT_APP_ZEPLIN_URL=https://notebook.qa.cqgc.hsj.rtss.qc.ca
 REACT_APP_FHIR_CONSOLE_URL=https://fhir-console.qa.cqgc.hsj.rtss.qc.ca/home
 
