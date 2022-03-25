@@ -28,7 +28,8 @@ const Header = () => {
           key="0"
           className={styles.navBtn}
           size="small"
-          type="text"
+          type="link"
+          href={'/patient/search'}
           icon={<SupervisorIcon />}
         >
           {intl.get('header.navigation.patient')}
