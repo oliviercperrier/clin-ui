@@ -1,9 +1,12 @@
-import { TSqonContent } from '@ferlab/ui/core/data/sqon/types';
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 
-export const prependPatientSqon = (content: TSqonContent, patientId: string) => [
-  {
-    content: { field: 'donors.patient_id', value: [patientId] },
-    op: 'in',
-  },
-  ...content,
-];
+export const wrapSqonWithDonorId = (resolvedSqon: ISqonGroupFilter, patientId: string) => ({
+  content: [
+    {
+      content: { field: 'donors.patient_id', value: [patientId] },
+      op: 'in',
+    },
+    { ...resolvedSqon },
+  ],
+  op: 'and',
+});

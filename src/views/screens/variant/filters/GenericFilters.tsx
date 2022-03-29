@@ -9,7 +9,7 @@ import { generateFilters } from 'store/graphql/utils/Filters';
 import { VARIANT_REPO_CACHE_KEY } from 'views/screens/variant/constants';
 import { MappingResults, useGetVariantAggregations } from 'store/graphql/variants/actions';
 import { VARIANT_AGGREGATION_QUERY } from 'store/graphql/variants/queries';
-import { prependPatientSqon } from '../utils';
+import { wrapSqonWithDonorId } from '../utils';
 
 import styles from './Filters.module.scss';
 
@@ -22,12 +22,11 @@ const GenericFilters: FunctionComponent<OwnProps> = ({ field, mappingResults }) 
   const { filters } = useFilters();
   const { patientid } = useParams<{ patientid: string }>();
   const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
-  let resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, 'donors'));
-  resolvedSqon.content = prependPatientSqon(resolvedSqon.content, patientid);
+  const resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, 'donors'));
 
-  let results = useGetVariantAggregations(
+  const results = useGetVariantAggregations(
     {
-      sqon: resolvedSqon,
+      sqon: wrapSqonWithDonorId(resolvedSqon, patientid),
     },
     VARIANT_AGGREGATION_QUERY([field], mappingResults),
   );
