@@ -3,7 +3,7 @@
   "component.table.itemcount.results.multiple.pages": "Résultats <strong>{from}</strong> - <strong>{to}</strong> sur <strong>{total}</strong>",
   "component.table.itemcount.results.one.page": "{count, plural, =0 {Aucun résultat} other {<strong>#</strong> résultats}}",
   "compound.heterozygous": "{num, plural, =0 {hétérozygote composé} other {hétérozygotes composés}}",
-  "compound.heterozygous.abbrev": "{num, plural, =0 {het. composé} other {het. composés}}",
+  "compound.heterozygous.abbrev": "{num, plural, =0 {hét. composé} other {hét. composés}}",
   "family": "famille",
   "father": "père",
   "filter.suggester.search.genes": "Recherche par gène",
