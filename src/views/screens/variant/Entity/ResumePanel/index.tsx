@@ -207,6 +207,7 @@ const columns = [
         />
       );
     },
+    width: '15%',
   },
   {
     title: () => intl.get('screen.variantDetails.summaryTab.consequencesTable.CDNAChangeColumn'),
@@ -216,6 +217,7 @@ const columns = [
         <div className={styles.longValue}>{codingDna || DISPLAY_WHEN_EMPTY_DATUM}</div>
       </Tooltip>
     ),
+    width: '12%',
   },
   {
     title: () => intl.get('screen.variantDetails.summaryTab.consequencesTable.VEP'),
@@ -223,6 +225,7 @@ const columns = [
     render: (vep: Impact) => {
       return getVepImpactTag(vep.toLowerCase());
     },
+    width: '10%',
   },
   {
     title: () => intl.get('prediction'),
@@ -259,6 +262,7 @@ const columns = [
         />
       );
     },
+    width: '15%',
   },
   {
     title: () => intl.get('screen.variantDetails.summaryTab.consequencesTable.ConservationColumn'),
@@ -285,6 +289,7 @@ const columns = [
       ) : (
         DISPLAY_WHEN_EMPTY_DATUM
       ),
+    width: '20%',
   },
 ];
 
