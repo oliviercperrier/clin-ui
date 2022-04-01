@@ -35,7 +35,7 @@ const getCount = (e: Complements) => {
     return e.count;
   }
   // must never pass here.
-  return -1;
+  return null;
 };
 
 export const HcComplementDescription = ({ defaultText, hcComplements, variantId }: Props) => {
