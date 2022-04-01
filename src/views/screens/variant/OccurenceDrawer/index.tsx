@@ -19,6 +19,7 @@ import style from './index.module.scss';
 import { useRpt } from 'hooks/rpt';
 import ReportDownloadButton from './ReportDownloadButton';
 import capitalize from 'lodash/capitalize';
+import { HcComplementDescription } from './HcDescription';
 
 interface OwnProps {
   patientId: string;
@@ -107,12 +108,20 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
             <Descriptions.Item
               label={capitalize(intl.get('compound.heterozygous.abbrev', { num: 0 }))}
             >
-              {DISPLAY_WHEN_EMPTY_DATUM}
+              <HcComplementDescription
+                variantId={variantId}
+                hcComplements={donor?.hc_complement}
+                defaultText={DISPLAY_WHEN_EMPTY_DATUM}
+              />
             </Descriptions.Item>
             <Descriptions.Item
               label={capitalize(intl.get('potential.compound.heterozygous.abbrev', { num: 0 }))}
             >
-              {DISPLAY_WHEN_EMPTY_DATUM}
+              <HcComplementDescription
+                variantId={variantId}
+                hcComplements={donor?.possibly_hc_complement}
+                defaultText={DISPLAY_WHEN_EMPTY_DATUM}
+              />
             </Descriptions.Item>
           </Descriptions>
           {hasAParent && (

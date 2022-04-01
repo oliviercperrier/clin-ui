@@ -92,6 +92,29 @@ export const VARIANT_QUERY = gql`
                     father_affected_status
                     father_calls
                     parental_origin
+                    is_hc
+                    is_possibly_hc
+                    hc_complement {
+                      hits {
+                        edges {
+                          node {
+                            symbol
+                            locus
+                          }
+                        }
+                      }
+                    }
+                    is_possibly_hc
+                    possibly_hc_complement {
+                      hits {
+                        edges {
+                          node {
+                            symbol
+                            count
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }

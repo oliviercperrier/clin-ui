@@ -8,11 +8,11 @@ import {
 } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
-export enum Hits {
-  COLLECTION = 'hits.edges',
-  SINGLE_ITEM = 'hits.edges[0].node',
-  ITEM = 'hits',
-}
+export type Hits<T> = {
+  edges: {
+    node: T;
+  }[];
+};
 
 export interface IBaseQueryResults<TData> {
   error: ApolloError | undefined;
@@ -64,3 +64,6 @@ export const useLazyResultQueryOnLoadOnly = <TData = any, TVariables = Operation
     error,
   };
 };
+
+export const extractHits = <T>(hits: Hits<T> | null | undefined): T[] | null =>
+  hits?.edges?.map((edge) => edge.node) ?? null;

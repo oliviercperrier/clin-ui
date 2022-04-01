@@ -14,6 +14,7 @@ import {
 import history from 'utils/history';
 import {
   keyEnhance,
+  keyEnhanceBooleanOnly,
   underscoreToDot,
 } from '@ferlab/ui/core/data/arranger/formatting';
 
@@ -31,8 +32,6 @@ export interface TermAgg {
   doc_count: number;
   key: string;
 }
-
-export type Aggs = TermAggs | RangeAggs;
 
 const isTermAgg = (obj: TermAggs) => !!obj.buckets;
 const isRangeAgg = (obj: RangeAggs) => !!obj.stats;
@@ -89,13 +88,13 @@ export const getFilters = (aggregations: Aggregations | null, key: string): IFil
         const defaultValue = {
           data: {
             count: f.doc_count,
-            key: f.key,
+            key: keyEnhanceBooleanOnly(f.key),
           },
           id: f.key,
-        }
-        if(key.includes('lastNameFirstName') && f.key){
-          const nameSplit = f.key.split(',')
-          const formatName = `${nameSplit[0].toUpperCase()} ${nameSplit[1]}`
+        };
+        if (key.includes('lastNameFirstName') && f.key) {
+          const nameSplit = f.key.split(',');
+          const formatName = `${nameSplit[0].toUpperCase()} ${nameSplit[1]}`;
           return {
             ...defaultValue,
             name: formatName,

@@ -30,6 +30,32 @@ export type frequency_RQDMEntity = {
   total: BoundType;
 };
 
+export type HcComplement = {
+  symbol: string;
+  locus: string[];
+};
+
+export type HcComplementHits = {
+  hits: {
+    edges: {
+      node: HcComplement;
+    }[];
+  };
+};
+
+export type PossiblyHcComplement = {
+  symbol: string;
+  count: number;
+};
+
+export type PossiblyHcComplementHits = {
+  hits: {
+    edges: {
+      node: PossiblyHcComplement;
+    }[];
+  };
+};
+
 export type DonorsEntity = {
   id: string;
   patient_id: string;
@@ -58,6 +84,10 @@ export type DonorsEntity = {
   father_affected_status?: boolean;
   father_calls?: number[];
   parental_origin?: string;
+  is_possibly_hc?: boolean;
+  possibly_hc_complement?: PossiblyHcComplementHits;
+  hc_complement?: HcComplementHits;
+  is_hc?: boolean;
 };
 
 export type VariantEntity = {

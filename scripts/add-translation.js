@@ -15,7 +15,7 @@ const addTranslationsThenSort = (answers) =>
         `The key:${answers.key} already exists in ${pathToTranslations} and will be overwritten!`,
       );
     }
-    const newFileContent = { [answers.key]: answers[locale], ...ofileContent };
+    const newFileContent = { ...ofileContent, [answers.key]: answers[locale] };
     const sortedFileContent = sortObject(newFileContent);
     fs.writeFileSync(pathToTranslations, JSON.stringify(sortedFileContent, null, 2));
   });

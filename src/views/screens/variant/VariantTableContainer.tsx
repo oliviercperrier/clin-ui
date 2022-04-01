@@ -67,7 +67,13 @@ const VariantTableContainer = (props: OwnProps) => {
       render: (hgvsg: string, entity: VariantEntity) =>
         hgvsg ? (
           <Tooltip placement="topLeft" title={hgvsg}>
-            <a onClick={() => navigateTo(`/variant/entity/${entity.hash}?patientid=${props.patientId}`)}>{hgvsg}</a>
+            <a
+              onClick={() =>
+                navigateTo(`/variant/entity/${entity.hash}?patientid=${props.patientId}`)
+              }
+            >
+              {hgvsg}
+            </a>
           </Tooltip>
         ) : (
           DISPLAY_WHEN_EMPTY_DATUM
@@ -123,25 +129,24 @@ const VariantTableContainer = (props: OwnProps) => {
       title: () => intl.get('screen.patientvariant.results.table.varsome'),
       dataIndex: 'varsome',
       className: cx(style.variantTableCell, style.variantTableCellElipsis),
-      render: (varsome: Varsome) =>
-        (<a
+      render: (varsome: Varsome) => (
+        <a
           href={`https://varsome.com/variant/${varsome?.variant_id}`}
           target="_blank"
           rel="noopener noreferrer"
         >
-          { varsome?.acmg.verdict.verdict ?
-            varsome?.acmg.verdict.verdict :
-            'No Verdict'
-          }
-        </a>)
+          {varsome?.acmg.verdict.verdict ? varsome?.acmg.verdict.verdict : 'No Verdict'}
+        </a>
+      ),
     },
     {
       title: () => intl.get('screen.patientvariant.results.table.acmgRules'),
       dataIndex: 'varsome',
       className: cx(style.variantTableCell, style.variantTableCellElipsis),
       render: (varsome: Varsome) =>
-        varsome?.acmg.classifications.hits.edges.map((e: ArrangerEdge<VarsomeClassifications>) => e.node.name)
-        .reduce((prev, curr) => `${prev}, ${curr}`)
+        varsome?.acmg.classifications.hits.edges
+          .map((e: ArrangerEdge<VarsomeClassifications>) => e.node.name)
+          .reduce((prev, curr) => `${prev}, ${curr}`),
     },
     {
       title: () => intl.get('screen.variantsearch.table.gnomAd'),
@@ -196,6 +201,8 @@ const VariantTableContainer = (props: OwnProps) => {
     },
   ];
 
+  const rows = makeRows(variants);
+
   return (
     <>
       <ItemsCount page={currentPageNum} size={currentPageSize} total={total} />
@@ -203,7 +210,7 @@ const VariantTableContainer = (props: OwnProps) => {
         size="small"
         loading={results.loading}
         columns={columns}
-        dataSource={makeRows(variants)}
+        dataSource={rows}
         className={style.variantSearchTable}
         pagination={{
           current: currentPageNum,
@@ -223,12 +230,14 @@ const VariantTableContainer = (props: OwnProps) => {
           size: 'small',
         }}
       />
-      <OccurenceDrawer
-        patientId={props.patientId}
-        data={selectedVariant!}
-        opened={drawerOpened}
-        toggle={toggleDrawer}
-      />
+      {rows?.length > 0 && selectedVariant && (
+        <OccurenceDrawer
+          patientId={props.patientId}
+          data={selectedVariant}
+          opened={drawerOpened}
+          toggle={toggleDrawer}
+        />
+      )}
     </>
   );
 };

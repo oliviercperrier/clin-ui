@@ -95,7 +95,11 @@ const filterGroups: {
     groups: [
       {
         title: 'screen.patientvariant.filter.grouptitle.rqdmpatient',
-        fields: ['frequency_RQDM__total__af', 'frequency_RQDM__affected__af', 'frequency_RQDM__non_affected__af'],
+        fields: [
+          'frequency_RQDM__total__af',
+          'frequency_RQDM__affected__af',
+          'frequency_RQDM__non_affected__af',
+        ],
       },
       {
         title: 'screen.patientvariant.filter.grouptitle.publiccohorts',
@@ -113,7 +117,13 @@ const filterGroups: {
   [FilterTypes.Occurrence]: {
     groups: [
       {
-        fields: ['donors__zygosity', 'donors__transmission', 'donors__parental_origin'],
+        fields: [
+          'donors__zygosity',
+          'donors__transmission',
+          'donors__parental_origin',
+          'donors__is_hc',
+          'donors__is_possibly_hc',
+        ],
       },
       {
         title: 'screen.patientvariant.category_metric',
