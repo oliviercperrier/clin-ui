@@ -327,7 +327,6 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
                     title={
                       <Space size={12}>
                         <Space size={4}>
-                          <span>{intl.get('screen.variant.entity.table.gene')}</span>
                           <span>
                             <a
                               href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${symbol}`}
