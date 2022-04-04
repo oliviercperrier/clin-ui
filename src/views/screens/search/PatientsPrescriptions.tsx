@@ -1,33 +1,31 @@
 import React, { useState } from 'react';
 import intl from 'react-intl-universal';
-import { getQueryBuilderCache, useFilters } from '@ferlab/ui/core/data/filters/utils';
+import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
 import ScrollView from '@ferlab/ui/core/layout/ScrollView';
 import StackLayout, { StackOrientation } from '@ferlab/ui/core/layout/StackLayout';
-
 import { mappedFilters, usePatients } from 'store/graphql/patients/actions';
 import { usePrescription, usePrescriptionMapping } from 'store/graphql/prescriptions/actions';
-
+import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { TableTabs } from './ContentContainer';
 import ContentContainer from './ContentContainer';
 import Sidebar from './Sidebar';
 import ContentHeader from 'components/Layout/Content/Header';
+
 import styles from './PatientsPrescriptions.module.scss';
-import { useParams } from 'react-router';
 
 export const MAX_NUMBER_RESULTS = 1000;
+export const PRESCRIPTION_QB_ID = 'prescription-repo';
 
 const PrescriptionSearch = (): React.ReactElement => {
-  useParams();
   const [currentTab, setCurrentTab] = useState(TableTabs.Prescriptions);
-  const { filters: sqonFilters } = useFilters();
-  const allSqons = getQueryBuilderCache('prescription-repo').state;
+  const { queryList, activeQuery } = useQueryBuilderState(PRESCRIPTION_QB_ID);
 
-  const newFilters = mappedFilters(sqonFilters);
+  const newFilters = mappedFilters(activeQuery);
   const patientQueryConfig = {
     first: MAX_NUMBER_RESULTS,
     offset: 0,
-    sqon: resolveSyntheticSqon(allSqons, newFilters),
+    sqon: resolveSyntheticSqon(queryList, newFilters),
     sort: [
       {
         field: 'timestamp',
@@ -42,7 +40,7 @@ const PrescriptionSearch = (): React.ReactElement => {
   const arrangerQueryConfig = {
     first: MAX_NUMBER_RESULTS,
     offset: 0,
-    sqon: resolveSyntheticSqon(allSqons, sqonFilters),
+    sqon: resolveSyntheticSqon(queryList, activeQuery),
     sort: [
       {
         field: 'timestamp',
@@ -59,10 +57,11 @@ const PrescriptionSearch = (): React.ReactElement => {
       <ContentHeader title={intl.get('screen.patientsearch.title')} />
       <StackLayout className={styles.pageWrapper} orientation={StackOrientation.Horizontal}>
         <Sidebar
+          queryBuilderId={PRESCRIPTION_QB_ID}
           isLoading={prescriptions.loading}
           aggregations={prescriptions.aggregations}
           extendedMapping={extendedMapping}
-          filters={sqonFilters}
+          filters={activeQuery as ISqonGroupFilter}
         />
         <ScrollView className={styles.scrollContent}>
           <ContentContainer

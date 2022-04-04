@@ -12,9 +12,9 @@ import DiseaseIcon from 'components/icons/DiseaseIcon';
 import FrequencyIcon from 'components/icons/FrequencyIcon';
 import OccurenceIcon from 'components/icons/OccurenceIcon';
 import VariantPageContainer from 'views/screens/variant/VariantPageContainer';
-
 import { Spin } from 'antd';
 import { MappingResults, useGetVariantExtendedMappings } from 'store/graphql/variants/actions';
+import { VARIANT_QB_ID } from './constants';
 
 import styles from './VariantSearchPage.module.scss';
 
@@ -145,7 +145,14 @@ const filtersContainer = (mappingResults: MappingResults, type: FilterTypes): Re
     return <Spin className={styles.filterLoader} spinning />;
   }
 
-  return <FilterList mappingResults={mappingResults} filterInfo={filterGroups[type]} />;
+  return (
+    <FilterList
+      key={type}
+      queryBuilderId={VARIANT_QB_ID}
+      mappingResults={mappingResults}
+      filterInfo={filterGroups[type]}
+    />
+  );
 };
 
 const VariantSearchPage = (): React.ReactElement => {

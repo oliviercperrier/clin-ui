@@ -6,17 +6,14 @@ import FilterSelector from '@ferlab/ui/core/components/filters/FilterSelector';
 import { IFilter, IFilterGroup } from '@ferlab/ui/core/components/filters/types';
 import { Aggregations } from 'store/graphql/models';
 import { ExtendedMapping, ExtendedMappingResults } from 'store/graphql/models';
-import {
-  getFilterType,
-  getSelectedFilters,
-  updateFilters,
-} from '@ferlab/ui/core/data/filters/utils';
-import history from 'utils/history';
+import { getFilterType } from '@ferlab/ui/core/data/filters/utils';
+import { getSelectedFilters } from '@ferlab/ui/core/data/sqon/utils';
 import {
   keyEnhance,
   keyEnhanceBooleanOnly,
   underscoreToDot,
 } from '@ferlab/ui/core/data/arranger/formatting';
+import { updateActiveQueryFilters } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 
 export interface RangeAggs {
   stats: {
@@ -36,15 +33,25 @@ export interface TermAgg {
 const isTermAgg = (obj: TermAggs) => !!obj.buckets;
 const isRangeAgg = (obj: RangeAggs) => !!obj.stats;
 
-export const generateFilters = (
-  aggregations: Aggregations,
-  extendedMapping: ExtendedMappingResults,
-  className: string = '',
-  filtersOpen: boolean = true,
-  filterFooter: boolean = false,
-  showSearchInput: boolean = false,
-  useFilterSelector: boolean = false,
-) =>
+export const generateFilters = ({
+  queryBuilderId,
+  aggregations,
+  extendedMapping,
+  className = '',
+  filtersOpen = true,
+  filterFooter = false,
+  showSearchInput = false,
+  useFilterSelector = false,
+}: {
+  queryBuilderId: string;
+  aggregations: Aggregations;
+  extendedMapping: ExtendedMappingResults;
+  className?: string;
+  filtersOpen?: boolean;
+  filterFooter?: boolean;
+  showSearchInput?: boolean;
+  useFilterSelector?: boolean;
+}) =>
   Object.keys(aggregations || []).map((key) => {
     const found = (extendedMapping?.data || []).find(
       (f: ExtendedMapping) => f.field === underscoreToDot(key),
@@ -52,7 +59,11 @@ export const generateFilters = (
 
     const filterGroup = getFilterGroup(found, aggregations[key], [], filterFooter);
     const filters = getFilters(aggregations, key);
-    const selectedFilters = getSelectedFilters(filters, filterGroup);
+    const selectedFilters = getSelectedFilters({
+      queryBuilderId,
+      filters,
+      filterGroup,
+    });
     const FilterComponent = useFilterSelector ? FilterSelector : FilterContainer;
 
     return (
@@ -63,9 +74,13 @@ export const generateFilters = (
           isOpen={filtersOpen}
           filterGroup={filterGroup}
           filters={filters}
-          onChange={(fg, f) => {
-            updateFilters(history, fg, f);
-          }}
+          onChange={(fg, f) =>
+            updateActiveQueryFilters({
+              queryBuilderId,
+              filterGroup: fg,
+              selectedFilters: f,
+            })
+          }
           searchInputVisible={showSearchInput}
           selectedFilters={selectedFilters}
         />

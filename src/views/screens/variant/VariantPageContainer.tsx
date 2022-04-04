@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import QueryBuilder from '@ferlab/ui/core/components/QueryBuilder';
 import { IDictionary } from '@ferlab/ui/core/components/QueryBuilder/types';
-import { getQueryBuilderCache, useFilters } from '@ferlab/ui/core/data/filters/utils';
-import { resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
+import { isEmptySqon, resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import intl from 'react-intl-universal';
 import { Tabs } from 'antd';
@@ -12,15 +11,15 @@ import { ExtendedMapping } from 'store/graphql/models';
 import { MappingResults, useGetVariantPageData } from 'store/graphql/variants/actions';
 import { VariantEntity } from 'store/graphql/variants/models';
 
-import { VARIANT_REPO_CACHE_KEY } from './constants';
+import { VARIANT_QB_ID } from './constants';
 import VariantTableContainer from './VariantTableContainer';
-import history from 'utils/history';
 import { useParams } from 'react-router';
 import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
 import GenericFilters from './filters/GenericFilters';
+import { wrapSqonWithDonorId } from './utils';
+import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 
 import styles from './VariantPageContainer.module.scss';
-import { wrapSqonWithDonorId } from './utils';
 
 export type VariantPageContainerData = {
   mappingResults: MappingResults;
@@ -49,10 +48,8 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
   const [currentPageNum, setCurrentPageNum] = useState(DEFAULT_PAGE_NUM);
   const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
   const { patientid } = useParams<{ patientid: string }>();
-
-  const { filters } = useFilters();
-  const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
-  const resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, 'donors'));
+  const { queryList, activeQuery } = useQueryBuilderState(VARIANT_QB_ID);
+  const resolvedSqon = cloneDeep(resolveSyntheticSqon(queryList, activeQuery, 'donors'));
 
   const results = useGetVariantPageData({
     sqon: wrapSqonWithDonorId(resolvedSqon, patientid),
@@ -130,10 +127,9 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
           defaultTitle: 'Requête de variants',
         }}
         IconTotal={<LineStyleIcon height="18" width="18" />}
-        history={history}
-        cacheKey={VARIANT_REPO_CACHE_KEY}
+        id={VARIANT_QB_ID}
         enableCombine={true}
-        currentQuery={filters?.content?.length ? filters : {}}
+        currentQuery={isEmptySqon(activeQuery) ? {} : activeQuery}
         loading={results.loading}
         total={total}
         dictionary={dictionary}
@@ -141,7 +137,10 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
           enable: true,
           onFacetClick: (field) => {
             setSelectedFilterContent(
-              <GenericFilters field={dotToUnderscore(field.content.field)} mappingResults={mappingResults} />,
+              <GenericFilters
+                field={dotToUnderscore(field.content.field)}
+                mappingResults={mappingResults}
+              />,
             );
           },
           selectedFilterContent: selectedFilterContent,
@@ -155,7 +154,7 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
         >
           <VariantTableContainer
             results={results}
-            filters={filters}
+            filters={activeQuery}
             setCurrentPageCb={setCurrentPageNum}
             currentPageSize={currentPageSize}
             setcurrentPageSize={setcurrentPageSize}

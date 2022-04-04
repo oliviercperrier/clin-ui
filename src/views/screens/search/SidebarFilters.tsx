@@ -8,6 +8,7 @@ import { generateFilters } from 'store/graphql/utils/Filters';
 import style from './SidebarFilter.module.scss';
 
 export type SidebarFilterProps = {
+  queryBuilderId: string;
   aggregations: Aggregations;
   filters: ISqonGroupFilter;
   extendedMapping: ExtendedMappingResults;
@@ -19,10 +20,18 @@ export interface ItemProps {
 }
 
 const SidebarFilters = ({
+  queryBuilderId,
   aggregations,
   extendedMapping,
 }: SidebarFilterProps): React.ReactElement => (
-  <>{generateFilters(aggregations, extendedMapping, style.facetCollapse)}</>
+  <>
+    {generateFilters({
+      queryBuilderId,
+      aggregations,
+      extendedMapping,
+      className: style.facetCollapse,
+    })}
+  </>
 );
 
 export default SidebarFilters;
