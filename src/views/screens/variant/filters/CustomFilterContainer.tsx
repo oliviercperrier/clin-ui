@@ -41,7 +41,7 @@ const CustomFilterContainer = ({
 
   const aggregations = results?.aggregations ? results?.aggregations[filterKey] : {};
   const filterGroup = getFilterGroup(found, aggregations, [], true);
-  const filters = results?.data ? getFilters(results?.aggregations, filterKey) : [];
+  const filters = results?.aggregations ? getFilters(results?.aggregations, filterKey) : [];
   const selectedFilters = results?.data
     ? getSelectedFilters({
         queryBuilderId,

@@ -30,6 +30,17 @@ export interface TermAgg {
   key: string;
 }
 
+export interface IGenerateFilter {
+  queryBuilderId: string;
+  aggregations: Aggregations;
+  extendedMapping: ExtendedMappingResults;
+  className?: string;
+  filtersOpen?: boolean;
+  filterFooter?: boolean;
+  showSearchInput?: boolean;
+  useFilterSelector?: boolean;
+}
+
 const isTermAgg = (obj: TermAggs) => !!obj.buckets;
 const isRangeAgg = (obj: RangeAggs) => !!obj.stats;
 
@@ -42,16 +53,7 @@ export const generateFilters = ({
   filterFooter = false,
   showSearchInput = false,
   useFilterSelector = false,
-}: {
-  queryBuilderId: string;
-  aggregations: Aggregations;
-  extendedMapping: ExtendedMappingResults;
-  className?: string;
-  filtersOpen?: boolean;
-  filterFooter?: boolean;
-  showSearchInput?: boolean;
-  useFilterSelector?: boolean;
-}) =>
+}: IGenerateFilter) =>
   Object.keys(aggregations || []).map((key) => {
     const found = (extendedMapping?.data || []).find(
       (f: ExtendedMapping) => f.field === underscoreToDot(key),
