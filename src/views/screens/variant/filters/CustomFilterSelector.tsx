@@ -1,7 +1,7 @@
 import FilterSelector, {
   FilterSelectorProps,
 } from '@ferlab/ui/core/components/filters/FilterSelector';
-import { getQueryBuilderCache, useFilters } from '@ferlab/ui/core/data/filters/utils';
+import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
 import { Spin } from 'antd';
 import { cloneDeep } from 'lodash';
@@ -9,16 +9,17 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { MappingResults, useGetVariantAggregations } from 'store/graphql/variants/actions';
 import { VARIANT_AGGREGATION_QUERY } from 'store/graphql/variants/queries';
-import { VARIANT_REPO_CACHE_KEY } from 'views/screens/variant/constants';
 import { wrapSqonWithDonorId } from '../utils';
 
 type OwnProps = FilterSelectorProps & {
+  queryBuilderId: string;
   filterKey: string;
   mappingResults: MappingResults;
   onDataLoaded: Function;
 };
 
 const CustomFilterSelector = ({
+  queryBuilderId,
   filterKey,
   mappingResults,
   dictionary,
@@ -30,10 +31,9 @@ const CustomFilterSelector = ({
   onDataLoaded,
   searchInputVisible,
 }: OwnProps) => {
-  const { filters: queryFilters } = useFilters();
   const { patientid } = useParams<{ patientid: string }>();
-  const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
-  const resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, queryFilters));
+  const { queryList, activeQuery } = useQueryBuilderState(queryBuilderId);
+  const resolvedSqon = cloneDeep(resolveSyntheticSqon(queryList, activeQuery));
 
   const results = useGetVariantAggregations(
     {

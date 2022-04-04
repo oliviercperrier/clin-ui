@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { IFilter, VisualType } from '@ferlab/ui/core/components/filters/types';
-import { updateFilters } from '@ferlab/ui/core/data/filters/utils';
 import { AutoComplete, Input, notification, Spin } from 'antd';
-import history from 'utils/history';
 import generateSuggestionOptions from 'views/screens/variant/Suggester/Options';
 import intl from 'react-intl-universal';
+import { VARIANT_QB_ID } from 'views/screens/variant/constants';
+import { useAxiosBasicWithAuth } from 'hooks/axios';
+import { updateActiveQueryFilters } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 
 import style from 'views/screens/variant/Suggester/index.module.scss';
-import { useAxiosBasicWithAuth } from 'hooks/axios';
 
 type SuggesterProps = {
   suggestionType: string;
@@ -17,18 +17,17 @@ type SuggesterProps = {
 
 type OptionMeta = {
   meta: {
-    featureType: string,
-    displayName: string,
-    searchText: string
-  }
-}
+    featureType: string;
+    displayName: string;
+    searchText: string;
+  };
+};
 
 type OptionValue = {
-  value: string
-}
+  value: string;
+};
 
-type Option = OptionValue & OptionMeta
-
+type Option = OptionValue & OptionMeta;
 
 const MIN_N_OF_CHARS_BEFORE_SEARCH = 2;
 const MAX_N_OF_CHARS = 50;
@@ -81,7 +80,12 @@ const Suggester = ({ suggestionType, placeholderText }: SuggesterProps) => {
         id: displayType,
       },
     ];
-    updateFilters(history, fg, f);
+
+    updateActiveQueryFilters({
+      queryBuilderId: VARIANT_QB_ID,
+      filterGroup: fg,
+      selectedFilters: f,
+    });
   };
 
   useEffect(() => {

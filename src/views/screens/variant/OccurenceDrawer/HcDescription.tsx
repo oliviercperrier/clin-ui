@@ -1,16 +1,15 @@
-import React from 'react';
 import {
   HcComplement,
   HcComplementHits,
   PossiblyHcComplement,
   PossiblyHcComplementHits,
 } from 'store/graphql/variants/models';
-import { Space, Tooltip, Typography } from 'antd';
+import { Button, Space, Tooltip, Typography } from 'antd';
 import { extractHits } from 'store/graphql/utils/query';
-import { createQueryParams } from '@ferlab/ui/core/data/filters/utils';
-import { generateFilters, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import { Link } from 'react-router-dom';
+import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import intl from 'react-intl-universal';
+import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { VARIANT_QB_ID } from '../constants';
 
 type Props = {
   variantId: string;
@@ -53,12 +52,12 @@ export const HcComplementDescription = ({ defaultText, hcComplements, variantId 
           <Tooltip
             title={intl.get('screen.patientvariant.drawer.hc.tooltip', { num: getCount(e) })}
           >
-            <Link
-              //style vs classname: for some reasons, cannot use classname (possibly problem with bridging of the apps)
-              style={{ textDecoration: 'underline' }}
-              to={{
-                search: createQueryParams({
-                  filters: generateFilters({
+            <Button
+              type="link"
+              onClick={() =>
+                addQuery({
+                  queryBuilderId: VARIANT_QB_ID,
+                  query: generateQuery({
                     newFilters: [
                       generateValueFilter({
                         field: 'genes.symbol',
@@ -76,11 +75,12 @@ export const HcComplementDescription = ({ defaultText, hcComplements, variantId 
                       ),
                     ],
                   }),
-                }),
-              }}
+                  setAsActive: true,
+                })
+              }
             >
               <Text>( {getCount(e)} )</Text>
-            </Link>
+            </Button>
             {!isLastItem(index, nOfSymbols) && ','}
           </Tooltip>
         </Space>

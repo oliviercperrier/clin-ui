@@ -1,15 +1,14 @@
 import React from 'react';
-import { getQueryBuilderCache, useFilters } from '@ferlab/ui/core/data/filters/utils';
 import { resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
 import { Layout, Spin } from 'antd';
 import { cloneDeep } from 'lodash';
 import { useParams } from 'react-router';
-
 import { generateFilters } from 'store/graphql/utils/Filters';
-import { VARIANT_REPO_CACHE_KEY } from 'views/screens/variant/constants';
+import { VARIANT_QB_ID } from 'views/screens/variant/constants';
 import { MappingResults, useGetVariantAggregations } from 'store/graphql/variants/actions';
 import { VARIANT_AGGREGATION_QUERY } from 'store/graphql/variants/queries';
 import { wrapSqonWithDonorId } from '../utils';
+import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 
 import styles from './Filters.module.scss';
 
@@ -19,10 +18,9 @@ type OwnProps = {
 };
 
 const GenericFilters = ({ field, mappingResults }: OwnProps): React.ReactElement => {
-  const { filters } = useFilters();
   const { patientid } = useParams<{ patientid: string }>();
-  const allSqons = getQueryBuilderCache(VARIANT_REPO_CACHE_KEY).state;
-  const resolvedSqon = cloneDeep(resolveSyntheticSqon(allSqons, filters, 'donors'));
+  const { queryList, activeQuery } = useQueryBuilderState(VARIANT_QB_ID);
+  const resolvedSqon = cloneDeep(resolveSyntheticSqon(queryList, activeQuery, 'donors'));
 
   const results = useGetVariantAggregations(
     {
@@ -34,18 +32,18 @@ const GenericFilters = ({ field, mappingResults }: OwnProps): React.ReactElement
   return (
     <Spin size="large" spinning={results.loading}>
       <Layout className={`${styles.variantFilterWrapper} ${styles.genericFilterWrapper}`}>
-        {generateFilters(
-          results?.aggregations,
-          {
+        {generateFilters({
+          queryBuilderId: VARIANT_QB_ID,
+          aggregations: results?.aggregations,
+          extendedMapping: {
             loading: mappingResults.loadingMapping,
             data: mappingResults.extendedMapping,
           },
-          styles.variantFilterContainer,
-          true,
-          true,
-          true,
-          true,
-        )}
+          className: styles.variantFilterContainer,
+          filterFooter: true,
+          showSearchInput: true,
+          useFilterSelector: true,
+        })}
       </Layout>
     </Spin>
   );

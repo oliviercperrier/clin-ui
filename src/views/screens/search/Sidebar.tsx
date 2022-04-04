@@ -14,6 +14,7 @@ import styles from './Sidebar.module.scss';
 import { Spin } from 'antd';
 
 export type SidebarData = {
+  queryBuilderId: string;
   aggregations: Aggregations;
   extendedMapping: ExtendedMappingResults;
   isLoading?: boolean;
@@ -24,6 +25,7 @@ type PrescriptionSidebarProps = SidebarData & {
 };
 
 const PrescriptionSidebar = ({
+  queryBuilderId,
   aggregations,
   extendedMapping,
   filters,
@@ -45,6 +47,7 @@ const PrescriptionSidebar = ({
       <ScrollContent className={cx(styles.scrollWrapper, collapsed ? styles.collapsed : '')}>
         <Spin className={styles.loader} spinning={isLoading}>
           <SidebarFilters
+            queryBuilderId={queryBuilderId}
             aggregations={aggregations}
             extendedMapping={extendedMapping}
             filters={filters}
