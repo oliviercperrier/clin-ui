@@ -6,7 +6,7 @@ import { getEnvVariable } from 'utils/config';
 const FEATURE_TOGGLE_PREFIX = 'FT_';
 
 const isEnabledFromStorage = (name: string) => isBoolTrue(localStorage.getItem(name));
-const isEnabledFromFlags = (paramFlag: string | null) =>
+const isEnabledFromFlags = (name: string, paramFlag: string | null) =>
   isBoolTrue(paramFlag) || isBoolTrue(getEnvVariable(`${FEATURE_TOGGLE_PREFIX}${name}`));
 
 const useFeatureToggle = (name: string) => {
@@ -17,7 +17,7 @@ const useFeatureToggle = (name: string) => {
     const paramFlag = queryParams.get('name');
     const isCached = localStorage.getItem(name) !== null;
 
-    setEnabled(isCached ? isEnabledFromStorage(name) : isEnabledFromFlags(paramFlag));
+    setEnabled(isCached ? isEnabledFromStorage(name) : isEnabledFromFlags(name, paramFlag));
     // eslint-disable-next-line
   }, []);
 
