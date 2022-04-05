@@ -14,7 +14,7 @@ const useFeatureToggle = (name: string) => {
   const [isEnabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const paramFlag = queryParams.get('name');
+    const paramFlag = queryParams.get(name);
     const isCached = localStorage.getItem(name) !== null;
 
     setEnabled(isCached ? isEnabledFromStorage(name) : isEnabledFromFlags(name, paramFlag));
