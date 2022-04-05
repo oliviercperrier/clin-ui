@@ -1,5 +1,5 @@
-import { ArrangerEdge } from "store/graphql/models";
-import { ConsequenceEntity } from "store/graphql/variants/models";
+import { ArrangerEdge } from "graphql/models";
+import { ConsequenceEntity } from "graphql/variants/models";
 
 const keyNoSymbol = "noSymbol_";
 

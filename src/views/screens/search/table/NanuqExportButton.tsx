@@ -1,13 +1,13 @@
 import { Button, Tooltip, Modal, Typography, message } from 'antd';
 import React from 'react';
 import intl from 'react-intl-universal';
-import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
+import { PrescriptionResult } from 'graphql/prescriptions/models/Prescription';
 import { getTopBodyElement } from 'utils/helper';
 import { FileTextOutlined } from '@ant-design/icons';
 import { v4 as uuid } from 'uuid';
 import { getPatientPosition, downloadJSONFile } from 'utils/helper';
 import { UNKNOWN_TAG } from 'utils/constants';
-import { PatientResult } from 'store/graphql/patients/models/Patient';
+import { PatientResult } from 'graphql/patients/models/Patient';
 
 interface Props {
   selectedPrescription: PrescriptionResult[];

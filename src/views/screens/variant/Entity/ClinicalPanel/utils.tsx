@@ -1,4 +1,4 @@
-import { ArrangerResultsTree, ArrangerEdge } from "store/graphql/models";
+import { ArrangerResultsTree, ArrangerEdge } from "graphql/models";
 import {
   ClinVar,
   Conditions,
@@ -10,7 +10,7 @@ import {
   OrphanetEntity,
   GeneEntity,
   HpoEntity,
-} from "store/graphql/variants/models";
+} from "graphql/variants/models";
 import { toKebabCase } from "utils/helper";
 
 const keepOnlyOmimWithId = (arr: ArrangerEdge<OmimEntity>[]) =>

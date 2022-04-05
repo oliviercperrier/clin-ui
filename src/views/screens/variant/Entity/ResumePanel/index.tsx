@@ -14,10 +14,10 @@ import {
   GeneEntity,
   Impact,
   VariantEntity,
-} from 'store/graphql/variants/models';
+} from 'graphql/variants/models';
 import { getVepImpactTag } from 'views/screens/variant/Entity/index';
 import SummaryCard from 'views/screens/variant/Entity/ResumePanel/Summary';
-import { ArrangerEdge, ArrangerResultsTree } from 'store/graphql/models';
+import { ArrangerEdge, ArrangerResultsTree } from 'graphql/models';
 
 import styles from './index.module.scss';
 

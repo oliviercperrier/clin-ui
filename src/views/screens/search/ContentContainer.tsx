@@ -6,10 +6,10 @@ import { MedicineBoxFilled } from '@ant-design/icons';
 import { ic_people } from 'react-icons-kit/md';
 import IconKit from 'react-icons-kit';
 
-import { GqlResults } from 'store/graphql/models';
-import { ExtendedMappingResults } from 'store/graphql/models';
-import { PatientResult } from 'store/graphql/patients/models/Patient';
-import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
+import { GqlResults } from 'graphql/models';
+import { ExtendedMappingResults } from 'graphql/models';
+import { PatientResult } from 'graphql/patients/models/Patient';
+import { PrescriptionResult } from 'graphql/prescriptions/models/Prescription';
 
 import PatientsTable from './table/PatientsTable';
 import PrescriptionsTable from './table/PrescriptionsTable';

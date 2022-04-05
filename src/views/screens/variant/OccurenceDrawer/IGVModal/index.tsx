@@ -10,11 +10,11 @@ import {
   getTopBodyElement,
 } from 'utils/helper';
 import axios from 'axios';
-import { usePatientFilesData } from 'store/graphql/patients/actions';
-import { GraphqlBackend } from 'store/providers';
-import ApolloProvider from 'store/providers/apollo';
-import { DonorsEntity, VariantEntity } from 'store/graphql/variants/models';
-import { FhirDoc, PatientFileResults } from 'store/graphql/patients/models/Patient';
+import { usePatientFilesData } from 'graphql/patients/actions';
+import { GraphqlBackend } from 'providers/';
+import ApolloProvider from 'providers//apollo';
+import { DonorsEntity, VariantEntity } from 'graphql/variants/models';
+import { FhirDoc, PatientFileResults } from 'graphql/patients/models/Patient';
 import { IIGVTrack } from 'components/Igv/type';
 import ServerError from 'components/Results/ServerError';
 

@@ -8,7 +8,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import get from 'lodash/get';
-import { GraphqlBackend, GraphqlProvider } from 'store/providers';
+import { GraphqlBackend, GraphqlProvider } from 'providers/';
 import { appendBearerIfToken } from 'utils/helper';
 import { useRpt } from 'hooks/rpt';
 

@@ -1,7 +1,7 @@
-import { ExtendedMappingResults, GqlResults, hydrateResults } from 'store/graphql/models';
-import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
-import { INDEX_EXTENDED_MAPPING, QueryVariable } from 'store/graphql/queries';
-import { useLazyResultQuery } from 'store/graphql/utils/query';
+import { ExtendedMappingResults, GqlResults, hydrateResults } from 'graphql/models';
+import { PrescriptionResult } from 'graphql/prescriptions/models/Prescription';
+import { INDEX_EXTENDED_MAPPING, QueryVariable } from 'graphql/queries';
+import { useLazyResultQuery } from 'graphql/utils/query';
 
 import { PRESCRIPTIONS_QUERY } from './queries';
 

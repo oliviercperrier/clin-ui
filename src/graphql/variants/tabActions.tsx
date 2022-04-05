@@ -1,4 +1,4 @@
-import { useLazyResultQueryOnLoadOnly } from 'store/graphql/utils/query';
+import { useLazyResultQueryOnLoadOnly } from 'graphql/utils/query';
 
 import {
   TAB_CLINICAL_QUERY,

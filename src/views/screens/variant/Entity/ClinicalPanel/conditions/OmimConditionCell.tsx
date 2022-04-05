@@ -1,7 +1,7 @@
 import React from 'react';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
-import { OmimConditions, OmimCondition } from 'store/graphql/variants/models';
+import { OmimConditions, OmimCondition } from 'graphql/variants/models';
 import { Typography } from 'antd';
 
 interface OwnProps {

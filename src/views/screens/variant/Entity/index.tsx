@@ -10,9 +10,9 @@ import ServerError from 'components/Results/ServerError';
 import NotFound from 'components/Results/NotFound';
 
 import ResumePanel from './ResumePanel';
-import { GraphqlBackend } from 'store/providers';
-import ApolloProvider from 'store/providers/apollo';
-import { useTabSummaryData } from 'store/graphql/variants/tabActions';
+import { GraphqlBackend } from 'providers/';
+import ApolloProvider from 'providers//apollo';
+import { useTabSummaryData } from 'graphql/variants/tabActions';
 import FrequencyPanel from 'views/screens/variant/Entity/FrequencyPanel';
 import ClinicalPanel from 'views/screens/variant/Entity/ClinicalPanel';
 import PatientPanel from 'views/screens/variant/Entity/PatientPanel';

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import { GenomicFeatureType, SearchText } from "store/graphql/variants/models";
+import { GenomicFeatureType, SearchText } from "graphql/variants/models";
 
 import style from "./index.module.scss";
 

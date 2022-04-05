@@ -13,7 +13,7 @@ import FrequencyIcon from 'components/icons/FrequencyIcon';
 import OccurenceIcon from 'components/icons/OccurenceIcon';
 import VariantPageContainer from 'views/screens/variant/VariantPageContainer';
 import { Spin } from 'antd';
-import { MappingResults, useGetVariantExtendedMappings } from 'store/graphql/variants/actions';
+import { MappingResults, useGetVariantExtendedMappings } from 'graphql/variants/actions';
 import { VARIANT_QB_ID } from './constants';
 
 import styles from './VariantSearchPage.module.scss';

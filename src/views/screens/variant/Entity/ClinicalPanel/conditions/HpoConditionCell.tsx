@@ -1,6 +1,6 @@
 import React from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import { HpoConditions, HpoCondition } from "store/graphql/variants/models";
+import { HpoConditions, HpoCondition } from "graphql/variants/models";
 import { Typography } from "antd";
 import ExpandableCell from "components/table/ExpandableCell";
 

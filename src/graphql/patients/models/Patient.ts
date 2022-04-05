@@ -1,4 +1,4 @@
-import { ArrangerNodeData, ArrangerResultsTree } from 'store/graphql/models';
+import { ArrangerNodeData, ArrangerResultsTree } from 'graphql/models';
 
 export interface Requests extends ArrangerNodeData {
   status: string;

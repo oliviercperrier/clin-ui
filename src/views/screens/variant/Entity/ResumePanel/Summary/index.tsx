@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Card, Col, Divider, Row, Spin, Typography } from 'antd';
-import { GeneEntity, VariantEntity } from 'store/graphql/variants/models';
+import { GeneEntity, VariantEntity } from 'graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 import intl from 'react-intl-universal';
 import { formatTimestampToISODate } from 'utils/helper';
 import history from 'utils/history';
-import { ArrangerEdge } from 'store/graphql/models';
+import { ArrangerEdge } from 'graphql/models';
 
 import styles from './index.module.scss';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { prescriptionsColumns } from './prescriptionColumns';
 import Table, { Props } from './Table';
-import { PrescriptionResult } from 'store/graphql/prescriptions/models/Prescription';
+import { PrescriptionResult } from 'graphql/prescriptions/models/Prescription';
 import NanuqExportButton from './NanuqExportButton';
 
 const DEFAULT_PAGE_SIZE = 20;

@@ -7,8 +7,8 @@ import { Spin } from 'antd';
 import { cloneDeep } from 'lodash';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
-import { MappingResults, useGetVariantAggregations } from 'store/graphql/variants/actions';
-import { VARIANT_AGGREGATION_QUERY } from 'store/graphql/variants/queries';
+import { MappingResults, useGetVariantAggregations } from 'graphql/variants/actions';
+import { VARIANT_AGGREGATION_QUERY } from 'graphql/variants/queries';
 import { wrapSqonWithDonorId } from '../utils';
 
 type OwnProps = FilterSelectorProps & {

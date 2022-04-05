@@ -5,8 +5,8 @@ import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 
-import { Aggregations } from 'store/graphql/models';
-import { ExtendedMappingResults } from 'store/graphql/models';
+import { Aggregations } from 'graphql/models';
+import { ExtendedMappingResults } from 'graphql/models';
 
 import SidebarFilters from './SidebarFilters';
 
