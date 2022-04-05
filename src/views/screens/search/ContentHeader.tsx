@@ -5,7 +5,9 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 
 import { AutoComplete, Button, Col, Input, Row, Typography } from 'antd';
-
+import useFeatureToggle from 'hooks/useFeatureToggle';
+import { useDispatch } from 'react-redux';
+import { prescriptionFormActions } from 'store/prescription/slice';
 // import PatientCreation from 'components/screens/PatientCreation';
 import { GqlResults } from 'graphql/models';
 import { PatientResult } from 'graphql/patients/models/Patient';
@@ -44,6 +46,8 @@ const autoCompleteResults = (data: PatientResult[]) => {
 const ContentHeader = ({
   searchResults,
 }: PrescriptionResultsContainerProps): React.ReactElement => {
+  const dispatch = useDispatch();
+  const { isEnabled } = useFeatureToggle('prescriptionV4');
   const [filteredResults, setFilteredResults] = useState<PatientResult[]>([]);
 
   return (
@@ -91,7 +95,11 @@ const ContentHeader = ({
       <Button
         className="buttonCreatePrescription"
         onClick={(e) => {
-          createPrescription();
+          if (isEnabled) {
+            dispatch(prescriptionFormActions.toggleModal());
+          } else {
+            createPrescription();
+          }
         }}
         type="primary"
         size="large"

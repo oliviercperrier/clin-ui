@@ -1,0 +1,24 @@
+.createPrescriptionModal {
+  &,
+  :global(.ant-modal-content) {
+    height: 100vh !important;
+    width: 100vw !important;
+    margin: 0;
+    top: 0;
+    max-width: unset;
+    padding-bottom: 0;
+  }
+
+  :global(.ant-modal-body) {
+    height: calc(100vh - 55px);
+  }
+
+  :global(.ant-modal-close-x) {
+    width: unset;
+    padding-right: 24px;
+  }
+
+  .customCloseBtn {
+    padding: 0;
+  }
+}
