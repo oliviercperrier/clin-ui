@@ -1,32 +1,32 @@
 import { useEffect, useState } from 'react';
 import useQueryParams from 'hooks/useQueryParams';
 import { isBoolTrue } from 'utils/helper';
+import { getEnvVariable } from 'utils/config';
 
-const FEATURE_TOGGLE_PREFIX = 'REACT_APP_FT_';
+const FEATURE_TOGGLE_PREFIX = 'FT_';
+
+const isEnabledFromStorage = (name: string) => isBoolTrue(localStorage.getItem(name));
+const isEnabledFromFlags = (paramFlag: string | null) =>
+  isBoolTrue(paramFlag) || isBoolTrue(getEnvVariable(`${FEATURE_TOGGLE_PREFIX}${name}`));
 
 const useFeatureToggle = (name: string) => {
   const queryParams = useQueryParams();
   const [isEnabled, setEnabled] = useState(false);
 
-  const clear = () => {
-    setEnabled(false);
-    localStorage.removeItem(name);
-  };
-
   useEffect(() => {
     const paramFlag = queryParams.get('name');
-    const flag = process.env[`${FEATURE_TOGGLE_PREFIX}${name}`];
     const isCached = localStorage.getItem(name) !== null;
 
-    setEnabled(
-      isCached ? isBoolTrue(localStorage.getItem(name)) : isBoolTrue(flag) || isBoolTrue(paramFlag),
-    );
+    setEnabled(isCached ? isEnabledFromStorage(name) : isEnabledFromFlags(paramFlag));
     // eslint-disable-next-line
   }, []);
 
   return {
     isEnabled,
-    clear,
+    clear: () => {
+      setEnabled(false);
+      localStorage.removeItem(name);
+    },
   };
 };
 
