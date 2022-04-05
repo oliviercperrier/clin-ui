@@ -3,6 +3,12 @@
 .variantFilterWrapper {
   min-height: 100px;
 
+  & :global(.ant-collapse),
+  :global(.ant-collapse-item) {
+    background-color: $gray-1;
+    border: none;
+  }
+
   .filterGroupTitle {
     margin-top: 16px;
     margin-bottom: 16px;

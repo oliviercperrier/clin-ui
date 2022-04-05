@@ -2,12 +2,22 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
-import { persistStore, persistReducer } from 'redux-persist';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import { RootState } from 'store/types';
 // Reducers
 import GlobalReducer from 'store/global';
 import ReportReducer from 'store/reports';
 import PrescriptionReducer from 'store/prescription';
+import { prescriptionFormActionTypes } from './prescription/slice';
 
 const devMode = process.env.NODE_ENV === 'development';
 
@@ -23,14 +33,26 @@ const persistConfig = {
 const rootReducer = combineReducers<RootState>({
   global: GlobalReducer,
   report: ReportReducer,
-  prescription: PrescriptionReducer
+  prescription: PrescriptionReducer,
 });
 
 const store: any = configureStore({
   reducer: persistReducer(persistConfig, rootReducer),
   devTools: devMode,
   middleware: (getDefaultMiddleware) => {
-    let defaultMid = getDefaultMiddleware();
+    let defaultMid = getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          ...prescriptionFormActionTypes,
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+        ],
+      },
+    });
     return devMode ? defaultMid.concat(logger) : defaultMid;
   },
 });

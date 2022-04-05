@@ -15,6 +15,7 @@ import { createPrescription } from 'utils/bridge';
 import { redirectParent } from 'utils/bridge';
 
 import './ContentHeader.scss';
+import { AnalysisType } from 'store/prescription/types';
 
 export type PrescriptionResultsContainerProps = {
   searchResults: GqlResults<PatientResult> | null;
@@ -96,7 +97,11 @@ const ContentHeader = ({
         className="buttonCreatePrescription"
         onClick={(e) => {
           if (isEnabled) {
-            dispatch(prescriptionFormActions.toggleModal());
+            dispatch(
+              prescriptionFormActions.startPrescription({
+                type: AnalysisType.MUSCULAR_DISEASE,
+              }),
+            );
           } else {
             createPrescription();
           }

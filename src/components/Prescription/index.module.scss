@@ -1,4 +1,19 @@
+@import "colors";
+
+$modal-header-height: 55px;
+
 .createPrescriptionModal {
+  
+  :global(.ant-modal-header) {
+    height: $modal-header-height;
+  }
+
+  .modalHeader {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
   &,
   :global(.ant-modal-content) {
     height: 100vh !important;
@@ -10,7 +25,8 @@
   }
 
   :global(.ant-modal-body) {
-    height: calc(100vh - 55px);
+    height: calc(100vh - #{$modal-header-height});
+    background-color: $gray-4;
   }
 
   :global(.ant-modal-close-x) {
@@ -20,5 +36,11 @@
 
   .customCloseBtn {
     padding: 0;
+  }
+
+  .prescriptionContentFooter {
+    display: flex;
+    justify-content: space-between;
+    
   }
 }
