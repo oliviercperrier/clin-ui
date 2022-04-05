@@ -56,11 +56,11 @@ export const downloadFile = (blob: Blob, filename: string) => {
   downloadLinkElement.click();
   document.body.removeChild(downloadLinkElement);
   URL.revokeObjectURL(downloadLinkElement.href);
-}
+};
 
 export const downloadJSONFile = (content: string, filename: string) => {
   const fileBlob = new Blob([content], { type: 'text/json' });
-  downloadFile(fileBlob, filename)
+  downloadFile(fileBlob, filename);
 };
 
 export const getPatientPosition = (gender: string, position: string) => {
@@ -74,3 +74,8 @@ export const getPatientPosition = (gender: string, position: string) => {
 
 export const formatLocus = (start: number, chromosome: string, bound?: number) =>
   `chr${chromosome}:${bound ? `${start - bound}-${start + bound}` : start}`;
+
+export const isBoolTrue = (value: any) => ['true', 'True', 'TRUE', true, '1', 1].includes(value);
+
+export const isBoolFalse = (value: any) =>
+  ['false', 'False', 'FALSE', false, '0', 1].includes(value);
