@@ -17,8 +17,6 @@ const useFeatureToggle = (name: string) => {
     const paramFlag = queryParams.get(name);
     const isCached = localStorage.getItem(name) !== null;
 
-    console.log(queryParams)
-
     setEnabled(isCached ? isEnabledFromStorage(name) : isEnabledFromFlags(name, paramFlag));
     // eslint-disable-next-line
   }, []);
