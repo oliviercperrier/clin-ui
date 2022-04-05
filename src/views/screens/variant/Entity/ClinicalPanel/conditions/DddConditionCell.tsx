@@ -1,6 +1,6 @@
 import React from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import { DddConditions } from "store/graphql/variants/models";
+import { DddConditions } from "graphql/variants/models";
 import { Typography } from "antd";
 
 interface OwnProps {

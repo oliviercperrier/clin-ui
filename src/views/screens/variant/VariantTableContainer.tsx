@@ -13,17 +13,17 @@ import {
   Consequence,
   ExternalFrequenciesEntity,
   DonorsEntity,
-} from 'store/graphql/variants/models';
+} from 'graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 import ConsequencesCell from './ConsequencesCell';
-import { ArrangerResultsTree, ArrangerEdge } from 'store/graphql/models';
+import { ArrangerResultsTree, ArrangerEdge } from 'graphql/models';
 import { navigateTo } from 'utils/helper';
 
 import style from './VariantTableContainer.module.scss';
 import OccurenceDrawer from './OccurenceDrawer';
 import { ColumnType } from 'antd/lib/table';
 import { ItemsCount } from 'components/table/ItemsCount';
-import { Varsome, VarsomeClassifications } from 'store/graphql/variants/models';
+import { Varsome, VarsomeClassifications } from 'graphql/variants/models';
 
 const DEFAULT_PAGE_NUM = 1;
 const DEFAULT_PAGE_SIZE = 10;

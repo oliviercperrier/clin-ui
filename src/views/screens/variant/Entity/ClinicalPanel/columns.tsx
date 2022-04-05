@@ -15,7 +15,7 @@ import {
   OrphanetConditions,
   OrphanetInheritance,
   SingleValuedInheritance,
-} from "store/graphql/variants/models";
+} from "graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
 import OmimConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/OmimConditionCell";
 import OrphanetConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/OrphanetConditionCell";

@@ -3,7 +3,7 @@ import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import {
   OrphanetCondition,
   OrphanetConditions,
-} from "store/graphql/variants/models";
+} from "graphql/variants/models";
 
 interface OwnProps {
   conditions: OrphanetConditions;

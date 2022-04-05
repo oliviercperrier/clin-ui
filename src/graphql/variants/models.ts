@@ -1,4 +1,4 @@
-import { ArrangerResultsTree } from 'store/graphql/models';
+import { ArrangerResultsTree } from 'graphql/models';
 
 export enum Impact {
   High = 'HIGH',

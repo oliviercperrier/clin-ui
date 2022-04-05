@@ -7,9 +7,9 @@ import intl from 'react-intl-universal';
 import { Tabs } from 'antd';
 import { cloneDeep } from 'lodash';
 import LineStyleIcon from 'components/icons/LineStyleIcon';
-import { ExtendedMapping } from 'store/graphql/models';
-import { MappingResults, useGetVariantPageData } from 'store/graphql/variants/actions';
-import { VariantEntity } from 'store/graphql/variants/models';
+import { ExtendedMapping } from 'graphql/models';
+import { MappingResults, useGetVariantPageData } from 'graphql/variants/actions';
+import { VariantEntity } from 'graphql/variants/models';
 
 import { VARIANT_QB_ID } from './constants';
 import VariantTableContainer from './VariantTableContainer';

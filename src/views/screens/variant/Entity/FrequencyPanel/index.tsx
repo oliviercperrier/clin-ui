@@ -1,17 +1,17 @@
 import React from 'react';
 import cx from 'classnames';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
-import { useTabFrequenciesData } from 'store/graphql/variants/tabActions';
+import { useTabFrequenciesData } from 'graphql/variants/tabActions';
 import intl from 'react-intl-universal';
 import { Card, Table, Spin, Space, Tooltip } from 'antd';
 import {
   BoundType,
   ExternalFrequenciesEntity,
   FrequencyByAnalysisEntity,
-} from 'store/graphql/variants/models';
+} from 'graphql/variants/models';
 import ServerError from 'components/Results/ServerError';
 import NoData from 'views/screens/variant/Entity/NoData';
-import { ArrangerEdge } from 'store/graphql/models';
+import { ArrangerEdge } from 'graphql/models';
 import { toExponentialNotation } from 'utils/helper';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 

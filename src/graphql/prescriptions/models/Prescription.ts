@@ -1,9 +1,9 @@
-import { ArrangerNodeData, ArrangerResultsTree } from 'store/graphql/models';
+import { ArrangerNodeData, ArrangerResultsTree } from 'graphql/models';
 import {
   HealthProfessional,
   Organization,
   PatientResult,
-} from 'store/graphql/patients/models/Patient';
+} from 'graphql/patients/models/Patient';
 
 export type DataCategory = {
   data_category: string;

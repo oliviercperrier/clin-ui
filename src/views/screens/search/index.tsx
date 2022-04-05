@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
 
-import { GraphqlBackend } from 'store/providers';
-import ApolloProvider from 'store/providers/apollo';
+import { GraphqlBackend } from 'providers';
+import ApolloProvider from 'providers/apollo';
 
 import PatientsPrescriptions from 'views/screens/search/PatientsPrescriptions';
 

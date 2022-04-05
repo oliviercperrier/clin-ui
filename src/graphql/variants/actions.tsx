@@ -1,9 +1,9 @@
 import { DocumentNode, TypedDocumentNode } from '@apollo/client';
 
-import { INDEX_EXTENDED_MAPPING, QueryVariable } from 'store/graphql/queries';
-import { ExtendedMapping, GqlResults } from 'store/graphql/models';
-import { useLazyResultQuery } from 'store/graphql/utils/query';
-import { VARIANT_QUERY } from 'store/graphql/variants/queries';
+import { INDEX_EXTENDED_MAPPING, QueryVariable } from 'graphql/queries';
+import { ExtendedMapping, GqlResults } from 'graphql/models';
+import { useLazyResultQuery } from 'graphql/utils/query';
+import { VARIANT_QUERY } from 'graphql/variants/queries';
 import { VARIANT_INDEX } from 'views/screens/variant/constants';
 
 export type MappingResults = {

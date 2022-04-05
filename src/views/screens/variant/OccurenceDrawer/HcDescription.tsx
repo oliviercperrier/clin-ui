@@ -3,9 +3,9 @@ import {
   HcComplementHits,
   PossiblyHcComplement,
   PossiblyHcComplementHits,
-} from 'store/graphql/variants/models';
+} from 'graphql/variants/models';
 import { Button, Space, Tooltip, Typography } from 'antd';
-import { extractHits } from 'store/graphql/utils/query';
+import { extractHits } from 'graphql/utils/query';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import intl from 'react-intl-universal';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';

@@ -1,9 +1,9 @@
-import { GqlResults, hydrateResults } from 'store/graphql/models';
-import { ExtendedMapping } from 'store/graphql/models';
-import { PatientFileResults, PatientResult } from 'store/graphql/patients/models/Patient';
-import { QueryVariable } from 'store/graphql/queries';
-import { INDEX_EXTENDED_MAPPING } from 'store/graphql/queries';
-import { useLazyResultQuery, useLazyResultQueryOnLoadOnly } from 'store/graphql/utils/query';
+import { GqlResults, hydrateResults } from 'graphql/models';
+import { ExtendedMapping } from 'graphql/models';
+import { PatientFileResults, PatientResult } from 'graphql/patients/models/Patient';
+import { QueryVariable } from 'graphql/queries';
+import { INDEX_EXTENDED_MAPPING } from 'graphql/queries';
+import { useLazyResultQuery, useLazyResultQueryOnLoadOnly } from 'graphql/utils/query';
 
 import { IValueContent, ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { PATIENTS_QUERY, PATIENT_FILES_QUERY } from './queries';

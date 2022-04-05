@@ -7,8 +7,8 @@ import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { AutoComplete, Button, Col, Input, Row, Typography } from 'antd';
 
 // import PatientCreation from 'components/screens/PatientCreation';
-import { GqlResults } from 'store/graphql/models';
-import { PatientResult } from 'store/graphql/patients/models/Patient';
+import { GqlResults } from 'graphql/models';
+import { PatientResult } from 'graphql/patients/models/Patient';
 import { createPrescription } from 'utils/bridge';
 import { redirectParent } from 'utils/bridge';
 

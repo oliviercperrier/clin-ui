@@ -9,9 +9,9 @@ import MaleNotAffectedIcon from 'components/icons/MaleNotAffectedIcon';
 import FemaleAffectedIcon from 'components/icons/FemaleAffectedIcon';
 import FemaleNotAffectedIcon from 'components/icons/FemaleNotAffectedIcon';
 import { getTopBodyElement } from 'utils/helper';
-import { DonorsEntity, VariantEntity } from 'store/graphql/variants/models';
+import { DonorsEntity, VariantEntity } from 'graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
-import { ArrangerEdge } from 'store/graphql/models';
+import { ArrangerEdge } from 'graphql/models';
 import IGVModal from 'views/screens/variant/OccurenceDrawer/IGVModal';
 import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 

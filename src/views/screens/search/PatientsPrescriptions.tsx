@@ -4,8 +4,8 @@ import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/
 import { resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
 import ScrollView from '@ferlab/ui/core/layout/ScrollView';
 import StackLayout, { StackOrientation } from '@ferlab/ui/core/layout/StackLayout';
-import { mappedFilters, usePatients } from 'store/graphql/patients/actions';
-import { usePrescription, usePrescriptionMapping } from 'store/graphql/prescriptions/actions';
+import { mappedFilters, usePatients } from 'graphql/patients/actions';
+import { usePrescription, usePrescriptionMapping } from 'graphql/prescriptions/actions';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { TableTabs } from './ContentContainer';
 import ContentContainer from './ContentContainer';

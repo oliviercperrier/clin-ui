@@ -3,10 +3,10 @@ import { resolveSyntheticSqon } from '@ferlab/ui/core/data/sqon/utils';
 import { Layout, Spin } from 'antd';
 import { cloneDeep } from 'lodash';
 import { useParams } from 'react-router';
-import { generateFilters } from 'store/graphql/utils/Filters';
+import { generateFilters } from 'graphql/utils/Filters';
 import { VARIANT_QB_ID } from 'views/screens/variant/constants';
-import { MappingResults, useGetVariantAggregations } from 'store/graphql/variants/actions';
-import { VARIANT_AGGREGATION_QUERY } from 'store/graphql/variants/queries';
+import { MappingResults, useGetVariantAggregations } from 'graphql/variants/actions';
+import { VARIANT_AGGREGATION_QUERY } from 'graphql/variants/queries';
 import { wrapSqonWithDonorId } from '../utils';
 import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 

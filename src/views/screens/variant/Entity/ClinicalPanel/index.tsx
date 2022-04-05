@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import intl from "react-intl-universal";
-import { useTabClinicalData } from "store/graphql/variants/tabActions";
+import { useTabClinicalData } from "graphql/variants/tabActions";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import ServerError from "components/Results/ServerError";
 import { Card, Space, Table, Spin } from "antd";

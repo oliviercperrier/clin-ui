@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import * as actions from 'store/graphql/variants/actions';
+import * as actions from 'graphql/variants/actions';
 import VariantSearchPage from 'views/screens/variant/VariantSearchPage';
 
 jest.mock('@ferlab/ui/core/components/SidebarMenu', () => () => {
@@ -27,7 +27,7 @@ const mockVariantPageContainerComponents = jest.mock('views/screens/variant/Vari
   return mock
 });
 
-jest.mock('store/graphql/variants/actions');
+jest.mock('graphql/variants/actions');
 const useMock = actions.useGetVariantExtendedMappings
 
 const variantSearchPageTests = () => {

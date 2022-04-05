@@ -1,5 +1,5 @@
 import React from "react";
-import { GenomicFeatureType, Suggestion } from "store/graphql/variants/models";
+import { GenomicFeatureType, Suggestion } from "graphql/variants/models";
 import SuggestionOption from "./Option";
 
 const generateDisplayName = (suggestion: Suggestion): string | undefined => {
