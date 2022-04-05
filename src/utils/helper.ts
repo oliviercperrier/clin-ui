@@ -78,4 +78,4 @@ export const formatLocus = (start: number, chromosome: string, bound?: number) =
 export const isBoolTrue = (value: any) => ['true', 'True', 'TRUE', true, '1', 1].includes(value);
 
 export const isBoolFalse = (value: any) =>
-  ['false', 'False', 'FALSE', false, '0', 1].includes(value);
+  ['false', 'False', 'FALSE', false, '0', 0].includes(value);
