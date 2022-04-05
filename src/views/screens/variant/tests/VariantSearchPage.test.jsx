@@ -27,7 +27,7 @@ const mockVariantPageContainerComponents = jest.mock('views/screens/variant/Vari
   return mock
 });
 
-jest.mock('store/graphql/variants/actions');
+jest.mock('graphql/variants/actions');
 const useMock = actions.useGetVariantExtendedMappings
 
 const variantSearchPageTests = () => {
