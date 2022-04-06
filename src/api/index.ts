@@ -1,14 +1,29 @@
+import keycloak from 'auth/keycloak';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   data: T | undefined;
   response: AxiosResponse;
   error: AxiosError | undefined;
 }
 
-//copied from Include project.
+apiInstance.interceptors.request.use((config) => {
+  // set Authorization headers on a per request basis
+  // setting headers on axios get/put/post or common seems to be shared across all axios instances
+
+  const token = keycloak?.token;
+  if (token) {
+    config.headers = {
+      ...(token && { Authorization: `Bearer ${token}` }),
+      ...config.headers,
+    };
+  }
+
+  return config;
+});
+
 export const sendRequest = async <T>(config: AxiosRequestConfig) =>
   apiInstance
     .request<T>(config)
