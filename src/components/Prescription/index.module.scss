@@ -3,7 +3,6 @@
 $modal-header-height: 55px;
 
 .createPrescriptionModal {
-  
   :global(.ant-modal-header) {
     height: $modal-header-height;
   }
@@ -41,6 +40,12 @@ $modal-header-height: 55px;
   .prescriptionContentFooter {
     display: flex;
     justify-content: space-between;
-    
+  }
+
+  .prescriptionFormCard {
+    :global(.ant-card-body) {
+      padding-left: 1px !important;
+      padding-right: 1px !important;
+    }
   }
 }

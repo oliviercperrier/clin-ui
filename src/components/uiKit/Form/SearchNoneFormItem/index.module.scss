@@ -1,0 +1,24 @@
+.hideLabel {
+  :global(.ant-form-item-label) {
+    visibility: hidden;
+  }
+}
+
+.noMargin {
+  margin-bottom: 0px;
+}
+
+.searchInput {
+  max-width: 200px;
+}
+
+.resetBtn {
+  font-size: 12px;
+  span {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

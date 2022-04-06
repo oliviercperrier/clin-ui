@@ -32,14 +32,14 @@ const PrescriptionForm = () => {
       className={styles.createPrescriptionModal}
       visible={modalVisible}
       title={
-        <Space className={styles.modalHeader} align='center'>
+        <Space className={styles.modalHeader} align="center">
           <Title level={4}>Prescription d'analyse</Title>
           <Button
             className={styles.customCloseBtn}
             type="link"
             icon={<CloseOutlined />}
             danger
-            size='small'
+            size="small"
             onClick={() =>
               Modal.confirm({
                 title: intl.get('prescription-form-cancel-modal-title'),
@@ -63,14 +63,15 @@ const PrescriptionForm = () => {
       destroyOnClose
       closable={false}
     >
-      <Row gutter={24}>
-        <Col xl={6}>
+      <Row gutter={[24, 24]}>
+        <Col span={6}>
           <StepsPanel />
         </Col>
-        <Col xl={18}>
+        <Col span={18}>
           <GridCard
             title={<Title level={3}>{currentStep?.title}</Title>}
             content={analysisType ? AnalysisFormMapping[analysisType!] : undefined}
+            className={styles.prescriptionFormCard}
             bordered={false}
             footer={
               <div className={styles.prescriptionContentFooter}>

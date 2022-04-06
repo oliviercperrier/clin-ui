@@ -21,7 +21,8 @@
 @font-size-base: 14px;
 @font-size-lg: 16px;
 @border-radius-base: 2px;
-@primary-color: @blue-9;
+@primary-color: @blue-8;
+@label-color: @gray-9;
 
 body {
   color: @gray-8;
@@ -78,17 +79,13 @@ body {
 @shadow-1-right: 6px 0 16px -8px fade(@text-color, 8%), 9px 0 28px 0 fade(@text-color, 5%);
 @shadow-2: 0 3px 6px -4px fade(@text-color, 30%), 0 6px 16px 0 fade(@text-color, 16%);
 
-// Checkbox
-@checkbox-color: @blue-9;
-
 // Dropdown
-@dropdown-selected-color: @primary-color;
+@dropdown-selected-color: @blue-9;
 
 // Page Header
 //@page-header-back-color: @disabled-color;
 
 // Radio
-@radio-dot-color: @blue-9;
 @radio-dot-disabled-color: @gray-6;
 
 // Radio buttons
@@ -110,6 +107,11 @@ body {
   font-size: @font-size-sm;
   margin-top: 2px;
 }
+
+.ant-form-item-label > label {
+  font-weight: 500;
+}
+@highlight-color: @red-8;
 
 @form-error-input-bg: @red-0;
 
