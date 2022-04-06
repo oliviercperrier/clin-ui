@@ -162,7 +162,7 @@ export type ConsequenceEntity = {
   canonical: boolean;
   coding_dna_change: string;
   strand: string;
-  refseq_mrna_id: string;
+  refseq_mrna_id: string[];
   ensembl_transcript_id: string;
   ensembl_gene_id: string;
   predictions: PredictionEntity;
