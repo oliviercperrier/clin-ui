@@ -1,12 +1,15 @@
 import { CalendarOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
+import { MaskedInputProps } from 'antd-mask-input/build/main/lib/MaskedInput';
 import { MaskedRange } from 'imask';
 
 const { Text } = Typography;
 
-const MaskedDateInput = () => (
+const MaskedDateInput = (props: Omit<MaskedInputProps, 'mask'>) => (
   <MaskedInput
+    {...props}
+    style={{ ...props.style, width: props.style?.width ?? 150 }}
     placeholder="yyyy / mm / dd"
     mask={'yyyy / mm / dd'}
     maskOptions={{

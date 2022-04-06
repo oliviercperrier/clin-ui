@@ -13,7 +13,7 @@ import { SearchProps } from 'antd/lib/input';
 import { ApiResponse } from 'api';
 import cx from 'classnames';
 import { get } from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './index.module.scss';
 
@@ -25,12 +25,13 @@ export interface ISearchOrNoneFormItemProps<TSearchResult> {
     'label' | 'valuePropName'
   >;
   inputProps?: Omit<SearchProps, 'disabled' | 'onSearch'> & {
-    handleSearch?: (value: string, search: (value: string) => void) => void;
+    handlesearch?: (value: string, search: (value: string) => void) => void;
   };
   checkboxProps?: Omit<CheckboxProps, 'disabled'>;
   onReset?: () => void;
   onSearchDone: (result: TSearchResult | undefined) => void;
   apiPromise: (value: string) => Promise<ApiResponse<TSearchResult>>;
+  disabled?: boolean;
 }
 
 const SearchOrNoneFormItem = <TSearchResult,>({
@@ -42,12 +43,19 @@ const SearchOrNoneFormItem = <TSearchResult,>({
   onReset,
   onSearchDone,
   apiPromise,
+  disabled = false,
 }: ISearchOrNoneFormItemProps<TSearchResult>) => {
   const checkboxName = checkboxFormItemProps.name;
   const [isLoading, setIsLoading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(disabled);
 
-  const handleSearch = (value: string) => {
+  useEffect(() => {
+    if (disabled !== isDisabled) {
+      setIsDisabled(disabled);
+    }
+  }, [disabled]);
+
+  const processSearch = (value: string) => {
     setIsLoading(true);
     apiPromise(value)
       .then(({ error, data }) => {
@@ -81,10 +89,10 @@ const SearchOrNoneFormItem = <TSearchResult,>({
                     enterButton
                     disabled={isDisabled}
                     onSearch={(value) => {
-                      if (inputProps?.handleSearch) {
-                        inputProps.handleSearch(value, handleSearch);
+                      if (inputProps?.handlesearch) {
+                        inputProps.handlesearch(value, processSearch);
                       } else {
-                        handleSearch(value);
+                        processSearch(value);
                       }
                     }}
                     loading={isLoading}
