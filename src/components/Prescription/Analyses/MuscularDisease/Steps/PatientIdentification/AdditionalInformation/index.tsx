@@ -12,8 +12,6 @@ import GestationalAge from './GestationalAge';
 
 import styles from './index.module.scss';
 
-const { Text } = Typography;
-
 type OwnProps = IAnalysisFormPart & {
   showNewBornSection?: boolean;
   initialData?: IAddInfoDataType;
@@ -64,6 +62,18 @@ const AdditionalInformation = ({
 
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
+      if (initialData.additional_info_gestational_age_ddm) {
+        setGestationalAgeDDM(
+          calculateGestationalAgeFromDDM(new Date(initialData.additional_info_gestational_age_ddm)),
+        );
+      }
+
+      if (initialData.additional_info_gestational_age_dpa) {
+        setGestationalAgeDPA(
+          calculateGestationalAgeFromDPA(new Date(initialData.additional_info_gestational_age_dpa)),
+        );
+      }
+
       form.setFields([
         {
           name: getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS),
