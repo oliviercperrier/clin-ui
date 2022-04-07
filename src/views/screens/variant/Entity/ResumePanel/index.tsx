@@ -282,6 +282,7 @@ const columns = [
       return (
         transcript.ids.map(id => (
           <a
+            key={id}
             target="_blank"
             rel="noopener noreferrer"
             href={`https://www.ncbi.nlm.nih.gov/nuccore/${id}.3?report=graph`}
