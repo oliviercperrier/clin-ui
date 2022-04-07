@@ -3,15 +3,21 @@ import { Typography } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { MaskedInputProps } from 'antd-mask-input/build/main/lib/MaskedInput';
 import { MaskedRange } from 'imask';
+import moment from 'moment';
 
 const { Text } = Typography;
+const MASK = 'yyyy / mm / dd';
 
 const MaskedDateInput = (props: Omit<MaskedInputProps, 'mask'>) => (
   <MaskedInput
     {...props}
     style={{ ...props.style, width: props.style?.width ?? 150 }}
-    placeholder="yyyy / mm / dd"
-    mask={'yyyy / mm / dd'}
+    placeholder={MASK}
+    mask={MASK}
+    onChange={(e) => {
+      e.unmaskedValue = e.maskedValue.replace(/\s/g, '').replaceAll('/', '-');
+      props.onChange && props.onChange(e);
+    }}
     maskOptions={{
       blocks: {
         yyyy: {

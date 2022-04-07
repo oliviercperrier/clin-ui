@@ -1,4 +1,4 @@
-import { Checkbox, Form, Input, Radio, Space } from 'antd';
+import { Checkbox, Form, Input, Radio, Space, Typography } from 'antd';
 import { getNamePath } from 'components/Prescription/utils/form';
 import { formatRamq, RAMQ_PATTERN } from 'components/Prescription/utils/ramq';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
@@ -6,9 +6,12 @@ import RadioDateFormItem from 'components/uiKit/form/RadioDateFormItem';
 import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
 import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
+import { calculateGestationalAgeFromDDM, calculateGestationalAgeFromDPA } from 'utils/age';
 import { SexValue } from 'utils/commonTypes';
 
 import styles from './index.module.scss';
+
+const { Text } = Typography;
 
 type OwnProps = IAnalysisFormPart & {
   showNewBornSection?: boolean;
@@ -47,6 +50,8 @@ const AdditionalInformation = ({
   initialData,
 }: OwnProps) => {
   const [localShowNewBorn, setLocalShowNewBorn] = useState(showNewBornSection);
+  const [gestationalAgeDPA, setGestationalAgeDPA] = useState<number | undefined>(undefined);
+  const [gestationalAgeDDM, setGestationalAgeDDM] = useState<number | undefined>(undefined);
 
   const getName = (key: ADD_INFO_FI_KEY) => getNamePath(parentKey, key);
 
@@ -126,8 +131,18 @@ const AdditionalInformation = ({
                             value: GestationalAgeValues.DDM,
                             name: GestationalAgeValues.DDM,
                           }}
-                          dateFormItemProps={{
-                            name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DDM),
+                          dateInputProps={{
+                            formItemProps: {
+                              name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DDM),
+                            },
+                            extra: gestationalAgeDDM ? <Text>{gestationalAgeDDM}</Text> : <></>,
+                            onValidate: (valid, value) => {
+                              if (!valid && gestationalAgeDDM) {
+                                setGestationalAgeDDM(undefined);
+                              } else {
+                                setGestationalAgeDDM(calculateGestationalAgeFromDDM(value));
+                              }
+                            },
                           }}
                           parentFormItemName={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
                         />
@@ -137,8 +152,18 @@ const AdditionalInformation = ({
                             value: GestationalAgeValues.DPA,
                             name: GestationalAgeValues.DPA,
                           }}
-                          dateFormItemProps={{
-                            name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DPA),
+                          dateInputProps={{
+                            formItemProps: {
+                              name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DPA),
+                            },
+                            extra: gestationalAgeDPA && <>{gestationalAgeDPA}</>,
+                            onValidate: (valid, value) => {
+                              if (!valid && gestationalAgeDPA) {
+                                setGestationalAgeDPA(undefined);
+                              } else {
+                                setGestationalAgeDPA(calculateGestationalAgeFromDPA(value));
+                              }
+                            },
                           }}
                           parentFormItemName={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
                         />

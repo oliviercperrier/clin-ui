@@ -7,6 +7,7 @@ import {
   ICompleteAnalysisChoice,
 } from 'store/prescription/types';
 import { MuscularDiseaseConfig } from './analysis/muscular';
+import { isMuscularAnalysis, isMuscularAnalysisAndNotGlobal } from './helper';
 
 export const PrescriptionState: initialState = {
   prescriptionVisible: false,
@@ -16,8 +17,12 @@ export const PrescriptionState: initialState = {
   analysisData: {},
 };
 
-export const AnalysisConfigMapping = {
-  [AnalysisType.MUSCULAR_DISEASE]: MuscularDiseaseConfig,
+export const getAnalysisConfigMapping = (type: AnalysisType) => {
+  if (isMuscularAnalysis(type)) {
+    return MuscularDiseaseConfig;
+  } else {
+    return undefined; // TODO
+  }
 };
 
 const enrichSteps = (steps: IAnalysisStep[]): IAnalysisStep[] =>
@@ -60,12 +65,16 @@ const prescriptionFormSlice = createSlice({
       state.analysisChoiceVisible = true;
     },
     completeAnalysisChoice: (state, action: PayloadAction<ICompleteAnalysisChoice>) => {
-      let config = AnalysisConfigMapping[action.payload.type];
+      let config = getAnalysisConfigMapping(action.payload.type)!;
 
       config = {
         ...config,
         steps: enrichSteps(config.steps),
       };
+
+      if (isMuscularAnalysisAndNotGlobal(action.payload.type)) {
+        state.analysisData = action.payload.extraData;
+      }
 
       state.analysisType = action.payload.type;
       state.analysisChoiceVisible = false;

@@ -16,13 +16,6 @@
     overflow-wrap: initial;
   }
 
-  a {
-    text-decoration: underline;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
   .transcriptLink {
     display: flex;
     align-items: center;

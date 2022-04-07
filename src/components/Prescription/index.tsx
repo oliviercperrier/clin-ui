@@ -14,13 +14,18 @@ import intl from 'react-intl-universal';
 import { isUndefined } from 'lodash';
 import { AnalysisType } from 'store/prescription/types';
 import MuscularDisease from './Analyses/MuscularDisease';
+import { isMuscularAnalysis } from 'store/prescription/helper';
 
 import styles from './index.module.scss';
 
 const { Title } = Typography;
 
-const AnalysisFormMapping = {
-  [AnalysisType.MUSCULAR_DISEASE]: <MuscularDisease />,
+const getAnalysisForm = (type: AnalysisType) => {
+  if (isMuscularAnalysis(type)) {
+    return <MuscularDisease />;
+  } else {
+    return undefined; // TODO
+  }
 };
 
 const PrescriptionForm = () => {
@@ -71,7 +76,7 @@ const PrescriptionForm = () => {
         <Col span={18}>
           <GridCard
             title={<Title level={3}>{currentStep?.title}</Title>}
-            content={analysisType ? AnalysisFormMapping[analysisType!] : undefined}
+            content={analysisType ? getAnalysisForm(analysisType) : undefined}
             className={styles.prescriptionFormCard}
             bordered={false}
             footer={

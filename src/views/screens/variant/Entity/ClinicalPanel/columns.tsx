@@ -27,18 +27,18 @@ const { Text } = Typography;
 
 export const columnsClinVar = [
   {
-    title: "Interpretation",
+    title: () => intl.get("interpretation"),
     dataIndex: "interpretation",
   },
   {
-    title: "Condition",
+    title: () => intl.get("condition"),
     dataIndex: "condition",
-    width: "25%",
+    width: "33%",
   },
   {
-    title: "Inheritance",
+    title: () => intl.get("inheritance"),
     dataIndex: "inheritance",
-    width: "25%",
+    width: "33%",
   },
 ];
 
@@ -113,7 +113,7 @@ export const columnsPhenotypes = [
           );
       }
     },
-    width: "35%",
+    width: "33%",
   },
   {
     title: () =>
@@ -156,6 +156,6 @@ export const columnsPhenotypes = [
       const inheritance = record.inheritance as SingleValuedInheritance;
       return inheritance || DISPLAY_WHEN_EMPTY_DATUM;
     },
-    width: "35%",
+    width: "33%",
   },
 ];

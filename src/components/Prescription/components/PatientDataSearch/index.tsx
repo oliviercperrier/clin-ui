@@ -4,7 +4,6 @@ import { Bundle, Patient } from 'api/fhir/models';
 import { getRAMQValue } from 'api/fhir/patientHelper';
 import { formatRamq, isRamqValid } from 'components/Prescription/utils/ramq';
 import SearchOrNoneFormItem from 'components/uiKit/form/SearchOrNoneFormItem';
-import MaskedDateInput from 'components/uiKit/input/MaskedDateInput';
 import { useRpt } from 'hooks/rpt';
 import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -13,6 +12,7 @@ import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import { getNamePath } from 'components/Prescription/utils/form';
 import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
 import { SexValue } from 'utils/commonTypes';
+import InputDateFormItem from 'components/uiKit/form/InputDateFormItem';
 
 type OwnProps = IAnalysisFormPart & {
   onRamqSearchStateChange?: (done: boolean) => void;
@@ -27,7 +27,7 @@ export enum PATIENT_DATA_FI_KEY {
   PRESCRIBING_INSTITUTION = 'prescribing_institution',
   FILE_NUMBER = 'file_number',
   NO_FILE = 'no_file',
-  RAMQ_NUMBER = 'ramq_numnber',
+  RAMQ_NUMBER = 'ramq_number',
   NO_RAMQ = 'no_ramq',
   LAST_NAME = 'last_name',
   FIRST_NAME = 'first_name',
@@ -131,7 +131,7 @@ const PatientDataSearch = ({
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
       setFileSearchDone(!!(initialData.no_file || initialData.file_number));
-      setRamqSearchDone(!!(initialData.no_ramq || initialData.ramq_numnber));
+      setRamqSearchDone(!!(initialData.no_ramq || initialData.ramq_number));
 
       form.setFields([
         {
@@ -148,7 +148,7 @@ const PatientDataSearch = ({
         },
         {
           name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-          value: initialData.ramq_numnber,
+          value: initialData.ramq_number,
         },
         {
           name: getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
@@ -318,13 +318,13 @@ const PatientDataSearch = ({
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                name={getName(PATIENT_DATA_FI_KEY.BIRTH_DATE)}
-                label="Date de naissance"
-                rules={[{ required: true }]}
-              >
-                <MaskedDateInput />
-              </Form.Item>
+              <InputDateFormItem
+                formItemProps={{
+                  name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
+                  label: 'Date de naissance',
+                  rules: [{ required: true }],
+                }}
+              />
               <Form.Item
                 name={getName(PATIENT_DATA_FI_KEY.SEX)}
                 label="Sexe"

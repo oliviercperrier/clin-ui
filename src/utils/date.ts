@@ -1,3 +1,5 @@
+export const DATE_FORMAT = 'YYYY-MM-DD';
+
 export const formatDate = (date: string): string => {
   const d = new Date(date);
   const month = `${d.getMonth() + 1}`.padStart(2, '0');
