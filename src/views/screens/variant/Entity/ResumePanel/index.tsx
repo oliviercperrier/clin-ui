@@ -172,7 +172,7 @@ const makeRows = (consequences: ArrangerEdge<ConsequenceEntity>[]) =>
     ].filter(([, , score]) => score),
     conservation: consequence.node.conservations?.phylo_p17way_primate_rankscore,
     transcript: {
-      id: consequence.node.refseq_mrna_id,
+      ids: consequence.node.refseq_mrna_id?.filter((i) => i?.length > 0),
       isCanonical: consequence.node.canonical,
     },
   }));
@@ -273,22 +273,29 @@ const columns = [
   {
     title: () => intl.get('refSeq'),
     dataIndex: 'transcript',
-    render: (transcript: { id: string; isCanonical?: boolean }) =>
-      transcript.id ? (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`https://www.ncbi.nlm.nih.gov/nuccore/${transcript.id}.3?report=graph`}
-          className={styles.transcriptLink}
-        >
-          {transcript.id}
-          {transcript.isCanonical && (
-            <CanonicalIcon className={styles.canonicalIcon} height="14" width="14" />
-          )}
-        </a>
-      ) : (
-        DISPLAY_WHEN_EMPTY_DATUM
-      ),
+    render: (transcript: { ids: string[]; isCanonical?: boolean }) => {
+      
+      if (!transcript.ids || transcript.ids.length === 0) {
+        return DISPLAY_WHEN_EMPTY_DATUM;
+      }
+      
+      return (
+        transcript.ids.map(id => (
+          <a
+            key={id}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`https://www.ncbi.nlm.nih.gov/nuccore/${id}.3?report=graph`}
+            className={styles.transcriptLink}
+          >
+            {id}
+            {transcript.isCanonical && (
+              <CanonicalIcon className={styles.canonicalIcon} height="14" width="14" />
+            )}
+          </a>
+        ))
+      );
+    },
     width: '20%',
   },
 ];
