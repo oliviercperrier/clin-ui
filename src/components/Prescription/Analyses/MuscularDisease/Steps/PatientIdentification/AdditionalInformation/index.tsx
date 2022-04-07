@@ -123,6 +123,7 @@ const AdditionalInformation = ({ form, parentKey, showNewBornSection = false }: 
                   label="RAMQ de la mère"
                   name={getName(ADD_INFO_FI_KEY.MOTHER_RAMQ_NUMBER)}
                   rules={[{ type: 'regexp', pattern: RAMQ_PATTERN }]}
+                  wrapperCol={{ span: 10, sm: 12, xxl: 6 }}
                 >
                   <Input
                     placeholder="AAAA 0000 0000"

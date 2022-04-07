@@ -256,6 +256,7 @@ const PatientDataSearch = ({
                 name={getName(PATIENT_DATA_FI_KEY.LAST_NAME)}
                 label="Nom de famille"
                 rules={[{ required: true }]}
+                wrapperCol={{ span: 10, sm: 12, xxl: 6 }}
               >
                 <Input />
               </Form.Item>
@@ -263,6 +264,7 @@ const PatientDataSearch = ({
                 name={getName(PATIENT_DATA_FI_KEY.FIRST_NAME)}
                 label="Prénom"
                 rules={[{ required: true }]}
+                wrapperCol={{ span: 10, sm: 12, xxl: 6 }}
               >
                 <Input />
               </Form.Item>
