@@ -4,14 +4,16 @@ import {
   AnalysisType,
   IAnalysisStep,
   initialState,
-  IStartPrescription,
+  ICompleteAnalysisChoice,
 } from 'store/prescription/types';
 import { MuscularDiseaseConfig } from './analysis/muscular';
 
 export const PrescriptionState: initialState = {
-  modalVisible: false,
+  prescriptionVisible: false,
+  analysisChoiceVisible: false,
   currentStep: undefined,
   config: undefined,
+  analysisData: {},
 };
 
 export const AnalysisConfigMapping = {
@@ -30,9 +32,12 @@ const prescriptionFormSlice = createSlice({
   name: 'prescriptionForm',
   initialState: PrescriptionState,
   reducers: {
-    cancelPrescription: (state) => ({
-      ...PrescriptionState,
-    }),
+    saveStepData: (state, action: PayloadAction<any>) => {
+      state.analysisData = {
+        ...state.analysisData,
+        ...action.payload,
+      };
+    },
     goTo: (state, action: PayloadAction<number>) => {
       state.currentStep = state.config?.steps[action.payload];
     },
@@ -48,15 +53,23 @@ const prescriptionFormSlice = createSlice({
         state.currentStep = state.config?.steps[previousStepIndex];
       }
     },
-    startPrescription: (state, action: PayloadAction<IStartPrescription>) => {
+    cancel: (state) => ({
+      ...PrescriptionState,
+    }),
+    startAnalyseChoice: (state) => {
+      state.analysisChoiceVisible = true;
+    },
+    completeAnalysisChoice: (state, action: PayloadAction<ICompleteAnalysisChoice>) => {
       let config = AnalysisConfigMapping[action.payload.type];
+
       config = {
         ...config,
         steps: enrichSteps(config.steps),
       };
 
       state.analysisType = action.payload.type;
-      state.modalVisible = true;
+      state.analysisChoiceVisible = false;
+      state.prescriptionVisible = true;
       state.currentStep = config.steps[0];
       state.config = config;
     },

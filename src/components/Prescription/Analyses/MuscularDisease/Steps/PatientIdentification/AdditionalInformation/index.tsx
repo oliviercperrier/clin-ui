@@ -4,6 +4,7 @@ import { formatRamq, RAMQ_PATTERN } from 'components/Prescription/utils/ramq';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import RadioDateFormItem from 'components/uiKit/form/RadioDateFormItem';
 import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
+import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { SexValue } from 'utils/commonTypes';
 
@@ -11,6 +12,7 @@ import styles from './index.module.scss';
 
 type OwnProps = IAnalysisFormPart & {
   showNewBornSection?: boolean;
+  initialData?: IAddInfoDataType;
 };
 
 enum GestationalAgeValues {
@@ -19,13 +21,13 @@ enum GestationalAgeValues {
 }
 
 export enum ADD_INFO_FI_KEY {
-  GESTATIONAL_AGE = 'gestational_age',
-  GESTATIONAL_AGE_DDM = 'gestational_age_ddm',
-  GESTATIONAL_AGE_DPA = 'gestational_age_dpa',
-  PRENATAL_DIAGNOSIS = 'prenatal_diagnosis',
-  FOETUS_SEX = 'foetus_sex',
-  NEW_BORN = 'new_born',
-  MOTHER_RAMQ_NUMBER = 'mother_ramq_number',
+  GESTATIONAL_AGE = 'additional_info_gestational_age',
+  GESTATIONAL_AGE_DDM = 'additional_info_gestational_age_ddm',
+  GESTATIONAL_AGE_DPA = 'additional_info_gestational_age_dpa',
+  PRENATAL_DIAGNOSIS = 'additional_info_prenatal_diagnosis',
+  FOETUS_SEX = 'additional_info_foetus_sex',
+  NEW_BORN = 'additional_info_new_born',
+  MOTHER_RAMQ_NUMBER = 'additional_info_mother_ramq_number',
 }
 
 export interface IAddInfoDataType {
@@ -38,7 +40,12 @@ export interface IAddInfoDataType {
   [ADD_INFO_FI_KEY.MOTHER_RAMQ_NUMBER]: string;
 }
 
-const AdditionalInformation = ({ form, parentKey, showNewBornSection = false }: OwnProps) => {
+const AdditionalInformation = ({
+  form,
+  parentKey,
+  showNewBornSection = false,
+  initialData,
+}: OwnProps) => {
   const [localShowNewBorn, setLocalShowNewBorn] = useState(showNewBornSection);
 
   const getName = (key: ADD_INFO_FI_KEY) => getNamePath(parentKey, key);
@@ -48,6 +55,41 @@ const AdditionalInformation = ({ form, parentKey, showNewBornSection = false }: 
       setLocalShowNewBorn(showNewBornSection);
     }
   }, [showNewBornSection]);
+
+  useEffect(() => {
+    if (initialData && !isEmpty(initialData)) {
+      form.setFields([
+        {
+          name: getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS),
+          value: initialData.additional_info_prenatal_diagnosis,
+        },
+        {
+          name: getName(ADD_INFO_FI_KEY.NEW_BORN),
+          value: initialData.additional_info_new_born,
+        },
+        {
+          name: getName(ADD_INFO_FI_KEY.FOETUS_SEX),
+          value: initialData.additional_info_foetus_sex,
+        },
+        {
+          name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE),
+          value: initialData.additional_info_gestational_age,
+        },
+        {
+          name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DDM),
+          value: initialData.additional_info_gestational_age_ddm,
+        },
+        {
+          name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DPA),
+          value: initialData.additional_info_gestational_age_dpa,
+        },
+        {
+          name: getName(ADD_INFO_FI_KEY.MOTHER_RAMQ_NUMBER),
+          value: initialData.additional_info_mother_ramq_number,
+        },
+      ]);
+    }
+  }, []);
 
   return (
     <Form.Item noStyle shouldUpdate>

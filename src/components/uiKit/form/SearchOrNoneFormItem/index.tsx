@@ -7,6 +7,7 @@ import {
   FormItemProps,
   Input,
   Space,
+  Typography,
 } from 'antd';
 import { NamePath } from 'antd/lib/form/interface';
 import { SearchProps } from 'antd/lib/input';
@@ -63,7 +64,6 @@ const SearchOrNoneFormItem = <TSearchResult,>({
       })
       .finally(() => {
         setIsLoading(false);
-        setIsDisabled(true);
       });
   };
 
@@ -99,10 +99,8 @@ const SearchOrNoneFormItem = <TSearchResult,>({
                   />
                 </Form.Item>
                 {isDisabled && (
-                  <Button
-                    size="small"
-                    type="link"
-                    className={styles.resetBtn}
+                  <Typography.Link
+                    className={styles.resetLink}
                     onClick={() => {
                       form.resetFields([inputFormItemProps.name, checkboxFormItemProps.name]);
                       setIsDisabled(false);
@@ -112,7 +110,7 @@ const SearchOrNoneFormItem = <TSearchResult,>({
                     }}
                   >
                     Réinitialisé
-                  </Button>
+                  </Typography.Link>
                 )}
               </Space>
             </Form.Item>

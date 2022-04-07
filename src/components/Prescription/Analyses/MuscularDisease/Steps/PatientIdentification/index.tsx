@@ -1,37 +1,35 @@
 import { Collapse, Form, Space } from 'antd';
 import AnalysisForm from 'components/Prescription/Analyses/AnalysisForm';
 import PatientDataSearch, {
-  InstitutionValue,
   IPatientDataType,
   PATIENT_DATA_FI_KEY,
 } from 'components/Prescription/components/PatientDataSearch';
 import { getNamePath } from 'components/Prescription/utils/form';
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
-import { useEffect, useState } from 'react';
-import {
-  ADDITIONAL_INFO_WRAPPER_KEY,
-  MuscularDiseaseFormName,
-  PATIENT_IDENTIFICATION_NAME_PATH,
-} from 'store/prescription/analysis/muscular';
+import { useState } from 'react';
+import { usePrescriptionForm } from 'store/prescription';
+import { MuscularDiseaseFormName } from 'store/prescription/analysis/muscular';
 import AdditionalInformation, { ADD_INFO_FI_KEY, IAddInfoDataType } from './AdditionalInformation';
 
 import styles from './index.module.scss';
 
+export type TPatientFormDataContent = IPatientDataType & IAddInfoDataType;
 export interface IPatientFormDataType {
-  [MuscularDiseaseFormName.PATIENT_IDENTIFICATION]: IPatientDataType & {
-    [ADDITIONAL_INFO_WRAPPER_KEY]: IAddInfoDataType;
-  };
+  [MuscularDiseaseFormName.PATIENT_IDENTIFICATION]: TPatientFormDataContent;
 }
 
 const PatientIdentification = (props: IAnalysisStepForm) => {
   const [form] = Form.useForm();
+  const { analysisData } = usePrescriptionForm();
   const [ramqSearchDone, setRamqSearchDone] = useState(false);
   const [fileSearchDone, setFileSearchDone] = useState(false);
   const FORM_NAME = props.formName;
-  const ADD_INFO_NAME_PATH = PATIENT_IDENTIFICATION_NAME_PATH.ADDITIONAL_INFO_NAME_PATH;
 
   const getName = (key: string) => getNamePath(FORM_NAME, key);
-  const getAddInfoName = (key: string) => getNamePath(ADD_INFO_NAME_PATH, key);
+  const getInitialData = () =>
+    analysisData
+      ? (analysisData[MuscularDiseaseFormName.PATIENT_IDENTIFICATION] as TPatientFormDataContent)
+      : undefined;
 
   return (
     <AnalysisForm form={form} className={styles.patientIdentificationForm} name={FORM_NAME}>
@@ -45,12 +43,13 @@ const PatientIdentification = (props: IAnalysisStepForm) => {
               onFileSearchStateChange={setFileSearchDone}
               initialFileSearchDone={fileSearchDone}
               initialRamqSearchDone={ramqSearchDone}
+              initialData={getInitialData()}
               onResetRamq={() => {
                 form.resetFields([
-                  getAddInfoName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS),
-                  getAddInfoName(ADD_INFO_FI_KEY.FOETUS_SEX),
-                  getAddInfoName(ADD_INFO_FI_KEY.GESTATIONAL_AGE),
-                  getAddInfoName(ADD_INFO_FI_KEY.NEW_BORN),
+                  getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS),
+                  getName(ADD_INFO_FI_KEY.FOETUS_SEX),
+                  getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE),
+                  getName(ADD_INFO_FI_KEY.NEW_BORN),
                 ]);
               }}
             />
@@ -63,8 +62,9 @@ const PatientIdentification = (props: IAnalysisStepForm) => {
                 <Collapse.Panel key="additional_information" header="Information supplémentaires">
                   <AdditionalInformation
                     form={form}
-                    parentKey={ADD_INFO_NAME_PATH}
+                    parentKey={FORM_NAME}
                     showNewBornSection={getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))}
+                    initialData={getInitialData()}
                   />
                 </Collapse.Panel>
               </Collapse>

@@ -5,8 +5,11 @@ import PatientIdentification from './Steps/PatientIdentification';
 import Submission from './Steps/Submission';
 import { usePrescriptionForm } from 'store/prescription';
 import { Form } from 'antd';
+import { useDispatch } from 'react-redux';
+import { prescriptionFormActions } from 'store/prescription/slice';
 
 const MuscularDisease = () => {
+  const dispatch = useDispatch();
   const { currentStep, config } = usePrescriptionForm();
 
   const getCurrentStepForm = () => {
@@ -31,7 +34,9 @@ const MuscularDisease = () => {
       onFormFinish={(formName, info) => {
         // Handle every form submission here
         console.log('Form name: ', formName);
-        console.log('Form data: ', info);
+        console.log('Form data: ', info.values);
+        
+        dispatch(prescriptionFormActions.saveStepData(info.values))
       }}
     >
       {getCurrentStepForm()}

@@ -25,12 +25,13 @@ const AnalysisFormMapping = {
 
 const PrescriptionForm = () => {
   const dispatch = useDispatch();
-  const { modalVisible, analysisType, currentStep, currentFormSubmitRef } = usePrescriptionForm();
+  const { prescriptionVisible, analysisType, currentStep, currentFormSubmitRef } =
+    usePrescriptionForm();
 
   return (
     <Modal
       className={styles.createPrescriptionModal}
-      visible={modalVisible}
+      visible={prescriptionVisible}
       title={
         <Space className={styles.modalHeader} align="center">
           <Title level={4}>Prescription d'analyse</Title>
@@ -50,7 +51,7 @@ const PrescriptionForm = () => {
                 okButtonProps: { danger: true },
                 onOk: (close) => {
                   close();
-                  dispatch(prescriptionFormActions.cancelPrescription());
+                  dispatch(prescriptionFormActions.cancel());
                 },
               })
             }
@@ -93,7 +94,7 @@ const PrescriptionForm = () => {
                   ) : (
                     <Button
                       type="primary"
-                      onClick={() => (currentFormSubmitRef ? currentFormSubmitRef() : {})}
+                      onClick={() => currentFormSubmitRef && currentFormSubmitRef()}
                     >
                       Suivant <ArrowRightOutlined />
                     </Button>

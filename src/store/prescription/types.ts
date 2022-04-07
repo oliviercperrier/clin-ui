@@ -1,16 +1,18 @@
 export type initialState = {
-  modalVisible: boolean;
+  analysisChoiceVisible: boolean;
+  prescriptionVisible: boolean;
   currentFormSubmitRef?: Function;
   currentStep?: IAnalysisStep;
   analysisType?: AnalysisType;
   config?: IAnalysisConfig;
+  analysisData: any; // TODO add type for each Analysis Data Type
 };
 
 export enum AnalysisType {
   MUSCULAR_DISEASE = 'muscular',
 }
 
-export interface IStartPrescription {
+export interface ICompleteAnalysisChoice {
   type: AnalysisType;
 }
 

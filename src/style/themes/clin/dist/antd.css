@@ -36,7 +36,7 @@ body {
   margin: 0;
   color: #364a63;
   font-size: 14px;
-  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Roboto', BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   font-variant: tabular-nums;
   line-height: 1.5715;
   background-color: #fff;
@@ -129,8 +129,8 @@ sup {
   top: -0.5em;
 }
 a {
-  color: #0a5085;
-  text-decoration: none;
+  color: #006AA3;
+  text-decoration: underline;
   background-color: transparent;
   outline: none;
   cursor: pointer;
@@ -141,7 +141,7 @@ a:hover {
   color: #006AA3;
 }
 a:active {
-  color: #03345e;
+  color: #004d7d;
 }
 a:active,
 a:hover {
@@ -192,7 +192,7 @@ table {
 caption {
   padding-top: 0.75em;
   padding-bottom: 0.3em;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   text-align: left;
   caption-side: bottom;
 }
@@ -1283,7 +1283,7 @@ html {
   color: #23a4d7;
 }
 .ant-alert-warning {
-  background-color: #FFF1B8;
+  background-color: #fff1b8;
   border: 1px solid #ffe58f;
 }
 .ant-alert-warning .ant-alert-icon {
@@ -1315,14 +1315,14 @@ html {
   cursor: pointer;
 }
 .ant-alert-close-icon .anticon-close {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   transition: color 0.3s;
 }
 .ant-alert-close-icon .anticon-close:hover {
   color: #364a63;
 }
 .ant-alert-close-text {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   transition: color 0.3s;
 }
 .ant-alert-close-text:hover {
@@ -1637,7 +1637,7 @@ html {
   overflow: hidden;
   color: #fff;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: #63768f;
   border-radius: 20px;
   transition: all 0.3s;
 }
@@ -2099,18 +2099,18 @@ html {
   line-height: 1.5715;
   list-style: none;
   font-feature-settings: 'tnum';
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
 }
 .ant-breadcrumb .anticon {
   font-size: 14px;
 }
 .ant-breadcrumb a {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   transition: color 0.3s;
 }
 .ant-breadcrumb a:hover {
-  color: #0a5085;
+  color: #006AA3;
 }
 .ant-breadcrumb > span:last-child {
   color: #364a63;
@@ -2123,7 +2123,7 @@ html {
 }
 .ant-breadcrumb-separator {
   margin: 0 8px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-breadcrumb-link > .anticon + span,
 .ant-breadcrumb-link > .anticon + a {
@@ -2661,7 +2661,7 @@ html {
   content: '';
 }
 .ant-btn-link {
-  color: #0a5085;
+  color: #006AA3;
   border-color: transparent;
   background: transparent;
   box-shadow: none;
@@ -4396,7 +4396,7 @@ a.ant-btn-sm {
 .ant-card-actions > li {
   float: left;
   margin: 12px 0;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   text-align: center;
 }
 .ant-card-rtl .ant-card-actions > li {
@@ -4418,7 +4418,7 @@ a.ant-btn-sm {
 .ant-card-actions > li > span > .anticon {
   display: inline-block;
   width: 100%;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   line-height: 22px;
   transition: color 0.3s;
 }
@@ -4496,7 +4496,7 @@ a.ant-btn-sm {
   text-overflow: ellipsis;
 }
 .ant-card-meta-description {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-card-loading {
   overflow: hidden;
@@ -5096,7 +5096,7 @@ a.ant-btn-sm {
 .ant-cascader-menu-item-expand .ant-cascader-menu-item-expand-icon,
 .ant-cascader-menu-item-loading-icon {
   margin-left: 4px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 10px;
 }
 .ant-cascader-menu-item-disabled.ant-cascader-menu-item-expand .ant-cascader-menu-item-expand-icon,
@@ -5510,15 +5510,15 @@ a.ant-btn-sm {
   line-height: 18px;
 }
 .ant-comment-content-author-name {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
   transition: color 0.3s;
 }
 .ant-comment-content-author-name > * {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-comment-content-author-name > *:hover {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-comment-content-author-time {
   color: #ccc;
@@ -5536,11 +5536,11 @@ a.ant-btn-sm {
 }
 .ant-comment-actions > li {
   display: inline-block;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-comment-actions > li > span {
   margin-right: 10px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 12px;
   cursor: pointer;
   transition: color 0.3s;
@@ -5827,7 +5827,7 @@ textarea.ant-picker-input > input {
   vertical-align: top;
 }
 .ant-picker-clear:hover {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-picker-separator {
   position: relative;
@@ -5840,7 +5840,7 @@ textarea.ant-picker-input > input {
   cursor: default;
 }
 .ant-picker-focused .ant-picker-separator {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-picker-disabled .ant-picker-range-separator .ant-picker-separator {
   cursor: not-allowed;
@@ -6326,13 +6326,13 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
   text-align: left;
 }
 .ant-picker-today-btn {
-  color: #0a5085;
+  color: #006AA3;
 }
 .ant-picker-today-btn:hover {
   color: #006AA3;
 }
 .ant-picker-today-btn:active {
-  color: #03345e;
+  color: #004d7d;
 }
 .ant-picker-today-btn.ant-picker-today-btn-disabled {
   color: #8b9db2;
@@ -7012,7 +7012,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 .ant-drawer-close {
   display: inline-block;
   margin-right: 12px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-weight: 700;
   font-size: 16px;
   font-style: normal;
@@ -7229,7 +7229,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 }
 .ant-dropdown-menu-item-group-title {
   padding: 5px 12px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   transition: all 0.3s;
 }
 .ant-dropdown-menu-submenu-popup {
@@ -7327,7 +7327,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 .ant-dropdown-menu-item .ant-dropdown-menu-submenu-expand-icon .ant-dropdown-menu-submenu-arrow-icon,
 .ant-dropdown-menu-submenu-title .ant-dropdown-menu-submenu-expand-icon .ant-dropdown-menu-submenu-arrow-icon {
   margin-right: 0 !important;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 10px;
   font-style: normal;
 }
@@ -7827,7 +7827,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   width: 100%;
   margin-bottom: 20px;
   padding: 0;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 16px;
   line-height: inherit;
   border: 0;
@@ -7950,13 +7950,13 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 .ant-form-item-label > label .ant-form-item-optional {
   display: inline-block;
   margin-left: 4px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-form-hide-required-mark .ant-form-item-label > label .ant-form-item-optional {
   display: none;
 }
 .ant-form-item-label > label .ant-form-item-tooltip {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   cursor: help;
   writing-mode: horizontal-tb;
   margin-inline-start: 4px;
@@ -7991,7 +7991,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 .ant-form-item-explain,
 .ant-form-item-extra {
   clear: both;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
   line-height: 1.5715;
   transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -13675,7 +13675,7 @@ textarea.ant-input-affix-wrapper {
   margin-right: 8px;
 }
 .ant-input-show-count-suffix {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-input-show-count-has-suffix {
   margin-right: 2px;
@@ -13697,7 +13697,7 @@ textarea.ant-input-affix-wrapper {
 }
 .anticon.ant-input-clear-icon:hover,
 .ant-input-clear-icon:hover {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .anticon.ant-input-clear-icon:active,
 .ant-input-clear-icon:active {
@@ -14260,7 +14260,7 @@ textarea.ant-input {
   vertical-align: top;
 }
 .ant-input-password-icon.anticon {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -14283,7 +14283,7 @@ textarea.ant-input {
 }
 .ant-input-textarea-show-count::after {
   float: right;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   white-space: nowrap;
   content: attr(data-count);
   pointer-events: none;
@@ -14313,7 +14313,7 @@ textarea.ant-input {
   border-radius: 0 2px 2px 0;
 }
 .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary).ant-btn-loading::before {
   top: 0;
@@ -15076,7 +15076,7 @@ textarea.ant-input-number {
   width: 100%;
   height: 50%;
   overflow: hidden;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-weight: bold;
   line-height: 0;
   text-align: center;
@@ -15106,7 +15106,7 @@ textarea.ant-input-number {
   right: 4px;
   width: 12px;
   height: 12px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   line-height: 12px;
   transition: all 0.1s linear;
   user-select: none;
@@ -15423,11 +15423,11 @@ textarea.ant-input-number {
   background: #fff;
 }
 .ant-layout-sider-light .ant-layout-sider-trigger {
-  color: #0a5085;
+  color: #006AA3;
   background: #fff;
 }
 .ant-layout-sider-light .ant-layout-sider-zero-width-trigger {
-  color: #0a5085;
+  color: #006AA3;
   background: #fff;
 }
 .ant-layout-rtl {
@@ -15513,7 +15513,7 @@ textarea.ant-input-number {
   color: #006AA3;
 }
 .ant-list-item-meta-description {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
   line-height: 1.5715;
 }
@@ -15528,7 +15528,7 @@ textarea.ant-input-number {
   position: relative;
   display: inline-block;
   padding: 0 8px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
   line-height: 1.5715;
   text-align: center;
@@ -15558,7 +15558,7 @@ textarea.ant-input-number {
 }
 .ant-list-empty {
   padding: 16px 0;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 12px;
   text-align: center;
 }
@@ -16154,7 +16154,7 @@ textarea.ant-mentions {
 .ant-menu-item-group-title {
   height: 1.5715;
   padding: 8px 16px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
   line-height: 1.5715;
   transition: all 0.3s;
@@ -17136,7 +17136,7 @@ textarea.ant-mentions {
   right: 0;
   z-index: 10;
   padding: 0;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-weight: 700;
   line-height: 1;
   text-decoration: none;
@@ -17438,11 +17438,11 @@ textarea.ant-mentions {
   position: absolute;
   top: 16px;
   right: 22px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   outline: none;
 }
 .ant-notification-notice-close:hover {
-  color: rgba(0, 0, 0, 0.67);
+  color: #3b4756;
 }
 .ant-notification-notice-btn {
   float: right;
@@ -17566,7 +17566,7 @@ textarea.ant-mentions {
   line-height: 1;
 }
 .ant-page-header-back-button {
-  color: #0a5085;
+  color: #006AA3;
   text-decoration: none;
   outline: none;
   transition: color 0.3s;
@@ -17578,7 +17578,7 @@ textarea.ant-mentions {
   color: #006AA3;
 }
 .ant-page-header-back-button:active {
-  color: #03345e;
+  color: #004d7d;
 }
 .ant-page-header .ant-divider-vertical {
   height: 14px;
@@ -17614,7 +17614,7 @@ textarea.ant-mentions {
 }
 .ant-page-header-heading-sub-title {
   margin-right: 12px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
   line-height: 1.5715;
   overflow: hidden;
@@ -17722,7 +17722,7 @@ textarea.ant-mentions {
   min-width: 32px;
   height: 32px;
   margin-right: 8px;
-  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Roboto', BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   line-height: 30px;
   text-align: center;
   vertical-align: middle;
@@ -17847,7 +17847,7 @@ textarea.ant-mentions {
   min-width: 32px;
   height: 32px;
   color: #364a63;
-  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Roboto', BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   line-height: 32px;
   text-align: center;
   vertical-align: middle;
@@ -19184,7 +19184,7 @@ span.ant-radio + * {
   text-align: center;
 }
 .ant-result-subtitle {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
   line-height: 1.6;
   text-align: center;
@@ -19414,7 +19414,7 @@ span.ant-radio + * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: inline-block;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-weight: bold;
   font-size: 10px;
   line-height: inherit;
@@ -19449,7 +19449,7 @@ span.ant-radio + * {
 .ant-select-multiple .ant-select-selection-search-input,
 .ant-select-multiple .ant-select-selection-search-mirror {
   height: 24px;
-  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Roboto', BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   line-height: 24px;
   transition: all 0.3s;
 }
@@ -19747,7 +19747,7 @@ span.ant-radio + * {
   display: block;
 }
 .ant-select-clear:hover {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-select:hover .ant-select-clear {
   opacity: 1;
@@ -19818,7 +19818,7 @@ span.ant-radio + * {
   transition: background 0.3s ease;
 }
 .ant-select-item-group {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 12px;
   cursor: default;
 }
@@ -20325,7 +20325,7 @@ span.ant-radio + * {
 .ant-slider-mark-text {
   position: absolute;
   display: inline-block;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   text-align: center;
   word-break: keep-all;
   cursor: pointer;
@@ -20506,7 +20506,7 @@ span.ant-radio + * {
   pointer-events: auto;
 }
 .ant-spin-tip {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-spin-dot {
   position: relative;
@@ -20609,13 +20609,13 @@ span.ant-radio + * {
 }
 .ant-statistic-title {
   margin-bottom: 4px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
 }
 .ant-statistic-content {
   color: #0a5085;
   font-size: 24px;
-  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Roboto', BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 .ant-statistic-content-value {
   display: inline-block;
@@ -20684,7 +20684,7 @@ span.ant-radio + * {
   height: 32px;
   margin: 0 8px 0 0;
   font-size: 16px;
-  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'Roboto', BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   line-height: 32px;
   text-align: center;
   border: 1px solid #8b9db2;
@@ -20734,12 +20734,12 @@ span.ant-radio + * {
 .ant-steps-item-subtitle {
   display: inline;
   margin-left: 8px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-weight: normal;
   font-size: 14px;
 }
 .ant-steps-item-description {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
 }
 .ant-steps-item-wait .ant-steps-item-icon {
@@ -20753,13 +20753,13 @@ span.ant-radio + * {
   background: #8b9db2;
 }
 .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
   background-color: #e1e8ef;
 }
 .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-description {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-tail::after {
   background-color: #e1e8ef;
@@ -20812,7 +20812,7 @@ span.ant-radio + * {
   background-color: #006AA3;
 }
 .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-description {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
   background-color: #006AA3;
@@ -20926,7 +20926,7 @@ span.ant-radio + * {
   top: 12px;
 }
 .ant-steps-small .ant-steps-item-description {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
 }
 .ant-steps-small .ant-steps-item-tail {
@@ -21914,7 +21914,7 @@ td.ant-table-column-sort {
   transition: all 0.3s;
 }
 .ant-table-filter-trigger:hover {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   background: #eaf3fa;
 }
 .ant-table-filter-trigger.active {
@@ -22045,7 +22045,7 @@ table tr th.ant-table-selection-column::after {
   height: 1px;
 }
 .ant-table-row-expand-icon {
-  color: #0a5085;
+  color: #006AA3;
   text-decoration: none;
   cursor: pointer;
   transition: color 0.3s;
@@ -22071,7 +22071,7 @@ table tr th.ant-table-selection-column::after {
   color: #006AA3;
 }
 .ant-table-row-expand-icon:active {
-  color: #03345e;
+  color: #004d7d;
 }
 .ant-table-row-expand-icon:focus,
 .ant-table-row-expand-icon:hover,
@@ -22687,7 +22687,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 .ant-tabs-dropdown-menu-item-remove {
   flex: none;
   margin-left: 12px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 12px;
   background: transparent;
   border: 0;
@@ -22901,7 +22901,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   flex: none;
   margin-right: -4px;
   margin-left: 8px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 12px;
   background: transparent;
   border: none;
@@ -22990,7 +22990,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
 }
 .ant-tag-close-icon {
   margin-left: 3px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 10px;
   cursor: pointer;
   transition: all 0.3s;
@@ -23868,7 +23868,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   text-overflow: ellipsis;
 }
 .ant-transfer-list-content-item-remove {
-  color: #0a5085;
+  color: #006AA3;
   text-decoration: none;
   outline: none;
   cursor: pointer;
@@ -23881,7 +23881,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   color: #006AA3;
 }
 .ant-transfer-list-content-item-remove:active {
-  color: #03345e;
+  color: #004d7d;
 }
 .ant-transfer-list-content-item-remove::after {
   position: absolute;
@@ -24945,7 +24945,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   overflow-wrap: break-word;
 }
 .ant-typography.ant-typography-secondary {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-typography.ant-typography-success {
   color: #52c41a;
@@ -25081,11 +25081,12 @@ span.ant-typography-ellipsis {
 }
 a.ant-typography,
 .ant-typography a {
-  color: #0a5085;
+  color: #006AA3;
+  text-decoration: none;
   outline: none;
   cursor: pointer;
   transition: color 0.3s;
-  text-decoration: none;
+  text-decoration: underline;
 }
 a.ant-typography:focus,
 .ant-typography a:focus,
@@ -25095,7 +25096,7 @@ a.ant-typography:hover,
 }
 a.ant-typography:active,
 .ant-typography a:active {
-  color: #03345e;
+  color: #004d7d;
 }
 a.ant-typography:active,
 .ant-typography a:active,
@@ -25162,7 +25163,7 @@ a.ant-typography.ant-typography-disabled:active,
 .ant-typography-expand,
 .ant-typography-edit,
 .ant-typography-copy {
-  color: #0a5085;
+  color: #006AA3;
   text-decoration: none;
   outline: none;
   cursor: pointer;
@@ -25180,7 +25181,7 @@ a.ant-typography.ant-typography-disabled:active,
 .ant-typography-expand:active,
 .ant-typography-edit:active,
 .ant-typography-copy:active {
-  color: #03345e;
+  color: #004d7d;
 }
 .ant-typography-copy-success,
 .ant-typography-copy-success:hover,
@@ -25199,7 +25200,7 @@ div.ant-typography-edit-content {
   position: absolute;
   right: 10px;
   bottom: 8px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-weight: normal;
   font-size: 14px;
   font-style: normal;
@@ -25399,7 +25400,7 @@ div.ant-typography-edit-content.ant-typography-rtl {
   font-size: 16px;
 }
 .ant-upload.ant-upload-drag p.ant-upload-hint {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
 }
 .ant-upload.ant-upload-drag .anticon-plus {
@@ -25408,10 +25409,10 @@ div.ant-typography-edit-content.ant-typography-rtl {
   transition: all 0.3s;
 }
 .ant-upload.ant-upload-drag .anticon-plus:hover {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-upload.ant-upload-drag:hover .anticon-plus {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-upload-picture-card-wrapper {
   display: inline-block;
@@ -25499,7 +25500,7 @@ div.ant-typography-edit-content.ant-typography-rtl {
   opacity: 1;
 }
 .ant-upload-list-item-card-actions .anticon {
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
 }
 .ant-upload-list-item-info {
   height: 100%;
@@ -25515,14 +25516,14 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-upload-list-item-info .ant-upload-text-icon .anticon {
   position: absolute;
   top: 5px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 14px;
 }
 .ant-upload-list-item .anticon-close {
   position: absolute;
   top: 6px;
   right: 4px;
-  color: rgba(0, 0, 0, 0.45);
+  color: #63768f;
   font-size: 10px;
   line-height: 0;
   cursor: pointer;
@@ -26211,6 +26212,18 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
   background-color: #23a4d7;
+}
+.ant-form-item {
+  transition: margin-bottom 0s;
+}
+.ant-form-item:last-child {
+  margin-bottom: 0;
+}
+.ant-typographya {
+  text-decoration: underline !important;
+}
+.ant-typographya:hover {
+  text-decoration: none;
 }
 body {
   color: #364a63;

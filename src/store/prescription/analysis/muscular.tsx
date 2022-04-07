@@ -6,6 +6,8 @@ export enum MuscularDiseaseFormName {
   SUBMISSION = 'submission',
 }
 
+export interface IMuscularDiseaseAnalyseData {}
+
 export const MuscularDiseaseConfig = {
   analysisTitle: 'Maladies musculaires',
   steps: [
@@ -33,14 +35,6 @@ export const MuscularDiseaseConfig = {
 };
 
 // PATIENT_IDENTIFICATION STEP
-export const ADDITIONAL_INFO_WRAPPER_KEY = 'additional_information';
-export const PATIENT_IDENTIFICATION_NAME_PATH = {
-  ADDITIONAL_INFO_WRAPPER_KEY: ADDITIONAL_INFO_WRAPPER_KEY,
-  ADDITIONAL_INFO_NAME_PATH: [
-    MuscularDiseaseFormName.PATIENT_IDENTIFICATION,
-    ADDITIONAL_INFO_WRAPPER_KEY,
-  ],
-};
 
 // CLINICAL_SIGNS STEP
 

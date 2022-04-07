@@ -20,6 +20,7 @@ type OwnProps = IAnalysisFormPart & {
   onResetRamq?: () => void;
   initialFileSearchDone?: boolean;
   initialRamqSearchDone?: boolean;
+  initialData?: IPatientDataType;
 };
 
 export enum PATIENT_DATA_FI_KEY {
@@ -40,6 +41,7 @@ export enum InstitutionValue {
 }
 
 export interface IPatientDataType {
+  [PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION]: InstitutionValue;
   [PATIENT_DATA_FI_KEY.BIRTH_DATE]: string;
   [PATIENT_DATA_FI_KEY.FILE_NUMBER]: string;
   [PATIENT_DATA_FI_KEY.NO_FILE]: boolean;
@@ -58,6 +60,7 @@ const PatientDataSearch = ({
   onResetRamq,
   initialFileSearchDone = false,
   initialRamqSearchDone = false,
+  initialData,
 }: OwnProps) => {
   const { rpt } = useRpt();
   const [fileSearchDone, setFileSearchDone] = useState(initialFileSearchDone);
@@ -125,6 +128,52 @@ const PatientDataSearch = ({
     [fileSearchDone],
   );
 
+  useEffect(() => {
+    if (initialData && !isEmpty(initialData)) {
+      setFileSearchDone(!!(initialData.no_file || initialData.file_number));
+      setRamqSearchDone(!!(initialData.no_ramq || initialData.ramq_numnber));
+
+      form.setFields([
+        {
+          name: getName(PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION),
+          value: initialData.prescribing_institution,
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.FILE_NUMBER),
+          value: initialData.file_number,
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.NO_FILE),
+          value: initialData.no_file,
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
+          value: initialData.ramq_numnber,
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
+          value: initialData.no_ramq,
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.FIRST_NAME),
+          value: initialData.first_name,
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.LAST_NAME),
+          value: initialData.last_name,
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
+          value: initialData.birth_date,
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.SEX),
+          value: initialData.sex,
+        },
+      ]);
+    }
+  }, []);
+
   return (
     <>
       <Form.Item
@@ -177,6 +226,7 @@ const PatientDataSearch = ({
               }}
               apiPromise={(value) => FhirApi.checkRamq(rpt, value)}
               disabled={
+                fileSearchDone ||
                 (ramqSearchDone && form.getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_FILE))) ||
                 getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))
               }

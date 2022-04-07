@@ -1,0 +1,9 @@
+.labelWithInfo {
+    display: flex;
+    align-items: center;
+
+    .infoIconWrapper {
+        display: flex;
+        margin-left: 4px;
+    }
+}

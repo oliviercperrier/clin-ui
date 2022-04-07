@@ -97,11 +97,7 @@ const ContentHeader = ({
         className="buttonCreatePrescription"
         onClick={(e) => {
           if (isEnabled) {
-            dispatch(
-              prescriptionFormActions.startPrescription({
-                type: AnalysisType.MUSCULAR_DISEASE,
-              }),
-            );
+            dispatch(prescriptionFormActions.startAnalyseChoice());
           } else {
             createPrescription();
           }

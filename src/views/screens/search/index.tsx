@@ -6,6 +6,7 @@ import ApolloProvider from 'providers/apollo';
 
 import PatientsPrescriptions from 'views/screens/search/PatientsPrescriptions';
 import PrescriptionForm from 'components/Prescription';
+import AnalysisChoice from 'components/Prescription/AnalysisChoice';
 
 const { Content } = Layout;
 
@@ -14,6 +15,7 @@ const SearchScreen = (): React.ReactElement => (
     <Content>
       <ApolloProvider backend={GraphqlBackend.ARRANGER}>
         <PatientsPrescriptions />
+        <AnalysisChoice />
         <PrescriptionForm />
       </ApolloProvider>
     </Content>

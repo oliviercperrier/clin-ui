@@ -1,21 +1,23 @@
-@import "../../../../node_modules/antd/dist/antd.less";
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap");
-@import "./colors.less";
-@import "./antd/table.less";
-@import "./antd/collapse.less";
-@import "./antd/checkbox.less";
-@import "./antd/tags.less";
-@import "./antd/inputs.less";
-@import "./antd/selects.less";
-@import "./antd/tabs.less";
-@import "./antd/buttons.less";
-@import "./antd/drawer.less";
-@import "./antd/description.less";
-@import "./antd/steps.less";
+@import '../../../../node_modules/antd/dist/antd.less';
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap');
+@import './colors.less';
+@import './antd/table.less';
+@import './antd/collapse.less';
+@import './antd/checkbox.less';
+@import './antd/tags.less';
+@import './antd/inputs.less';
+@import './antd/selects.less';
+@import './antd/tabs.less';
+@import './antd/buttons.less';
+@import './antd/drawer.less';
+@import './antd/description.less';
+@import './antd/steps.less';
+@import './antd/forms.less';
+@import './antd/typography.less';
 
 // Text colors
-@font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+@font-family: 'Roboto', BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 @heading-color: @blue-9;
 @text-selection-bg: @gray-3;
 @font-size-base: 14px;
@@ -33,7 +35,7 @@ body {
 @text-selection-bg: @blue-3;
 @text-color-secondary: @blue-3;
 @text-color: @gray-8;
-@text-color-secondary: fade(@black, 45%);
+@text-color-secondary: @gray-7;
 @heading-2-size: 24px;
 @heading-3-size: 20px;
 @heading-4-size: 16px;
@@ -64,8 +66,9 @@ body {
 @typography-title-margin-bottom: 0;
 
 // LINK
-@link-color: @blue-9;
+@link-color: @blue-8;
 @link-hover-color: @blue-8;
+@link-decoration: underline;
 
 // Outline
 @outline-width: 1px;
@@ -97,7 +100,8 @@ body {
   border-color: @radio-disabled-button-checked-bg;
 }
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within,
-.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within {
+.ant-radio-group-solid
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within {
   box-shadow: none;
 }
 
@@ -132,7 +136,7 @@ body {
 @alert-message-color: @text-color;
 @alert-close-color: @text-color-secondary;
 @alert-close-hover-color: @text-color;
-@alert-warning-bg-color: #FFF1B8;
+@alert-warning-bg-color: #fff1b8;
 @alert-error-bg-color: @red-0;
 
 // Tooltip
@@ -146,8 +150,6 @@ body {
 @menu-item-active-bg: @blue-1;
 @menu-dark-submenu-bg: #001529;
 @menu-dark-item-active-bg: @blue-6;
-
-
 
 // Badge
 @badge-dot-size: 8px;
