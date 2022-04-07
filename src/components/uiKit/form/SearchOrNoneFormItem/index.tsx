@@ -24,8 +24,8 @@ export interface ISearchOrNoneFormItemProps<TSearchResult> {
     FormItemProps & { name: NamePath; title: string },
     'label' | 'valuePropName'
   >;
-  inputProps?: Omit<SearchProps, 'disabled' | 'onSearch'> & {
-    handlesearch?: (value: string, search: (value: string) => void) => void;
+  inputProps?: Omit<SearchProps, 'disabled'> & {
+    onSearch?: (value: string, search: (value: string) => void) => void;
   };
   checkboxProps?: Omit<CheckboxProps, 'disabled'>;
   onReset?: () => void;
@@ -89,8 +89,8 @@ const SearchOrNoneFormItem = <TSearchResult,>({
                     enterButton
                     disabled={isDisabled}
                     onSearch={(value) => {
-                      if (inputProps?.handlesearch) {
-                        inputProps.handlesearch(value, processSearch);
+                      if (inputProps?.onSearch) {
+                        inputProps.onSearch(value, processSearch);
                       } else {
                         processSearch(value);
                       }

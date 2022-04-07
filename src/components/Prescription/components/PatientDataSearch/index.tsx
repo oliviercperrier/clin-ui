@@ -7,12 +7,15 @@ import SearchOrNoneFormItem from 'components/uiKit/form/SearchOrNoneFormItem';
 import MaskedDateInput from 'components/uiKit/input/MaskedDateInput';
 import { useRpt } from 'hooks/rpt';
 import { isEmpty } from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldData } from 'rc-field-form/lib/interface';
 
 interface OwnProps {
   form: FormInstance;
   parentKey?: string;
+  onRamqSearchStateChange?: (done: boolean) => void;
+  onFileSearchStateChange?: (done: boolean) => void;
+  onResetRamq?: () => void;
 }
 
 export enum FORM_ITEMS_KEY {
@@ -27,7 +30,13 @@ export enum FORM_ITEMS_KEY {
   SEX = 'sex',
 }
 
-const PatientDataSearch = ({ form, parentKey }: OwnProps) => {
+const PatientDataSearch = ({
+  form,
+  parentKey,
+  onRamqSearchStateChange,
+  onFileSearchStateChange,
+  onResetRamq,
+}: OwnProps) => {
   const { rpt } = useRpt();
   const [fileSearchDone, setFileSearchDone] = useState(false);
   const [ramqSearchDone, setRamqSearchDone] = useState(false);
@@ -77,11 +86,19 @@ const PatientDataSearch = ({ form, parentKey }: OwnProps) => {
         value: patient?.gender,
       });
 
-      console.log(fields);
-
       form.setFields(fields);
     }
   };
+
+  useEffect(
+    () => onRamqSearchStateChange && onRamqSearchStateChange(ramqSearchDone),
+    [ramqSearchDone],
+  );
+
+  useEffect(
+    () => onFileSearchStateChange && onFileSearchStateChange(fileSearchDone),
+    [fileSearchDone],
+  );
 
   return (
     <>
@@ -154,14 +171,18 @@ const PatientDataSearch = ({ form, parentKey }: OwnProps) => {
               }}
               checkboxProps={{
                 onChange: (e) => {
-                  setNoRamq(e.target.checked);
+                  const checked = e.target.checked;
+                  setNoRamq(checked);
+                  if (!checked) {
+                    onResetRamq && onResetRamq();
+                  }
                 },
               }}
               inputProps={{
                 placeholder: 'AAAA 0000 0000',
-                handlesearch: (value, search) =>
+                onSearch: (value, search) =>
                   isRamqValid(value)
-                    ? search(value.replace(/\s/g, ''))
+                    ? (search as Function)(value.replace(/\s/g, ''))
                     : form.setFields([
                         {
                           name: getNamePath(FORM_ITEMS_KEY.RAMQ_NUMBER),
@@ -183,6 +204,7 @@ const PatientDataSearch = ({ form, parentKey }: OwnProps) => {
                 title: 'Aucun numéro de RAMQ ou nouveau-né',
               }}
               onReset={() => {
+                onResetRamq && onResetRamq();
                 setRamqSearchDone(false);
                 form.resetFields([
                   getNamePath(FORM_ITEMS_KEY.FIRST_NAME),

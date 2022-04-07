@@ -1,17 +1,15 @@
 import { Form, Input } from 'antd';
 import AnalysisForm from 'components/Prescription/Analyses/AnalysisForm';
+import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 
-const FORM_PARENT_KEY = 'clinical_signs';
+const FORM_KEY = 'clinical_signs';
 
-const ClinicalSigns = () => {
+const ClinicalSigns = (props: IAnalysisStepForm) => {
+  const FORM_KEY = props.formName;
   const [form] = Form.useForm();
 
   return (
-    <AnalysisForm
-      form={form}
-      onFinish={(values) => console.log('Clinical Step: ', values)}
-      name={FORM_PARENT_KEY}
-    >
+    <AnalysisForm form={form} name={FORM_KEY}>
       <Form.Item name="test" rules={[{ required: true }]}>
         <Input />
       </Form.Item>

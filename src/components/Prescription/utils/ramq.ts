@@ -1,4 +1,4 @@
-const RAMQ_PATTERN = RegExp(/^[a-zA-Z-]{4}\d{8,9}$/);
+export const RAMQ_PATTERN = RegExp(/^[a-zA-Z-]{4}\d{8,9}$/);
 
 export const isRamqValid = (ramq: string) => RAMQ_PATTERN.test(ramq.replaceAll(' ', ''));
 

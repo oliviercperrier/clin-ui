@@ -7,7 +7,7 @@ export type initialState = {
 };
 
 export enum AnalysisType {
-  MUSCULAR_DISEASE = "muscular",
+  MUSCULAR_DISEASE = 'muscular',
 }
 
 export interface IStartPrescription {
@@ -20,8 +20,9 @@ export interface IAnalysisConfig {
 }
 
 export interface IAnalysisStep {
-  index: number;
   title: string;
+  formName: string;
+  index?: number;
   previousStepIndex?: number;
   nextStepIndex?: number;
 }

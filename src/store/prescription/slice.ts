@@ -18,23 +18,23 @@ export const AnalysisConfigMapping = {
     analysisTitle: 'Maladies musculaires',
     steps: [
       {
-        index: 0,
+        formName: 'patient',
         title: 'Identification du patient',
       },
       {
-        index: 1,
+        formName: 'clinical_signs',
         title: 'Signes cliniques',
       },
       {
-        index: 2,
+        formName: 'paraclinical_exams',
         title: 'Examens paracliniques',
       },
       {
-        index: 3,
+        formName: 'diagnostic_hypothesis',
         title: 'Histoire et hypothèse diagnostique',
       },
       {
-        index: 4,
+        formName: 'submission',
         title: 'Soumission',
       },
     ],
@@ -44,6 +44,7 @@ export const AnalysisConfigMapping = {
 const enrichSteps = (steps: IAnalysisStep[]): IAnalysisStep[] =>
   steps.map((step, index) => ({
     ...step,
+    index,
     previousStepIndex: index > 0 ? index - 1 : undefined,
     nextStepIndex: index < steps.length - 1 ? index + 1 : undefined,
   }));
