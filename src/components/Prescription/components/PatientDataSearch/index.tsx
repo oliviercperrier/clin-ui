@@ -322,7 +322,6 @@ const PatientDataSearch = ({
                 formItemProps={{
                   name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
                   label: 'Date de naissance',
-                  rules: [{ required: true }],
                 }}
               />
               <Form.Item

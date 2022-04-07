@@ -19,17 +19,21 @@ const RadioDateFormItem = ({
   parentFormItemName,
 }: IRadioDateFormItemProps) => {
   return (
-    <Form.Item noStyle>
-      <div className={styles.radioBtnDateWrapper}>
-        <Radio {...radioProps}>{title}</Radio>
-        <Form.Item shouldUpdate className={styles.maskedDateInputFormItem}>
-          {({ getFieldValue }) =>
-            getFieldValue(parentFormItemName) === radioProps?.value ? (
-              <InputDateFormItem {...dateInputProps} />
-            ) : null
-          }
-        </Form.Item>
-      </div>
+    <Form.Item noStyle shouldUpdate>
+      {({ getFieldValue }) => {
+        const isSelected = getFieldValue(parentFormItemName) === radioProps?.value;
+        return (
+          <div className={styles.radioBtnDateWrapper}>
+            <Radio {...radioProps}>{title}</Radio>
+            <Form.Item
+              noStyle={!isSelected}
+              className={styles.maskedDateInputFormItem}
+            >
+              {isSelected ? <InputDateFormItem {...dateInputProps} /> : null}
+            </Form.Item>
+          </div>
+        );
+      }}
     </Form.Item>
   );
 };

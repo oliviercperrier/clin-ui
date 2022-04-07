@@ -8,6 +8,7 @@ import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { calculateGestationalAgeFromDDM, calculateGestationalAgeFromDPA } from 'utils/age';
 import { SexValue } from 'utils/commonTypes';
+import GestationalAge from './GestationalAge';
 
 import styles from './index.module.scss';
 
@@ -135,7 +136,7 @@ const AdditionalInformation = ({
                             formItemProps: {
                               name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DDM),
                             },
-                            extra: gestationalAgeDDM ? <Text>{gestationalAgeDDM}</Text> : <></>,
+                            extra: <GestationalAge value={gestationalAgeDDM} />,
                             onValidate: (valid, value) => {
                               if (!valid && gestationalAgeDDM) {
                                 setGestationalAgeDDM(undefined);
@@ -156,7 +157,7 @@ const AdditionalInformation = ({
                             formItemProps: {
                               name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DPA),
                             },
-                            extra: gestationalAgeDPA && <>{gestationalAgeDPA}</>,
+                            extra: <GestationalAge value={gestationalAgeDPA} />,
                             onValidate: (valid, value) => {
                               if (!valid && gestationalAgeDPA) {
                                 setGestationalAgeDPA(undefined);
