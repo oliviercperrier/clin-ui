@@ -6,6 +6,7 @@ import {
   initialState,
   IStartPrescription,
 } from 'store/prescription/types';
+import { MuscularDiseaseConfig } from './analysis/muscular';
 
 export const PrescriptionState: initialState = {
   modalVisible: false,
@@ -14,31 +15,7 @@ export const PrescriptionState: initialState = {
 };
 
 export const AnalysisConfigMapping = {
-  [AnalysisType.MUSCULAR_DISEASE]: {
-    analysisTitle: 'Maladies musculaires',
-    steps: [
-      {
-        formName: 'patient',
-        title: 'Identification du patient',
-      },
-      {
-        formName: 'clinical_signs',
-        title: 'Signes cliniques',
-      },
-      {
-        formName: 'paraclinical_exams',
-        title: 'Examens paracliniques',
-      },
-      {
-        formName: 'diagnostic_hypothesis',
-        title: 'Histoire et hypothèse diagnostique',
-      },
-      {
-        formName: 'submission',
-        title: 'Soumission',
-      },
-    ],
-  },
+  [AnalysisType.MUSCULAR_DISEASE]: MuscularDiseaseConfig,
 };
 
 const enrichSteps = (steps: IAnalysisStep[]): IAnalysisStep[] =>

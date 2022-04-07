@@ -2,7 +2,6 @@ import { Form, Input } from 'antd';
 import AnalysisForm from 'components/Prescription/Analyses/AnalysisForm';
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 
-const FORM_KEY = 'clinical_signs';
 
 const ClinicalSigns = (props: IAnalysisStepForm) => {
   const FORM_KEY = props.formName;

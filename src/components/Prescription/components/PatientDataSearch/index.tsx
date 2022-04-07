@@ -9,16 +9,20 @@ import { useRpt } from 'hooks/rpt';
 import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { FieldData } from 'rc-field-form/lib/interface';
+import { IAnalysisFormPart } from 'components/Prescription/utils/type';
+import { getNamePath } from 'components/Prescription/utils/form';
+import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
+import { SexValue } from 'utils/commonTypes';
 
-interface OwnProps {
-  form: FormInstance;
-  parentKey?: string;
+type OwnProps = IAnalysisFormPart & {
   onRamqSearchStateChange?: (done: boolean) => void;
   onFileSearchStateChange?: (done: boolean) => void;
   onResetRamq?: () => void;
-}
+  initialFileSearchDone?: boolean;
+  initialRamqSearchDone?: boolean;
+};
 
-export enum FORM_ITEMS_KEY {
+export enum PATIENT_DATA_FI_KEY {
   PRESCRIBING_INSTITUTION = 'prescribing_institution',
   FILE_NUMBER = 'file_number',
   NO_FILE = 'no_file',
@@ -30,19 +34,36 @@ export enum FORM_ITEMS_KEY {
   SEX = 'sex',
 }
 
+export enum InstitutionValue {
+  CHUSJ = 'CHUSJ',
+  CHUM = 'CHUM',
+}
+
+export interface IPatientDataType {
+  [PATIENT_DATA_FI_KEY.BIRTH_DATE]: string;
+  [PATIENT_DATA_FI_KEY.FILE_NUMBER]: string;
+  [PATIENT_DATA_FI_KEY.NO_FILE]: boolean;
+  [PATIENT_DATA_FI_KEY.RAMQ_NUMBER]: string;
+  [PATIENT_DATA_FI_KEY.NO_RAMQ]: boolean;
+  [PATIENT_DATA_FI_KEY.LAST_NAME]: string;
+  [PATIENT_DATA_FI_KEY.FIRST_NAME]: string;
+  [PATIENT_DATA_FI_KEY.SEX]: SexValue;
+}
+
 const PatientDataSearch = ({
   form,
   parentKey,
   onRamqSearchStateChange,
   onFileSearchStateChange,
   onResetRamq,
+  initialFileSearchDone = false,
+  initialRamqSearchDone = false,
 }: OwnProps) => {
   const { rpt } = useRpt();
-  const [fileSearchDone, setFileSearchDone] = useState(false);
-  const [ramqSearchDone, setRamqSearchDone] = useState(false);
-  const [noRamq, setNoRamq] = useState(false);
+  const [fileSearchDone, setFileSearchDone] = useState(initialFileSearchDone);
+  const [ramqSearchDone, setRamqSearchDone] = useState(initialRamqSearchDone);
 
-  const getNamePath = (key: FORM_ITEMS_KEY) => (parentKey ? [parentKey, key] : key);
+  const getName = (key: PATIENT_DATA_FI_KEY) => getNamePath(parentKey, key);
 
   const updateFormFromPatient = (form: FormInstance, bundle?: Bundle<Patient>) => {
     const entry = bundle?.entry;
@@ -56,7 +77,7 @@ const PatientDataSearch = ({
 
       if (ramq) {
         fields.push({
-          name: getNamePath(FORM_ITEMS_KEY.RAMQ_NUMBER),
+          name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
           value: formatRamq(ramq),
         });
       }
@@ -64,11 +85,11 @@ const PatientDataSearch = ({
       if (name) {
         fields.push(
           {
-            name: getNamePath(FORM_ITEMS_KEY.FIRST_NAME),
+            name: getName(PATIENT_DATA_FI_KEY.FIRST_NAME),
             value: name.given.join(' '),
           },
           {
-            name: getNamePath(FORM_ITEMS_KEY.LAST_NAME),
+            name: getName(PATIENT_DATA_FI_KEY.LAST_NAME),
             value: name.family,
           },
         );
@@ -76,19 +97,23 @@ const PatientDataSearch = ({
 
       if (birthDate) {
         fields.push({
-          name: getNamePath(FORM_ITEMS_KEY.BIRTH_DATE),
+          name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
           value: birthDate,
         });
       }
 
       fields.push({
-        name: getNamePath(FORM_ITEMS_KEY.SEX),
+        name: getName(PATIENT_DATA_FI_KEY.SEX),
         value: patient?.gender,
       });
 
       form.setFields(fields);
     }
   };
+
+  useEffect(() => setFileSearchDone(initialFileSearchDone), [initialFileSearchDone]);
+
+  useEffect(() => setRamqSearchDone(initialRamqSearchDone), [initialRamqSearchDone]);
 
   useEffect(
     () => onRamqSearchStateChange && onRamqSearchStateChange(ramqSearchDone),
@@ -103,22 +128,22 @@ const PatientDataSearch = ({
   return (
     <>
       <Form.Item
-        name={getNamePath(FORM_ITEMS_KEY.PRESCRIBING_INSTITUTION)}
+        name={getName(PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION)}
         label="Établissement prescripteur"
         rules={[{ required: true }]}
       >
         <Radio.Group disabled={ramqSearchDone}>
-          <Radio value="CHUSJ">CHUSJ</Radio>
-          <Radio value="CHUM">CHUM</Radio>
+          <Radio value={InstitutionValue.CHUSJ}>CHUSJ</Radio>
+          <Radio value={InstitutionValue.CHUM}>CHUM</Radio>
         </Radio.Group>
       </Form.Item>
       <Form.Item noStyle shouldUpdate>
         {({ getFieldValue }) =>
-          getFieldValue(getNamePath(FORM_ITEMS_KEY.PRESCRIBING_INSTITUTION)) ? (
+          getFieldValue(getName(PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION)) ? (
             <SearchOrNoneFormItem<Bundle<Patient>>
               form={form}
               inputFormItemProps={{
-                name: getNamePath(FORM_ITEMS_KEY.FILE_NUMBER),
+                name: getName(PATIENT_DATA_FI_KEY.FILE_NUMBER),
                 rules: [{ required: true }],
                 required: true,
                 label: 'Dossier',
@@ -127,20 +152,20 @@ const PatientDataSearch = ({
                 placeholder: '000000',
               }}
               checkboxFormItemProps={{
-                name: getNamePath(FORM_ITEMS_KEY.NO_FILE),
+                name: getName(PATIENT_DATA_FI_KEY.NO_FILE),
                 title: 'Aucun numéro de dossier',
               }}
               onReset={() => {
                 setFileSearchDone(false);
                 setRamqSearchDone(false);
                 form.resetFields([
-                  getNamePath(FORM_ITEMS_KEY.FIRST_NAME),
-                  getNamePath(FORM_ITEMS_KEY.LAST_NAME),
-                  getNamePath(FORM_ITEMS_KEY.SEX),
-                  getNamePath(FORM_ITEMS_KEY.RAMQ_NUMBER),
-                  getNamePath(FORM_ITEMS_KEY.NO_RAMQ),
-                  getNamePath(FORM_ITEMS_KEY.NO_FILE),
-                  getNamePath(FORM_ITEMS_KEY.BIRTH_DATE),
+                  getName(PATIENT_DATA_FI_KEY.FIRST_NAME),
+                  getName(PATIENT_DATA_FI_KEY.LAST_NAME),
+                  getName(PATIENT_DATA_FI_KEY.SEX),
+                  getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
+                  getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
+                  getName(PATIENT_DATA_FI_KEY.NO_FILE),
+                  getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
                 ]);
               }}
               onSearchDone={(value) => {
@@ -152,8 +177,8 @@ const PatientDataSearch = ({
               }}
               apiPromise={(value) => FhirApi.checkRamq(rpt, value)}
               disabled={
-                (ramqSearchDone && form.getFieldValue(getNamePath(FORM_ITEMS_KEY.NO_FILE))) ||
-                noRamq
+                (ramqSearchDone && form.getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_FILE))) ||
+                getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))
               }
             />
           ) : null
@@ -161,18 +186,17 @@ const PatientDataSearch = ({
       </Form.Item>
       <Form.Item noStyle shouldUpdate>
         {({ getFieldValue }) =>
-          getFieldValue(getNamePath(FORM_ITEMS_KEY.NO_FILE)) || fileSearchDone ? (
+          getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_FILE)) || fileSearchDone ? (
             <SearchOrNoneFormItem<Bundle<Patient>>
               form={form}
               inputFormItemProps={{
-                name: getNamePath(FORM_ITEMS_KEY.RAMQ_NUMBER),
+                name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
                 required: true,
                 label: 'RAMQ',
               }}
               checkboxProps={{
                 onChange: (e) => {
                   const checked = e.target.checked;
-                  setNoRamq(checked);
                   if (!checked) {
                     onResetRamq && onResetRamq();
                   }
@@ -185,7 +209,7 @@ const PatientDataSearch = ({
                     ? (search as Function)(value.replace(/\s/g, ''))
                     : form.setFields([
                         {
-                          name: getNamePath(FORM_ITEMS_KEY.RAMQ_NUMBER),
+                          name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
                           errors: ['Le numéro de RAMQ est invalide'],
                           value,
                         },
@@ -193,25 +217,25 @@ const PatientDataSearch = ({
                 onChange: (event) =>
                   form.setFields([
                     {
-                      name: getNamePath(FORM_ITEMS_KEY.RAMQ_NUMBER),
+                      name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
                       errors: [],
                       value: formatRamq(event.currentTarget.value),
                     },
                   ]),
               }}
               checkboxFormItemProps={{
-                name: getNamePath(FORM_ITEMS_KEY.NO_RAMQ),
+                name: getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
                 title: 'Aucun numéro de RAMQ ou nouveau-né',
               }}
               onReset={() => {
                 onResetRamq && onResetRamq();
                 setRamqSearchDone(false);
                 form.resetFields([
-                  getNamePath(FORM_ITEMS_KEY.FIRST_NAME),
-                  getNamePath(FORM_ITEMS_KEY.LAST_NAME),
-                  getNamePath(FORM_ITEMS_KEY.SEX),
-                  getNamePath(FORM_ITEMS_KEY.NO_RAMQ),
-                  getNamePath(FORM_ITEMS_KEY.BIRTH_DATE),
+                  getName(PATIENT_DATA_FI_KEY.FIRST_NAME),
+                  getName(PATIENT_DATA_FI_KEY.LAST_NAME),
+                  getName(PATIENT_DATA_FI_KEY.SEX),
+                  getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
+                  getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
                 ]);
               }}
               onSearchDone={(value) => {
@@ -226,39 +250,35 @@ const PatientDataSearch = ({
       </Form.Item>
       <Form.Item noStyle shouldUpdate>
         {({ getFieldValue }) =>
-          getFieldValue(getNamePath(FORM_ITEMS_KEY.NO_RAMQ)) || ramqSearchDone ? (
+          getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ)) || ramqSearchDone ? (
             <>
               <Form.Item
-                name={getNamePath(FORM_ITEMS_KEY.LAST_NAME)}
+                name={getName(PATIENT_DATA_FI_KEY.LAST_NAME)}
                 label="Nom de famille"
                 rules={[{ required: true }]}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                name={getNamePath(FORM_ITEMS_KEY.FIRST_NAME)}
+                name={getName(PATIENT_DATA_FI_KEY.FIRST_NAME)}
                 label="Prénom"
                 rules={[{ required: true }]}
               >
                 <Input />
               </Form.Item>
               <Form.Item
-                name={getNamePath(FORM_ITEMS_KEY.BIRTH_DATE)}
+                name={getName(PATIENT_DATA_FI_KEY.BIRTH_DATE)}
                 label="Date de naissance"
                 rules={[{ required: true }]}
               >
                 <MaskedDateInput />
               </Form.Item>
               <Form.Item
-                name={getNamePath(FORM_ITEMS_KEY.SEX)}
+                name={getName(PATIENT_DATA_FI_KEY.SEX)}
                 label="Sexe"
                 rules={[{ required: true }]}
               >
-                <Radio.Group>
-                  <Radio value="female">Féminin</Radio>
-                  <Radio value="male">Masculin</Radio>
-                  <Radio value="unknown">Indéterminé</Radio>
-                </Radio.Group>
+                <RadioGroupSex />
               </Form.Item>
             </>
           ) : null

@@ -21,7 +21,7 @@ export interface IAnalysisConfig {
 
 export interface IAnalysisStep {
   title: string;
-  formName: string;
+  formName: any;
   index?: number;
   previousStepIndex?: number;
   nextStepIndex?: number;
