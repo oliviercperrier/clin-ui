@@ -3,7 +3,6 @@ import { Typography } from 'antd';
 import { MaskedInput } from 'antd-mask-input';
 import { MaskedInputProps } from 'antd-mask-input/build/main/lib/MaskedInput';
 import { MaskedRange } from 'imask';
-import moment from 'moment';
 
 const { Text } = Typography;
 const MASK = 'yyyy / mm / dd';

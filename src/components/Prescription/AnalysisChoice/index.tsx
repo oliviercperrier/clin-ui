@@ -63,7 +63,7 @@ const AnalysisChoice = () => {
             />
           }
           name={ANALYSIS_CHOICE_FI_KEY.ANALYSIS_TYPE}
-          required
+          rules={[{ required: true, message: "Le champs Choix de l'analyse est obligatoire" }]}
         >
           <Select placeholder="Sélectionner">
             <Select.Option value={OtherAnalysisType.GLOBAL_DEVELOPMENTAL_DELAY}>

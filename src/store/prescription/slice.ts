@@ -5,6 +5,7 @@ import {
   IAnalysisStep,
   initialState,
   ICompleteAnalysisChoice,
+  ICurrentFormRefs,
 } from 'store/prescription/types';
 import { MuscularDiseaseConfig } from './analysis/muscular';
 import { isMuscularAnalysis, isMuscularAnalysisAndNotGlobal } from './helper';
@@ -54,6 +55,14 @@ const prescriptionFormSlice = createSlice({
     },
     previousStep: (state) => {
       const previousStepIndex = state.currentStep?.previousStepIndex;
+
+      if (state.currentFormRefs?.getFieldsValue) {
+        state.analysisData = {
+          ...state.analysisData,
+          ...state.currentFormRefs.getFieldsValue(),
+        };
+      }
+
       if (!isUndefined(previousStepIndex)) {
         state.currentStep = state.config?.steps[previousStepIndex];
       }
@@ -82,8 +91,8 @@ const prescriptionFormSlice = createSlice({
       state.currentStep = config.steps[0];
       state.config = config;
     },
-    currentFormSubmitRef: (state, action: PayloadAction<Function>) => {
-      state.currentFormSubmitRef = action.payload;
+    currentFormRefs: (state, action: PayloadAction<ICurrentFormRefs>) => {
+      state.currentFormRefs = action.payload;
     },
   },
   extraReducers: (builder) => {},

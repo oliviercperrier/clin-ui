@@ -1,9 +1,9 @@
-.@{form-prefix-cls} {
-  &-item {
-    transition: margin-bottom 0s;
+@form-error-input-bg: @red-0;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
+:not(.@{space-prefix-cls}-item .@{form-prefix-cls}-item) {
+  transition: margin-bottom 0s;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }

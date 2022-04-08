@@ -4,7 +4,7 @@ import {
   CloseOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
-import { Button, Col, Modal, Row, Space, Typography } from 'antd';
+import { Affix, Button, Col, Modal, Row, Space, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import { usePrescriptionForm } from 'store/prescription';
 import { prescriptionFormActions } from 'store/prescription/slice';
@@ -17,6 +17,7 @@ import MuscularDisease from './Analyses/MuscularDisease';
 import { isMuscularAnalysis } from 'store/prescription/helper';
 
 import styles from './index.module.scss';
+import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 
 const { Title } = Typography;
 
@@ -30,8 +31,7 @@ const getAnalysisForm = (type: AnalysisType) => {
 
 const PrescriptionForm = () => {
   const dispatch = useDispatch();
-  const { prescriptionVisible, analysisType, currentStep, currentFormSubmitRef } =
-    usePrescriptionForm();
+  const { prescriptionVisible, analysisType, currentStep, currentFormRefs } = usePrescriptionForm();
 
   return (
     <Modal
@@ -69,45 +69,47 @@ const PrescriptionForm = () => {
       destroyOnClose
       closable={false}
     >
-      <Row gutter={[24, 24]}>
-        <Col span={6}>
-          <StepsPanel />
+      <Row gutter={[24, 24]} className={styles.modalContentRow}>
+        <Col span={6} className={styles.siderCol}>
+            <StepsPanel />
         </Col>
-        <Col span={18}>
-          <GridCard
-            title={<Title level={3}>{currentStep?.title}</Title>}
-            content={analysisType ? getAnalysisForm(analysisType) : undefined}
-            className={styles.prescriptionFormCard}
-            bordered={false}
-            footer={
-              <div className={styles.prescriptionContentFooter}>
-                <Space className={styles.footerLeftSide}>
-                  {!isUndefined(currentStep?.previousStepIndex) && (
-                    <Button
-                      icon={<ArrowLeftOutlined />}
-                      onClick={() => dispatch(prescriptionFormActions.previousStep())}
-                    >
-                      Precédent
-                    </Button>
-                  )}
-                </Space>
-                <Space className={styles.footerRightSide}>
-                  {isUndefined(currentStep?.nextStepIndex) ? (
-                    <Button type="primary" onClick={() => {}}>
-                      Soumettre
-                    </Button>
-                  ) : (
-                    <Button
-                      type="primary"
-                      onClick={() => currentFormSubmitRef && currentFormSubmitRef()}
-                    >
-                      Suivant <ArrowRightOutlined />
-                    </Button>
-                  )}
-                </Space>
-              </div>
-            }
-          />
+        <Col span={18} className={styles.contentCol}>
+          <ScrollContent className={styles.contentScroller}>
+            <GridCard
+              title={<Title level={3}>{currentStep?.title}</Title>}
+              content={analysisType ? getAnalysisForm(analysisType) : undefined}
+              className={styles.prescriptionFormCard}
+              bordered={false}
+              footer={
+                <div className={styles.prescriptionContentFooter}>
+                  <Space className={styles.footerLeftSide}>
+                    {!isUndefined(currentStep?.previousStepIndex) && (
+                      <Button
+                        icon={<ArrowLeftOutlined />}
+                        onClick={() => dispatch(prescriptionFormActions.previousStep())}
+                      >
+                        Precédent
+                      </Button>
+                    )}
+                  </Space>
+                  <Space className={styles.footerRightSide}>
+                    {isUndefined(currentStep?.nextStepIndex) ? (
+                      <Button type="primary" onClick={() => {}}>
+                        Soumettre
+                      </Button>
+                    ) : (
+                      <Button
+                        type="primary"
+                        onClick={() => currentFormRefs?.sumbit && currentFormRefs.sumbit()}
+                      >
+                        Suivant <ArrowRightOutlined />
+                      </Button>
+                    )}
+                  </Space>
+                </div>
+              }
+            />
+          </ScrollContent>
         </Col>
       </Row>
     </Modal>

@@ -20,6 +20,7 @@ type OwnProps = IAnalysisFormPart & {
 enum GestationalAgeValues {
   DDM = 'ddm',
   DPA = 'dpa',
+  DEAD_FOETUS = 'dead_foetus',
 }
 
 export enum ADD_INFO_FI_KEY {
@@ -52,7 +53,7 @@ const AdditionalInformation = ({
   const [gestationalAgeDPA, setGestationalAgeDPA] = useState<number | undefined>(undefined);
   const [gestationalAgeDDM, setGestationalAgeDDM] = useState<number | undefined>(undefined);
 
-  const getName = (key: ADD_INFO_FI_KEY) => getNamePath(parentKey, key);
+  const getName = (...key: ADD_INFO_FI_KEY[]) => getNamePath(parentKey, key);
 
   useEffect(() => {
     if (localShowNewBorn !== showNewBornSection) {
@@ -178,6 +179,7 @@ const AdditionalInformation = ({
                           }}
                           parentFormItemName={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
                         />
+                        <Radio value={GestationalAgeValues.DEAD_FOETUS}>Foetus décédé</Radio>
                       </Space>
                     </Radio.Group>
                   </Form.Item>

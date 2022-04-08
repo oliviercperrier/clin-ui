@@ -9,7 +9,7 @@ const { Title } = Typography;
 
 const StepsPanel = () => {
   const dispatch = useDispatch();
-  const { config, currentStep } = usePrescriptionForm();
+  const { config, currentStep, currentFormRefs } = usePrescriptionForm();
 
   return (
     <Space direction="vertical" size={24} className={styles.prescriptionStepsPanel}>
@@ -20,7 +20,19 @@ const StepsPanel = () => {
       <Steps direction="vertical" size="small" current={currentStep?.index}>
         {config?.steps.map((step) => (
           <Steps.Step
-            onStepClick={(index) => dispatch(prescriptionFormActions.goTo(index))}
+            // TODO need to check if target step is the next one or all previous are completed
+            onStepClick={(index) => {
+              dispatch(prescriptionFormActions.goTo(index))
+
+              //if (currentFormRefs?.validateFields) {
+              //  currentFormRefs
+              //    ?.validateFields()
+              //    .then(() => dispatch(prescriptionFormActions.goTo(index)))
+              //    .catch(() => false);
+              //} else {
+              //  dispatch(prescriptionFormActions.goTo(index));
+              //}
+            }}
             className={styles.stepsItem}
             key={step.index}
             title={step.title}

@@ -8,8 +8,13 @@ export type InputDateFormItemProps = {
   onValidate?: (valid: boolean, value: Date) => void;
 };
 
-const InputDateFormItem = ({ formItemProps, extra, onValidate }: InputDateFormItemProps) => (
-  <Form.Item>
+const InputDateFormItem = ({
+  formItemProps,
+  extra,
+  onValidate,
+  ...rest
+}: InputDateFormItemProps) => (
+  <Form.Item noStyle>
     <Space>
       <Form.Item
         {...formItemProps}
@@ -18,20 +23,25 @@ const InputDateFormItem = ({ formItemProps, extra, onValidate }: InputDateFormIt
           ...(formItemProps?.rules ?? []),
           () => ({
             validator(_, value) {
-              const date = new Date(value);
-              if (isValid(date)) {
-                onValidate && onValidate(true, date);
+              if (isValid(new Date(value))) {
                 return Promise.resolve();
               }
-              onValidate && onValidate(false, date);
               return Promise.reject(new Error('La date est invalide'));
             },
+            validateTrigger: 'onSubmit',
           }),
         ]}
       >
-        <MaskedDateInput />
+        <MaskedDateInput
+          onChange={(e) => {
+            if (onValidate) {
+              const date = new Date(e.unmaskedValue);
+              onValidate(isValid(date), date);
+            }
+          }}
+        />
       </Form.Item>
-      {extra}
+      <div>{extra}</div>
     </Space>
   </Form.Item>
 );

@@ -1,0 +1,54 @@
+@import 'colors';
+
+$label-width: 200px;
+
+.historyAndDiagnosisHypSelect {
+  :global(.ant-form-item-label) {
+    width: $label-width;
+  }
+
+  .addHealthCondition {
+    padding-left: 0;
+
+    span {
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .healthConditionListItem {
+    width: 100%;
+    display: flex;
+    margin-top: 6px;
+    margin-bottom: 6px;
+
+    .hidden {
+      visibility: hidden;
+    }
+
+    :global(.ant-space-item) {
+      &:first-child {
+        min-width: 60%;
+      }
+
+      &:nth-child(-n + 2) {
+        width: 100%;
+      }
+    }
+
+    :global(.ant-form-item) {
+      margin-bottom: 0;
+    }
+
+    .removeIcon {
+      color: $blue-8;
+    }
+  }
+}
+
+.familyHistoryFormItem {
+  margin-bottom: 5px;
+}

@@ -1,12 +1,20 @@
+import { ValidateFields } from 'rc-field-form/lib/interface';
+
 export type initialState = {
   analysisChoiceVisible: boolean;
   prescriptionVisible: boolean;
-  currentFormSubmitRef?: Function;
+  currentFormRefs?: ICurrentFormRefs;
   currentStep?: IAnalysisStep;
   analysisType?: AnalysisType;
   config?: IAnalysisConfig;
   analysisData: any; // TODO add type for each Analysis Data Type
 };
+
+export interface ICurrentFormRefs {
+  sumbit: () => void;
+  validateFields: ValidateFields;
+  getFieldsValue: () => any;
+}
 
 // TODO Probably change with backend values??
 export enum MuscularAnalysisType {

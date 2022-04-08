@@ -66,7 +66,7 @@ const PatientDataSearch = ({
   const [fileSearchDone, setFileSearchDone] = useState(initialFileSearchDone);
   const [ramqSearchDone, setRamqSearchDone] = useState(initialRamqSearchDone);
 
-  const getName = (key: PATIENT_DATA_FI_KEY) => getNamePath(parentKey, key);
+  const getName = (...key: string[]) => getNamePath(parentKey, key);
 
   const updateFormFromPatient = (form: FormInstance, bundle?: Bundle<Patient>) => {
     const entry = bundle?.entry;
@@ -98,17 +98,16 @@ const PatientDataSearch = ({
         );
       }
 
-      if (birthDate) {
-        fields.push({
+      fields.push(
+        {
           name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
           value: birthDate,
-        });
-      }
-
-      fields.push({
-        name: getName(PATIENT_DATA_FI_KEY.SEX),
-        value: patient?.gender,
-      });
+        },
+        {
+          name: getName(PATIENT_DATA_FI_KEY.SEX),
+          value: patient?.gender,
+        },
+      );
 
       form.setFields(fields);
     }
@@ -133,44 +132,12 @@ const PatientDataSearch = ({
       setFileSearchDone(!!(initialData.no_file || initialData.file_number));
       setRamqSearchDone(!!(initialData.no_ramq || initialData.ramq_number));
 
-      form.setFields([
-        {
-          name: getName(PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION),
-          value: initialData.prescribing_institution,
-        },
-        {
-          name: getName(PATIENT_DATA_FI_KEY.FILE_NUMBER),
-          value: initialData.file_number,
-        },
-        {
-          name: getName(PATIENT_DATA_FI_KEY.NO_FILE),
-          value: initialData.no_file,
-        },
-        {
-          name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-          value: initialData.ramq_number,
-        },
-        {
-          name: getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
-          value: initialData.no_ramq,
-        },
-        {
-          name: getName(PATIENT_DATA_FI_KEY.FIRST_NAME),
-          value: initialData.first_name,
-        },
-        {
-          name: getName(PATIENT_DATA_FI_KEY.LAST_NAME),
-          value: initialData.last_name,
-        },
-        {
-          name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
-          value: initialData.birth_date,
-        },
-        {
-          name: getName(PATIENT_DATA_FI_KEY.SEX),
-          value: initialData.sex,
-        },
-      ]);
+      form.setFields(
+        Object.entries(initialData).map((value) => ({
+          name: getName(value[0]),
+          value: value[1],
+        })),
+      );
     }
   }, []);
 
@@ -179,7 +146,7 @@ const PatientDataSearch = ({
       <Form.Item
         name={getName(PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION)}
         label="Établissement prescripteur"
-        rules={[{ required: true }]}
+        rules={[{ required: true, validateTrigger: 'onSubmit' }]}
       >
         <Radio.Group disabled={ramqSearchDone}>
           <Radio value={InstitutionValue.CHUSJ}>CHUSJ</Radio>
@@ -193,7 +160,7 @@ const PatientDataSearch = ({
               form={form}
               inputFormItemProps={{
                 name: getName(PATIENT_DATA_FI_KEY.FILE_NUMBER),
-                rules: [{ required: true }],
+                rules: [{ required: true, validateTrigger: 'onSubmit' }],
                 required: true,
                 label: 'Dossier',
               }}
@@ -241,7 +208,7 @@ const PatientDataSearch = ({
               form={form}
               inputFormItemProps={{
                 name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-                required: true,
+                rules: [{ required: true, validateTrigger: 'onSubmit' }],
                 label: 'RAMQ',
               }}
               checkboxProps={{
@@ -305,7 +272,7 @@ const PatientDataSearch = ({
               <Form.Item
                 name={getName(PATIENT_DATA_FI_KEY.LAST_NAME)}
                 label="Nom de famille"
-                rules={[{ required: true }]}
+                rules={[{ required: true, validateTrigger: 'onSubmit' }]}
                 wrapperCol={{ span: 10, sm: 12, xxl: 6 }}
               >
                 <Input />
@@ -313,7 +280,7 @@ const PatientDataSearch = ({
               <Form.Item
                 name={getName(PATIENT_DATA_FI_KEY.FIRST_NAME)}
                 label="Prénom"
-                rules={[{ required: true }]}
+                rules={[{ required: true, validateTrigger: 'onSubmit' }]}
                 wrapperCol={{ span: 10, sm: 12, xxl: 6 }}
               >
                 <Input />
@@ -327,7 +294,7 @@ const PatientDataSearch = ({
               <Form.Item
                 name={getName(PATIENT_DATA_FI_KEY.SEX)}
                 label="Sexe"
-                rules={[{ required: true }]}
+                rules={[{ required: true, validateTrigger: 'onSubmit' }]}
               >
                 <RadioGroupSex />
               </Form.Item>

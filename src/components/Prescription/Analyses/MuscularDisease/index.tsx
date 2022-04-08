@@ -1,7 +1,7 @@
-import ClinicalSigns from './Steps/ClinicalSigns';
-import HistoryAndDiagnosticHypothesis from './Steps/HistoryAndDiagnosticHypothesis';
-import ParaclinicalExams from './Steps/ParaclinicalExams';
-import PatientIdentification from './Steps/PatientIdentification';
+import ClinicalSigns from '../AnalysisForm/ReusableSections/ClinicalSigns';
+import HistoryAndDiagnosticHypothesis from '../AnalysisForm/ReusableSections/HistoryAndDiagnosticHypothesis';
+import ParaclinicalExams from '../AnalysisForm/ReusableSections/ParaclinicalExams';
+import PatientIdentification from '../AnalysisForm/ReusableSections/PatientIdentification';
 import Submission from './Steps/Submission';
 import { usePrescriptionForm } from 'store/prescription';
 import { Form } from 'antd';
@@ -35,8 +35,8 @@ const MuscularDisease = () => {
         // Handle every form submission here
         console.log('Form name: ', formName);
         console.log('Form data: ', info.values);
-        
-        dispatch(prescriptionFormActions.saveStepData(info.values))
+
+        dispatch(prescriptionFormActions.saveStepData(info.values));
       }}
     >
       {getCurrentStepForm()}

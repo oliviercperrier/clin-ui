@@ -1,9 +1,23 @@
 .labelWithInfo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
 
-    .infoIconWrapper {
-        display: flex;
-        margin-left: 4px;
-    }
+  .infoIconWrapper {
+    display: flex;
+    margin-left: 4px;
+  }
+
+  .small {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .colon {
+    padding: 0 3px;
+  }
+
+  .requiredMark {
+    padding-right: 4px;
+  }
 }

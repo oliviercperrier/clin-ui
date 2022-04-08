@@ -8,15 +8,11 @@ import { getNamePath } from 'components/Prescription/utils/form';
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 import { useState } from 'react';
 import { usePrescriptionForm } from 'store/prescription';
-import { MuscularDiseaseFormName } from 'store/prescription/analysis/muscular';
 import AdditionalInformation, { ADD_INFO_FI_KEY, IAddInfoDataType } from './AdditionalInformation';
 
 import styles from './index.module.scss';
 
-export type TPatientFormDataContent = IPatientDataType & IAddInfoDataType;
-export interface IPatientFormDataType {
-  [MuscularDiseaseFormName.PATIENT_IDENTIFICATION]: TPatientFormDataContent;
-}
+export type TPatientFormDataType = IPatientDataType & IAddInfoDataType;
 
 const PatientIdentification = (props: IAnalysisStepForm) => {
   const [form] = Form.useForm();
@@ -25,11 +21,9 @@ const PatientIdentification = (props: IAnalysisStepForm) => {
   const [fileSearchDone, setFileSearchDone] = useState(false);
   const FORM_NAME = props.formName;
 
-  const getName = (key: string) => getNamePath(FORM_NAME, key);
+  const getName = (...key: string[]) => getNamePath(FORM_NAME, key);
   const getInitialData = () =>
-    analysisData
-      ? (analysisData[MuscularDiseaseFormName.PATIENT_IDENTIFICATION] as TPatientFormDataContent)
-      : undefined;
+    analysisData ? (analysisData[FORM_NAME] as TPatientFormDataType) : undefined;
 
   return (
     <AnalysisForm form={form} className={styles.patientIdentificationForm} name={FORM_NAME}>

@@ -14,7 +14,13 @@ const AnalysisForm = (
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(prescriptionFormActions.currentFormSubmitRef(props.form.submit));
+    dispatch(
+      prescriptionFormActions.currentFormRefs({
+        sumbit: props.form.submit,
+        validateFields: props.form.validateFields,
+        getFieldsValue: props.form.getFieldsValue,
+      }),
+    );
   }, []);
 
   return (

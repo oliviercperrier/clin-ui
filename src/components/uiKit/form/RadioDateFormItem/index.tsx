@@ -25,11 +25,16 @@ const RadioDateFormItem = ({
         return (
           <div className={styles.radioBtnDateWrapper}>
             <Radio {...radioProps}>{title}</Radio>
-            <Form.Item
-              noStyle={!isSelected}
-              className={styles.maskedDateInputFormItem}
-            >
-              {isSelected ? <InputDateFormItem {...dateInputProps} /> : null}
+            <Form.Item noStyle={!isSelected} className={styles.maskedDateInputFormItem}>
+              {isSelected ? (
+                <InputDateFormItem
+                  {...dateInputProps}
+                  formItemProps={{
+                    ...dateInputProps.formItemProps,
+                    className: cx(styles.noMargin, dateInputProps.formItemProps?.className),
+                  }}
+                />
+              ) : null}
             </Form.Item>
           </div>
         );
