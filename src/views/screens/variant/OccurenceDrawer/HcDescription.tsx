@@ -37,6 +37,8 @@ const getCount = (e: Complements) => {
   return null;
 };
 
+const getLocus = (e: HcComplement) => e.locus || [];
+
 export const HcComplementDescription = ({ defaultText, hcComplements, variantId }: Props) => {
   const nodes = extractHits<Complements>(hcComplements?.hits);
   const nOfSymbols = nodes?.length ?? 0;
@@ -71,7 +73,11 @@ export const HcComplementDescription = ({ defaultText, hcComplements, variantId 
                               value: ['HET'],
                               index: INDEX_VARIANTS,
                             }
-                          : { field: 'hgvsg', value: [variantId], index: INDEX_VARIANTS },
+                          : {
+                              field: 'locus',
+                              value: [...getLocus(e as HcComplement)],
+                              index: INDEX_VARIANTS,
+                            },
                       ),
                     ],
                   }),
