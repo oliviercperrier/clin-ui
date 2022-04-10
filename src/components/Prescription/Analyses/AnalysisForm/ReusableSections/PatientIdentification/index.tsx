@@ -18,7 +18,6 @@ const PatientIdentification = (props: IAnalysisStepForm) => {
   const [form] = Form.useForm();
   const { analysisData } = usePrescriptionForm();
   const [ramqSearchDone, setRamqSearchDone] = useState(false);
-  const [fileSearchDone, setFileSearchDone] = useState(false);
   const FORM_NAME = props.formName;
 
   const getName = (...key: string[]) => getNamePath(FORM_NAME, key);
@@ -34,8 +33,6 @@ const PatientIdentification = (props: IAnalysisStepForm) => {
               form={form}
               parentKey={FORM_NAME}
               onRamqSearchStateChange={setRamqSearchDone}
-              onFileSearchStateChange={setFileSearchDone}
-              initialFileSearchDone={fileSearchDone}
               initialRamqSearchDone={ramqSearchDone}
               initialData={getInitialData()}
               onResetRamq={() => {

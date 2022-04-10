@@ -112,7 +112,7 @@ const ParaclinicalExamsSelect = ({ form, parentKey, initialData }: OwnProps) => 
 
             return (
               <div key={key} className={cx(styles.paraExamFormItem)}>
-                <Space direction="vertical" className={styles.paraExamFormItemContent} size={0}>
+                <Space direction="vertical" className={styles.paraExamFormItemContent} size={8}>
                   <Form.Item
                     {...restField}
                     name={[name, PARACLINICAL_EXAMS_FI_KEY.STATUS]}

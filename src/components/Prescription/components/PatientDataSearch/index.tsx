@@ -143,15 +143,26 @@ const PatientDataSearch = ({
 
   return (
     <>
-      <Form.Item
-        name={getName(PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION)}
-        label="Établissement prescripteur"
-        rules={[{ required: true, validateTrigger: 'onSubmit' }]}
-      >
-        <Radio.Group disabled={ramqSearchDone}>
-          <Radio value={InstitutionValue.CHUSJ}>CHUSJ</Radio>
-          <Radio value={InstitutionValue.CHUM}>CHUM</Radio>
-        </Radio.Group>
+      <Form.Item noStyle shouldUpdate>
+        {({ getFieldValue }) => (
+          <Form.Item
+            name={getName(PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION)}
+            label="Établissement prescripteur"
+            rules={[{ required: true, validateTrigger: 'onSubmit' }]}
+          >
+            <Radio.Group
+              disabled={
+                getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_FILE)) ||
+                getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ)) ||
+                fileSearchDone ||
+                ramqSearchDone
+              }
+            >
+              <Radio value={InstitutionValue.CHUSJ}>CHUSJ</Radio>
+              <Radio value={InstitutionValue.CHUM}>CHUM</Radio>
+            </Radio.Group>
+          </Form.Item>
+        )}
       </Form.Item>
       <Form.Item noStyle shouldUpdate>
         {({ getFieldValue }) =>
@@ -170,6 +181,9 @@ const PatientDataSearch = ({
               checkboxFormItemProps={{
                 name: getName(PATIENT_DATA_FI_KEY.NO_FILE),
                 title: 'Aucun numéro de dossier',
+              }}
+              checkboxProps={{
+                onChange: (e) => setFileSearchDone(e.target.checked),
               }}
               onReset={() => {
                 setFileSearchDone(false);
@@ -193,9 +207,9 @@ const PatientDataSearch = ({
               }}
               apiPromise={(value) => FhirApi.checkRamq(rpt, value)}
               disabled={
-                fileSearchDone ||
-                (ramqSearchDone && form.getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_FILE))) ||
-                getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))
+                ramqSearchDone ||
+                getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ)) ||
+                (fileSearchDone && !getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_FILE)))
               }
             />
           ) : null
@@ -204,64 +218,66 @@ const PatientDataSearch = ({
       <Form.Item noStyle shouldUpdate>
         {({ getFieldValue }) =>
           getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_FILE)) || fileSearchDone ? (
-            <SearchOrNoneFormItem<Bundle<Patient>>
-              form={form}
-              inputFormItemProps={{
-                name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-                rules: [{ required: true, validateTrigger: 'onSubmit' }],
-                label: 'RAMQ',
-              }}
-              checkboxProps={{
-                onChange: (e) => {
-                  const checked = e.target.checked;
-                  if (!checked) {
-                    onResetRamq && onResetRamq();
-                  }
-                },
-              }}
-              inputProps={{
-                placeholder: 'AAAA 0000 0000',
-                onSearch: (value, search) =>
-                  isRamqValid(value)
-                    ? (search as Function)(value.replace(/\s/g, ''))
-                    : form.setFields([
-                        {
-                          name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-                          errors: ['Le numéro de RAMQ est invalide'],
-                          value,
-                        },
-                      ]),
-                onChange: (event) =>
-                  form.setFields([
-                    {
-                      name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-                      errors: [],
-                      value: formatRamq(event.currentTarget.value),
-                    },
-                  ]),
-              }}
-              checkboxFormItemProps={{
-                name: getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
-                title: 'Aucun numéro de RAMQ ou nouveau-né',
-              }}
-              onReset={() => {
-                onResetRamq && onResetRamq();
-                setRamqSearchDone(false);
-                form.resetFields([
-                  getName(PATIENT_DATA_FI_KEY.FIRST_NAME),
-                  getName(PATIENT_DATA_FI_KEY.LAST_NAME),
-                  getName(PATIENT_DATA_FI_KEY.SEX),
-                  getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
-                  getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
-                ]);
-              }}
-              onSearchDone={(value) => {
-                updateFormFromPatient(form, value);
-                setRamqSearchDone(true);
-              }}
-              apiPromise={(value) => FhirApi.checkRamq(rpt, value)}
-              disabled={ramqSearchDone}
-            />
+            <>
+              <SearchOrNoneFormItem<Bundle<Patient>>
+                form={form}
+                inputFormItemProps={{
+                  name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
+                  rules: [{ required: true, validateTrigger: 'onSubmit' }],
+                  label: 'RAMQ',
+                }}
+                checkboxProps={{
+                  onChange: (e) => {
+                    const checked = e.target.checked;
+                    if (!checked) {
+                      onResetRamq && onResetRamq();
+                    }
+                  },
+                }}
+                inputProps={{
+                  placeholder: 'AAAA 0000 0000',
+                  onSearch: (value, search) =>
+                    isRamqValid(value)
+                      ? (search as Function)(value.replace(/\s/g, ''))
+                      : form.setFields([
+                          {
+                            name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
+                            errors: ['Le numéro de RAMQ est invalide'],
+                            value,
+                          },
+                        ]),
+                  onChange: (event) =>
+                    form.setFields([
+                      {
+                        name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
+                        errors: [],
+                        value: formatRamq(event.currentTarget.value),
+                      },
+                    ]),
+                }}
+                checkboxFormItemProps={{
+                  name: getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
+                  title: 'Aucun numéro de RAMQ ou nouveau-né',
+                }}
+                onReset={() => {
+                  onResetRamq && onResetRamq();
+                  setRamqSearchDone(false);
+                  form.resetFields([
+                    getName(PATIENT_DATA_FI_KEY.FIRST_NAME),
+                    getName(PATIENT_DATA_FI_KEY.LAST_NAME),
+                    getName(PATIENT_DATA_FI_KEY.SEX),
+                    getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
+                    getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
+                  ]);
+                }}
+                onSearchDone={(value) => {
+                  updateFormFromPatient(form, value);
+                  setRamqSearchDone(true);
+                }}
+                apiPromise={(value) => FhirApi.checkRamq(rpt, value)}
+                disabled={ramqSearchDone && !getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))}
+              />
+            </>
           ) : null
         }
       </Form.Item>

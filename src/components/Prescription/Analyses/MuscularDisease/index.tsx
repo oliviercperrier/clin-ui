@@ -2,7 +2,7 @@ import ClinicalSigns from '../AnalysisForm/ReusableSections/ClinicalSigns';
 import HistoryAndDiagnosticHypothesis from '../AnalysisForm/ReusableSections/HistoryAndDiagnosticHypothesis';
 import ParaclinicalExams from '../AnalysisForm/ReusableSections/ParaclinicalExams';
 import PatientIdentification from '../AnalysisForm/ReusableSections/PatientIdentification';
-import Submission from './Steps/Submission';
+import Submission from '../AnalysisForm/ReusableSections/Submission';
 import { usePrescriptionForm } from 'store/prescription';
 import { Form } from 'antd';
 import { useDispatch } from 'react-redux';
