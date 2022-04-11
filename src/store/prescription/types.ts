@@ -1,4 +1,5 @@
 import { STEPS_ID } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
+import { IAnalysisDataType } from 'components/Prescription/Analysis/stepMapping';
 import { ValidateFields } from 'rc-field-form/lib/interface';
 
 export type initialState = {
@@ -8,7 +9,7 @@ export type initialState = {
   currentStep?: IAnalysisStep;
   analysisType?: AnalysisType;
   config?: IAnalysisConfig;
-  analysisData: any; // TODO add type for each Analysis Data Type
+  analysisData: IAnalysisDataType; // TODO add type for each Analysis Data Type
 };
 
 export interface ICurrentFormRefs {

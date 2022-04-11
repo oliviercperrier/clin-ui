@@ -1,5 +1,4 @@
 import { Typography } from 'antd';
-import { isEmpty } from 'lodash';
 
 import styles from './index.module.scss';
 

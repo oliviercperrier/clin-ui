@@ -22,8 +22,7 @@ const PatientIdentification = ({}: IAnalysisStepForm) => {
   const [ramqSearchDone, setRamqSearchDone] = useState(false);
 
   const getName = (...key: string[]) => getNamePath(FORM_NAME, key);
-  const getInitialData = () =>
-    analysisData ? (analysisData[FORM_NAME] as TPatientFormDataType) : undefined;
+  const getInitialData = () => (analysisData ? analysisData[FORM_NAME] : undefined);
 
   return (
     <AnalysisForm form={form} className={styles.patientIdentificationForm} name={FORM_NAME}>

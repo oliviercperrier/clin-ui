@@ -253,5 +253,11 @@
   "screen.variantdetails.tab.summary": "Résumé",
   "screen.variantsearch.table.gnomAd": "gnomAD ",
   "standard.format.date": "Format AAAA-MM-JJ",
-  "zygosity": "zigosité"
+  "zygosity": "zigosité",
+  "component.phenotypeTree.modal.title": "Navigateur de phénotype observé (HPO)",
+  "component.phenotypeTree.modal.okText": "Appliquer",
+  "component.phenotypeTree.modal.searchPlaceholder": "Recherche d'un terme d'ontologie - 3 caractères minimum",
+  "component.phenotypeTree.modal.emptySelection": "Sélectionnez des éléments dans le volet de gauche..",
+  "component.phenotypeTree.modal.tags.exact": "Participants avec ce terme exact",
+  "component.phenotypeTree.modal.tags.all": "Participants, y compris les termes descendants"
 }

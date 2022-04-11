@@ -7,6 +7,8 @@ import ClinicalSignsSelect, {
 import { usePrescriptionForm } from 'store/prescription';
 import { STEPS_ID } from '../constant';
 
+export type TClinicalSignsDataType = IClinicalSignsDataType;
+
 const ClinicalSigns = ({}: IAnalysisStepForm) => {
   const FORM_NAME = STEPS_ID.CLINICAL_SIGNS;
   const [form] = Form.useForm();

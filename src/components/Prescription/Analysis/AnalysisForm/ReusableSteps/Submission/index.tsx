@@ -9,13 +9,15 @@ import { prescriptionFormActions } from 'store/prescription/slice';
 import { STEPS_ID } from '../constant';
 
 import styles from './index.module.scss';
+import { PATIENT_DATA_FI_KEY } from 'components/Prescription/components/PatientDataSearch';
+import { submissionStepMapping } from 'components/Prescription/Analysis/stepMapping';
 
 export enum SUBMISSION_REVIEW_FI_KEY {
   RESPONSIBLE_DOCTOR = 'responsible_doctor',
   GENERAL_COMMENT = 'general_comment',
 }
 
-const Submission = (props: IAnalysisStepForm) => {
+const Submission = ({}: IAnalysisStepForm) => {
   const FORM_NAME = STEPS_ID.SUBMISSION;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -57,12 +59,18 @@ const Submission = (props: IAnalysisStepForm) => {
               <Descriptions.Item label="Analyse demandée">{analysisType}</Descriptions.Item>
             </Descriptions>
             <Descriptions>
-              <Descriptions.Item label="Établissement préscripteur">lol</Descriptions.Item>
+              <Descriptions.Item label="Établissement préscripteur">
+                {
+                  analysisData[STEPS_ID.PATIENT_IDENTIFICATION]?.[
+                    PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION
+                  ]
+                }
+              </Descriptions.Item>
             </Descriptions>
           </Space>
         </Collapse.Panel>
         {config?.steps
-          .filter(({ title }) => title != currentStep?.title)
+          .filter(({ title }) => title !== currentStep?.title)
           .map((step) => (
             <Collapse.Panel
               key={step.title}
@@ -75,7 +83,9 @@ const Submission = (props: IAnalysisStepForm) => {
                   }}
                 />
               }
-            ></Collapse.Panel>
+            >
+              {submissionStepMapping[step.id]}
+            </Collapse.Panel>
           ))}
       </Collapse>
     </AnalysisForm>

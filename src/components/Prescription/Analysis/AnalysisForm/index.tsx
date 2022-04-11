@@ -1,5 +1,5 @@
 import { Form, FormInstance, FormProps } from 'antd';
-import { NamePath } from 'antd/lib/form/interface';
+import { getNamePath } from 'components/Prescription/utils/form';
 import { isUndefined } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -27,15 +27,14 @@ const AnalysisForm = (
     <AnalysisFormContextProvider
       value={{
         form: props.form,
-        name: props.name,
-        getNamePath: (key: string) => [props.name, key],
+        getNamePath: (key: (string | number)[]) => getNamePath(currentStep?.id!, key),
       }}
     >
       <Form
         {...props}
         labelWrap
         validateMessages={{
-          required: "Ce champs est obligatoire"
+          required: 'Ce champs est obligatoire',
         }}
         onFinish={(values) => {
           if (props.onFinish) {

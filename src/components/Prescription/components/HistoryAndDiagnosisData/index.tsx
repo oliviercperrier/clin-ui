@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input, Radio, Select, Space } from 'antd';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import styles from './index.module.scss';
-import { getNamePath, resetFieldError } from 'components/Prescription/utils/form';
+import { getNamePath } from 'components/Prescription/utils/form';
 import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';

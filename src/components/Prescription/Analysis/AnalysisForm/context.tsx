@@ -4,8 +4,7 @@ import * as React from 'react';
 
 export interface AnalysisFormContextProps {
   form: FormInstance;
-  name: string;
-  getNamePath: (key: string) => NamePath;
+  getNamePath: (key: (string | number)[]) => NamePath;
 }
 
 const AnalysisFormContext = React.createContext<AnalysisFormContextProps | null>(null);

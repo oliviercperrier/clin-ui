@@ -6,7 +6,7 @@ import { formatRamq, isRamqValid } from 'components/Prescription/utils/ramq';
 import SearchOrNoneFormItem from 'components/uiKit/form/SearchOrNoneFormItem';
 import { useRpt } from 'hooks/rpt';
 import { isEmpty } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FieldData } from 'rc-field-form/lib/interface';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import {
@@ -18,6 +18,7 @@ import {
 import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
 import { SexValue } from 'utils/commonTypes';
 import InputDateFormItem from 'components/uiKit/form/InputDateFormItem';
+import AnalysisFormContext from 'components/Prescription/Analysis/AnalysisForm/context';
 
 type OwnProps = IAnalysisFormPart & {
   onRamqSearchStateChange?: (done: boolean) => void;

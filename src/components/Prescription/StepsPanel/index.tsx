@@ -9,7 +9,7 @@ const { Title } = Typography;
 
 const StepsPanel = () => {
   const dispatch = useDispatch();
-  const { config, currentStep, currentFormRefs } = usePrescriptionForm();
+  const { config, currentStep } = usePrescriptionForm();
 
   return (
     <Space direction="vertical" size={24} className={styles.prescriptionStepsPanel}>

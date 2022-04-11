@@ -253,5 +253,11 @@
   "screen.variantdetails.tab.summary": "Summary",
   "screen.variantsearch.table.gnomAd": "gnomAD ",
   "standard.format.date": "Format YYYY-MM-DD",
-  "zygosity": "zygozity"
+  "zygosity": "zygozity",
+  "component.phenotypeTree.modal.title": "Observed Phenotype (HPO) Browser",
+  "component.phenotypeTree.modal.okText": "Apply",
+  "component.phenotypeTree.modal.searchPlaceholder": "Search for ontology term - min 3 characters",
+  "component.phenotypeTree.modal.emptySelection": "Select items from the left-hand pane.",
+  "component.phenotypeTree.modal.tags.exact": "Participants with this exact term",
+  "component.phenotypeTree.modal.tags.all": "Participants including descendant terms"
 }
