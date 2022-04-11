@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import React, { useState } from 'react';
 import { Tooltip, Table } from 'antd';
 import cx from 'classnames';
@@ -13,6 +11,7 @@ import {
   Consequence,
   ExternalFrequenciesEntity,
   DonorsEntity,
+  frequency_RQDMEntity,
 } from 'graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 import ConsequencesCell from './ConsequencesCell';
@@ -20,7 +19,7 @@ import { ArrangerResultsTree, ArrangerEdge } from 'graphql/models';
 import { navigateTo } from 'utils/helper';
 
 import style from './VariantTableContainer.module.scss';
-import OccurenceDrawer from './OccurenceDrawer';
+import OccurrenceDrawer from './OccurenceDrawer';
 import { ColumnType } from 'antd/lib/table';
 import { ItemsCount } from 'components/table/ItemsCount';
 import { Varsome, VarsomeClassifications } from 'graphql/variants/models';
@@ -48,6 +47,13 @@ const findDonorById = (donors: ArrangerResultsTree<DonorsEntity>, patientId: str
 };
 
 const formatCalls = (calls: number[]) => (calls ? calls.join('/') : DISPLAY_WHEN_EMPTY_DATUM);
+
+const formatRqdm = (rqdm: frequency_RQDMEntity) => {
+  if (!rqdm?.total?.pc) {
+    return DISPLAY_WHEN_EMPTY_DATUM;
+  }
+  return `${rqdm.total.pc} / ${rqdm.total.pn} (${(rqdm.total.pf * 100).toPrecision(3)}%)`;
+};
 
 const VariantTableContainer = (props: OwnProps) => {
   const [drawerOpened, toggleDrawer] = useState(false);
@@ -158,10 +164,7 @@ const VariantTableContainer = (props: OwnProps) => {
     },
     {
       title: () => intl.get('screen.patientvariant.results.table.rqdm'),
-      render: (record: VariantEntity) =>
-        `${record.frequency_RQDM.total.pc} / ${record.frequency_RQDM.total.pn} (${(
-          record.frequency_RQDM.total.pf * 100
-        ).toPrecision(3)}%)`,
+      render: (record: VariantEntity) => formatRqdm(record.frequency_RQDM),
     },
     {
       title: () => intl.get('screen.patientvariant.results.table.zygosity'),
@@ -231,7 +234,7 @@ const VariantTableContainer = (props: OwnProps) => {
         }}
       />
       {rows?.length > 0 && selectedVariant && (
-        <OccurenceDrawer
+        <OccurrenceDrawer
           patientId={props.patientId}
           data={selectedVariant}
           opened={drawerOpened}
