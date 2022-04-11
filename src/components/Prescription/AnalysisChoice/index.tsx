@@ -64,6 +64,7 @@ const AnalysisChoice = () => {
           }
           name={ANALYSIS_CHOICE_FI_KEY.ANALYSIS_TYPE}
           rules={[{ required: true, message: "Le champs Choix de l'analyse est obligatoire" }]}
+          className="noMarginBtm"
         >
           <Select placeholder="Sélectionner">
             <Select.Option value={OtherAnalysisType.GLOBAL_DEVELOPMENTAL_DELAY}>
@@ -97,7 +98,11 @@ const AnalysisChoice = () => {
         <Form.Item noStyle shouldUpdate>
           {({ getFieldValue }) =>
             isMuscularAnalysisAndNotGlobal(getFieldValue(ANALYSIS_CHOICE_FI_KEY.ANALYSIS_TYPE)) ? (
-              <Form.Item name={ANALYSIS_CHOICE_FI_KEY.ANALYSE_REFLEX} valuePropName="checked">
+              <Form.Item
+                name={ANALYSIS_CHOICE_FI_KEY.ANALYSE_REFLEX}
+                valuePropName="checked"
+                className="marginTop noMarginBtm"
+              >
                 <Checkbox>
                   Analyser en réflexe le panel global des maladies musculaires si aucun diagnostic
                   n'est identifié depuis le panel spécialisé.
@@ -109,10 +114,12 @@ const AnalysisChoice = () => {
         <Form.Item noStyle shouldUpdate>
           {({ getFieldValue }) =>
             getFieldValue(ANALYSIS_CHOICE_FI_KEY.ANALYSIS_TYPE) ? (
-              <Text>
-                Il est recommandé de consulter <Link>l’algorithme clinique du RQDM</Link> sur
-                l'analyse sélectionnée avant de procéder au formulaire de prescription.
-              </Text>
+              <Form.Item className="marginTop noMarginBtm">
+                <Text>
+                  Il est recommandé de consulter <Link>l’algorithme clinique du RQDM</Link> sur
+                  l'analyse sélectionnée avant de procéder au formulaire de prescription.
+                </Text>
+              </Form.Item>
             ) : null
           }
         </Form.Item>

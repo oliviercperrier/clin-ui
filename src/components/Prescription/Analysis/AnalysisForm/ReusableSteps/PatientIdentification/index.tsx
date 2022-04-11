@@ -1,5 +1,5 @@
 import { Collapse, Form, Space } from 'antd';
-import AnalysisForm from 'components/Prescription/Analyses/AnalysisForm';
+import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import PatientDataSearch, {
   IPatientDataType,
   PATIENT_DATA_FI_KEY,
@@ -8,17 +8,18 @@ import { getNamePath } from 'components/Prescription/utils/form';
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 import { useState } from 'react';
 import { usePrescriptionForm } from 'store/prescription';
+import { STEPS_ID } from '../constant';
 import AdditionalInformation, { ADD_INFO_FI_KEY, IAddInfoDataType } from './AdditionalInformation';
 
 import styles from './index.module.scss';
 
 export type TPatientFormDataType = IPatientDataType & IAddInfoDataType;
 
-const PatientIdentification = (props: IAnalysisStepForm) => {
+const PatientIdentification = ({}: IAnalysisStepForm) => {
+  const FORM_NAME = STEPS_ID.PATIENT_IDENTIFICATION;
   const [form] = Form.useForm();
   const { analysisData } = usePrescriptionForm();
   const [ramqSearchDone, setRamqSearchDone] = useState(false);
-  const FORM_NAME = props.formName;
 
   const getName = (...key: string[]) => getNamePath(FORM_NAME, key);
   const getInitialData = () =>

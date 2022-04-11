@@ -9,7 +9,12 @@ import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { FieldData } from 'rc-field-form/lib/interface';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
-import { getNamePath } from 'components/Prescription/utils/form';
+import {
+  getNamePath,
+  resetFieldError,
+  setFieldError,
+  setFieldValue,
+} from 'components/Prescription/utils/form';
 import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
 import { SexValue } from 'utils/commonTypes';
 import InputDateFormItem from 'components/uiKit/form/InputDateFormItem';
@@ -171,12 +176,40 @@ const PatientDataSearch = ({
               form={form}
               inputFormItemProps={{
                 name: getName(PATIENT_DATA_FI_KEY.FILE_NUMBER),
-                rules: [{ required: true, validateTrigger: 'onSubmit' }],
+                rules: [
+                  {
+                    required: true,
+                    validateTrigger: 'onSubmit',
+                    validator: (_, value) => {
+                      if (!value) {
+                        return Promise.reject(new Error('Ce champs est obligatoire'));
+                      }
+
+                      if (!fileSearchDone) {
+                        return Promise.reject(new Error('Cliquer sur rechercher'));
+                      }
+
+                      return Promise.resolve();
+                    },
+                  },
+                ],
                 required: true,
                 label: 'Dossier',
               }}
               inputProps={{
                 placeholder: '000000',
+                onSearch: (value, search) => {
+                  resetFieldError(form, getName(PATIENT_DATA_FI_KEY.FILE_NUMBER));
+                  if (value) {
+                    (search as Function)(value.replace(/\s/g, ''));
+                  } else {
+                    setFieldError(
+                      form,
+                      getName(PATIENT_DATA_FI_KEY.FILE_NUMBER),
+                      'Ce champs est oblifatoire',
+                    );
+                  }
+                },
               }}
               checkboxFormItemProps={{
                 name: getName(PATIENT_DATA_FI_KEY.NO_FILE),
@@ -223,7 +256,23 @@ const PatientDataSearch = ({
                 form={form}
                 inputFormItemProps={{
                   name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-                  rules: [{ required: true, validateTrigger: 'onSubmit' }],
+                  rules: [
+                    {
+                      required: true,
+                      validateTrigger: 'onSubmit',
+                      validator: (_, value) => {
+                        if (!value) {
+                          return Promise.reject(new Error('Ce champs est obligatoire'));
+                        }
+
+                        if (!ramqSearchDone) {
+                          return Promise.reject(new Error('Cliquer sur rechercher'));
+                        }
+
+                        return Promise.resolve();
+                      },
+                    },
+                  ],
                   label: 'RAMQ',
                 }}
                 checkboxProps={{
@@ -236,24 +285,25 @@ const PatientDataSearch = ({
                 }}
                 inputProps={{
                   placeholder: 'AAAA 0000 0000',
-                  onSearch: (value, search) =>
-                    isRamqValid(value)
-                      ? (search as Function)(value.replace(/\s/g, ''))
-                      : form.setFields([
-                          {
-                            name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-                            errors: ['Le numéro de RAMQ est invalide'],
-                            value,
-                          },
-                        ]),
+                  onSearch: (value, search) => {
+                    resetFieldError(form, getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER));
+
+                    if (isRamqValid(value)) {
+                      (search as Function)(value.replace(/\s/g, ''));
+                    } else {
+                      setFieldError(
+                        form,
+                        getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
+                        'Le numéro de RAMQ est invalide',
+                      );
+                    }
+                  },
                   onChange: (event) =>
-                    form.setFields([
-                      {
-                        name: getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
-                        errors: [],
-                        value: formatRamq(event.currentTarget.value),
-                      },
-                    ]),
+                    setFieldValue(
+                      form,
+                      getName(PATIENT_DATA_FI_KEY.RAMQ_NUMBER),
+                      formatRamq(event.currentTarget.value),
+                    ),
                 }}
                 checkboxFormItemProps={{
                   name: getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
@@ -311,6 +361,7 @@ const PatientDataSearch = ({
                 name={getName(PATIENT_DATA_FI_KEY.SEX)}
                 label="Sexe"
                 rules={[{ required: true, validateTrigger: 'onSubmit' }]}
+                className="noMarginBtm"
               >
                 <RadioGroupSex />
               </Form.Item>

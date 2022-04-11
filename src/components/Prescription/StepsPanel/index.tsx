@@ -20,18 +20,9 @@ const StepsPanel = () => {
       <Steps direction="vertical" size="small" current={currentStep?.index}>
         {config?.steps.map((step) => (
           <Steps.Step
-            // TODO need to check if target step is the next one or all previous are completed
+            // TODO remove after development
             onStepClick={(index) => {
-              dispatch(prescriptionFormActions.goTo(index))
-
-              //if (currentFormRefs?.validateFields) {
-              //  currentFormRefs
-              //    ?.validateFields()
-              //    .then(() => dispatch(prescriptionFormActions.goTo(index)))
-              //    .catch(() => false);
-              //} else {
-              //  dispatch(prescriptionFormActions.goTo(index));
-              //}
+              dispatch(prescriptionFormActions.goTo(index));
             }}
             className={styles.stepsItem}
             key={step.index}

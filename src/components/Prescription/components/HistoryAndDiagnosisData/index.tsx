@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input, Radio, Select, Space } from 'antd';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import styles from './index.module.scss';
-import { getNamePath } from 'components/Prescription/utils/form';
+import { getNamePath, resetFieldError } from 'components/Prescription/utils/form';
 import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
@@ -44,7 +44,7 @@ export interface IHistoryAndDiagnosisDataType {
 const hiddenLabelConfig = { colon: false, label: <></> };
 
 const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) => {
-  const getName = (...key: string[]) => getNamePath(parentKey, key);
+  const getName = (...key: (string | number)[]) => getNamePath(parentKey, key);
 
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
@@ -133,14 +133,22 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
                               className={styles.healthConditionListItem}
                               align="baseline"
                             >
-                              <Form.Item {...restField} name={[name, 'condition']}>
+                              <Form.Item
+                                {...restField}
+                                name={[name, HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_CONDITION]}
+                              >
                                 <Input placeholder="Condition de santé" onChange={resetListError} />
                               </Form.Item>
-                              <Form.Item {...restField} name={[name, 'parental_link']}>
-                                <Select
-                                  placeholder="Lien parental"
-                                  onChange={resetListError}
-                                ></Select>
+                              <Form.Item
+                                {...restField}
+                                name={[
+                                  name,
+                                  HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_PARENTAL_LINK,
+                                ]}
+                              >
+                                <Select placeholder="Lien parental" onChange={resetListError}>
+                                  <Select.Option value="aa">aa</Select.Option>
+                                </Select>
                               </Form.Item>
                               <CloseOutlined
                                 className={cx(!name ? styles.hidden : '', styles.removeIcon)}
@@ -153,16 +161,31 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
                       <Form.Item noStyle>
                         <Form.ErrorList errors={errors} />
                       </Form.Item>
-                      <Form.Item {...hiddenLabelConfig} className="noMarginBtm">
-                        <Button
-                          type="link"
-                          className={styles.addHealthCondition}
-                          onClick={() => add({ condition: '', parental_link: undefined })}
-                          icon={<PlusOutlined />}
-                        >
-                          Ajouter
-                        </Button>
-                      </Form.Item>
+                      {getFieldValue(
+                        getName(
+                          HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS,
+                          0,
+                          HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_CONDITION,
+                        ),
+                      ) &&
+                        getFieldValue(
+                          getName(
+                            HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS,
+                            0,
+                            HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_PARENTAL_LINK,
+                          ),
+                        ) && (
+                          <Form.Item {...hiddenLabelConfig} className="noMarginBtm">
+                            <Button
+                              type="link"
+                              className={styles.addHealthCondition}
+                              onClick={() => add({ condition: '', parental_link: undefined })}
+                              icon={<PlusOutlined />}
+                            >
+                              Ajouter
+                            </Button>
+                          </Form.Item>
+                        )}
                     </>
                   )}
                 </Form.List>

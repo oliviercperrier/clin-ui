@@ -7,6 +7,7 @@ import {
   ICompleteAnalysisChoice,
   ICurrentFormRefs,
 } from 'store/prescription/types';
+import { DevelopmentDelayConfig } from './analysis/developmentDelay';
 import { MuscularDiseaseConfig } from './analysis/muscular';
 import { isMuscularAnalysis, isMuscularAnalysisAndNotGlobal } from './helper';
 
@@ -22,7 +23,7 @@ export const getAnalysisConfigMapping = (type: AnalysisType) => {
   if (isMuscularAnalysis(type)) {
     return MuscularDiseaseConfig;
   } else {
-    return undefined; // TODO
+    return DevelopmentDelayConfig; // TODO
   }
 };
 

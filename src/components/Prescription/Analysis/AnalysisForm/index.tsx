@@ -34,6 +34,9 @@ const AnalysisForm = (
       <Form
         {...props}
         labelWrap
+        validateMessages={{
+          required: "Ce champs est obligatoire"
+        }}
         onFinish={(values) => {
           if (props.onFinish) {
             props.onFinish(values);

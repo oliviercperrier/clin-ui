@@ -2,12 +2,13 @@ import { Collapse, Descriptions, Form, Input, Space } from 'antd';
 import { getNamePath } from 'components/Prescription/utils/form';
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 import { usePrescriptionForm } from 'store/prescription';
-import AnalysisForm from 'components/Prescription/Analyses/AnalysisForm';
+import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import { FormOutlined, SearchOutlined } from '@ant-design/icons';
-
-import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { prescriptionFormActions } from 'store/prescription/slice';
+import { STEPS_ID } from '../constant';
+
+import styles from './index.module.scss';
 
 export enum SUBMISSION_REVIEW_FI_KEY {
   RESPONSIBLE_DOCTOR = 'responsible_doctor',
@@ -15,10 +16,10 @@ export enum SUBMISSION_REVIEW_FI_KEY {
 }
 
 const Submission = (props: IAnalysisStepForm) => {
+  const FORM_NAME = STEPS_ID.SUBMISSION;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { analysisData, config, currentStep, analysisType } = usePrescriptionForm();
-  const FORM_NAME = props.formName;
 
   const getName = (...key: string[]) => getNamePath(FORM_NAME, key);
 

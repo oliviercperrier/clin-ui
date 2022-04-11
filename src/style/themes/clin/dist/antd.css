@@ -26278,11 +26278,18 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-form-item.noMarginBtm {
   margin-bottom: 0;
 }
+.ant-form-item.marginTop {
+  margin-top: 24px;
+}
 .ant-typographya {
   text-decoration: underline !important;
 }
 .ant-typographya:hover {
   text-decoration: none;
+}
+div[class$='-has-error'] .ant-radio-inner,
+div[class$='-has-error'] .ant-radio-inner:hover {
+  border-color: #a8071a;
 }
 body {
   color: #364a63;

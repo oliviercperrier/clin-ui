@@ -1,13 +1,14 @@
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
-import AnalysisForm from 'components/Prescription/Analyses/AnalysisForm';
+import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import { Form } from 'antd';
 import { usePrescriptionForm } from 'store/prescription';
 import ParaclinicalExamsSelect, {
   IParaclinicalExamsDataType,
 } from 'components/Prescription/components/ParaclinicalExamsSelect';
+import { STEPS_ID } from '../constant';
 
-const ParaclinicalExams = (props: IAnalysisStepForm) => {
-  const FORM_NAME = props.formName;
+const ParaclinicalExams = ({}: IAnalysisStepForm) => {
+  const FORM_NAME = STEPS_ID.PARACLINICAL_EXAMS;
   const [form] = Form.useForm();
   const { analysisData } = usePrescriptionForm();
 

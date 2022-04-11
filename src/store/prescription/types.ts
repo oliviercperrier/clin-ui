@@ -1,3 +1,4 @@
+import { STEPS_ID } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 import { ValidateFields } from 'rc-field-form/lib/interface';
 
 export type initialState = {
@@ -45,7 +46,7 @@ export interface IAnalysisConfig {
 
 export interface IAnalysisStep {
   title: string;
-  formName: any;
+  id: STEPS_ID;
   index?: number;
   previousStepIndex?: number;
   nextStepIndex?: number;

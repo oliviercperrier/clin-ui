@@ -1,14 +1,15 @@
 import { Form } from 'antd';
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 import { usePrescriptionForm } from 'store/prescription';
-import AnalysisForm from 'components/Prescription/Analyses/AnalysisForm';
+import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import { getNamePath } from 'components/Prescription/utils/form';
 import HistoryAndDiagnosticData, {
   IHistoryAndDiagnosisDataType,
 } from 'components/Prescription/components/HistoryAndDiagnosisData';
+import { STEPS_ID } from '../constant';
 
-const HistoryAndDiagnosticHypothesis = (props: IAnalysisStepForm) => {
-  const FORM_NAME = props.formName;
+const HistoryAndDiagnosticHypothesis = ({}: IAnalysisStepForm) => {
+  const FORM_NAME = STEPS_ID.HISTORY_AND_DIAGNOSIS;
   const [form] = Form.useForm();
   const { analysisData } = usePrescriptionForm();
 

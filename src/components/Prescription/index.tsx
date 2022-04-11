@@ -4,7 +4,7 @@ import {
   CloseOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
-import { Affix, Button, Col, Modal, Row, Space, Typography } from 'antd';
+import { Button, Col, Modal, Row, Space, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import { usePrescriptionForm } from 'store/prescription';
 import { prescriptionFormActions } from 'store/prescription/slice';
@@ -12,22 +12,12 @@ import StepsPanel from './StepsPanel';
 import GridCard from '@ferlab/ui/core/view/v2/GridCard';
 import intl from 'react-intl-universal';
 import { isUndefined } from 'lodash';
-import { AnalysisType } from 'store/prescription/types';
-import MuscularDisease from './Analyses/MuscularDisease';
-import { isMuscularAnalysis } from 'store/prescription/helper';
-
-import styles from './index.module.scss';
+import PrescriptionAnalysis from './Analysis';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 
-const { Title } = Typography;
+import styles from './index.module.scss';
 
-const getAnalysisForm = (type: AnalysisType) => {
-  if (isMuscularAnalysis(type)) {
-    return <MuscularDisease />;
-  } else {
-    return undefined; // TODO
-  }
-};
+const { Title } = Typography;
 
 const PrescriptionForm = () => {
   const dispatch = useDispatch();
@@ -71,13 +61,13 @@ const PrescriptionForm = () => {
     >
       <Row gutter={[24, 24]} className={styles.modalContentRow}>
         <Col span={6} className={styles.siderCol}>
-            <StepsPanel />
+          <StepsPanel />
         </Col>
         <Col span={18} className={styles.contentCol}>
           <ScrollContent className={styles.contentScroller}>
             <GridCard
               title={<Title level={3}>{currentStep?.title}</Title>}
-              content={analysisType ? getAnalysisForm(analysisType) : undefined}
+              content={analysisType ? <PrescriptionAnalysis /> : undefined}
               className={styles.prescriptionFormCard}
               bordered={false}
               footer={
