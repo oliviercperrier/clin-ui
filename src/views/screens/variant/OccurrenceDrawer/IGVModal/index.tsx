@@ -18,7 +18,7 @@ import { FhirDoc, PatientFileResults } from 'graphql/patients/models/Patient';
 import { IIGVTrack } from 'components/Igv/type';
 import ServerError from 'components/Results/ServerError';
 
-import style from 'views/screens/variant/OccurenceDrawer/IGVModal/index.module.scss';
+import style from 'views/screens/variant/OccurrenceDrawer/IGVModal/index.module.scss';
 import { GENDER, PARENT_TYPE, PATIENT_POSITION } from 'utils/constants';
 
 interface OwnProps {

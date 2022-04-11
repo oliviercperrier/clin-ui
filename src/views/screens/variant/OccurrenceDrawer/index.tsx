@@ -12,7 +12,7 @@ import { getTopBodyElement } from 'utils/helper';
 import { DonorsEntity, VariantEntity } from 'graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 import { ArrangerEdge } from 'graphql/models';
-import IGVModal from 'views/screens/variant/OccurenceDrawer/IGVModal';
+import IGVModal from 'views/screens/variant/OccurrenceDrawer/IGVModal';
 import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
 
 import style from './index.module.scss';
@@ -66,7 +66,7 @@ const getParentTitle = (who: 'mother' | 'father', id: string, affected: boolean)
   );
 };
 
-const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) => {
+const OccurrenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) => {
   const [modalOpened, toggleModal] = useState(false);
   const { loading: loadingRpt, rpt } = useRpt();
 
@@ -216,4 +216,4 @@ const OccurenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps) 
   );
 };
 
-export default OccurenceDrawer;
+export default OccurrenceDrawer;

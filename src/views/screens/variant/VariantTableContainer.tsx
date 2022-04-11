@@ -19,7 +19,7 @@ import { ArrangerResultsTree, ArrangerEdge } from 'graphql/models';
 import { navigateTo } from 'utils/helper';
 
 import style from './VariantTableContainer.module.scss';
-import OccurrenceDrawer from './OccurenceDrawer';
+import OccurrenceDrawer from './OccurrenceDrawer';
 import { ColumnType } from 'antd/lib/table';
 import { ItemsCount } from 'components/table/ItemsCount';
 import { Varsome, VarsomeClassifications } from 'graphql/variants/models';
