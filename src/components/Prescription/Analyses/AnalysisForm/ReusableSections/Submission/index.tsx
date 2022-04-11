@@ -56,9 +56,7 @@ const Submission = (props: IAnalysisStepForm) => {
               <Descriptions.Item label="Analyse demandée">{analysisType}</Descriptions.Item>
             </Descriptions>
             <Descriptions>
-              <Descriptions.Item label="Établissement préscripteur">
-                {analysisData['patient']['prescribing_institution']}
-              </Descriptions.Item>
+              <Descriptions.Item label="Établissement préscripteur">lol</Descriptions.Item>
             </Descriptions>
           </Space>
         </Collapse.Panel>

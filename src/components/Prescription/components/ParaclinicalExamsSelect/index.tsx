@@ -40,9 +40,33 @@ const DEFAULT_EXAMS: IParaclinicalExam[] = [
   },
   { title: 'EMG' },
   { title: 'IRM musculaire' },
-  { title: 'Test répétitions CTG' },
-  { title: 'Test répétitions GCN' },
-  { title: 'Test délétions et duplication' },
+  {
+    title: 'Test répétitions CTG',
+    label: (
+      <LabelWithInfo
+        title="Test répétitions CTG"
+        popoverProps={{ title: 'Bonjour', content: 'allo' }}
+      />
+    ),
+  },
+  {
+    title: 'Test répétitions GCN',
+    label: (
+      <LabelWithInfo
+        title="Test répétitions GCN"
+        popoverProps={{ title: 'Bonjour', content: 'allo' }}
+      />
+    ),
+  },
+  {
+    title: 'Test délétions et duplication',
+    label: (
+      <LabelWithInfo
+        title="Test délétions et duplication"
+        popoverProps={{ title: 'Bonjour', content: 'allo' }}
+      />
+    ),
+  },
   {
     title: 'Biopsie musculaire',
     extra: (name) => (
@@ -112,7 +136,7 @@ const ParaclinicalExamsSelect = ({ form, parentKey, initialData }: OwnProps) => 
 
             return (
               <div key={key} className={cx(styles.paraExamFormItem)}>
-                <Space direction="vertical" className={styles.paraExamFormItemContent} size={8}>
+                <Space direction="vertical" className={styles.paraExamFormItemContent} size={5}>
                   <Form.Item
                     {...restField}
                     name={[name, PARACLINICAL_EXAMS_FI_KEY.STATUS]}
@@ -149,7 +173,7 @@ const ParaclinicalExamsSelect = ({ form, parentKey, initialData }: OwnProps) => 
         wrapperCol={{ xxl: 14 }}
         label="Autres examens paracliniques"
         name={getName(PARACLINICAL_EXAMS_FI_KEY.OTHER_EXAMS)}
-        className={styles.otherExamsTextarea}
+        className={cx(styles.otherExamsTextarea, 'noMarginBtm')}
       >
         <Input.TextArea rows={3} />
       </Form.Item>

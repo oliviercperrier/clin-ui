@@ -19,6 +19,13 @@ $label-width: 200px;
     }
   }
 
+  .listErrorWrapper {
+    border: 1px solid $red-8;
+    padding: 12px;
+    border-radius: 2px;
+    background-color: $red-0;
+  }
+
   .healthConditionListItem {
     width: 100%;
     display: flex;

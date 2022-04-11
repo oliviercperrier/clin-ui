@@ -93,57 +93,99 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
           <Text type="success">pertinents</Text>.
         </Text>
       </Form.Item>
-      <Form.List name={getName(CLINICAL_SIGNS_FI_KEY.SIGNS)}>
-        {(fields, { add, remove }) => (
+      <Form.List
+        name={getName(CLINICAL_SIGNS_FI_KEY.SIGNS)}
+        rules={[
+          {
+            validator: async (_, signs: IClinicalSignItem[]) => {
+              if (
+                !signs.some(
+                  (sign) => sign[CLINICAL_SIGNS_FI_KEY.STATUS] === ClinicalSignsStatus.OBSERVED,
+                )
+              ) {
+                return Promise.reject(new Error('Sélectionner au moins un (1) signe clinique'));
+              }
+            },
+          },
+        ]}
+      >
+        {(fields, { add, remove }, { errors }) => (
           <>
-            {fields.map(({ key, name, ...restField }) => {
-              const isDefaultHpoTerm = isDefaultHpo(hpoList[name]);
-
-              return (
-                <div
-                  key={key}
-                  className={cx(styles.hpoFormItem, !isDefaultHpoTerm && styles.customHpoFormItem)}
-                >
-                  <Space direction="vertical" className={styles.hpoFormItemContent}>
-                    <div className={styles.hpoFormItemTopWrapper}>
-                      <Form.Item
-                        {...restField}
-                        name={[name, CLINICAL_SIGNS_FI_KEY.STATUS]}
-                        label={formatHpoTitleAndCode({
-                          phenotype: hpoList[name],
-                          codeColorType: 'secondary',
-                          codeClassName: styles.hpoCode,
-                        })}
-                      >
-                        <Radio.Group>
-                          <Radio value={ClinicalSignsStatus.OBSERVED}>Observé</Radio>
-                          <Radio value={ClinicalSignsStatus.NOT_OBSERVED}>Non observé</Radio>
-                          {isDefaultHpoTerm && <Radio value={ClinicalSignsStatus.NA}>NA</Radio>}
-                        </Radio.Group>
-                      </Form.Item>
-                      {!isDefaultHpoTerm && (
-                        <CloseOutlined className={styles.removeIcon} onClick={() => remove(name)} />
-                      )}
-                    </div>
-                    <Form.Item noStyle shouldUpdate>
-                      {({ getFieldValue }) =>
-                        getFieldValue(
-                          getName(CLINICAL_SIGNS_FI_KEY.SIGNS, name, CLINICAL_SIGNS_FI_KEY.STATUS),
-                        ) === ClinicalSignsStatus.OBSERVED ? (
-                          <Form.Item
-                            colon={false}
-                            name={[name, CLINICAL_SIGNS_FI_KEY.ONSET_AGE]}
-                            label={<></>}
+            <div className={cx(errors.length ? styles.listErrorWrapper : '')}>
+              {fields.map(({ key, name, ...restField }) => {
+                const isDefaultHpoTerm = isDefaultHpo(hpoList[name]);
+                return (
+                  <div
+                    key={key}
+                    className={cx(
+                      styles.hpoFormItem,
+                      !isDefaultHpoTerm && styles.customHpoFormItem,
+                    )}
+                  >
+                    <Space direction="vertical" className={styles.hpoFormItemContent}>
+                      <div className={styles.hpoFormItemTopWrapper}>
+                        <Form.Item
+                          {...restField}
+                          name={[name, CLINICAL_SIGNS_FI_KEY.STATUS]}
+                          label={formatHpoTitleAndCode({
+                            phenotype: hpoList[name],
+                            codeColorType: 'secondary',
+                            codeClassName: styles.hpoCode,
+                          })}
+                        >
+                          <Radio.Group
+                            onChange={(e) => {
+                              if (e.target.value === ClinicalSignsStatus.OBSERVED) {
+                                const listName = getName(CLINICAL_SIGNS_FI_KEY.SIGNS);
+                                form.setFields([
+                                  {
+                                    name: listName,
+                                    errors: [],
+                                    value: form.getFieldValue(listName),
+                                  },
+                                ]);
+                              }
+                            }}
                           >
-                            <Select placeholder="Âge d’apparition" />
-                          </Form.Item>
-                        ) : null
-                      }
-                    </Form.Item>
-                  </Space>
-                </div>
-              );
-            })}
+                            <Radio value={ClinicalSignsStatus.OBSERVED}>Observé</Radio>
+                            <Radio value={ClinicalSignsStatus.NOT_OBSERVED}>Non observé</Radio>
+                            {isDefaultHpoTerm && <Radio value={ClinicalSignsStatus.NA}>NA</Radio>}
+                          </Radio.Group>
+                        </Form.Item>
+                        {!isDefaultHpoTerm && (
+                          <CloseOutlined
+                            className={styles.removeIcon}
+                            onClick={() => remove(name)}
+                          />
+                        )}
+                      </div>
+                      <Form.Item noStyle shouldUpdate>
+                        {({ getFieldValue }) =>
+                          getFieldValue(
+                            getName(
+                              CLINICAL_SIGNS_FI_KEY.SIGNS,
+                              name,
+                              CLINICAL_SIGNS_FI_KEY.STATUS,
+                            ),
+                          ) === ClinicalSignsStatus.OBSERVED ? (
+                            <Form.Item
+                              colon={false}
+                              name={[name, CLINICAL_SIGNS_FI_KEY.ONSET_AGE]}
+                              label={<></>}
+                            >
+                              <Select placeholder="Âge d'apparition" />
+                            </Form.Item>
+                          ) : null
+                        }
+                      </Form.Item>
+                    </Space>
+                  </div>
+                );
+              })}
+            </div>
+            <Form.Item noStyle>
+              <Form.ErrorList errors={errors} />
+            </Form.Item>
             <Form.Item colon={false} label={<></>}>
               <Button
                 type="link"
@@ -166,6 +208,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
         wrapperCol={{ xxl: 14 }}
         label="Commentaire clinique général"
         name={getName(CLINICAL_SIGNS_FI_KEY.CLINIC_REMARK)}
+        className="noMarginBtm"
       >
         <Input.TextArea rows={3} />
       </Form.Item>

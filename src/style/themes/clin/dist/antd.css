@@ -26162,6 +26162,10 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-input-input::placeholder {
   color: #8b9db2;
 }
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
+  background-color: #fef4f4;
+}
 .ant-select {
   color: #364a63;
 }
@@ -26190,6 +26194,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-select-item-option-disabled.ant-select-item-option-selected {
   background-color: #e1e8ef;
+}
+.ant-select-status-error.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input) .ant-select-selector {
+  background-color: #fef4f4;
 }
 .ant-tabs-nav {
   margin-bottom: 0 !important;
@@ -26268,10 +26275,7 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
   background-color: #23a4d7;
 }
-:not(.ant-space-item > .ant-form-item) {
-  transition: margin-bottom 0s;
-}
-:not(.ant-space-item > .ant-form-item):last-child {
+.ant-form-item.noMarginBtm {
   margin-bottom: 0;
 }
 .ant-typographya {
@@ -26293,7 +26297,6 @@ body {
 .ant-form-item-explain,
 .ant-form-item-extra {
   font-size: 12px;
-  margin-top: 2px;
 }
 .ant-form-item-label > label {
   font-weight: 500;

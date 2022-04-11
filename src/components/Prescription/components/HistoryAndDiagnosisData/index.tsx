@@ -41,6 +41,8 @@ export interface IHistoryAndDiagnosisDataType {
   [HISTORY_AND_DIAG_FI_KEY.DIAGNOSIS_HYPOTHESIS]: string;
 }
 
+const hiddenLabelConfig = { colon: false, label: <></> };
+
 const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) => {
   const getName = (...key: string[]) => getNamePath(parentKey, key);
 
@@ -63,14 +65,28 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
             },
           ],
         },
+        {
+          name: getName(HISTORY_AND_DIAG_FI_KEY.HAS_INBREEDING),
+          value: InbreedingValue.NA,
+        },
       ]);
     }
   }, []);
 
+  const resetListError = () => {
+    form.setFields([
+      {
+        name: getName(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS),
+        errors: [],
+      },
+    ]);
+  };
+
   return (
     <div className={styles.historyAndDiagnosisHypSelect}>
-      <Form.Item label="Histoire familiale">
+      <Form.Item noStyle>
         <Form.Item
+          label="Histoire familiale"
           name={getName(HISTORY_AND_DIAG_FI_KEY.REPORT_HEALTH_CONDITIONS)}
           valuePropName="checked"
           className={styles.familyHistoryFormItem}
@@ -81,38 +97,67 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
           {({ getFieldValue }) =>
             getFieldValue(getName(HISTORY_AND_DIAG_FI_KEY.REPORT_HEALTH_CONDITIONS)) ? (
               <Form.Item wrapperCol={{ xxl: 16 }}>
-                <LabelWithInfo
-                  title="Indiquer au moins une condition de santé et son lien parental"
-                  colon
-                  requiredMark
-                  size="small"
-                />
-                <Form.List name={getName(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS)}>
-                  {(fields, { add, remove }) => (
+                <Form.Item {...hiddenLabelConfig} className="noMarginBtm">
+                  <LabelWithInfo
+                    title="Indiquer au moins une condition de santé et son lien parental"
+                    colon
+                    requiredMark
+                    size="small"
+                  />
+                </Form.Item>
+                <Form.List
+                  name={getName(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS)}
+                  rules={[
+                    {
+                      validator: async (_, conditions: IHealthConditionItem[]) => {
+                        if (
+                          !conditions.some(
+                            (condition) =>
+                              condition[HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_CONDITION] &&
+                              condition[HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_PARENTAL_LINK],
+                          )
+                        ) {
+                          return Promise.reject(new Error('Entrer au moins 1 condition de santé'));
+                        }
+                      },
+                    },
+                  ]}
+                >
+                  {(fields, { add, remove }, { errors }) => (
                     <>
-                      {fields.map(({ key, name, ...restField }) => (
-                        <Space
-                          key={key}
-                          className={styles.healthConditionListItem}
-                          align="baseline"
-                        >
-                          <Form.Item {...restField} name={[name, 'condition']}>
-                            <Input placeholder="Condition de santé" />
+                      <div className={cx(errors.length ? styles.listErrorWrapper : '')}>
+                        {fields.map(({ key, name, ...restField }) => (
+                          <Form.Item {...hiddenLabelConfig} className="noMarginBtm">
+                            <Space
+                              key={key}
+                              className={styles.healthConditionListItem}
+                              align="baseline"
+                            >
+                              <Form.Item {...restField} name={[name, 'condition']}>
+                                <Input placeholder="Condition de santé" onChange={resetListError} />
+                              </Form.Item>
+                              <Form.Item {...restField} name={[name, 'parental_link']}>
+                                <Select
+                                  placeholder="Lien parental"
+                                  onChange={resetListError}
+                                ></Select>
+                              </Form.Item>
+                              <CloseOutlined
+                                className={cx(!name ? styles.hidden : '', styles.removeIcon)}
+                                onClick={() => remove(name)}
+                              />
+                            </Space>
                           </Form.Item>
-                          <Form.Item {...restField} name={[name, 'parental_link']}>
-                            <Select placeholder="Lien parental"></Select>
-                          </Form.Item>
-                          <CloseOutlined
-                            className={cx(!name ? styles.hidden : '', styles.removeIcon)}
-                            onClick={() => remove(name)}
-                          />
-                        </Space>
-                      ))}
-                      <Form.Item>
+                        ))}
+                      </div>
+                      <Form.Item noStyle>
+                        <Form.ErrorList errors={errors} />
+                      </Form.Item>
+                      <Form.Item {...hiddenLabelConfig} className="noMarginBtm">
                         <Button
                           type="link"
                           className={styles.addHealthCondition}
-                          onClick={() => add()}
+                          onClick={() => add({ condition: '', parental_link: undefined })}
                           icon={<PlusOutlined />}
                         >
                           Ajouter
@@ -126,7 +171,6 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
           }
         </Form.Item>
       </Form.Item>
-
       <Form.Item
         label="Présence de consanguinité"
         name={getName(HISTORY_AND_DIAG_FI_KEY.HAS_INBREEDING)}
@@ -148,6 +192,8 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
         label="Hypothèse diagnostique"
         name={getName(HISTORY_AND_DIAG_FI_KEY.DIAGNOSIS_HYPOTHESIS)}
         wrapperCol={{ xxl: 14 }}
+        rules={[{ required: true, validateTrigger: 'onSubmit' }]}
+        className="noMarginBtm"
       >
         <Input.TextArea rows={3} placeholder="Sélectionner" />
       </Form.Item>

@@ -1,6 +1,8 @@
-import { Form, FormItemProps, InputProps, Space } from 'antd';
+import { Form, FormItemProps, Space } from 'antd';
 import MaskedDateInput from 'components/uiKit/input/MaskedDateInput';
 import { isValid } from 'date-fns';
+
+import styles from './index.module.scss';
 
 export type InputDateFormItemProps = {
   formItemProps?: Omit<FormItemProps, 'getValueFromEvent'>;
@@ -33,6 +35,7 @@ const InputDateFormItem = ({
         ]}
       >
         <MaskedDateInput
+          className={styles.maskedInputDate}
           onChange={(e) => {
             if (onValidate) {
               const date = new Date(e.unmaskedValue);

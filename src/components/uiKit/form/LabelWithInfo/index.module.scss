@@ -3,21 +3,25 @@
   align-items: center;
   font-weight: 500;
 
+  .title,
+  .requiredMark {
+    margin-right: 4px;
+  }
+
   .infoIconWrapper {
     display: flex;
-    margin-left: 4px;
+  }
+
+  .infoIconWrapper {
+    margin-right: 2px;
+  }
+
+  .colon {
+    margin: 0px 8px 0px 2px;
   }
 
   .small {
     font-size: 12px;
     line-height: 20px;
-  }
-
-  .colon {
-    padding: 0 3px;
-  }
-
-  .requiredMark {
-    padding-right: 4px;
   }
 }

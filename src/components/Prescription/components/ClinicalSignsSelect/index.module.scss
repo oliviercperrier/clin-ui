@@ -23,6 +23,13 @@ $label-width: 350px;
     }
   }
 
+  .listErrorWrapper {
+    border: 1px solid $red-8;
+    padding: 12px 0;
+    border-radius: 2px;
+    background-color: $red-0;
+  }
+
   .customHpoFormItem {
     display: flex;
     margin-bottom: 8px;
