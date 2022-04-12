@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Button, Divider, Dropdown, PageHeader } from 'antd';
+import { Button, Divider, Dropdown, PageHeader, Menu } from 'antd';
 import intl from 'react-intl-universal';
 import TranslateIcon from 'components/icons/TranslateIcon';
 import AccountCircleIcon from 'components/icons/AccountCircleIcon';
@@ -10,6 +10,24 @@ import { useGlobals } from 'store/global';
 import { useKeycloak } from '@react-keycloak/web';
 import styles from 'components/Layout/Header/index.module.scss';
 import { showTranslationBtn } from 'utils/config';
+import { LogoutOutlined } from '@ant-design/icons';
+import { logout } from 'auth/keycloak';
+
+const userMenu = () => (
+  <Menu>
+    <Menu.Item key="logout">
+      <Button
+        id="logout-button"
+        onClick={() => logout()}
+        type="text"
+        icon={<LogoutOutlined />}
+        className={styles.dropdownNav}
+      >
+        {`${intl.get('logout')}`}
+      </Button>
+    </Menu.Item>
+  </Menu>
+);
 
 const Header = () => {
   const { keycloak } = useKeycloak();
@@ -21,32 +39,31 @@ const Header = () => {
   const userFirstname = keycloak?.tokenParsed?.given_name || '';
 
   const getExtra = () => {
-    let extras = [];
+    const extras = [];
 
-    if (userFirstname) {
-      extras.push(
+    extras.push(
+      <Button
+        key="0"
+        className={styles.navBtn}
+        size="small"
+        type="link"
+        href={'/patient/search'}
+        icon={<SupervisorIcon />}
+      >
+        {intl.get('header.navigation.patient')}
+      </Button>,
+      <Divider key="1" className={styles.divider} type="vertical" />,
+      <Dropdown overlay={userMenu()} trigger={['click']} key="2">
         <Button
-          key="0"
-          className={styles.navBtn}
-          size="small"
-          type="link"
-          href={'/patient/search'}
-          icon={<SupervisorIcon />}
-        >
-          {intl.get('header.navigation.patient')}
-        </Button>,
-        <Divider key="1" className={styles.divider} type="vertical" />,
-        <Button
-          key="2"
           className={cx(styles.navBtn, styles.noMargin)}
           size="small"
           type="text"
           icon={<AccountCircleIcon />}
         >
           {userFirstname}
-        </Button>,
-      );
-    }
+        </Button>
+      </Dropdown>,
+    );
     if (showTranslationBtn) {
       extras.push(
         <Dropdown
