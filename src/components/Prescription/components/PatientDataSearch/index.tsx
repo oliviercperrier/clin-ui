@@ -6,7 +6,7 @@ import { formatRamq, isRamqValid } from 'components/Prescription/utils/ramq';
 import SearchOrNoneFormItem from 'components/uiKit/form/SearchOrNoneFormItem';
 import { useRpt } from 'hooks/rpt';
 import { isEmpty } from 'lodash';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldData } from 'rc-field-form/lib/interface';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import {
@@ -18,7 +18,7 @@ import {
 import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
 import { SexValue } from 'utils/commonTypes';
 import InputDateFormItem from 'components/uiKit/form/InputDateFormItem';
-import AnalysisFormContext from 'components/Prescription/Analysis/AnalysisForm/context';
+import { defaultFormItemsRules } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 
 type OwnProps = IAnalysisFormPart & {
   onRamqSearchStateChange?: (done: boolean) => void;
@@ -154,7 +154,7 @@ const PatientDataSearch = ({
           <Form.Item
             name={getName(PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION)}
             label="Établissement prescripteur"
-            rules={[{ required: true, validateTrigger: 'onSubmit' }]}
+            rules={defaultFormItemsRules}
           >
             <Radio.Group
               disabled={
@@ -239,7 +239,7 @@ const PatientDataSearch = ({
                   setRamqSearchDone(true);
                 }
               }}
-              apiPromise={(value) => FhirApi.checkRamq(rpt, value)}
+              apiPromise={(value) => FhirApi.searchPatient(rpt, value)}
               disabled={
                 ramqSearchDone ||
                 getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ)) ||
@@ -325,7 +325,7 @@ const PatientDataSearch = ({
                   updateFormFromPatient(form, value);
                   setRamqSearchDone(true);
                 }}
-                apiPromise={(value) => FhirApi.checkRamq(rpt, value)}
+                apiPromise={(value) => FhirApi.searchPatient(rpt, value)}
                 disabled={ramqSearchDone && !getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))}
               />
             </>
@@ -339,7 +339,7 @@ const PatientDataSearch = ({
               <Form.Item
                 name={getName(PATIENT_DATA_FI_KEY.LAST_NAME)}
                 label="Nom de famille"
-                rules={[{ required: true, validateTrigger: 'onSubmit' }]}
+                rules={defaultFormItemsRules}
                 wrapperCol={{ span: 10, sm: 12, xxl: 6 }}
               >
                 <Input />
@@ -347,21 +347,22 @@ const PatientDataSearch = ({
               <Form.Item
                 name={getName(PATIENT_DATA_FI_KEY.FIRST_NAME)}
                 label="Prénom"
-                rules={[{ required: true, validateTrigger: 'onSubmit' }]}
+                rules={defaultFormItemsRules}
                 wrapperCol={{ span: 10, sm: 12, xxl: 6 }}
               >
                 <Input />
               </Form.Item>
               <InputDateFormItem
                 formItemProps={{
-                  name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
                   label: 'Date de naissance',
+                  name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
+                  rules: defaultFormItemsRules,
                 }}
               />
               <Form.Item
                 name={getName(PATIENT_DATA_FI_KEY.SEX)}
                 label="Sexe"
-                rules={[{ required: true, validateTrigger: 'onSubmit' }]}
+                rules={defaultFormItemsRules}
                 className="noMarginBtm"
               >
                 <RadioGroupSex />

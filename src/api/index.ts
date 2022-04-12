@@ -1,5 +1,6 @@
 import keycloak from 'auth/keycloak';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { fetchRptToken } from 'auth/rpt';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();
 
@@ -24,8 +25,28 @@ apiInstance.interceptors.request.use((config) => {
   return config;
 });
 
+const rptApiInstance = axios.create({
+  timeout: 15000,
+});
+
+rptApiInstance.interceptors.request.use(async (config) => {
+  const { data } = await fetchRptToken();
+  config.headers = {
+    ...(data && { Authorization: `Bearer ${data.access_token}` }),
+    ...config.headers,
+  };
+
+  return config;
+});
+
+export const sendRequestWithRpt = async <T>(config: AxiosRequestConfig) =>
+  makeRequest<T>(rptApiInstance, config);
+
 export const sendRequest = async <T>(config: AxiosRequestConfig) =>
-  apiInstance
+  makeRequest<T>(apiInstance, config);
+
+export const makeRequest = async <T>(instance: AxiosInstance, config: AxiosRequestConfig) =>
+  instance
     .request<T>(config)
     .then(
       (response): ApiResponse<T> => ({
@@ -43,3 +64,4 @@ export const sendRequest = async <T>(config: AxiosRequestConfig) =>
     );
 
 export default apiInstance;
+export { rptApiInstance };

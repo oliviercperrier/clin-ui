@@ -6,7 +6,7 @@ import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import { FormOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { prescriptionFormActions } from 'store/prescription/slice';
-import { STEPS_ID } from '../constant';
+import { defaultFormItemsRules, STEPS_ID } from '../constant';
 
 import styles from './index.module.scss';
 import { PATIENT_DATA_FI_KEY } from 'components/Prescription/components/PatientDataSearch';
@@ -30,8 +30,8 @@ const Submission = ({}: IAnalysisStepForm) => {
       <Form.Item
         name={getName(SUBMISSION_REVIEW_FI_KEY.RESPONSIBLE_DOCTOR)}
         label={'Veuillez identifier votre médecin résponsable'}
-        rules={[{ required: true, validateTrigger: 'onSumbit' }]}
         wrapperCol={{ xxl: 14 }}
+        rules={defaultFormItemsRules}
       >
         <Input suffix={<SearchOutlined />} placeholder="Recherche par nom ou licence…" />
       </Form.Item>
@@ -54,20 +54,16 @@ const Submission = ({}: IAnalysisStepForm) => {
             />
           }
         >
-          <Space size={8} direction="vertical">
-            <Descriptions>
-              <Descriptions.Item label="Analyse demandée">{analysisType}</Descriptions.Item>
-            </Descriptions>
-            <Descriptions>
-              <Descriptions.Item label="Établissement préscripteur">
-                {
-                  analysisData[STEPS_ID.PATIENT_IDENTIFICATION]?.[
-                    PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION
-                  ]
-                }
-              </Descriptions.Item>
-            </Descriptions>
-          </Space>
+          <Descriptions column={1} size="small">
+            <Descriptions.Item label="Analyse demandée">{analysisType}</Descriptions.Item>
+            <Descriptions.Item label="Établissement préscripteur">
+              {
+                analysisData[STEPS_ID.PATIENT_IDENTIFICATION]?.[
+                  PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION
+                ]
+              }
+            </Descriptions.Item>
+          </Descriptions>
         </Collapse.Panel>
         {config?.steps
           .filter(({ title }) => title !== currentStep?.title)

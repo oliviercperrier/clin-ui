@@ -174,7 +174,9 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
                                 name={[name, CLINICAL_SIGNS_FI_KEY.ONSET_AGE]}
                                 label={<></>}
                               >
-                                <Select placeholder="Âge d'apparition" />
+                                <Select placeholder="Âge d'apparition">
+                                  <Select.Option value="juvenile">Juvénile</Select.Option>
+                                </Select>
                               </Form.Item>
                             ) : null
                           }

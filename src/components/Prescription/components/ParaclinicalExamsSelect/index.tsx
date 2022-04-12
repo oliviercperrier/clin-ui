@@ -7,6 +7,7 @@ import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 import { isEmpty } from 'lodash';
 
 import styles from './index.module.scss';
+import { defaultFormItemsRules } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 
 type OwnProps = IAnalysisFormPart & {
   initialData?: IParaclinicalExamsDataType;
@@ -32,7 +33,7 @@ const DEFAULT_EXAMS: IParaclinicalExam[] = [
             content: 'Aloo',
           }}
         />
-        <Form.Item name={[name, 'creatine_level']}>
+        <Form.Item name={[name, 'creatine_level']} rules={defaultFormItemsRules}>
           <Input />
         </Form.Item>
       </Form.Item>
@@ -72,7 +73,7 @@ const DEFAULT_EXAMS: IParaclinicalExam[] = [
     extra: (name) => (
       <Form.Item wrapperCol={{ xxl: 14 }} colon={false} label={<></>}>
         <LabelWithInfo title="Spécifier tout ce qui s'applique" colon size="small" />
-        <Form.Item name={[name, 'biopsie_values']}>
+        <Form.Item name={[name, 'biopsie_values']} rules={defaultFormItemsRules}>
           <Select mode="multiple" placeholder="Sélectionner" />
         </Form.Item>
       </Form.Item>
@@ -82,8 +83,12 @@ const DEFAULT_EXAMS: IParaclinicalExam[] = [
 
 export enum PARACLINICAL_EXAMS_FI_KEY {
   EXAMS = 'exams',
-  STATUS = 'status',
   OTHER_EXAMS = 'other_exams',
+}
+
+export enum PARACLINICAL_EXAM_ITEM_KEY {
+  NAME = 'name',
+  STATUS = 'status',
 }
 
 export enum ParaclinicalExamStatus {
@@ -92,12 +97,12 @@ export enum ParaclinicalExamStatus {
   NORMAL = 'normal',
 }
 
-export interface IClinicalSignItem {
-  [PARACLINICAL_EXAMS_FI_KEY.STATUS]: string;
+export interface IParaclinicalSignItem {
+  [PARACLINICAL_EXAM_ITEM_KEY.STATUS]: string;
 }
 
 export interface IParaclinicalExamsDataType {
-  [PARACLINICAL_EXAMS_FI_KEY.EXAMS]: IClinicalSignItem[];
+  [PARACLINICAL_EXAMS_FI_KEY.EXAMS]: IParaclinicalSignItem[];
   [PARACLINICAL_EXAMS_FI_KEY.OTHER_EXAMS]?: string;
 }
 
@@ -139,7 +144,7 @@ const ParaclinicalExamsSelect = ({ form, parentKey, initialData }: OwnProps) => 
                 <Space direction="vertical" className={styles.paraExamFormItemContent} size={5}>
                   <Form.Item
                     {...restField}
-                    name={[name, PARACLINICAL_EXAMS_FI_KEY.STATUS]}
+                    name={[name, PARACLINICAL_EXAM_ITEM_KEY.STATUS]}
                     label={title}
                   >
                     <Radio.Group>
@@ -155,7 +160,7 @@ const ParaclinicalExamsSelect = ({ form, parentKey, initialData }: OwnProps) => 
                           getName(
                             PARACLINICAL_EXAMS_FI_KEY.EXAMS,
                             name,
-                            PARACLINICAL_EXAMS_FI_KEY.STATUS,
+                            PARACLINICAL_EXAM_ITEM_KEY.STATUS,
                           ),
                         ) === ParaclinicalExamStatus.ABNORMAL
                           ? extra(name)

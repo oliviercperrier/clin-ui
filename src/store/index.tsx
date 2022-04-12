@@ -17,6 +17,7 @@ import { RootState } from 'store/types';
 import GlobalReducer from 'store/global';
 import ReportReducer from 'store/reports';
 import PrescriptionReducer from 'store/prescription';
+import UserReducer from 'store/user';
 import { prescriptionFormActionTypes } from './prescription/slice';
 
 const devMode = process.env.NODE_ENV === 'development';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers<RootState>({
   global: GlobalReducer,
   report: ReportReducer,
   prescription: PrescriptionReducer,
+  user: UserReducer,
 });
 
 const store: any = configureStore({

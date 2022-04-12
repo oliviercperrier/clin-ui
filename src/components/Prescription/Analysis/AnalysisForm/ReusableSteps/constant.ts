@@ -5,3 +5,7 @@ export enum STEPS_ID {
   PARACLINICAL_EXAMS = 'paraclinical_exams',
   SUBMISSION = 'submission',
 }
+
+export const EMPTY_FIELD = '--';
+
+export const defaultFormItemsRules = [{ required: true, validateTrigger: 'onSumbit' }];

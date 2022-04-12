@@ -7,6 +7,7 @@ import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import cx from 'classnames';
 import { isEmpty } from 'lodash';
+import { defaultFormItemsRules } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 
 type OwnProps = IAnalysisFormPart & {
   initialData?: IHistoryAndDiagnosisDataType;
@@ -18,8 +19,11 @@ export enum HISTORY_AND_DIAG_FI_KEY {
   HEALTH_CONDITIONS = 'health_conditions',
   ETHNICITY = 'ethnicity',
   DIAGNOSIS_HYPOTHESIS = 'diagnostic_hypothesis',
-  HEALTH_CONDITION_CONDITION = 'condition',
-  HEALTH_CONDITION_PARENTAL_LINK = 'parental_link',
+}
+
+export enum HEALTH_CONDITION_ITEM_KEY {
+  CONDITION = 'condition',
+  PARENTAL_LINK = 'parental_link',
 }
 
 export enum InbreedingValue {
@@ -29,8 +33,8 @@ export enum InbreedingValue {
 }
 
 export interface IHealthConditionItem {
-  [HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_CONDITION]: string;
-  [HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_PARENTAL_LINK]: string;
+  [HEALTH_CONDITION_ITEM_KEY.CONDITION]: string;
+  [HEALTH_CONDITION_ITEM_KEY.PARENTAL_LINK]: string;
 }
 
 export interface IHistoryAndDiagnosisDataType {
@@ -84,19 +88,19 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
 
   return (
     <div className={styles.historyAndDiagnosisHypSelect}>
-      <Form.Item noStyle>
+      <Form.Item className="">
         <Form.Item
           label="Histoire familiale"
           name={getName(HISTORY_AND_DIAG_FI_KEY.REPORT_HEALTH_CONDITIONS)}
           valuePropName="checked"
-          className={styles.familyHistoryFormItem}
+          className="noMarginBtm"
         >
           <Checkbox>Rapporter des conditions de santé pertinentes</Checkbox>
         </Form.Item>
         <Form.Item noStyle shouldUpdate>
           {({ getFieldValue }) =>
             getFieldValue(getName(HISTORY_AND_DIAG_FI_KEY.REPORT_HEALTH_CONDITIONS)) ? (
-              <Form.Item wrapperCol={{ xxl: 16 }}>
+              <Form.Item wrapperCol={{ xxl: 16 }} className="noMarginBtm">
                 <Form.Item {...hiddenLabelConfig} className="noMarginBtm">
                   <LabelWithInfo
                     title="Indiquer au moins une condition de santé et son lien parental"
@@ -113,8 +117,8 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
                         if (
                           !conditions.some(
                             (condition) =>
-                              condition[HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_CONDITION] &&
-                              condition[HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_PARENTAL_LINK],
+                              condition[HEALTH_CONDITION_ITEM_KEY.CONDITION] &&
+                              condition[HEALTH_CONDITION_ITEM_KEY.PARENTAL_LINK],
                           )
                         ) {
                           return Promise.reject(new Error('Entrer au moins 1 condition de santé'));
@@ -135,16 +139,13 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
                             >
                               <Form.Item
                                 {...restField}
-                                name={[name, HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_CONDITION]}
+                                name={[name, HEALTH_CONDITION_ITEM_KEY.CONDITION]}
                               >
                                 <Input placeholder="Condition de santé" onChange={resetListError} />
                               </Form.Item>
                               <Form.Item
                                 {...restField}
-                                name={[
-                                  name,
-                                  HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_PARENTAL_LINK,
-                                ]}
+                                name={[name, HEALTH_CONDITION_ITEM_KEY.PARENTAL_LINK]}
                               >
                                 <Select placeholder="Lien parental" onChange={resetListError}>
                                   <Select.Option value="aa">aa</Select.Option>
@@ -165,14 +166,14 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
                         getName(
                           HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS,
                           0,
-                          HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_CONDITION,
+                          HEALTH_CONDITION_ITEM_KEY.CONDITION,
                         ),
                       ) &&
                         getFieldValue(
                           getName(
                             HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS,
                             0,
-                            HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITION_PARENTAL_LINK,
+                            HEALTH_CONDITION_ITEM_KEY.PARENTAL_LINK,
                           ),
                         ) && (
                           <Form.Item {...hiddenLabelConfig} className="noMarginBtm">
@@ -215,7 +216,7 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
         label="Hypothèse diagnostique"
         name={getName(HISTORY_AND_DIAG_FI_KEY.DIAGNOSIS_HYPOTHESIS)}
         wrapperCol={{ xxl: 14 }}
-        rules={[{ required: true, validateTrigger: 'onSubmit' }]}
+        rules={defaultFormItemsRules}
         className="noMarginBtm"
       >
         <Input.TextArea rows={3} placeholder="Sélectionner" />

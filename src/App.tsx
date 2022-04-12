@@ -33,6 +33,7 @@ const App = () => {
     const showLogin = keycloakIsReady && !keycloak.authenticated;
     if (showLogin) {
       keycloak.login();
+    } else {
     }
   }, [keycloakIsReady, keycloak]);
 
