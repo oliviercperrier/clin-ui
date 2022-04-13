@@ -1,8 +1,8 @@
-export interface IPhenotypeSource {
+export type TreeNode = {
+  title: string;
   key: string;
-  doc_count: number;
-  top_hits: {
-    parents: string[];
-  };
-  filter_by_term: any;
-}
+  hasChildren?: boolean;
+  children?: TreeNode[];
+  disabled?: boolean;
+  isLeaf: boolean;
+};

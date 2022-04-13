@@ -1,5 +1,5 @@
 import { Checkbox, Form, Input, Radio, Space, Typography } from 'antd';
-import { getNamePath } from 'components/Prescription/utils/form';
+import { checkShouldUpdate, getNamePath } from 'components/Prescription/utils/form';
 import { formatRamq, RAMQ_PATTERN } from 'components/Prescription/utils/ramq';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import RadioDateFormItem from 'components/uiKit/form/RadioDateFormItem';
@@ -109,96 +109,106 @@ const AdditionalInformation = ({
   }, []);
 
   return (
-    <Form.Item noStyle shouldUpdate>
-      {({ getFieldValue }) => (
-        <>
-          <Form.Item
-            label="Diagnostic prénatal"
-            name={getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS)}
-            valuePropName="checked"
-          >
-            <Checkbox disabled={getFieldValue(getName(ADD_INFO_FI_KEY.NEW_BORN))}>Oui</Checkbox>
-          </Form.Item>
-          <Form.Item noStyle shouldUpdate>
-            {({ getFieldValue }) =>
-              getFieldValue(getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS)) ? (
-                <>
-                  <Form.Item
-                    name={getName(ADD_INFO_FI_KEY.FOETUS_SEX)}
-                    label="Sexe (foetus)"
-                    rules={[{ required: true }]}
-                  >
-                    <RadioGroupSex />
-                  </Form.Item>
-                  <Form.Item
-                    label="Âge gestationnel"
-                    name={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
-                    rules={[{ required: true }]}
-                  >
-                    <Radio.Group>
-                      <Space direction="vertical" className={styles.verticalRadioWrapper}>
-                        <RadioDateFormItem
-                          title="Date des dernières menstruation (DDM)"
-                          radioProps={{
-                            value: GestationalAgeValues.DDM,
-                            name: GestationalAgeValues.DDM,
-                          }}
-                          dateInputProps={{
-                            formItemProps: {
-                              name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DDM),
-                            },
-                            extra: <GestationalAge value={gestationalAgeDDM} />,
-                            onValidate: (valid, value) => {
-                              if (!valid && gestationalAgeDDM) {
-                                setGestationalAgeDDM(undefined);
-                              } else {
-                                setGestationalAgeDDM(calculateGestationalAgeFromDDM(value));
-                              }
-                            },
-                          }}
-                          parentFormItemName={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
-                        />
-                        <RadioDateFormItem
-                          title="Date prévue d'accouchement (DPA)"
-                          radioProps={{
-                            value: GestationalAgeValues.DPA,
-                            name: GestationalAgeValues.DPA,
-                          }}
-                          dateInputProps={{
-                            formItemProps: {
-                              name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DPA),
-                            },
-                            extra: <GestationalAge value={gestationalAgeDPA} />,
-                            onValidate: (valid, value) => {
-                              if (!valid && gestationalAgeDPA) {
-                                setGestationalAgeDPA(undefined);
-                              } else {
-                                setGestationalAgeDPA(calculateGestationalAgeFromDPA(value));
-                              }
-                            },
-                          }}
-                          parentFormItemName={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
-                        />
-                        <Radio value={GestationalAgeValues.DEAD_FOETUS}>Foetus décédé</Radio>
-                      </Space>
-                    </Radio.Group>
-                  </Form.Item>
-                </>
-              ) : null
-            }
-          </Form.Item>
-          {localShowNewBorn && (
+    <div className={styles.patientAddInfoWrapper}>
+      <Form.Item
+        label="Diagnostic prénatal"
+        name={getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS)}
+        valuePropName="checked"
+      >
+        <Checkbox disabled={form.getFieldValue(getName(ADD_INFO_FI_KEY.NEW_BORN))}>Oui</Checkbox>
+      </Form.Item>
+      <Form.Item
+        noStyle
+        shouldUpdate={(prev, next) =>
+          checkShouldUpdate(prev, next, [getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS)])
+        }
+      >
+        {({ getFieldValue }) =>
+          getFieldValue(getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS)) ? (
             <>
               <Form.Item
-                label="Nouveau-né"
-                name={getName(ADD_INFO_FI_KEY.NEW_BORN)}
-                valuePropName="checked"
+                name={getName(ADD_INFO_FI_KEY.FOETUS_SEX)}
+                label="Sexe (foetus)"
+                rules={[{ required: true }]}
               >
-                <Checkbox disabled={getFieldValue(getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS))}>
-                  Oui
-                </Checkbox>
+                <RadioGroupSex />
               </Form.Item>
-              {getFieldValue(getName(ADD_INFO_FI_KEY.NEW_BORN)) && (
+              <Form.Item
+                label="Âge gestationnel"
+                name={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
+                rules={[{ required: true }]}
+              >
+                <Radio.Group>
+                  <Space direction="vertical" className={styles.verticalRadioWrapper}>
+                    <RadioDateFormItem
+                      title="Date des dernières menstruation (DDM)"
+                      radioProps={{
+                        value: GestationalAgeValues.DDM,
+                        name: GestationalAgeValues.DDM,
+                      }}
+                      dateInputProps={{
+                        formItemProps: {
+                          name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DDM),
+                        },
+                        extra: <GestationalAge value={gestationalAgeDDM} />,
+                        onValidate: (valid, value) => {
+                          if (!valid && gestationalAgeDDM) {
+                            setGestationalAgeDDM(undefined);
+                          } else {
+                            setGestationalAgeDDM(calculateGestationalAgeFromDDM(value));
+                          }
+                        },
+                      }}
+                      parentFormItemName={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
+                    />
+                    <RadioDateFormItem
+                      title="Date prévue d'accouchement (DPA)"
+                      radioProps={{
+                        value: GestationalAgeValues.DPA,
+                        name: GestationalAgeValues.DPA,
+                      }}
+                      dateInputProps={{
+                        formItemProps: {
+                          name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DPA),
+                        },
+                        extra: <GestationalAge value={gestationalAgeDPA} />,
+                        onValidate: (valid, value) => {
+                          if (!valid && gestationalAgeDPA) {
+                            setGestationalAgeDPA(undefined);
+                          } else {
+                            setGestationalAgeDPA(calculateGestationalAgeFromDPA(value));
+                          }
+                        },
+                      }}
+                      parentFormItemName={getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE)}
+                    />
+                    <Radio value={GestationalAgeValues.DEAD_FOETUS}>Foetus décédé</Radio>
+                  </Space>
+                </Radio.Group>
+              </Form.Item>
+            </>
+          ) : null
+        }
+      </Form.Item>
+      {localShowNewBorn && (
+        <>
+          <Form.Item
+            label="Nouveau-né"
+            name={getName(ADD_INFO_FI_KEY.NEW_BORN)}
+            valuePropName="checked"
+          >
+            <Checkbox disabled={form.getFieldValue(getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS))}>
+              Oui
+            </Checkbox>
+          </Form.Item>
+          <Form.Item
+            noStyle
+            shouldUpdate={(prev, next) =>
+              checkShouldUpdate(prev, next, [getName(ADD_INFO_FI_KEY.NEW_BORN)])
+            }
+          >
+            {({ getFieldValue }) =>
+              getFieldValue(getName(ADD_INFO_FI_KEY.NEW_BORN)) ? (
                 <Form.Item
                   label="RAMQ de la mère"
                   name={getName(ADD_INFO_FI_KEY.MOTHER_RAMQ_NUMBER)}
@@ -218,12 +228,12 @@ const AdditionalInformation = ({
                     }
                   />
                 </Form.Item>
-              )}
-            </>
-          )}
+              ) : null
+            }
+          </Form.Item>
         </>
       )}
-    </Form.Item>
+    </div>
   );
 };
 

@@ -5,5 +5,5 @@ export interface IAnalysisStepForm {}
 
 export interface IAnalysisFormPart {
   form: FormInstance;
-  parentKey?: NamePath;
+  parentKey: NamePath;
 }

@@ -9,6 +9,7 @@ import ParaclinicalExams, {
   TParaclinicalExamsDataType,
 } from './AnalysisForm/ReusableSteps/ParaclinicalExams';
 import ParaclinicalExamsReview from './AnalysisForm/ReusableSteps/ParaclinicalExams/Review';
+import ParentIdentification from './AnalysisForm/ReusableSteps/ParentIdentification';
 import PatientIdentification, {
   TPatientFormDataType,
 } from './AnalysisForm/ReusableSteps/PatientIdentification';
@@ -20,6 +21,8 @@ export const stepsMapping = {
   [STEPS_ID.CLINICAL_SIGNS]: <ClinicalSigns />,
   [STEPS_ID.PARACLINICAL_EXAMS]: <ParaclinicalExams />,
   [STEPS_ID.HISTORY_AND_DIAGNOSIS]: <HistoryAndDiagnosticHypothesis />,
+  [STEPS_ID.MOTHER_IDENTIFICATION]: <ParentIdentification parent="mother" />,
+  [STEPS_ID.FATHER_IDENTIFICATION]: <ParentIdentification parent="father" />,
   [STEPS_ID.SUBMISSION]: <Submission />,
 };
 
@@ -28,6 +31,8 @@ export const submissionStepMapping = {
   [STEPS_ID.CLINICAL_SIGNS]: <ClinicalSignsReview />,
   [STEPS_ID.PARACLINICAL_EXAMS]: <ParaclinicalExamsReview />,
   [STEPS_ID.HISTORY_AND_DIAGNOSIS]: <HistoryAndDiagnosisReview />,
+  [STEPS_ID.MOTHER_IDENTIFICATION]: <></>,
+  [STEPS_ID.FATHER_IDENTIFICATION]: <></>,
   [STEPS_ID.SUBMISSION]: <></>,
 };
 
@@ -36,6 +41,8 @@ export interface IAnalysisDataType {
   [STEPS_ID.CLINICAL_SIGNS]?: TClinicalSignsDataType;
   [STEPS_ID.PARACLINICAL_EXAMS]?: TParaclinicalExamsDataType;
   [STEPS_ID.HISTORY_AND_DIAGNOSIS]?: THistoryAndDiagnosisDataType;
+  [STEPS_ID.MOTHER_IDENTIFICATION]?: any;
+  [STEPS_ID.FATHER_IDENTIFICATION]?: any;
   [STEPS_ID.SUBMISSION]?: any;
 }
 

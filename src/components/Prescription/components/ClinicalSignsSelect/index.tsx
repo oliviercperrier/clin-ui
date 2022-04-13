@@ -5,9 +5,14 @@ import { clone, isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { formatHpoTitleAndCode } from 'utils/hpo';
 import cx from 'classnames';
-import { getNamePath } from 'components/Prescription/utils/form';
+import {
+  checkShouldUpdate,
+  getNamePath,
+  resetFieldError,
+} from 'components/Prescription/utils/form';
 
 import styles from './index.module.scss';
+import PhenotypeModal from 'components/PhenotypeTree/TransferModal';
 
 const { Text } = Typography;
 
@@ -61,8 +66,12 @@ const isDefaultHpo = (hpo: string) => DEFAULT_HPO_LIST.includes(hpo);
 
 const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
   const [hpoList, setHpoList] = useState(clone(DEFAULT_HPO_LIST));
+  const [isPhenotypeModalVisible, setIsPhenotypeModalVisible] = useState(false);
 
   const getName = (...key: (string | number)[]) => getNamePath(parentKey, key);
+
+  const getNode = (index: number): IClinicalSignItem =>
+    form.getFieldValue(getName(CLINICAL_SIGNS_FI_KEY.SIGNS))[index];
 
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
@@ -114,7 +123,8 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
             <>
               <div className={cx(errors.length ? styles.listErrorWrapper : '')}>
                 {fields.map(({ key, name, ...restField }) => {
-                  const isDefaultHpoTerm = isDefaultHpo(hpoList[name]);
+                  const hpoNode = getNode(name);
+                  const isDefaultHpoTerm = isDefaultHpo(hpoNode.term);
                   return (
                     <div
                       key={key}
@@ -129,7 +139,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
                             {...restField}
                             name={[name, CLINICAL_SIGNS_FI_KEY.STATUS]}
                             label={formatHpoTitleAndCode({
-                              phenotype: hpoList[name],
+                              phenotype: hpoNode.term,
                               codeColorType: 'secondary',
                               codeClassName: styles.hpoCode,
                             })}
@@ -137,14 +147,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
                             <Radio.Group
                               onChange={(e) => {
                                 if (e.target.value === ClinicalSignsStatus.OBSERVED) {
-                                  const listName = getName(CLINICAL_SIGNS_FI_KEY.SIGNS);
-                                  form.setFields([
-                                    {
-                                      name: listName,
-                                      errors: [],
-                                      value: form.getFieldValue(listName),
-                                    },
-                                  ]);
+                                  resetFieldError(form, getName(CLINICAL_SIGNS_FI_KEY.SIGNS));
                                 }
                               }}
                             >
@@ -160,7 +163,18 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
                             />
                           )}
                         </div>
-                        <Form.Item noStyle shouldUpdate>
+                        <Form.Item
+                          noStyle
+                          shouldUpdate={(prev, next) =>
+                            checkShouldUpdate(prev, next, [
+                              getName(
+                                CLINICAL_SIGNS_FI_KEY.SIGNS,
+                                name,
+                                CLINICAL_SIGNS_FI_KEY.STATUS,
+                              ),
+                            ])
+                          }
+                        >
                           {({ getFieldValue }) =>
                             getFieldValue(
                               getName(
@@ -193,17 +207,21 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
                 <Button
                   type="link"
                   className={styles.addClinicalSignBtn}
-                  onClick={() => {
-                    const newTerm = 'Un fou term (HP:OMG)';
-
-                    setHpoList([...hpoList, newTerm]);
-                    add({ term: newTerm, status: ClinicalSignsStatus.OBSERVED });
-                  }}
+                  onClick={() => setIsPhenotypeModalVisible(true)}
                   icon={<PlusOutlined />}
                 >
                   Ajouter un signe clinique
                 </Button>
               </Form.Item>
+              <PhenotypeModal
+                visible={isPhenotypeModalVisible}
+                onVisibleChange={setIsPhenotypeModalVisible}
+                onApply={(nodes) => {
+                  nodes.forEach((node) =>
+                    add({ term: node.title, status: ClinicalSignsStatus.OBSERVED }),
+                  );
+                }}
+              />
             </>
           )}
         </Form.List>

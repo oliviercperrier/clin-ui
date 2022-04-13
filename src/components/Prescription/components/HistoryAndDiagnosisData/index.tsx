@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input, Radio, Select, Space } from 'antd';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import styles from './index.module.scss';
-import { getNamePath } from 'components/Prescription/utils/form';
+import { checkShouldUpdate, getNamePath } from 'components/Prescription/utils/form';
 import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
@@ -97,7 +97,14 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
         >
           <Checkbox>Rapporter des conditions de santé pertinentes</Checkbox>
         </Form.Item>
-        <Form.Item noStyle shouldUpdate>
+        <Form.Item
+          noStyle
+          shouldUpdate={(prev, next) =>
+            checkShouldUpdate(prev, next, [
+              getName(HISTORY_AND_DIAG_FI_KEY.REPORT_HEALTH_CONDITIONS),
+            ])
+          }
+        >
           {({ getFieldValue }) =>
             getFieldValue(getName(HISTORY_AND_DIAG_FI_KEY.REPORT_HEALTH_CONDITIONS)) ? (
               <Form.Item wrapperCol={{ xxl: 16 }} className="noMarginBtm">

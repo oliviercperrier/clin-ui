@@ -1,5 +1,5 @@
 import keycloak from 'auth/keycloak';
-import { fetchRptToken } from 'auth/rpt';
+import { fetchRptToken, RptManager } from 'auth/rpt';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();
@@ -30,9 +30,9 @@ const rptApiInstance = axios.create({
 });
 
 rptApiInstance.interceptors.request.use(async (config) => {
-  const { data } = await fetchRptToken();
+  const rpt = await RptManager.readRpt();
   config.headers = {
-    ...(data && { Authorization: `Bearer ${data.access_token}` }),
+    ...(rpt && { Authorization: `Bearer ${rpt.access_token}` }),
     ...config.headers,
   };
 

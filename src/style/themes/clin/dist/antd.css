@@ -26291,6 +26291,9 @@ div[class$='-has-error'] .ant-radio-inner,
 div[class$='-has-error'] .ant-radio-inner:hover {
   border-color: #a8071a;
 }
+.ant-pagination-item a {
+  text-decoration: none;
+}
 body {
   color: #364a63;
 }

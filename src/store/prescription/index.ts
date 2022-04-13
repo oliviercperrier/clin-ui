@@ -1,4 +1,3 @@
-import { STEPS_ID } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 import { useSelector } from 'react-redux';
 import { prescriptionSelector } from './selector';
 

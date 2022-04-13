@@ -20,6 +20,14 @@ export const DevelopmentDelayConfig = {
       title: 'Histoire et hypothèse diagnostique',
     },
     {
+      id: STEPS_ID.MOTHER_IDENTIFICATION,
+      title: 'Informations sur la mère',
+    },
+    {
+      id: STEPS_ID.FATHER_IDENTIFICATION,
+      title: 'Informations sur la père',
+    },
+    {
       id: STEPS_ID.SUBMISSION,
       title: 'Soumission',
     },

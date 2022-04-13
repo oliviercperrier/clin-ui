@@ -1,3 +1,8 @@
+import { PractitionerRole } from 'api/fhir/models';
+
 export type TUserState = {
-    isLoading: boolean;
+  isLoading: boolean;
+  user: {
+    practitionerRoles: PractitionerRole[];
+  };
 };

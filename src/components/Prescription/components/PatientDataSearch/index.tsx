@@ -20,6 +20,8 @@ import { SexValue } from 'utils/commonTypes';
 import InputDateFormItem from 'components/uiKit/form/InputDateFormItem';
 import { defaultFormItemsRules } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 
+import styles from './index.module.scss';
+
 type OwnProps = IAnalysisFormPart & {
   onRamqSearchStateChange?: (done: boolean) => void;
   onFileSearchStateChange?: (done: boolean) => void;
@@ -148,7 +150,7 @@ const PatientDataSearch = ({
   }, []);
 
   return (
-    <>
+    <div className={styles.patientDataSearchWrapper}>
       <Form.Item noStyle shouldUpdate>
         {({ getFieldValue }) => (
           <Form.Item
@@ -371,7 +373,7 @@ const PatientDataSearch = ({
           ) : null
         }
       </Form.Item>
-    </>
+    </div>
   );
 };
 

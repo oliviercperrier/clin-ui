@@ -7,10 +7,15 @@ import { FormOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { prescriptionFormActions } from 'store/prescription/slice';
 import { defaultFormItemsRules, STEPS_ID } from '../constant';
-
-import styles from './index.module.scss';
 import { PATIENT_DATA_FI_KEY } from 'components/Prescription/components/PatientDataSearch';
 import { submissionStepMapping } from 'components/Prescription/Analysis/stepMapping';
+import { useUser } from 'store/user';
+
+import styles from './index.module.scss';
+import {
+  findPractitionerRoleByOrganization,
+  isPractitionerResident,
+} from 'api/fhir/practitionerHelper';
 
 export enum SUBMISSION_REVIEW_FI_KEY {
   RESPONSIBLE_DOCTOR = 'responsible_doctor',
@@ -21,20 +26,32 @@ const Submission = ({}: IAnalysisStepForm) => {
   const FORM_NAME = STEPS_ID.SUBMISSION;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const { user } = useUser();
   const { analysisData, config, currentStep, analysisType } = usePrescriptionForm();
 
   const getName = (...key: string[]) => getNamePath(FORM_NAME, key);
 
+  const needToSelectSupervisor = () => {
+    const org = getPrescribingOrg()!;
+    const role = findPractitionerRoleByOrganization(user.practitionerRoles, org);
+    return isPractitionerResident(role!);
+  };
+
+  const getPrescribingOrg = () =>
+    analysisData[STEPS_ID.PATIENT_IDENTIFICATION]?.[PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION];
+
   return (
     <AnalysisForm form={form} className={styles.submissionForm} name={FORM_NAME} layout="vertical">
-      <Form.Item
-        name={getName(SUBMISSION_REVIEW_FI_KEY.RESPONSIBLE_DOCTOR)}
-        label={'Veuillez identifier votre médecin résponsable'}
-        wrapperCol={{ xxl: 14 }}
-        rules={defaultFormItemsRules}
-      >
-        <Input suffix={<SearchOutlined />} placeholder="Recherche par nom ou licence…" />
-      </Form.Item>
+      {needToSelectSupervisor() && (
+        <Form.Item
+          name={getName(SUBMISSION_REVIEW_FI_KEY.RESPONSIBLE_DOCTOR)}
+          label={'Veuillez identifier votre médecin résponsable'}
+          wrapperCol={{ xxl: 14 }}
+          rules={defaultFormItemsRules}
+        >
+          <Input suffix={<SearchOutlined />} placeholder="Recherche par nom ou licence…" />
+        </Form.Item>
+      )}
       <Form.Item
         name={getName(SUBMISSION_REVIEW_FI_KEY.GENERAL_COMMENT)}
         label="Commentaire général"
@@ -57,11 +74,7 @@ const Submission = ({}: IAnalysisStepForm) => {
           <Descriptions column={1} size="small">
             <Descriptions.Item label="Analyse demandée">{analysisType}</Descriptions.Item>
             <Descriptions.Item label="Établissement préscripteur">
-              {
-                analysisData[STEPS_ID.PATIENT_IDENTIFICATION]?.[
-                  PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION
-                ]
-              }
+              {getPrescribingOrg()}
             </Descriptions.Item>
           </Descriptions>
         </Collapse.Panel>

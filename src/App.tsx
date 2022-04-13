@@ -14,6 +14,8 @@ import { useGlobals } from 'store/global';
 import { useKeycloak } from '@react-keycloak/web';
 import Spinner from 'components/uiKit/Spinner';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchPractitionerRole } from 'store/user/thunks';
 
 const { store, persistor } = getStoreConfig();
 
@@ -25,15 +27,18 @@ persistor.subscribe(function () {
 });
 
 const App = () => {
+  const dispatch = useDispatch();
   const { lang } = useGlobals();
   const { keycloak, initialized } = useKeycloak();
   const keycloakIsReady = keycloak && initialized;
 
   useEffect(() => {
-    const showLogin = keycloakIsReady && !keycloak.authenticated;
-    if (showLogin) {
+    if (keycloakIsReady && !keycloak.authenticated) {
       keycloak.login();
-    } else {
+    }
+
+    if (keycloakIsReady && keycloak.authenticated) {
+      dispatch(fetchPractitionerRole());
     }
   }, [keycloakIsReady, keycloak]);
 
