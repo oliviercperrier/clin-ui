@@ -23,8 +23,7 @@ const LabelWithInfo = ({
   className = '',
   requiredMark = false,
 }: OwnProps) => (
-  <Text className={cx(styles.labelWithInfo, className)}>
-    {requiredMark && <Text className={styles.requiredMark} type="danger">*</Text>}
+  <Text className={cx(styles.labelWithInfo, requiredMark ? styles.requiredMark : '', className)}>
     <span className={cx(styles.title, styles[size])}>{title}</span>
     {popoverProps && (
       <Text type="secondary" className={styles.infoIconWrapper}>

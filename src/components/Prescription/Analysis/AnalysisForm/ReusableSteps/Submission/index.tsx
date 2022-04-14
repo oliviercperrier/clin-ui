@@ -17,6 +17,7 @@ import {
   findPractitionerRoleByOrganization,
   isPractitionerResident,
 } from 'api/fhir/practitionerHelper';
+import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 
 import styles from './index.module.scss';
 
@@ -37,7 +38,8 @@ const Submission = ({}: IAnalysisStepForm) => {
   const needToSelectSupervisor = () => {
     const org = getPrescribingOrg()!;
     const role = findPractitionerRoleByOrganization(user.practitionerRoles, org);
-    return isPractitionerResident(role!);
+
+    return isPractitionerResident(role!) || true;
   };
 
   const getPrescribingOrg = () =>
@@ -48,7 +50,7 @@ const Submission = ({}: IAnalysisStepForm) => {
       {needToSelectSupervisor() && (
         <Form.Item
           name={getName(SUBMISSION_REVIEW_FI_KEY.RESPONSIBLE_DOCTOR)}
-          label={'Veuillez identifier votre médecin résponsable'}
+          label={<LabelWithInfo title='Veuillez identifier votre médecin résponsable' colon/>}
           wrapperCol={{ xxl: 14 }}
           rules={defaultFormItemsRules}
         >
@@ -57,7 +59,7 @@ const Submission = ({}: IAnalysisStepForm) => {
       )}
       <Form.Item
         name={getName(SUBMISSION_REVIEW_FI_KEY.GENERAL_COMMENT)}
-        label="Commentaire général"
+        label={<LabelWithInfo title='Commentaire général' colon/>}
         wrapperCol={{ xxl: 14 }}
       >
         <Input.TextArea rows={3} />

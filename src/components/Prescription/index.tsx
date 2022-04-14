@@ -52,7 +52,7 @@ const PrescriptionForm = () => {
               })
             }
           >
-            Annuler
+            {intl.get('cancel')}
           </Button>
         </Space>
       }
@@ -79,14 +79,14 @@ const PrescriptionForm = () => {
                         icon={<ArrowLeftOutlined />}
                         onClick={() => dispatch(prescriptionFormActions.previousStep())}
                       >
-                        Precédent
+                        {intl.get('previous')}
                       </Button>
                     )}
                   </Space>
                   <Space className={styles.footerRightSide}>
                     {isUndefined(currentStep?.nextStepIndex) ? (
                       <Button type="primary" onClick={() => {}}>
-                        Soumettre
+                        {intl.get('submit')}
                       </Button>
                     ) : (
                       <Button
@@ -94,10 +94,10 @@ const PrescriptionForm = () => {
                         onClick={() => currentFormRefs?.sumbit && currentFormRefs.sumbit()}
                       >
                         {lastStepIsNext ? (
-                          'Enregistrer'
+                          intl.get('save')
                         ) : (
                           <>
-                            Suivant <ArrowRightOutlined />
+                            {intl.get('next')} <ArrowRightOutlined />
                           </>
                         )}
                       </Button>

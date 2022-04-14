@@ -1,11 +1,24 @@
+@import 'colors';
+
 .labelWithInfo {
   display: flex;
   align-items: center;
   font-weight: 500;
 
-  .title,
-  .requiredMark {
-    margin-right: 4px;
+  &.requiredMark {
+    &::before {
+      display: inline-block;
+      margin-right: 4px;
+      color: $red-8;
+      font-size: 14px;
+      font-family: SimSun, sans-serif;
+      line-height: 1;
+      content: '*';
+    }
+  }
+
+  .title {
+    margin-right: 2px;
   }
 
   .infoIconWrapper {
@@ -14,6 +27,7 @@
 
   .infoIconWrapper {
     margin-right: 2px;
+    margin-left: 2px;
   }
 
   .colon {

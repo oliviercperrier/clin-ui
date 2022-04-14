@@ -4,7 +4,12 @@ import {
   IHealthConditionItem,
 } from 'components/Prescription/components/HistoryAndDiagnosisData';
 import { usePrescriptionForm } from 'store/prescription';
-import { EMPTY_FIELD, STEPS_ID } from '../../constant';
+import intl from 'react-intl-universal';
+import {
+  STEPS_ID,
+  EMPTY_FIELD,
+} from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
+import { isEmpty } from 'lodash';
 
 const HistoryAndDiagnosisReview = () => {
   const { analysisData } = usePrescriptionForm();
@@ -12,16 +17,20 @@ const HistoryAndDiagnosisReview = () => {
   const getData = (key: HISTORY_AND_DIAG_FI_KEY) =>
     analysisData[STEPS_ID.HISTORY_AND_DIAGNOSIS]?.[key];
 
-  const getHealthConditions = () =>
-    ((getData(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS) ?? []) as IHealthConditionItem[])
-      .map((item) => `${item.condition} (${item.parental_link})`)
-      .join(', ');
+  const getHealthConditions = () => {
+    const conditions = getData(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS);
+    return isEmpty(conditions)
+      ? EMPTY_FIELD
+      : (conditions as IHealthConditionItem[])
+          .map((item) => `${item.condition} (${item.parental_link})`)
+          .join(', ');
+  };
 
   return (
     <Descriptions column={1} size="small">
       <Descriptions.Item label="Histoire familiale">{getHealthConditions()}</Descriptions.Item>
       <Descriptions.Item label="Présence de consanguinité">
-        {getData(HISTORY_AND_DIAG_FI_KEY.HAS_INBREEDING)}
+        {intl.get((getData(HISTORY_AND_DIAG_FI_KEY.HAS_INBREEDING) as string) ?? 'no')}
       </Descriptions.Item>
       <Descriptions.Item label="Ethnicité">
         {getData(HISTORY_AND_DIAG_FI_KEY.ETHNICITY) ?? EMPTY_FIELD}
