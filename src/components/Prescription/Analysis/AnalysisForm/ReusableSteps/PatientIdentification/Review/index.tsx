@@ -1,13 +1,23 @@
 import { Descriptions } from 'antd';
 import { PATIENT_DATA_FI_KEY } from 'components/Prescription/components/PatientDataSearch';
 import { usePrescriptionForm } from 'store/prescription';
-import { EMPTY_FIELD, STEPS_ID } from '../../constant';
+import {
+  EMPTY_FIELD,
+  STEPS_ID,
+} from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
+import intl from 'react-intl-universal';
 
-const PatientIdentificationReview = () => {
+interface OwnProps {
+  stepId?:
+    | STEPS_ID.FATHER_IDENTIFICATION
+    | STEPS_ID.MOTHER_IDENTIFICATION
+    | STEPS_ID.PATIENT_IDENTIFICATION;
+}
+
+const PatientIdentificationReview = ({ stepId = STEPS_ID.PATIENT_IDENTIFICATION }: OwnProps) => {
   const { analysisData } = usePrescriptionForm();
 
-  const getData = (key: PATIENT_DATA_FI_KEY) =>
-    analysisData[STEPS_ID.PATIENT_IDENTIFICATION]?.[key];
+  const getData = (key: PATIENT_DATA_FI_KEY) => analysisData[stepId]?.[key];
 
   const getFileNumber = () => {
     const fileNumber = getData(PATIENT_DATA_FI_KEY.FILE_NUMBER);
@@ -31,7 +41,9 @@ const PatientIdentificationReview = () => {
       <Descriptions.Item label="Date de naissance">
         {getData(PATIENT_DATA_FI_KEY.BIRTH_DATE)}
       </Descriptions.Item>
-      <Descriptions.Item label="Sexe">{getData(PATIENT_DATA_FI_KEY.SEX)}</Descriptions.Item>
+      <Descriptions.Item label="Sexe">
+        {intl.get(`sex.${getData(PATIENT_DATA_FI_KEY.SEX)}`)}
+      </Descriptions.Item>
     </Descriptions>
   );
 };

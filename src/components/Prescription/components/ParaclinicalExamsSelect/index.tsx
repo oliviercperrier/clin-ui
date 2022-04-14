@@ -1,11 +1,12 @@
 import { Form, Input, Radio, Select, Space } from 'antd';
-import { IAnalysisFormPart } from 'components/Prescription/utils/type';
+import { IAnalysisFormPart, IGetNamePathParams } from 'components/Prescription/utils/type';
 import { ReactNode, useEffect } from 'react';
 import cx from 'classnames';
-import { getNamePath, isEnumHasField } from 'components/Prescription/utils/form';
+import { getNamePath, setFieldValue, setInitialValues } from 'components/Prescription/utils/form';
 import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 import { isEmpty } from 'lodash';
 import { defaultFormItemsRules } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
+import intl from 'react-intl-universal';
 
 import styles from './index.module.scss';
 
@@ -82,8 +83,8 @@ const DEFAULT_EXAMS: IParaclinicalExam[] = [
 ];
 
 export enum PARACLINICAL_EXAMS_FI_KEY {
-  EXAMS = 'exams',
-  OTHER_EXAMS = 'other_exams',
+  EXAMS = 'paraclinical_exams',
+  OTHER_EXAMS = 'paraclinical_other_exams',
 }
 
 export enum PARACLINICAL_EXAM_ITEM_KEY {
@@ -107,28 +108,20 @@ export interface IParaclinicalExamsDataType {
 }
 
 const ParaclinicalExamsSelect = ({ form, parentKey, initialData }: OwnProps) => {
-  const getName = (...key: (string | number)[]) => getNamePath(parentKey, key);
+  const getName = (...key: IGetNamePathParams) => getNamePath(parentKey, key);
 
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
-      form.setFields(
-        Object.entries(initialData)
-          .filter((value) => isEnumHasField(PARACLINICAL_EXAMS_FI_KEY, value[0]))
-          .map((value) => ({
-            name: getName(value[0]),
-            value: value[1],
-          })),
-      );
+      setInitialValues(form, getName, initialData, PARACLINICAL_EXAMS_FI_KEY);
     } else {
-      form.setFields([
-        {
-          name: getName(PARACLINICAL_EXAMS_FI_KEY.EXAMS),
-          value: DEFAULT_EXAMS.map((exam) => ({
-            name: exam.title,
-            status: ParaclinicalExamStatus.NOT_DONE,
-          })),
-        },
-      ]);
+      setFieldValue(
+        form,
+        getName(PARACLINICAL_EXAMS_FI_KEY.EXAMS),
+        DEFAULT_EXAMS.map((exam) => ({
+          name: exam.title,
+          status: ParaclinicalExamStatus.NOT_DONE,
+        })),
+      );
     }
   }, []);
 
@@ -150,9 +143,9 @@ const ParaclinicalExamsSelect = ({ form, parentKey, initialData }: OwnProps) => 
                     label={title}
                   >
                     <Radio.Group>
-                      <Radio value={ParaclinicalExamStatus.NOT_DONE}>Non effectué</Radio>
-                      <Radio value={ParaclinicalExamStatus.ABNORMAL}>Anormal</Radio>
-                      <Radio value={ParaclinicalExamStatus.NORMAL}>Normal</Radio>
+                      <Radio value={ParaclinicalExamStatus.NOT_DONE}>{intl.get('not_done')}</Radio>
+                      <Radio value={ParaclinicalExamStatus.ABNORMAL}>{intl.get('unnatural')}</Radio>
+                      <Radio value={ParaclinicalExamStatus.NORMAL}>{intl.get('normal')}</Radio>
                     </Radio.Group>
                   </Form.Item>
                   {extra && (

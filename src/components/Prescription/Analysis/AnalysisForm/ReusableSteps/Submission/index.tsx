@@ -1,4 +1,4 @@
-import { Collapse, Descriptions, Form, Input, Space } from 'antd';
+import { Collapse, Descriptions, Form, Input } from 'antd';
 import { getNamePath } from 'components/Prescription/utils/form';
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 import { usePrescriptionForm } from 'store/prescription';
@@ -6,16 +6,19 @@ import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import { FormOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { prescriptionFormActions } from 'store/prescription/slice';
-import { defaultFormItemsRules, STEPS_ID } from '../constant';
+import {
+  defaultFormItemsRules,
+  STEPS_ID,
+} from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 import { PATIENT_DATA_FI_KEY } from 'components/Prescription/components/PatientDataSearch';
 import { submissionStepMapping } from 'components/Prescription/Analysis/stepMapping';
 import { useUser } from 'store/user';
-
-import styles from './index.module.scss';
 import {
   findPractitionerRoleByOrganization,
   isPractitionerResident,
 } from 'api/fhir/practitionerHelper';
+
+import styles from './index.module.scss';
 
 export enum SUBMISSION_REVIEW_FI_KEY {
   RESPONSIBLE_DOCTOR = 'responsible_doctor',
@@ -60,17 +63,7 @@ const Submission = ({}: IAnalysisStepForm) => {
         <Input.TextArea rows={3} />
       </Form.Item>
       <Collapse defaultActiveKey={['analyse', ...(config?.steps.map(({ title }) => title) ?? [])]}>
-        <Collapse.Panel
-          key="analyse"
-          header="Analyse"
-          extra={
-            <FormOutlined
-              onClick={(event) => {
-                event.stopPropagation();
-              }}
-            />
-          }
-        >
+        <Collapse.Panel key="analyse" header="Analyse">
           <Descriptions column={1} size="small">
             <Descriptions.Item label="Analyse demandée">{analysisType}</Descriptions.Item>
             <Descriptions.Item label="Établissement préscripteur">
@@ -88,7 +81,12 @@ const Submission = ({}: IAnalysisStepForm) => {
                 <FormOutlined
                   onClick={(event) => {
                     event.stopPropagation();
-                    dispatch(prescriptionFormActions.goTo(step.index!));
+                    dispatch(
+                      prescriptionFormActions.goTo({
+                        index: step.index!,
+                        lastStepIsNext: true,
+                      }),
+                    );
                   }}
                 />
               }

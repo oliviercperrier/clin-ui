@@ -25,7 +25,7 @@ export const DevelopmentDelayConfig = {
     },
     {
       id: STEPS_ID.FATHER_IDENTIFICATION,
-      title: 'Informations sur la père',
+      title: 'Informations sur le père',
     },
     {
       id: STEPS_ID.SUBMISSION,

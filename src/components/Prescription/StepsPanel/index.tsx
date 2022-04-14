@@ -22,7 +22,11 @@ const StepsPanel = () => {
           <Steps.Step
             // TODO remove after development
             onStepClick={(index) => {
-              dispatch(prescriptionFormActions.goTo(index));
+              dispatch(
+                prescriptionFormActions.goTo({
+                  index,
+                }),
+              );
             }}
             className={styles.stepsItem}
             key={step.index}

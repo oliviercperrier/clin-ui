@@ -21,10 +21,10 @@ type OwnProps = IAnalysisStepForm & {
   parent: 'mother' | 'father';
 };
 
-export enum PARENT_DATE_FI_KEY {
-  ENTER_INFO_MOMENT = 'enter_moment',
-  NO_INFO_REASON = 'no_info_reason',
-  CLINICAL_STATUS = 'clinical_status',
+export enum PARENT_DATA_FI_KEY {
+  ENTER_INFO_MOMENT = 'parent_enter_moment',
+  NO_INFO_REASON = 'parent_no_info_reason',
+  CLINICAL_STATUS = 'parent_clinical_status',
 }
 
 export enum EnterInfoMomentValue {
@@ -41,9 +41,9 @@ export enum ClinicalStatusValue {
 
 export type TParentDataType = IPatientDataType &
   IClinicalSignsDataType & {
-    [PARENT_DATE_FI_KEY.CLINICAL_STATUS]: ClinicalStatusValue;
-    [PARENT_DATE_FI_KEY.ENTER_INFO_MOMENT]: EnterInfoMomentValue;
-    [PARENT_DATE_FI_KEY.NO_INFO_REASON]: string;
+    [PARENT_DATA_FI_KEY.CLINICAL_STATUS]: ClinicalStatusValue;
+    [PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT]: EnterInfoMomentValue;
+    [PARENT_DATA_FI_KEY.NO_INFO_REASON]: string;
   };
 
 const { Text } = Typography;
@@ -62,9 +62,21 @@ const ParentIdentification = ({ parent }: OwnProps) => {
   useEffect(() => {
     const initialData = getInitialData();
     if (initialData && !isEmpty(initialData)) {
-      setFieldValue(form, getName(PARENT_DATE_FI_KEY.ENTER_INFO_MOMENT), initialData.enter_moment);
-      setFieldValue(form, getName(PARENT_DATE_FI_KEY.NO_INFO_REASON), initialData.no_info_reason);
-      setFieldValue(form, getName(PARENT_DATE_FI_KEY.CLINICAL_STATUS), initialData.clinical_status);
+      setFieldValue(
+        form,
+        getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT),
+        initialData.parent_enter_moment,
+      );
+      setFieldValue(
+        form,
+        getName(PARENT_DATA_FI_KEY.NO_INFO_REASON),
+        initialData.parent_no_info_reason,
+      );
+      setFieldValue(
+        form,
+        getName(PARENT_DATA_FI_KEY.CLINICAL_STATUS),
+        initialData.parent_clinical_status,
+      );
     }
   }, []);
 
@@ -75,7 +87,7 @@ const ParentIdentification = ({ parent }: OwnProps) => {
           <Text>{intl.get('prescription.parent.info.notice')}</Text>
         </Form.Item>
         <Form.Item
-          name={getName(PARENT_DATE_FI_KEY.ENTER_INFO_MOMENT)}
+          name={getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT)}
           label={intl.get(`prescription.parent.info.moment.${parent}`)}
           rules={defaultFormItemsRules}
         >
@@ -93,11 +105,11 @@ const ParentIdentification = ({ parent }: OwnProps) => {
         </Form.Item>
         <Form.Item noStyle shouldUpdate>
           {({ getFieldValue }) => {
-            const value = getFieldValue(getName(PARENT_DATE_FI_KEY.ENTER_INFO_MOMENT));
+            const value = getFieldValue(getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT));
             return value && value !== EnterInfoMomentValue.NOW ? (
               <Form.Item
                 label={intl.get('prescription.parent.info.moment.justify')}
-                name={getName(PARENT_DATE_FI_KEY.NO_INFO_REASON)}
+                name={getName(PARENT_DATA_FI_KEY.NO_INFO_REASON)}
                 className="noMarginBtm"
               >
                 <Input.TextArea
@@ -112,11 +124,11 @@ const ParentIdentification = ({ parent }: OwnProps) => {
       <Form.Item
         noStyle
         shouldUpdate={(prev, next) =>
-          checkShouldUpdate(prev, next, [getName(PARENT_DATE_FI_KEY.ENTER_INFO_MOMENT)])
+          checkShouldUpdate(prev, next, [getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT)])
         }
       >
         {({ getFieldValue }) =>
-          getFieldValue(getName(PARENT_DATE_FI_KEY.ENTER_INFO_MOMENT)) ===
+          getFieldValue(getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT)) ===
           EnterInfoMomentValue.NOW ? (
             <Space direction="vertical" className={styles.formContentWrapper}>
               <Collapse bordered={false} defaultActiveKey={[parent]}>
@@ -142,14 +154,14 @@ const ParentIdentification = ({ parent }: OwnProps) => {
         noStyle
         shouldUpdate={(prev, next) =>
           checkShouldUpdate(prev, next, [
-            getName(PARENT_DATE_FI_KEY.ENTER_INFO_MOMENT),
-            getName(PARENT_DATE_FI_KEY.CLINICAL_STATUS),
+            getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT),
+            getName(PARENT_DATA_FI_KEY.CLINICAL_STATUS),
             getName(PATIENT_DATA_FI_KEY.NO_RAMQ),
           ])
         }
       >
         {({ getFieldValue }) =>
-          (getFieldValue(getName(PARENT_DATE_FI_KEY.ENTER_INFO_MOMENT)) ===
+          (getFieldValue(getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT)) ===
             EnterInfoMomentValue.NOW &&
             getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))) ||
           ramqSearchDone ? (
@@ -159,7 +171,7 @@ const ParentIdentification = ({ parent }: OwnProps) => {
                 header={intl.get(`prescription.parent.info.clinical.title.${parent}`)}
               >
                 <Form.Item
-                  name={getName(PARENT_DATE_FI_KEY.CLINICAL_STATUS)}
+                  name={getName(PARENT_DATA_FI_KEY.CLINICAL_STATUS)}
                   label="Status"
                   rules={defaultFormItemsRules}
                 >
@@ -175,7 +187,7 @@ const ParentIdentification = ({ parent }: OwnProps) => {
                     </Radio>
                   </Radio.Group>
                 </Form.Item>
-                {getFieldValue(getName(PARENT_DATE_FI_KEY.CLINICAL_STATUS)) ===
+                {getFieldValue(getName(PARENT_DATA_FI_KEY.CLINICAL_STATUS)) ===
                   ClinicalStatusValue.AFFECTED && (
                   <ClinicalSignsSelect
                     form={form}

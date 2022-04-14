@@ -12,6 +12,7 @@ import { NamePath } from 'antd/lib/form/interface';
 import { SearchProps } from 'antd/lib/input';
 import { ApiResponse } from 'api';
 import cx from 'classnames';
+import { resetFieldError, setFieldError } from 'components/Prescription/utils/form';
 import { get } from 'lodash';
 import { useEffect, useState } from 'react';
 
@@ -56,14 +57,20 @@ const SearchOrNoneFormItem = <TSearchResult,>({
   }, [disabled]);
 
   const processSearch = (value: string) => {
-    setIsLoading(true);
-    apiPromise(value)
-      .then(({ error, data }) => {
-        onSearchDone(data);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    resetFieldError(form, inputFormItemProps.name);
+
+    if (!value) {
+      setFieldError(form, inputFormItemProps.name, 'Ce champs est oblifatoire');
+    } else {
+      setIsLoading(true);
+      apiPromise(value)
+        .then(({ error, data }) => {
+          onSearchDone(data);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -87,6 +94,7 @@ const SearchOrNoneFormItem = <TSearchResult,>({
                     className={cx(styles.searchInput, inputProps?.className)}
                     enterButton
                     disabled={isDisabled}
+                    onPressEnter={(e) => e.preventDefault()}
                     onSearch={(value) => {
                       if (inputProps?.onSearch) {
                         inputProps.onSearch(value, processSearch);

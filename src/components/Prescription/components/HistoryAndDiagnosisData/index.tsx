@@ -1,7 +1,14 @@
 import { Button, Checkbox, Form, Input, Radio, Select, Space } from 'antd';
-import { IAnalysisFormPart } from 'components/Prescription/utils/type';
+import { IAnalysisFormPart, IGetNamePathParams } from 'components/Prescription/utils/type';
 import styles from './index.module.scss';
-import { checkShouldUpdate, getNamePath, isEnumHasField } from 'components/Prescription/utils/form';
+import {
+  checkShouldUpdate,
+  getNamePath,
+  isEnumHasField,
+  resetFieldError,
+  setFieldValue,
+  setInitialValues,
+} from 'components/Prescription/utils/form';
 import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
@@ -14,11 +21,11 @@ type OwnProps = IAnalysisFormPart & {
 };
 
 export enum HISTORY_AND_DIAG_FI_KEY {
-  REPORT_HEALTH_CONDITIONS = 'report_health_conditions',
-  HAS_INBREEDING = 'inbreeding',
-  HEALTH_CONDITIONS = 'health_conditions',
-  ETHNICITY = 'ethnicity',
-  DIAGNOSIS_HYPOTHESIS = 'diagnostic_hypothesis',
+  REPORT_HEALTH_CONDITIONS = 'history_and_diag_report_health_conditions',
+  HAS_INBREEDING = 'history_and_diag_inbreeding',
+  HEALTH_CONDITIONS = 'history_and_diag_health_conditions',
+  ETHNICITY = 'history_and_diag_ethnicity',
+  DIAGNOSIS_HYPOTHESIS = 'history_and_diag_diagnostic_hypothesis',
 }
 
 export enum HEALTH_CONDITION_ITEM_KEY {
@@ -48,45 +55,30 @@ export interface IHistoryAndDiagnosisDataType {
 const hiddenLabelConfig = { colon: false, label: <></> };
 
 const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) => {
-  const getName = (...key: (string | number)[]) => getNamePath(parentKey, key);
+  const getName = (...key: IGetNamePathParams) => getNamePath(parentKey, key);
 
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
-      form.setFields(
-        Object.entries(initialData)
-          .filter((value) => isEnumHasField(HISTORY_AND_DIAG_FI_KEY, value[0]))
-          .map((value) => ({
-            name: getName(value[0]),
-            value: value[1],
-          })),
-      );
+      setInitialValues(form, getName, initialData, HISTORY_AND_DIAG_FI_KEY);
+      if (!initialData[HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS]) {
+        setDefaultCondition();
+      }
     } else {
-      form.setFields([
-        {
-          name: getName(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS),
-          value: [
-            {
-              condition: '',
-              parental_link: undefined,
-            },
-          ],
-        },
-        {
-          name: getName(HISTORY_AND_DIAG_FI_KEY.HAS_INBREEDING),
-          value: InbreedingValue.NA,
-        },
-      ]);
+      setDefaultCondition();
+      setFieldValue(form, getName(HISTORY_AND_DIAG_FI_KEY.HAS_INBREEDING), InbreedingValue.NA);
     }
   }, []);
 
-  const resetListError = () => {
-    form.setFields([
+  const setDefaultCondition = () =>
+    setFieldValue(form, getName(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS), [
       {
-        name: getName(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS),
-        errors: [],
+        condition: '',
+        parental_link: undefined,
       },
     ]);
-  };
+
+  const resetListError = () =>
+    resetFieldError(form, getName(HISTORY_AND_DIAG_FI_KEY.HEALTH_CONDITIONS));
 
   return (
     <div className={styles.historyAndDiagnosisHypSelect}>

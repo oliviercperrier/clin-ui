@@ -40,9 +40,6 @@ const AnalysisForm = (
           if (props.onFinish) {
             props.onFinish(values);
           }
-          if (!isUndefined(currentStep?.nextStepIndex)) {
-            dispatch(prescriptionFormActions.nextStep());
-          }
         }}
       />
     </AnalysisFormContextProvider>

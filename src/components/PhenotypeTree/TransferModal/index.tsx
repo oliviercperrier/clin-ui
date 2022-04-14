@@ -51,8 +51,8 @@ const PhenotypeModal = ({ visible = false, onApply, onVisibleChange }: OwnProps)
     <Modal
       visible={isVisible}
       title={intl.get('component.phenotypeTree.modal.title')}
-      wrapClassName={styles.hpoTreeModalWrapper}
-      className={styles.hpoTreeModal}
+      wrapClassName={styles.phenotypeTreeModalWrapper}
+      className={styles.phenotypeTreeModal}
       footer={[
         <Button key="back" onClick={handleCancel}>
           {intl.get('component.phenotypeTree.modal.cancelText')}

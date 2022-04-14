@@ -21,7 +21,8 @@ const { Title } = Typography;
 
 const PrescriptionForm = () => {
   const dispatch = useDispatch();
-  const { prescriptionVisible, analysisType, currentStep, currentFormRefs } = usePrescriptionForm();
+  const { prescriptionVisible, analysisType, currentStep, currentFormRefs, lastStepIsNext } =
+    usePrescriptionForm();
 
   return (
     <Modal
@@ -73,7 +74,7 @@ const PrescriptionForm = () => {
               footer={
                 <div className={styles.prescriptionContentFooter}>
                   <Space className={styles.footerLeftSide}>
-                    {!isUndefined(currentStep?.previousStepIndex) && (
+                    {!isUndefined(currentStep?.previousStepIndex) && !lastStepIsNext && (
                       <Button
                         icon={<ArrowLeftOutlined />}
                         onClick={() => dispatch(prescriptionFormActions.previousStep())}
@@ -92,7 +93,13 @@ const PrescriptionForm = () => {
                         type="primary"
                         onClick={() => currentFormRefs?.sumbit && currentFormRefs.sumbit()}
                       >
-                        Suivant <ArrowRightOutlined />
+                        {lastStepIsNext ? (
+                          'Enregistrer'
+                        ) : (
+                          <>
+                            Suivant <ArrowRightOutlined />
+                          </>
+                        )}
                       </Button>
                     )}
                   </Space>

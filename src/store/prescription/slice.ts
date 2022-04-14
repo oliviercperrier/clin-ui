@@ -45,8 +45,19 @@ const prescriptionFormSlice = createSlice({
         ...action.payload,
       };
     },
-    goTo: (state, action: PayloadAction<number>) => {
-      state.currentStep = state.config?.steps[action.payload];
+    goTo: (
+      state,
+      action: PayloadAction<{
+        index: number;
+        lastStepIsNext?: boolean;
+      }>,
+    ) => {
+      state.currentStep = state.config?.steps[action.payload.index];
+      state.lastStepIsNext = action.payload.lastStepIsNext;
+    },
+    goToLastStep: (state) => {
+      state.currentStep = state.config?.steps[state.config?.steps.length - 1];
+      state.lastStepIsNext = false;
     },
     nextStep: (state) => {
       const nextStepIndex = state.currentStep?.nextStepIndex;

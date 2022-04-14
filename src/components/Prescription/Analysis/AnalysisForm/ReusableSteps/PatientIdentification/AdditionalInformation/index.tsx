@@ -1,5 +1,5 @@
-import { Checkbox, Form, Input, Radio, Space, Typography } from 'antd';
-import { checkShouldUpdate, getNamePath } from 'components/Prescription/utils/form';
+import { Checkbox, Form, Input, Radio, Space } from 'antd';
+import { checkShouldUpdate, getNamePath, setFieldValue } from 'components/Prescription/utils/form';
 import { formatRamq, RAMQ_PATTERN } from 'components/Prescription/utils/ramq';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import RadioDateFormItem from 'components/uiKit/form/RadioDateFormItem';
@@ -149,6 +149,7 @@ const AdditionalInformation = ({
                       dateInputProps={{
                         formItemProps: {
                           name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DDM),
+                          required: true,
                         },
                         extra: <GestationalAge value={gestationalAgeDDM} />,
                         onValidate: (valid, value) => {
@@ -170,6 +171,7 @@ const AdditionalInformation = ({
                       dateInputProps={{
                         formItemProps: {
                           name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DPA),
+                          required: true,
                         },
                         extra: <GestationalAge value={gestationalAgeDPA} />,
                         onValidate: (valid, value) => {
@@ -218,13 +220,11 @@ const AdditionalInformation = ({
                   <Input
                     placeholder="AAAA 0000 0000"
                     onChange={(e) =>
-                      form.setFields([
-                        {
-                          name: getName(ADD_INFO_FI_KEY.MOTHER_RAMQ_NUMBER),
-                          errors: [],
-                          value: formatRamq(e.currentTarget.value),
-                        },
-                      ])
+                      setFieldValue(
+                        form,
+                        getName(ADD_INFO_FI_KEY.MOTHER_RAMQ_NUMBER),
+                        formatRamq(e.currentTarget.value),
+                      )
                     }
                   />
                 </Form.Item>

@@ -1,6 +1,6 @@
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Radio, Select, Space, Typography } from 'antd';
-import { IAnalysisFormPart } from 'components/Prescription/utils/type';
+import { IAnalysisFormPart, IGetNamePathParams } from 'components/Prescription/utils/type';
 import { clone, isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { formatHpoTitleAndCode } from 'utils/hpo';
@@ -8,9 +8,9 @@ import cx from 'classnames';
 import {
   checkShouldUpdate,
   getNamePath,
-  isEnumHasField,
   resetFieldError,
   setFieldValue,
+  setInitialValues,
 } from 'components/Prescription/utils/form';
 
 import styles from './index.module.scss';
@@ -41,8 +41,8 @@ const DEFAULT_HPO_LIST = [
 ];
 
 export enum CLINICAL_SIGNS_FI_KEY {
-  SIGNS = 'signs',
-  CLINIC_REMARK = 'clinic_remark',
+  SIGNS = 'clinical_signs',
+  CLINIC_REMARK = 'clinical_clinic_remark',
 }
 
 export enum CLINICAL_SIGNS_ITEM_KEY {
@@ -73,7 +73,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
   const [hpoList, setHpoList] = useState(clone(DEFAULT_HPO_LIST));
   const [isPhenotypeModalVisible, setIsPhenotypeModalVisible] = useState(false);
 
-  const getName = (...key: (string | number)[]) => getNamePath(parentKey, key);
+  const getName = (...key: IGetNamePathParams) => getNamePath(parentKey, key);
 
   const getNode = (index: number): IClinicalSignItem =>
     form.getFieldValue(getName(CLINICAL_SIGNS_FI_KEY.SIGNS))[index];
@@ -94,14 +94,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
         setDefaultList();
       }
 
-      form.setFields(
-        Object.entries(initialData)
-          .filter((value) => isEnumHasField(CLINICAL_SIGNS_FI_KEY, value[0]))
-          .map((value) => ({
-            name: getName(value[0]),
-            value: value[1],
-          })),
-      );
+      setInitialValues(form, getName, initialData, CLINICAL_SIGNS_FI_KEY);
     } else {
       setDefaultList();
     }

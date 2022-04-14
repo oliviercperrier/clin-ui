@@ -8,13 +8,14 @@ import { useRpt } from 'hooks/rpt';
 import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { FieldData } from 'rc-field-form/lib/interface';
-import { IAnalysisFormPart } from 'components/Prescription/utils/type';
+import { IAnalysisFormPart, IGetNamePathParams } from 'components/Prescription/utils/type';
 import {
   getNamePath,
   isEnumHasField,
   resetFieldError,
   setFieldError,
   setFieldValue,
+  setInitialValues,
 } from 'components/Prescription/utils/form';
 import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
 import { SexValue } from 'utils/commonTypes';
@@ -33,15 +34,15 @@ type OwnProps = IAnalysisFormPart & {
 };
 
 export enum PATIENT_DATA_FI_KEY {
-  PRESCRIBING_INSTITUTION = 'prescribing_institution',
-  FILE_NUMBER = 'file_number',
-  NO_FILE = 'no_file',
-  RAMQ_NUMBER = 'ramq_number',
-  NO_RAMQ = 'no_ramq',
-  LAST_NAME = 'last_name',
-  FIRST_NAME = 'first_name',
-  BIRTH_DATE = 'birth_date',
-  SEX = 'sex',
+  PRESCRIBING_INSTITUTION = 'patient_prescribing_institution',
+  FILE_NUMBER = 'patient_file_number',
+  NO_FILE = 'patient_no_file',
+  RAMQ_NUMBER = 'patient_ramq_number',
+  NO_RAMQ = 'patient_no_ramq',
+  LAST_NAME = 'patient_last_name',
+  FIRST_NAME = 'patient_first_name',
+  BIRTH_DATE = 'patient_birth_date',
+  SEX = 'patient_sex',
 }
 
 export enum InstitutionValue {
@@ -75,7 +76,7 @@ const PatientDataSearch = ({
   const [fileSearchDone, setFileSearchDone] = useState(initialFileSearchDone);
   const [ramqSearchDone, setRamqSearchDone] = useState(initialRamqSearchDone);
 
-  const getName = (...key: string[]) => getNamePath(parentKey, key);
+  const getName = (...key: IGetNamePathParams) => getNamePath(parentKey, key);
 
   const updateFormFromPatient = (form: FormInstance, bundle?: Bundle<Patient>) => {
     const entry = bundle?.entry;
@@ -138,17 +139,9 @@ const PatientDataSearch = ({
 
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
-      setFileSearchDone(!!(initialData.no_file || initialData.file_number));
-      setRamqSearchDone(!!(initialData.no_ramq || initialData.ramq_number));
-
-      form.setFields(
-        Object.entries(initialData)
-          .filter((value) => isEnumHasField(PATIENT_DATA_FI_KEY, value[0]))
-          .map((value) => ({
-            name: getName(value[0]),
-            value: value[1],
-          })),
-      );
+      setFileSearchDone(!!(initialData.patient_no_file || initialData.patient_file_number));
+      setRamqSearchDone(!!(initialData.patient_no_ramq || initialData.patient_ramq_number));
+      setInitialValues(form, getName, initialData, PATIENT_DATA_FI_KEY);
     }
   }, []);
 
@@ -204,18 +197,7 @@ const PatientDataSearch = ({
               }}
               inputProps={{
                 placeholder: '000000',
-                onSearch: (value, search) => {
-                  resetFieldError(form, getName(PATIENT_DATA_FI_KEY.FILE_NUMBER));
-                  if (value) {
-                    (search as Function)(value.replace(/\s/g, ''));
-                  } else {
-                    setFieldError(
-                      form,
-                      getName(PATIENT_DATA_FI_KEY.FILE_NUMBER),
-                      'Ce champs est oblifatoire',
-                    );
-                  }
-                },
+                onSearch: (value, search) => (search as Function)(value.replace(/\s/g, '')),
               }}
               checkboxFormItemProps={{
                 name: getName(PATIENT_DATA_FI_KEY.NO_FILE),
@@ -361,7 +343,7 @@ const PatientDataSearch = ({
                 formItemProps={{
                   label: 'Date de naissance',
                   name: getName(PATIENT_DATA_FI_KEY.BIRTH_DATE),
-                  rules: defaultFormItemsRules,
+                  required: true,
                 }}
               />
               <Form.Item

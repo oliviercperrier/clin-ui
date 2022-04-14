@@ -10,6 +10,7 @@ export type initialState = {
   analysisType?: AnalysisType;
   config?: IAnalysisConfig;
   analysisData: IAnalysisDataType; // TODO add type for each Analysis Data Type
+  lastStepIsNext?: boolean;
 };
 
 export interface ICurrentFormRefs {

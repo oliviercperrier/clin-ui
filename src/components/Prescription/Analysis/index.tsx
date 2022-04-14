@@ -3,10 +3,11 @@ import { Form } from 'antd';
 import { useDispatch } from 'react-redux';
 import { prescriptionFormActions } from 'store/prescription/slice';
 import { stepsMapping } from './stepMapping';
+import { isUndefined } from 'lodash';
 
 const PrescriptionAnalysis = () => {
   const dispatch = useDispatch();
-  const { currentStep } = usePrescriptionForm();
+  const { currentStep, lastStepIsNext } = usePrescriptionForm();
 
   return (
     <Form.Provider
@@ -16,6 +17,12 @@ const PrescriptionAnalysis = () => {
         console.log('Form data: ', info.values);
 
         dispatch(prescriptionFormActions.saveStepData(info.values));
+
+        if (lastStepIsNext) {
+          dispatch(prescriptionFormActions.goToLastStep());
+        } else if (!isUndefined(currentStep?.nextStepIndex)) {
+          dispatch(prescriptionFormActions.nextStep());
+        }
       }}
     >
       {/** Eventually find a way to customize specific step based on the selected analysis */}
