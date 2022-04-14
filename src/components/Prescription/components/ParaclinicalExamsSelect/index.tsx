@@ -2,12 +2,12 @@ import { Form, Input, Radio, Select, Space } from 'antd';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import { ReactNode, useEffect } from 'react';
 import cx from 'classnames';
-import { getNamePath } from 'components/Prescription/utils/form';
+import { getNamePath, isEnumHasField } from 'components/Prescription/utils/form';
 import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 import { isEmpty } from 'lodash';
+import { defaultFormItemsRules } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 
 import styles from './index.module.scss';
-import { defaultFormItemsRules } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 
 type OwnProps = IAnalysisFormPart & {
   initialData?: IParaclinicalExamsDataType;
@@ -112,10 +112,12 @@ const ParaclinicalExamsSelect = ({ form, parentKey, initialData }: OwnProps) => 
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
       form.setFields(
-        Object.entries(initialData).map((value) => ({
-          name: getName(value[0]),
-          value: value[1],
-        })),
+        Object.entries(initialData)
+          .filter((value) => isEnumHasField(PARACLINICAL_EXAMS_FI_KEY, value[0]))
+          .map((value) => ({
+            name: getName(value[0]),
+            value: value[1],
+          })),
       );
     } else {
       form.setFields([

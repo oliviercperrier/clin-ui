@@ -21,8 +21,8 @@ export const stepsMapping = {
   [STEPS_ID.CLINICAL_SIGNS]: <ClinicalSigns />,
   [STEPS_ID.PARACLINICAL_EXAMS]: <ParaclinicalExams />,
   [STEPS_ID.HISTORY_AND_DIAGNOSIS]: <HistoryAndDiagnosticHypothesis />,
-  [STEPS_ID.MOTHER_IDENTIFICATION]: <ParentIdentification parent="mother" />,
-  [STEPS_ID.FATHER_IDENTIFICATION]: <ParentIdentification parent="father" />,
+  [STEPS_ID.MOTHER_IDENTIFICATION]: <ParentIdentification key="mother" parent="mother" />,
+  [STEPS_ID.FATHER_IDENTIFICATION]: <ParentIdentification key="father" parent="father" />,
   [STEPS_ID.SUBMISSION]: <Submission />,
 };
 

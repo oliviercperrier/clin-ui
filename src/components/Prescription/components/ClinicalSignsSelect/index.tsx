@@ -8,7 +8,9 @@ import cx from 'classnames';
 import {
   checkShouldUpdate,
   getNamePath,
+  isEnumHasField,
   resetFieldError,
+  setFieldValue,
 } from 'components/Prescription/utils/form';
 
 import styles from './index.module.scss';
@@ -40,9 +42,12 @@ const DEFAULT_HPO_LIST = [
 
 export enum CLINICAL_SIGNS_FI_KEY {
   SIGNS = 'signs',
+  CLINIC_REMARK = 'clinic_remark',
+}
+
+export enum CLINICAL_SIGNS_ITEM_KEY {
   STATUS = 'status',
   ONSET_AGE = 'onset_age',
-  CLINIC_REMARK = 'clinic_remark',
 }
 
 export enum ClinicalSignsStatus {
@@ -53,8 +58,8 @@ export enum ClinicalSignsStatus {
 
 export interface IClinicalSignItem {
   term: string;
-  [CLINICAL_SIGNS_FI_KEY.STATUS]: string;
-  [CLINICAL_SIGNS_FI_KEY.ONSET_AGE]?: string;
+  [CLINICAL_SIGNS_ITEM_KEY.STATUS]: string;
+  [CLINICAL_SIGNS_ITEM_KEY.ONSET_AGE]?: string;
 }
 
 export interface IClinicalSignsDataType {
@@ -73,22 +78,32 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
   const getNode = (index: number): IClinicalSignItem =>
     form.getFieldValue(getName(CLINICAL_SIGNS_FI_KEY.SIGNS))[index];
 
+  const setDefaultList = () =>
+    setFieldValue(
+      form,
+      getName(CLINICAL_SIGNS_FI_KEY.SIGNS),
+      hpoList.map((term) => ({ term, status: ClinicalSignsStatus.NA })),
+    );
+
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
-      setHpoList(initialData[CLINICAL_SIGNS_FI_KEY.SIGNS].map((value) => value.term));
+      const initialSigns = initialData[CLINICAL_SIGNS_FI_KEY.SIGNS];
+      if (initialSigns) {
+        setHpoList(initialSigns.map((value) => value.term));
+      } else {
+        setDefaultList();
+      }
+
       form.setFields(
-        Object.entries(initialData).map((value) => ({
-          name: getName(value[0]),
-          value: value[1],
-        })),
+        Object.entries(initialData)
+          .filter((value) => isEnumHasField(CLINICAL_SIGNS_FI_KEY, value[0]))
+          .map((value) => ({
+            name: getName(value[0]),
+            value: value[1],
+          })),
       );
     } else {
-      form.setFields([
-        {
-          name: getName(CLINICAL_SIGNS_FI_KEY.SIGNS),
-          value: hpoList.map((term) => ({ term, status: ClinicalSignsStatus.NA })),
-        },
-      ]);
+      setDefaultList();
     }
   }, []);
 
@@ -110,7 +125,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
               validator: async (_, signs: IClinicalSignItem[]) => {
                 if (
                   !signs.some(
-                    (sign) => sign[CLINICAL_SIGNS_FI_KEY.STATUS] === ClinicalSignsStatus.OBSERVED,
+                    (sign) => sign[CLINICAL_SIGNS_ITEM_KEY.STATUS] === ClinicalSignsStatus.OBSERVED,
                   )
                 ) {
                   return Promise.reject(new Error('Sélectionner au moins un (1) signe clinique'));
@@ -137,7 +152,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
                         <div className={styles.hpoFormItemTopWrapper}>
                           <Form.Item
                             {...restField}
-                            name={[name, CLINICAL_SIGNS_FI_KEY.STATUS]}
+                            name={[name, CLINICAL_SIGNS_ITEM_KEY.STATUS]}
                             label={formatHpoTitleAndCode({
                               phenotype: hpoNode.term,
                               codeColorType: 'secondary',
@@ -170,7 +185,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
                               getName(
                                 CLINICAL_SIGNS_FI_KEY.SIGNS,
                                 name,
-                                CLINICAL_SIGNS_FI_KEY.STATUS,
+                                CLINICAL_SIGNS_ITEM_KEY.STATUS,
                               ),
                             ])
                           }
@@ -180,12 +195,12 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
                               getName(
                                 CLINICAL_SIGNS_FI_KEY.SIGNS,
                                 name,
-                                CLINICAL_SIGNS_FI_KEY.STATUS,
+                                CLINICAL_SIGNS_ITEM_KEY.STATUS,
                               ),
                             ) === ClinicalSignsStatus.OBSERVED ? (
                               <Form.Item
                                 colon={false}
-                                name={[name, CLINICAL_SIGNS_FI_KEY.ONSET_AGE]}
+                                name={[name, CLINICAL_SIGNS_ITEM_KEY.ONSET_AGE]}
                                 label={<></>}
                               >
                                 <Select placeholder="Âge d'apparition">

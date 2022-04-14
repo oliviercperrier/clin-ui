@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input, Radio, Select, Space } from 'antd';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import styles from './index.module.scss';
-import { checkShouldUpdate, getNamePath } from 'components/Prescription/utils/form';
+import { checkShouldUpdate, getNamePath, isEnumHasField } from 'components/Prescription/utils/form';
 import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
@@ -53,10 +53,12 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
   useEffect(() => {
     if (initialData && !isEmpty(initialData)) {
       form.setFields(
-        Object.entries(initialData).map((value) => ({
-          name: getName(value[0]),
-          value: value[1],
-        })),
+        Object.entries(initialData)
+          .filter((value) => isEnumHasField(HISTORY_AND_DIAG_FI_KEY, value[0]))
+          .map((value) => ({
+            name: getName(value[0]),
+            value: value[1],
+          })),
       );
     } else {
       form.setFields([

@@ -21,7 +21,7 @@ export const setFieldError = (form: FormInstance, namePath: NamePath, error: str
     },
   ]);
 
-export const setFieldValue = (form: FormInstance, namePath: NamePath, value: string | string[]) =>
+export const setFieldValue = (form: FormInstance, namePath: NamePath, value: string | any[]) =>
   form.setFields([
     {
       name: namePath,
@@ -32,3 +32,5 @@ export const setFieldValue = (form: FormInstance, namePath: NamePath, value: str
 
 export const checkShouldUpdate = (previousData: any, currentData: any, paths: NamePath[]) =>
   paths.some((path) => get(previousData, path) !== get(currentData, path));
+
+export const isEnumHasField = (keyEnum: any, key: string) => Object.values(keyEnum).includes(key);

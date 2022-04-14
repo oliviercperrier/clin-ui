@@ -11,6 +11,7 @@ import { FieldData } from 'rc-field-form/lib/interface';
 import { IAnalysisFormPart } from 'components/Prescription/utils/type';
 import {
   getNamePath,
+  isEnumHasField,
   resetFieldError,
   setFieldError,
   setFieldValue,
@@ -141,10 +142,12 @@ const PatientDataSearch = ({
       setRamqSearchDone(!!(initialData.no_ramq || initialData.ramq_number));
 
       form.setFields(
-        Object.entries(initialData).map((value) => ({
-          name: getName(value[0]),
-          value: value[1],
-        })),
+        Object.entries(initialData)
+          .filter((value) => isEnumHasField(PATIENT_DATA_FI_KEY, value[0]))
+          .map((value) => ({
+            name: getName(value[0]),
+            value: value[1],
+          })),
       );
     }
   }, []);

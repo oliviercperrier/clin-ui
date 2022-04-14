@@ -258,5 +258,20 @@
   "component.phenotypeTree.modal.cancelText": "Cancel",
   "component.phenotypeTree.modal.okText": "Apply",
   "component.phenotypeTree.modal.emptySelection": "Select items from the left-hand pane.",
-  "component.phenotypeTree.searchPlaceholder": "research for a clinical sign..."
+  "component.phenotypeTree.searchPlaceholder": "research for a clinical sign...",
+  "prescription.parent.info.notice": "The requested analysis requires the exomes of the parents, with some exceptions.",
+  "prescription.parent.info.moment.options.now": "Now",
+  "prescription.parent.info.moment.options.later": "Later",
+  "prescription.parent.info.moment.options.never": "Never",
+  "prescription.parent.info.moment.mother": "Enter information about the mother",
+  "prescription.parent.info.moment.father": "Enter information about the father",
+  "prescription.parent.info.moment.justify": "Justify the absence",
+  "prescription.parent.info.moment.justify.placeholder": "Ex: In vacation...",
+  "prescription.parent.info.title.mother": "Information about the mother",
+  "prescription.parent.info.title.father": "Information about the father",
+  "prescription.parent.info.clinical.title.mother": "Mother's clinical information",
+  "prescription.parent.info.clinical.title.father": "Father's clinical information",
+  "prescription.parent.info.clinicalstatus.options.affected": "Affected",
+  "prescription.parent.info.clinicalstatus.options.notaffected": "Not affected",
+  "prescription.parent.info.clinicalstatus.options.unknown": "Unknown"
 }
