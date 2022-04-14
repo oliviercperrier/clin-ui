@@ -9,4 +9,5 @@ export const wrapSqonWithDonorId = (resolvedSqon: ISqonGroupFilter, patientId: s
     { ...resolvedSqon },
   ],
   op: 'and',
+  pivot: 'donors',
 });

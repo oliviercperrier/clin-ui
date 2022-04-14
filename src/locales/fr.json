@@ -23,7 +23,7 @@
   "normal": "Normal",
   "filter.suggester.search.genes": "Recherche par gène",
   "filter.suggester.search.genes.tooltip": "Entrer un Symbole de gène, Alias de gène ou Ensembl ID",
-  "filter.suggester.search.noresults": "Aucune résultat",
+  "filter.suggester.search.noresults": "Aucun résultat",
   "filter.suggester.search.variants": "Recherche par variant",
   "filter.suggester.search.variants.tooltip": "Entrer un Locus de Variant, Symbol de gène, Alias de gène, Gène AA Change, dbSNP ID, Clinvar ID, Ensembl ID, refseq ID",
   "filters.group.analysis.code": "Analyse",
