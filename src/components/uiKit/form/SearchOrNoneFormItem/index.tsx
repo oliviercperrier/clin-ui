@@ -73,6 +73,14 @@ const SearchOrNoneFormItem = <TSearchResult,>({
     }
   };
 
+  const handleReset = () => {
+    form.resetFields([inputFormItemProps.name, checkboxFormItemProps.name]);
+    setIsDisabled(false);
+    if (onReset) {
+      onReset();
+    }
+  };
+
   return (
     <>
       <Form.Item
@@ -106,16 +114,7 @@ const SearchOrNoneFormItem = <TSearchResult,>({
                   />
                 </Form.Item>
                 {isDisabled && (
-                  <Typography.Link
-                    className={styles.resetLink}
-                    onClick={() => {
-                      form.resetFields([inputFormItemProps.name, checkboxFormItemProps.name]);
-                      setIsDisabled(false);
-                      if (onReset) {
-                        onReset();
-                      }
-                    }}
-                  >
+                  <Typography.Link className={styles.resetLink} onClick={handleReset}>
                     Réinitialisé
                   </Typography.Link>
                 )}
@@ -141,7 +140,15 @@ const SearchOrNoneFormItem = <TSearchResult,>({
             valuePropName="checked"
             required={inputFormItemProps.required}
           >
-            <Checkbox {...checkboxProps} disabled={isDisabled}>
+            <Checkbox
+              {...checkboxProps}
+              disabled={isDisabled}
+              onChange={(e) => {
+                if (!e.target.checked) {
+                  handleReset();
+                }
+              }}
+            >
               {checkboxFormItemProps.title}
             </Checkbox>
           </Form.Item>

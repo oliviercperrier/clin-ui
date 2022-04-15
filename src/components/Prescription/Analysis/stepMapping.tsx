@@ -32,8 +32,12 @@ export const submissionStepMapping = {
   [STEPS_ID.CLINICAL_SIGNS]: <ClinicalSignsReview />,
   [STEPS_ID.PARACLINICAL_EXAMS]: <ParaclinicalExamsReview />,
   [STEPS_ID.HISTORY_AND_DIAGNOSIS]: <HistoryAndDiagnosisReview />,
-  [STEPS_ID.MOTHER_IDENTIFICATION]: <ParentIdentificationReview key="mother" parent="mother" />,
-  [STEPS_ID.FATHER_IDENTIFICATION]: <ParentIdentificationReview key="father" parent="father" />,
+  [STEPS_ID.MOTHER_IDENTIFICATION]: (
+    <ParentIdentificationReview key="mother-review" parent="mother" />
+  ),
+  [STEPS_ID.FATHER_IDENTIFICATION]: (
+    <ParentIdentificationReview key="father-review" parent="father" />
+  ),
   [STEPS_ID.SUBMISSION]: <></>,
 };
 

@@ -251,9 +251,9 @@ const PatientDataSearch = ({
                       validator: (_, value) => {
                         if (!value) {
                           return Promise.reject(new Error('Ce champs est obligatoire'));
-                        }
-
-                        if (!ramqSearchDone) {
+                        } else if (!isRamqValid(value)) {
+                          return Promise.reject(new Error('Le numéro de RAMQ est invalide'));
+                        } else if (!ramqSearchDone) {
                           return Promise.reject(new Error('Cliquer sur rechercher'));
                         }
 
@@ -262,6 +262,7 @@ const PatientDataSearch = ({
                     },
                   ],
                   label: 'RAMQ',
+                  required: true,
                 }}
                 checkboxProps={{
                   onChange: (e) => {
