@@ -6,8 +6,8 @@ on:
       - v*
 
 jobs:
-  build:
-    name: Publish Image
+  build_staging:
+    name: Publish Staging Image
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
@@ -20,3 +20,17 @@ jobs:
         password: ${{ secrets.FERLAB_DOCKER_HUB_TOKEN }}
         image: ferlabcrsj/clin-ui
         tag_format: "staging-{semver}"
+  build_prod:
+    name: Publish Prod Image
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set the Prod configuration file
+      run: mv env-prod .env
+    - name: Push the image on the docker registry
+      uses: Ferlab-Ste-Justine/action-push-image@v2
+      with:
+        username: ${{ secrets.FERLAB_DOCKER_HUB_USER }}
+        password: ${{ secrets.FERLAB_DOCKER_HUB_TOKEN }}
+        image: ferlabcrsj/clin-ui
+        tag_format: "prod-{semver}"
