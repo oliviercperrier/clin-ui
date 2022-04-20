@@ -1,6 +1,10 @@
 import { Collapse, Form, Input, Radio, Space, Typography } from 'antd';
-import { checkShouldUpdate, getNamePath, setFieldValue } from 'components/Prescription/utils/form';
-import { IAnalysisStepForm } from 'components/Prescription/utils/type';
+import {
+  checkShouldUpdate,
+  getNamePath,
+  setInitialValues,
+} from 'components/Prescription/utils/form';
+import { IAnalysisStepForm, IGetNamePathParams } from 'components/Prescription/utils/type';
 import { usePrescriptionForm } from 'store/prescription';
 import { defaultFormItemsRules, STEPS_ID } from '../constant';
 import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
@@ -12,10 +16,10 @@ import ClinicalSignsSelect, {
   IClinicalSignsDataType,
 } from 'components/Prescription/components/ClinicalSignsSelect';
 import intl from 'react-intl-universal';
-
-import styles from './index.module.scss';
 import { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
+
+import styles from './index.module.scss';
 
 type OwnProps = IAnalysisStepForm & {
   parent: 'mother' | 'father';
@@ -55,28 +59,14 @@ const ParentIdentification = ({ parent }: OwnProps) => {
   const [ramqSearchDone, setRamqSearchDone] = useState(false);
   const { analysisData } = usePrescriptionForm();
 
-  const getName = (...key: string[]) => getNamePath(FORM_NAME, key);
+  const getName = (...key: IGetNamePathParams) => getNamePath(FORM_NAME, key);
   const getInitialData = () =>
     analysisData ? (analysisData[FORM_NAME] as TParentDataType) : undefined;
 
   useEffect(() => {
     const initialData = getInitialData();
     if (initialData && !isEmpty(initialData)) {
-      setFieldValue(
-        form,
-        getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT),
-        initialData.parent_enter_moment,
-      );
-      setFieldValue(
-        form,
-        getName(PARENT_DATA_FI_KEY.NO_INFO_REASON),
-        initialData.parent_no_info_reason,
-      );
-      setFieldValue(
-        form,
-        getName(PARENT_DATA_FI_KEY.CLINICAL_STATUS),
-        initialData.parent_clinical_status,
-      );
+      setInitialValues(form, getName, initialData, PARENT_DATA_FI_KEY);
     }
   }, []);
 

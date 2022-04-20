@@ -12,9 +12,9 @@ import {
   setFieldValue,
   setInitialValues,
 } from 'components/Prescription/utils/form';
+import PhenotypeModal from 'components/PhenotypeTree/TransferModal';
 
 import styles from './index.module.scss';
-import PhenotypeModal from 'components/PhenotypeTree/TransferModal';
 
 const { Text } = Typography;
 

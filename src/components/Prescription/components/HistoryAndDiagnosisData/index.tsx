@@ -4,7 +4,6 @@ import styles from './index.module.scss';
 import {
   checkShouldUpdate,
   getNamePath,
-  isEnumHasField,
   resetFieldError,
   setFieldValue,
   setInitialValues,
@@ -15,6 +14,7 @@ import { useEffect } from 'react';
 import cx from 'classnames';
 import { isEmpty } from 'lodash';
 import { defaultFormItemsRules } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
+import intl from 'react-intl-universal';
 
 type OwnProps = IAnalysisFormPart & {
   initialData?: IHistoryAndDiagnosisDataType;
@@ -201,8 +201,8 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
         name={getName(HISTORY_AND_DIAG_FI_KEY.HAS_INBREEDING)}
       >
         <Radio.Group>
-          <Radio value={InbreedingValue.NO}>Non</Radio>
-          <Radio value={InbreedingValue.YES}>Oui</Radio>
+          <Radio value={InbreedingValue.NO}>{intl.get('no')}</Radio>
+          <Radio value={InbreedingValue.YES}>{intl.get('yes')}</Radio>
           <Radio value={InbreedingValue.NA}>NA</Radio>
         </Radio.Group>
       </Form.Item>

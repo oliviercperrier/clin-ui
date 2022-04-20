@@ -68,7 +68,7 @@ const PrescriptionForm = () => {
           <ScrollContent className={styles.contentScroller}>
             <GridCard
               title={<Title level={3}>{currentStep?.title}</Title>}
-              content={analysisType ? <PrescriptionAnalysis /> : undefined}
+              content={<PrescriptionAnalysis />}
               className={styles.prescriptionFormCard}
               bordered={false}
               footer={

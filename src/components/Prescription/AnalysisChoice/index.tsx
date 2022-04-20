@@ -1,12 +1,10 @@
 import { Checkbox, Form, Modal, Select, Typography } from 'antd';
 import LabelWithInfo from 'components/uiKit/form/LabelWithInfo';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { usePrescriptionForm } from 'store/prescription';
 import { isMuscularAnalysisAndNotGlobal } from 'store/prescription/helper';
 import { prescriptionFormActions } from 'store/prescription/slice';
 import { MuscularAnalysisType, OtherAnalysisType } from 'store/prescription/types';
-import { FhirApi } from "api/fhir/index"
 
 import styles from './index.module.scss';
 

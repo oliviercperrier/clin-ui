@@ -1,7 +1,12 @@
 import { Checkbox, Form, Input, Radio, Space } from 'antd';
-import { checkShouldUpdate, getNamePath, setFieldValue } from 'components/Prescription/utils/form';
+import {
+  checkShouldUpdate,
+  getNamePath,
+  setFieldValue,
+  setInitialValues,
+} from 'components/Prescription/utils/form';
 import { formatRamq, RAMQ_PATTERN } from 'components/Prescription/utils/ramq';
-import { IAnalysisFormPart } from 'components/Prescription/utils/type';
+import { IAnalysisFormPart, IGetNamePathParams } from 'components/Prescription/utils/type';
 import RadioDateFormItem from 'components/uiKit/form/RadioDateFormItem';
 import RadioGroupSex from 'components/uiKit/form/RadioGroupSex';
 import { isEmpty } from 'lodash';
@@ -53,7 +58,7 @@ const AdditionalInformation = ({
   const [gestationalAgeDPA, setGestationalAgeDPA] = useState<number | undefined>(undefined);
   const [gestationalAgeDDM, setGestationalAgeDDM] = useState<number | undefined>(undefined);
 
-  const getName = (...key: ADD_INFO_FI_KEY[]) => getNamePath(parentKey, key);
+  const getName = (...key: IGetNamePathParams) => getNamePath(parentKey, key);
 
   useEffect(() => {
     if (localShowNewBorn !== showNewBornSection) {
@@ -75,36 +80,7 @@ const AdditionalInformation = ({
         );
       }
 
-      form.setFields([
-        {
-          name: getName(ADD_INFO_FI_KEY.PRENATAL_DIAGNOSIS),
-          value: initialData.additional_info_prenatal_diagnosis,
-        },
-        {
-          name: getName(ADD_INFO_FI_KEY.NEW_BORN),
-          value: initialData.additional_info_new_born,
-        },
-        {
-          name: getName(ADD_INFO_FI_KEY.FOETUS_SEX),
-          value: initialData.additional_info_foetus_sex,
-        },
-        {
-          name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE),
-          value: initialData.additional_info_gestational_age,
-        },
-        {
-          name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DDM),
-          value: initialData.additional_info_gestational_age_ddm,
-        },
-        {
-          name: getName(ADD_INFO_FI_KEY.GESTATIONAL_AGE_DPA),
-          value: initialData.additional_info_gestational_age_dpa,
-        },
-        {
-          name: getName(ADD_INFO_FI_KEY.MOTHER_RAMQ_NUMBER),
-          value: initialData.additional_info_mother_ramq_number,
-        },
-      ]);
+      setInitialValues(form, getName, initialData, ADD_INFO_FI_KEY);
     }
   }, []);
 
