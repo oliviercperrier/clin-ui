@@ -98,6 +98,7 @@ const ClinicalSignsSelect = ({ form, parentKey, initialData }: OwnProps) => {
     } else {
       setDefaultList();
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -67,6 +67,7 @@ const HistoryAndDiagnosticData = ({ parentKey, form, initialData }: OwnProps) =>
       setDefaultCondition();
       setFieldValue(form, getName(HISTORY_AND_DIAG_FI_KEY.HAS_INBREEDING), InbreedingValue.NA);
     }
+    // eslint-disable-next-line
   }, []);
 
   const setDefaultCondition = () =>

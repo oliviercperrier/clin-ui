@@ -5,6 +5,7 @@ import { usePrescriptionForm } from 'store/prescription';
 import { isMuscularAnalysisAndNotGlobal } from 'store/prescription/helper';
 import { prescriptionFormActions } from 'store/prescription/slice';
 import { MuscularAnalysisType, OtherAnalysisType } from 'store/prescription/types';
+import { defaultFormItemsRules, defaultValidateMessages } from '../Analysis/AnalysisForm/ReusableSteps/constant';
 
 import styles from './index.module.scss';
 
@@ -15,15 +16,15 @@ export enum ANALYSIS_CHOICE_FI_KEY {
   ANALYSE_REFLEX = 'analyse_reflex',
 }
 
-const AnalysisChoice = () => {
+const AnalysisChoiceModal = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const { analysisChoiceVisible } = usePrescriptionForm();
+  const { analysisChoiceModalVisible } = usePrescriptionForm();
 
   return (
     <Modal
       title="Choix de l'analyse"
-      visible={analysisChoiceVisible}
+      visible={analysisChoiceModalVisible}
       onCancel={() => {
         dispatch(prescriptionFormActions.cancel());
         form.resetFields();
@@ -45,6 +46,7 @@ const AnalysisChoice = () => {
           );
           form.resetFields();
         }}
+        validateMessages={defaultValidateMessages}
         layout="vertical"
       >
         <Form.Item
@@ -60,10 +62,11 @@ const AnalysisChoice = () => {
                   </Text>
                 ),
               }}
+              colon
             />
           }
           name={ANALYSIS_CHOICE_FI_KEY.ANALYSIS_TYPE}
-          rules={[{ required: true, message: "Le champs Choix de l'analyse est obligatoire" }]}
+          rules={defaultFormItemsRules}
           className="noMarginBtm"
         >
           <Select placeholder="Sélectionner">
@@ -128,4 +131,4 @@ const AnalysisChoice = () => {
   );
 };
 
-export default AnalysisChoice;
+export default AnalysisChoiceModal;

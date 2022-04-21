@@ -11,7 +11,7 @@ $query-default-action-focus-color: $gray-8;
 
 $query-builder-bg: $white;
 $query-builder-border-color: transparent;
-$query-builder-header-border-divider-color: #D8E1EB;
+$query-builder-header-border-divider-color: #d8e1eb;
 $query-builder-padding: 24px 24px;
 
 $query-bar-bg: #f8fafc;
@@ -78,6 +78,10 @@ $checkbox-filter-types-mc-footer: $blue-8;
 $checkbox-filter-links-hover: $blue-8;
 $checkbox-filter-actions-separator-links: $blue-8;
 $checkbox-filter-actions-separator-background: $gray-6;
+
+// Grid Card V2
+$grid-card-light-background-color: $gray-1;
+$grid-card-shade-background-color: $gray-2;
 
 // EMPTY
 $empty-image-color: $gray-5;

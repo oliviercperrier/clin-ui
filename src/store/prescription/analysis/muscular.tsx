@@ -1,7 +1,8 @@
 import { STEPS_ID } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
+import { IAnalysisConfig } from '../types';
 
-export const DevelopmentDelayConfig = {
-  analysisTitle: 'Retard global de développement / Déficience intellectuelle',
+export const MuscularDiseaseConfig: IAnalysisConfig = {
+  analysisTitle: 'Maladies musculaires',
   steps: [
     {
       id: STEPS_ID.PATIENT_IDENTIFICATION,
@@ -18,14 +19,6 @@ export const DevelopmentDelayConfig = {
     {
       id: STEPS_ID.HISTORY_AND_DIAGNOSIS,
       title: 'Histoire et hypothèse diagnostique',
-    },
-    {
-      id: STEPS_ID.MOTHER_IDENTIFICATION,
-      title: 'Informations sur la mère',
-    },
-    {
-      id: STEPS_ID.FATHER_IDENTIFICATION,
-      title: 'Informations sur le père',
     },
     {
       id: STEPS_ID.SUBMISSION,

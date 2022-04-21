@@ -21,7 +21,7 @@ const { Title } = Typography;
 
 const PrescriptionForm = () => {
   const dispatch = useDispatch();
-  const { prescriptionVisible, analysisType, currentStep, currentFormRefs, lastStepIsNext } =
+  const { prescriptionVisible, currentStep, currentFormRefs, lastStepIsNext, isAddingParent } =
     usePrescriptionForm();
 
   return (
@@ -39,10 +39,16 @@ const PrescriptionForm = () => {
             size="small"
             onClick={() =>
               Modal.confirm({
-                title: intl.get('prescription-form-cancel-modal-title'),
+                title: isAddingParent
+                  ? intl.get('prescription-form-cancel-add-parent-modal-title')
+                  : intl.get('prescription-form-cancel-modal-title'),
                 icon: <ExclamationCircleOutlined />,
-                okText: intl.get('prescription-form-cancel-modal-cancel-btn'),
-                content: intl.get('prescription-form-cancel-modal-content'),
+                okText: isAddingParent
+                  ? intl.get('prescription-form-cancel-add-parent-modal-cancel-btn')
+                  : intl.get('prescription-form-cancel-modal-cancel-btn'),
+                content: isAddingParent
+                  ? intl.get('prescription-form-cancel-add-parent-modal-content')
+                  : intl.get('prescription-form-cancel-modal-content'),
                 cancelText: intl.get('prescription-form-cancel-modal-close-btn'),
                 okButtonProps: { danger: true },
                 onOk: (close) => {

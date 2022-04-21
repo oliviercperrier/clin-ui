@@ -1,11 +1,11 @@
 import { Form, FormInstance, FormProps } from 'antd';
 import { getNamePath } from 'components/Prescription/utils/form';
-import { isUndefined } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { usePrescriptionForm } from 'store/prescription';
 import { prescriptionFormActions } from 'store/prescription/slice';
 import { AnalysisFormContextProvider } from './context';
+import { defaultValidateMessages } from './ReusableSteps/constant';
 
 const AnalysisForm = (
   props: Omit<FormProps, 'labelWrap'> & { form: FormInstance; name: string },
@@ -33,9 +33,7 @@ const AnalysisForm = (
       <Form
         {...props}
         labelWrap
-        validateMessages={{
-          required: 'Ce champs est obligatoire',
-        }}
+        validateMessages={defaultValidateMessages}
         onFinish={(values) => {
           if (props.onFinish) {
             props.onFinish(values);

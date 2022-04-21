@@ -1,5 +1,4 @@
 import { Descriptions, Divider } from 'antd';
-import { CLINICAL_SIGNS_FI_KEY } from 'components/Prescription/components/ClinicalSignsSelect';
 import { usePrescriptionForm } from 'store/prescription';
 import {
   ClinicalStatusValue,
@@ -21,11 +20,11 @@ const ParentIdentificationReview = ({ parent }: OwnProps) => {
   const getStepId = () =>
     parent === 'father' ? STEPS_ID.FATHER_IDENTIFICATION : STEPS_ID.MOTHER_IDENTIFICATION;
 
-  const getData = (key: PARENT_DATA_FI_KEY | CLINICAL_SIGNS_FI_KEY) =>
-    analysisData[getStepId()]?.[key];
+  const getData = (key: PARENT_DATA_FI_KEY) => analysisData[getStepId()]?.[key];
 
   if (getData(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT) === EnterInfoMomentValue.NOW) {
-    const isAffected = getData(PARENT_DATA_FI_KEY.CLINICAL_STATUS) === ClinicalStatusValue.AFFECTED;
+    const status = getData(PARENT_DATA_FI_KEY.CLINICAL_STATUS);
+    const isAffected = status === ClinicalStatusValue.AFFECTED;
 
     return (
       <>
@@ -36,7 +35,7 @@ const ParentIdentificationReview = ({ parent }: OwnProps) => {
             label="Status"
             style={isAffected ? { paddingBottom: '8px' } : undefined}
           >
-            {intl.get(getData(PARENT_DATA_FI_KEY.CLINICAL_STATUS))}
+            {intl.get(status ?? '')}
           </Descriptions.Item>
         </Descriptions>
         {isAffected && <ClinicalSignsReview key={parent} stepId={getStepId()} />}

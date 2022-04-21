@@ -50,6 +50,8 @@ const ContentHeader = ({
   const { isEnabled } = useFeatureToggle('prescriptionV4');
   const [filteredResults, setFilteredResults] = useState<PatientResult[]>([]);
 
+  console.log(isEnabled)
+
   return (
     <StackLayout horizontal>
       <AutoComplete
@@ -97,6 +99,7 @@ const ContentHeader = ({
         onClick={(e) => {
           if (isEnabled) {
             dispatch(prescriptionFormActions.startAnalyseChoice());
+            //dispatch(prescriptionFormActions.startAddParentChoice());
           } else {
             createPrescription();
           }

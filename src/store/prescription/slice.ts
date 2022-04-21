@@ -6,14 +6,18 @@ import {
   initialState,
   ICompleteAnalysisChoice,
   ICurrentFormRefs,
+  IStartAddingParent,
+  IAnalysisConfig,
 } from 'store/prescription/types';
+import { getAddParentSteps } from './analysis/addParent';
 import { DevelopmentDelayConfig } from './analysis/developmentDelay';
 import { MuscularDiseaseConfig } from './analysis/muscular';
 import { isMuscularAnalysis, isMuscularAnalysisAndNotGlobal } from './helper';
 
 export const PrescriptionState: initialState = {
   prescriptionVisible: false,
-  analysisChoiceVisible: false,
+  addParentModalVisible: false,
+  analysisChoiceModalVisible: false,
   currentStep: undefined,
   config: undefined,
   analysisData: {},
@@ -82,8 +86,23 @@ const prescriptionFormSlice = createSlice({
     cancel: (state) => ({
       ...PrescriptionState,
     }),
+    startAddParentChoice: (state) => {
+      state.addParentModalVisible = true;
+      state.isAddingParent = true;
+    },
+    completeAddParentChoice: (state, action: PayloadAction<IStartAddingParent>) => {
+      const config: IAnalysisConfig = {
+        analysisTitle: '',
+        steps: enrichSteps(getAddParentSteps(action.payload.stepId)),
+      };
+
+      state.config = config;
+      state.currentStep = config.steps[0];
+      state.addParentModalVisible = false;
+      state.prescriptionVisible = true;
+    },
     startAnalyseChoice: (state) => {
-      state.analysisChoiceVisible = true;
+      state.analysisChoiceModalVisible = true;
     },
     completeAnalysisChoice: (state, action: PayloadAction<ICompleteAnalysisChoice>) => {
       let config = getAnalysisConfigMapping(action.payload.type)!;
@@ -98,7 +117,7 @@ const prescriptionFormSlice = createSlice({
       }
 
       state.analysisType = action.payload.type;
-      state.analysisChoiceVisible = false;
+      state.analysisChoiceModalVisible = false;
       state.prescriptionVisible = true;
       state.currentStep = config.steps[0];
       state.config = config;

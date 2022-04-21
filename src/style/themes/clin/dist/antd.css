@@ -6822,7 +6822,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   line-height: 1.5715;
   list-style: none;
   font-feature-settings: 'tnum';
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1px solid #e1e8ef;
 }
 .ant-divider-vertical {
   position: relative;
@@ -6832,7 +6832,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   margin: 0 8px;
   vertical-align: middle;
   border-top: 0;
-  border-left: 1px solid rgba(0, 0, 0, 0.06);
+  border-left: 1px solid #e1e8ef;
 }
 .ant-divider-horizontal {
   display: flex;
@@ -6850,7 +6850,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   white-space: nowrap;
   text-align: center;
   border-top: 0;
-  border-top-color: rgba(0, 0, 0, 0.06);
+  border-top-color: #e1e8ef;
 }
 .ant-divider-horizontal.ant-divider-with-text::before,
 .ant-divider-horizontal.ant-divider-with-text::after {
@@ -6885,7 +6885,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 }
 .ant-divider-dashed {
   background: none;
-  border-color: rgba(0, 0, 0, 0.06);
+  border-color: #e1e8ef;
   border-style: dashed;
   border-width: 1px 0 0;
 }
@@ -7105,7 +7105,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 }
 .ant-drawer-footer {
   flex-shrink: 0;
-  padding: 10px 16px;
+  padding: 16px 24px;
   border-top: 1px solid #e1e8ef;
 }
 .ant-drawer-mask {
@@ -17212,7 +17212,7 @@ textarea.ant-mentions {
   word-wrap: break-word;
 }
 .ant-modal-footer {
-  padding: 10px 16px;
+  padding: 16px 24px;
   text-align: right;
   background: transparent;
   border-top: 1px solid #e1e8ef;
@@ -26286,6 +26286,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-typographya:hover {
   text-decoration: none;
+}
+.ant-typography strong {
+  font-weight: 500;
 }
 div[class$='-has-error'] .ant-radio-inner,
 div[class$='-has-error'] .ant-radio-inner:hover {

@@ -1,6 +1,5 @@
 import { Collapse, Descriptions, Form, Input } from 'antd';
 import { getNamePath } from 'components/Prescription/utils/form';
-import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 import { usePrescriptionForm } from 'store/prescription';
 import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import { FormOutlined, SearchOutlined } from '@ant-design/icons';
@@ -11,7 +10,7 @@ import {
   STEPS_ID,
 } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 import { PATIENT_DATA_FI_KEY } from 'components/Prescription/components/PatientDataSearch';
-import { submissionStepMapping } from 'components/Prescription/Analysis/stepMapping';
+import { SubmissionStepMapping } from 'components/Prescription/Analysis/stepMapping';
 import { useUser } from 'store/user';
 import {
   findPractitionerRoleByOrganization,
@@ -26,7 +25,7 @@ export enum SUBMISSION_REVIEW_FI_KEY {
   GENERAL_COMMENT = 'general_comment',
 }
 
-const Submission = ({}: IAnalysisStepForm) => {
+const Submission = () => {
   const FORM_NAME = STEPS_ID.SUBMISSION;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -46,11 +45,19 @@ const Submission = ({}: IAnalysisStepForm) => {
     analysisData[STEPS_ID.PATIENT_IDENTIFICATION]?.[PATIENT_DATA_FI_KEY.PRESCRIBING_INSTITUTION];
 
   return (
-    <AnalysisForm form={form} className={styles.submissionForm} name={FORM_NAME} layout="vertical">
+    <AnalysisForm
+      form={form}
+      className={styles.submissionForm}
+      name={FORM_NAME}
+      layout="vertical"
+      onFinish={() => {
+        console.log("Format and send data to backend")
+      }}
+    >
       {needToSelectSupervisor() && (
         <Form.Item
           name={getName(SUBMISSION_REVIEW_FI_KEY.RESPONSIBLE_DOCTOR)}
-          label={<LabelWithInfo title='Veuillez identifier votre médecin résponsable' colon/>}
+          label={<LabelWithInfo title="Veuillez identifier votre médecin résponsable" colon />}
           wrapperCol={{ xxl: 14 }}
           rules={defaultFormItemsRules}
         >
@@ -59,7 +66,7 @@ const Submission = ({}: IAnalysisStepForm) => {
       )}
       <Form.Item
         name={getName(SUBMISSION_REVIEW_FI_KEY.GENERAL_COMMENT)}
-        label={<LabelWithInfo title='Commentaire général' colon/>}
+        label={<LabelWithInfo title="Commentaire général" colon />}
         wrapperCol={{ xxl: 14 }}
       >
         <Input.TextArea rows={3} />
@@ -93,7 +100,7 @@ const Submission = ({}: IAnalysisStepForm) => {
                 />
               }
             >
-              {submissionStepMapping[step.id]}
+              {SubmissionStepMapping[step.id]}
             </Collapse.Panel>
           ))}
       </Collapse>

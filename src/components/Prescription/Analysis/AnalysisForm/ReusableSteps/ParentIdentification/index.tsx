@@ -2,6 +2,7 @@ import { Collapse, Form, Input, Radio, Space, Typography } from 'antd';
 import {
   checkShouldUpdate,
   getNamePath,
+  setFieldValue,
   setInitialValues,
 } from 'components/Prescription/utils/form';
 import { IAnalysisStepForm, IGetNamePathParams } from 'components/Prescription/utils/type';
@@ -18,6 +19,7 @@ import ClinicalSignsSelect, {
 import intl from 'react-intl-universal';
 import { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
+import cx from 'classnames';
 
 import styles from './index.module.scss';
 
@@ -57,7 +59,7 @@ const ParentIdentification = ({ parent }: OwnProps) => {
     parent === 'father' ? STEPS_ID.FATHER_IDENTIFICATION : STEPS_ID.MOTHER_IDENTIFICATION;
   const [form] = Form.useForm();
   const [ramqSearchDone, setRamqSearchDone] = useState(false);
-  const { analysisData } = usePrescriptionForm();
+  const { analysisData, isAddingParent } = usePrescriptionForm();
 
   const getName = (...key: IGetNamePathParams) => getNamePath(FORM_NAME, key);
   const getInitialData = () =>
@@ -67,12 +69,17 @@ const ParentIdentification = ({ parent }: OwnProps) => {
     const initialData = getInitialData();
     if (initialData && !isEmpty(initialData)) {
       setInitialValues(form, getName, initialData, PARENT_DATA_FI_KEY);
+    } else if (isAddingParent) {
+      setFieldValue(form, getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT), EnterInfoMomentValue.NOW);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
     <AnalysisForm form={form} className={styles.parentIdentificationForm} name={FORM_NAME}>
-      <div className={styles.parentInfoChoiceWrapper}>
+      <div
+        className={cx(styles.parentInfoChoiceWrapper, isAddingParent ? styles.hideMomentField : '')}
+      >
         <Form.Item>
           <Text>{intl.get('prescription.parent.info.notice')}</Text>
         </Form.Item>

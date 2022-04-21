@@ -64,6 +64,7 @@ const AdditionalInformation = ({
     if (localShowNewBorn !== showNewBornSection) {
       setLocalShowNewBorn(showNewBornSection);
     }
+    // eslint-disable-next-line
   }, [showNewBornSection]);
 
   useEffect(() => {
@@ -82,6 +83,7 @@ const AdditionalInformation = ({
 
       setInitialValues(form, getName, initialData, ADD_INFO_FI_KEY);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

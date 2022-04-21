@@ -11,7 +11,6 @@ import { FieldData } from 'rc-field-form/lib/interface';
 import { IAnalysisFormPart, IGetNamePathParams } from 'components/Prescription/utils/type';
 import {
   getNamePath,
-  isEnumHasField,
   resetFieldError,
   setFieldError,
   setFieldValue,
@@ -129,11 +128,13 @@ const PatientDataSearch = ({
 
   useEffect(
     () => onRamqSearchStateChange && onRamqSearchStateChange(ramqSearchDone),
+    // eslint-disable-next-line
     [ramqSearchDone],
   );
 
   useEffect(
     () => onFileSearchStateChange && onFileSearchStateChange(fileSearchDone),
+    // eslint-disable-next-line
     [fileSearchDone],
   );
 
@@ -143,6 +144,7 @@ const PatientDataSearch = ({
       setRamqSearchDone(!!(initialData.patient_no_ramq || initialData.patient_ramq_number));
       setInitialValues(form, getName, initialData, PATIENT_DATA_FI_KEY);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
