@@ -25,7 +25,6 @@ const PatientsTable = ({ results, loading = false }: OwnProps): React.ReactEleme
       columns={patientsColumns()}
       dataSource={results?.data.map((i) => ({ ...i, key: i.id }))}
       loading={loading}
-      enableRowSelection={true}
       dictionary={getProTableDictionary()}
       onChange={({ current, pageSize }) => {
         if (currentPage !== current || currentPageSize !== pageSize) {

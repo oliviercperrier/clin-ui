@@ -199,7 +199,7 @@ const OccurrenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps)
               {intl.get('screen.patientvariant.drawer.igv.viewer')}
               <ExternalLinkIcon height="14" width="14" className="anticon" />
             </Button>
-            <ReportDownloadButton rpt={rpt} patientId={patientId} variantId={variantId} />
+            <ReportDownloadButton patientId={patientId} variantId={variantId} />
           </Space>
         </Space>
       </Drawer>

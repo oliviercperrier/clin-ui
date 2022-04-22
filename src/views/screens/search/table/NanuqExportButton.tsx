@@ -5,7 +5,6 @@ import { PrescriptionResult } from 'graphql/prescriptions/models/Prescription';
 import { FileTextOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { reportSelector } from 'store/reports/selectors';
-import { useRpt } from 'hooks/rpt';
 import { fetchNanuqSequencingReport } from 'store/reports/thunks';
 
 import styles from './nanuqExportButton.module.scss';
@@ -16,21 +15,19 @@ interface Props {
 
 const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement => {
   const dispatch = useDispatch();
-  const { rpt } = useRpt();
   const { isLoadingNanuqSequencing } = useSelector(reportSelector);
   return (
     <Tooltip title={intl.get('screen.patientsearch.table.nanuq.tootip')}>
       <Button
         loading={isLoadingNanuqSequencing}
-        disabled={!selectedPrescription.length || !rpt}
+        disabled={!selectedPrescription.length}
         type="link"
-        size='small'
+        size="small"
         className={styles.nanuqButton}
         icon={<FileTextOutlined height="14" width="14" />}
         onClick={() => {
           dispatch(
             fetchNanuqSequencingReport({
-              rpt,
               srIds: selectedPrescription.map((sp) => sp.id),
             }),
           );

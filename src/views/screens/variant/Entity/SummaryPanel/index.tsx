@@ -1,21 +1,13 @@
-import React from 'react';
 import cx from 'classnames';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
-import { Card, Typography, Space, Tooltip, Spin } from 'antd';
-import intl from 'react-intl-universal';
-import capitalize from 'lodash/capitalize';
-import {
-  ConsequenceEntity,
-  GeneEntity,
-  Impact,
-  VariantEntity,
-} from 'graphql/variants/models';
+import { Space } from 'antd';
+import { GeneEntity, VariantEntity } from 'graphql/variants/models';
 import SummaryCard from 'views/screens/variant/Entity/SummaryPanel/Summary';
 import { ArrangerResultsTree } from 'graphql/models';
-import Consequecenses from './Consequences'
+import Consequecenses from './Consequences';
+import ACMGCriteria from './AcmgCriteria';
 
 import styles from './index.module.scss';
-import ACMGCriteria from './AcmgCriteria';
 
 interface OwnProps {
   className?: string;
@@ -47,7 +39,7 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
       <Space direction="vertical" size={16}>
         <SummaryCard loading={data.loading} variant={variantData} genes={genes} />
         <Consequecenses data={data} />
-        <ACMGCriteria data={data}/>
+        <ACMGCriteria data={data} />
       </Space>
     </StackLayout>
   );

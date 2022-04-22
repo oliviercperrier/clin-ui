@@ -1,5 +1,9 @@
 import { ArrangerResultsTree } from 'graphql/models';
 
+export interface IVariantResultTree {
+  Variants: ArrangerResultsTree<VariantEntity>;
+}
+
 export enum Impact {
   High = 'HIGH',
   Moderate = 'MODERATE',

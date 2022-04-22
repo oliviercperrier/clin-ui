@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ReportsApi } from 'api/reports';
 import { downloadFile } from 'utils/helper';
 import { notification } from 'antd';
-import { Rpt } from 'auth/types';
 import intl from 'react-intl-universal';
 import capitalize from 'lodash/capitalize';
 import { MIME_TYPES } from 'utils/constants';
@@ -55,22 +54,22 @@ const proceedToDownload = async (
 
 const fetchTranscriptsReport = createAsyncThunk<
   void,
-  { rpt: Rpt; patientId: string; variantId: string }
->('report/fetchTranscriptsReport', async ({ rpt, patientId, variantId }) => {
+  { patientId: string; variantId: string }
+>('report/fetchTranscriptsReport', async ({ patientId, variantId }) => {
   await proceedToDownload(
     intl.get('report.name.interpretation'),
     `transcripts_${uuid()}.xlsx`,
-    ReportsApi.fetchPatientTranscriptsReport(rpt, patientId, variantId),
+    ReportsApi.fetchPatientTranscriptsReport(patientId, variantId),
   );
 });
 
-const fetchNanuqSequencingReport = createAsyncThunk<void, { rpt: Rpt; srIds: string[] }>(
+const fetchNanuqSequencingReport = createAsyncThunk<void, { srIds: string[] }>(
   'report/fetchNanuqSequencingReport',
-  async ({ rpt, srIds }) => {
+  async ({ srIds }) => {
     await proceedToDownload(
       'nanuq',
       `clin_nanuq_${uuid()}.xlsx`,
-      ReportsApi.fetchNanuqSequencingReport(rpt, srIds),
+      ReportsApi.fetchNanuqSequencingReport(srIds),
     );
   },
 );
