@@ -1,4 +1,6 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import keycloak from 'auth/keycloak';
+import { fetchRptToken, RptManager } from 'auth/rpt';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();
 
@@ -8,9 +10,43 @@ export interface ApiResponse<T> {
   error: AxiosError | undefined;
 }
 
-//copied from Include project.
+apiInstance.interceptors.request.use((config) => {
+  // set Authorization headers on a per request basis
+  // setting headers on axios get/put/post or common seems to be shared across all axios instances
+
+  const token = keycloak?.token;
+  if (token) {
+    config.headers = {
+      ...(token && { Authorization: `Bearer ${token}` }),
+      ...config.headers,
+    };
+  }
+
+  return config;
+});
+
+const rptApiInstance = axios.create({
+  timeout: 15000,
+});
+
+rptApiInstance.interceptors.request.use(async (config) => {
+  const rpt = await RptManager.readRpt();
+  config.headers = {
+    ...(rpt && { Authorization: `Bearer ${rpt.access_token}` }),
+    ...config.headers,
+  };
+
+  return config;
+});
+
+export const sendRequestWithRpt = async <T>(config: AxiosRequestConfig) =>
+  makeRequest<T>(rptApiInstance, config);
+
 export const sendRequest = async <T>(config: AxiosRequestConfig) =>
-  apiInstance
+  makeRequest<T>(apiInstance, config);
+
+export const makeRequest = async <T>(instance: AxiosInstance, config: AxiosRequestConfig) =>
+  instance
     .request<T>(config)
     .then(
       (response): ApiResponse<T> => ({
@@ -28,3 +64,4 @@ export const sendRequest = async <T>(config: AxiosRequestConfig) =>
     );
 
 export default apiInstance;
+export { rptApiInstance };

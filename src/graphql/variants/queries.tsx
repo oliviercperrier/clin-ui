@@ -151,6 +151,16 @@ export const VARIANT_QUERY = gql`
   }
 `;
 
+export const GET_VARIANT_COUNT = gql`
+  query getVariantCount($sqon: JSON) {
+    Variants {
+      hits(filters: $sqon) {
+        total
+      }
+    }
+  }
+`;
+
 export const TAB_FREQUENCIES_QUERY = gql`
   query GetFrequenciesTabVariant($sqon: JSON) {
     Variants {
