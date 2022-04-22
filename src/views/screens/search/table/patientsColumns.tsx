@@ -1,17 +1,13 @@
 import intl from 'react-intl-universal';
 import { Tooltip } from 'antd';
-import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 import { PatientIdCell } from './cell/LinkCell';
-
-import { TColumn } from './columns';
 import { formatDate } from 'utils/date';
+import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { ITablePatientResult } from 'graphql/patients/models/Patient';
 
 import './tableColumn.scss';
 
-export const patientsColumns = (
-  sqons: ISyntheticSqon[],
-  onLinkClick?: (sqons: ISyntheticSqon[]) => void,
-): TColumn[] =>
+export const patientsColumns = (): ProColumnType<ITablePatientResult>[] =>
   [
     {
       name: 'cid',
@@ -39,7 +35,8 @@ export const patientsColumns = (
       name: 'gender',
       summary: true,
       title: intl.get('screen.patientsearch.table.gender'),
-      render: (gender: string) => intl.get(`screen.patientsearch.table.gender.${gender.toLowerCase()}`)
+      render: (gender: string) =>
+        intl.get(`screen.patientsearch.table.gender.${gender.toLowerCase()}`),
     },
     {
       name: 'birthDate',
@@ -49,7 +46,7 @@ export const patientsColumns = (
           {intl.get('screen.patientsearch.table.dob')}
         </Tooltip>
       ),
-
+      displayTitle: intl.get('screen.patientsearch.table.dob'),
     },
     {
       name: 'timestamp',
@@ -59,6 +56,7 @@ export const patientsColumns = (
           {intl.get('screen.patientsearch.table.dateCreation')}
         </Tooltip>
       ),
+      displayTitle: intl.get('screen.patientsearch.table.dateCreation'),
       render: (date: string) => formatDate(date),
     },
   ].map((c) => ({
