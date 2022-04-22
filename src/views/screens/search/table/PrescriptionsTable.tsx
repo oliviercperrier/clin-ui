@@ -23,12 +23,11 @@ const PrescriptionsTable = ({ results, loading = false }: OwnProps): React.React
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionResult[]>([]);
   const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE);
-  const columns = prescriptionsColumns();
 
   return (
     <ProTable<ITablePrescriptionResult>
       tableId="prescription_table"
-      columns={columns}
+      columns={prescriptionsColumns()}
       dataSource={results?.data.map((i) => ({ ...i, key: i.id }))}
       loading={loading}
       enableRowSelection={true}

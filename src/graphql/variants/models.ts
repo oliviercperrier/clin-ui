@@ -90,6 +90,10 @@ export type DonorsEntity = {
   is_hc?: boolean;
 };
 
+export type ITableVariantEntity = VariantEntity & {
+  key: string;
+}
+
 export type VariantEntity = {
   id: string;
   hash: string;
