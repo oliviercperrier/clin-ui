@@ -6,6 +6,7 @@ export type DecodedRpt = {
   iss: string;
   authorization: {
     permissions: {
+      scopes: string[];
       rsid: string;
       rsname: string;
     }[];

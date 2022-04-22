@@ -12,12 +12,10 @@ export interface ApiResponse<T> {
 
 apiInstance.interceptors.request.use((config) => {
   const token = keycloak?.token;
-  if (token) {
-    config.headers = {
-      ...(token && { Authorization: `Bearer ${token}` }),
-      ...config.headers,
-    };
-  }
+  config.headers = {
+    ...(token && { Authorization: `Bearer ${token}` }),
+    ...config.headers,
+  };
 
   return config;
 });
@@ -28,12 +26,10 @@ const rptApiInstance = axios.create({
 
 rptApiInstance.interceptors.request.use(async (config) => {
   const rpt = await RptManager.readRpt();
-  if (rpt) {
-    config.headers = {
-      ...(rpt && { Authorization: `Bearer ${rpt.access_token}` }),
-      ...config.headers,
-    };
-  }
+  config.headers = {
+    ...(rpt && { Authorization: `Bearer ${rpt.access_token}` }),
+    ...config.headers,
+  };
 
   return config;
 });
