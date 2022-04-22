@@ -20,9 +20,9 @@ import { wrapSqonWithDonorId } from './utils';
 import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { GET_VARIANT_COUNT } from 'graphql/variants/queries';
 import { ArrangerApi } from 'api/arranger';
+import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 
 import styles from './VariantPageContainer.module.scss';
-import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 
 export type VariantPageContainerData = {
   mappingResults: MappingResults;
@@ -68,8 +68,6 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
   const [selectedFilterContent, setSelectedFilterContent] = useState<
     React.ReactElement | undefined
   >(undefined);
-
-  const total = results.data?.Variants.hits.total || 0;
 
   const dictionary: IDictionary = {
     query: {

@@ -1,5 +1,5 @@
 import keycloak from 'auth/keycloak';
-import { fetchRptToken, RptManager } from 'auth/rpt';
+import { RptManager } from 'auth/rpt';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();

@@ -5,24 +5,22 @@ import { DownloadOutlined } from '@ant-design/icons';
 import intl from 'react-intl-universal';
 import { fetchTranscriptsReport } from 'store/reports/thunks';
 import { reportSelector } from 'store/reports/selectors';
-import { Rpt } from 'auth/types';
 
 type Props = {
-  rpt: Rpt;
   patientId: string;
   variantId: string;
 };
 
-const ReportDownloadButton = ({ rpt, patientId, variantId }: Props) => {
+const ReportDownloadButton = ({ patientId, variantId }: Props) => {
   const dispatch = useDispatch();
   const { isLoadingPatientTranscripts: isLoadingReport } = useSelector(reportSelector);
   return (
     <Tooltip title={intl.get('screen.patientvariant.drawer.download.report.tooltip')}>
       <Button
-        disabled={!rpt || isLoadingReport}
+        disabled={isLoadingReport}
         loading={isLoadingReport}
         icon={<DownloadOutlined />}
-        onClick={() => dispatch(fetchTranscriptsReport({ rpt, patientId, variantId }))}
+        onClick={() => dispatch(fetchTranscriptsReport({ patientId, variantId }))}
       >
         {intl.get('screen.patientvariant.drawer.download.report')}
       </Button>
