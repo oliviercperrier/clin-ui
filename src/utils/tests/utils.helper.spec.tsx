@@ -6,7 +6,6 @@ import {
     formatTimestampToISODate,
     navigateTo,
     getTopBodyElement,
-    downloadJSONFile,
     getPatientPosition,
     formatLocus} from '../helper';
 

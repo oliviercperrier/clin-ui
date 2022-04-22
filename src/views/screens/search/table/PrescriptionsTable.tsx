@@ -1,42 +1,58 @@
 import React, { useState } from 'react';
 import { prescriptionsColumns } from './prescriptionColumns';
-import Table, { Props } from './Table';
-import { PrescriptionResult } from 'graphql/prescriptions/models/Prescription';
+import {
+  ITablePrescriptionResult,
+  PrescriptionResult,
+} from 'graphql/prescriptions/models/Prescription';
 import NanuqExportButton from './NanuqExportButton';
+import ProTable from '@ferlab/ui/core/components/ProTable';
+import { GqlResults } from 'graphql/models';
+import { getProTableDictionary } from 'utils/translation';
+
+interface OwnProps {
+  results: GqlResults<PrescriptionResult> | null;
+  total?: number;
+  extra?: React.ReactElement;
+  loading?: boolean;
+}
 
 const DEFAULT_PAGE_SIZE = 20;
 const DEFAULT_PAGE = 1;
 
-
-const PrescriptionsTable = ({ results, loading = false }: Props): React.ReactElement => {
+const PrescriptionsTable = ({ results, loading = false }: OwnProps): React.ReactElement => {
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionResult[]>([]);
   const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE);
-  const columns = prescriptionsColumns();
+
   return (
-    <Table
-      columns={columns}
+    <ProTable<ITablePrescriptionResult>
+      tableId="prescription_table"
+      columns={prescriptionsColumns()}
+      dataSource={results?.data.map((i) => ({ ...i, key: i.id }))}
       loading={loading}
+      enableRowSelection={true}
+      dictionary={getProTableDictionary()}
+      onChange={({ current, pageSize }) => {
+        if (currentPage !== current || currentPageSize !== pageSize) {
+          setCurrentPage(current!);
+          setcurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
+        }
+      }}
+      headerConfig={{
+        itemCount: {
+          pageIndex: currentPage,
+          pageSize: currentPageSize,
+          total: results?.total || 0,
+        },
+        onSelectedRowsChange: (keys, rows) => setSelectedPrescription(rows),
+        extra: [<NanuqExportButton selectedPrescription={selectedPrescription} />],
+      }}
+      size="small"
       pagination={{
         current: currentPage,
-        defaultPageSize: currentPageSize,
-        onChange: (page, pageSize) => {
-          if (currentPage !== page || currentPageSize !== pageSize) {
-            setCurrentPage(page);
-            setcurrentPageSize(pageSize || DEFAULT_PAGE_SIZE);
-          }
-        },
-      }}
-      results={results}
-      total={results?.total || 0}
-      extra={
-        <NanuqExportButton selectedPrescription={selectedPrescription} /> 
-      }
-      rowSelection={{
-        type: 'checkbox',
-        onChange: (_, value: PrescriptionResult[]) => {
-          setSelectedPrescription(value);
-        },
+        pageSize: currentPageSize,
+        defaultPageSize: DEFAULT_PAGE_SIZE,
+        total: results?.total ?? 0,
       }}
     />
   );

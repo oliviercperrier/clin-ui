@@ -1,5 +1,9 @@
 import { ArrangerResultsTree } from 'graphql/models';
 
+export interface IVariantResultTree {
+  Variants: ArrangerResultsTree<VariantEntity>;
+}
+
 export enum Impact {
   High = 'HIGH',
   Moderate = 'MODERATE',
@@ -90,6 +94,10 @@ export type DonorsEntity = {
   is_hc?: boolean;
 };
 
+export type ITableVariantEntity = VariantEntity & {
+  key: string;
+}
+
 export type VariantEntity = {
   id: string;
   hash: string;
@@ -121,6 +129,7 @@ export type VarsomeClassifications = {
     met_criteria: boolean;
     name: string;
     id: string;
+    user_explain: string;
 }
 type VarsomeVerdict = {
   benign_subscore: string;
@@ -134,9 +143,16 @@ type VarsomeAcmg = {
   classifications: ArrangerResultsTree<VarsomeClassifications>;
 }
 
+type Publication = {
+  id: string;
+}
+
 export type Varsome = {
   acmg: VarsomeAcmg;
   variant_id: string;
+  has_publication?: boolean;
+  publications: ArrangerResultsTree<Publication>
+
 }
 
 export type GeneEntity = {

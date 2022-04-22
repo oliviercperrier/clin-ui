@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TReportState } from 'store/reports/types';
-import { fetchTranscriptsReport } from 'store/reports/thunks';
+import { fetchNanuqSequencingReport, fetchTranscriptsReport } from 'store/reports/thunks';
 
 export const ReportState: TReportState = {
-  isLoading: false,
+  isLoadingPatientTranscripts: false,
+  isLoadingNanuqSequencing: false,
 };
 
 const reportSlice = createSlice({
@@ -11,17 +12,26 @@ const reportSlice = createSlice({
   initialState: ReportState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchTranscriptsReport.pending, (state, action) => {
-      state.isLoading = true;
+    builder.addCase(fetchTranscriptsReport.pending, (state) => {
+      state.isLoadingPatientTranscripts = true;
     });
-    builder.addCase(fetchTranscriptsReport.rejected, (state, action) => {
-      state.isLoading = false;
+    builder.addCase(fetchTranscriptsReport.rejected, (state) => {
+      state.isLoadingPatientTranscripts = false;
     });
-    builder.addCase(fetchTranscriptsReport.fulfilled, (state, action) => {
-      state.isLoading = false;
+    builder.addCase(fetchTranscriptsReport.fulfilled, (state) => {
+      state.isLoadingPatientTranscripts = false;
+    });
+    builder.addCase(fetchNanuqSequencingReport.pending, (state) => {
+      state.isLoadingNanuqSequencing = true;
+    });
+    builder.addCase(fetchNanuqSequencingReport.rejected, (state) => {
+      state.isLoadingNanuqSequencing = false;
+    });
+    builder.addCase(fetchNanuqSequencingReport.fulfilled, (state) => {
+      state.isLoadingNanuqSequencing = false;
     });
   },
 });
 
 export const reportActions = reportSlice.actions;
-export default reportSlice.reducer
+export default reportSlice.reducer;

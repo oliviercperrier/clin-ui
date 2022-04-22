@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash';
 import LineStyleIcon from 'components/icons/LineStyleIcon';
 import { ExtendedMapping } from 'graphql/models';
 import { MappingResults, useGetVariantPageData } from 'graphql/variants/actions';
-import { VariantEntity } from 'graphql/variants/models';
+import { IVariantResultTree, VariantEntity } from 'graphql/variants/models';
 
 import { VARIANT_QB_ID } from './constants';
 import VariantTableContainer from './VariantTableContainer';
@@ -18,6 +18,9 @@ import { dotToUnderscore } from '@ferlab/ui/core/data/arranger/formatting';
 import GenericFilters from './filters/GenericFilters';
 import { wrapSqonWithDonorId } from './utils';
 import useQueryBuilderState from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { GET_VARIANT_COUNT } from 'graphql/variants/queries';
+import { ArrangerApi } from 'api/arranger';
+import { ISyntheticSqon } from '@ferlab/ui/core/data/sqon/types';
 
 import styles from './VariantPageContainer.module.scss';
 
@@ -49,10 +52,12 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
   const [currentPageSize, setcurrentPageSize] = useState(DEFAULT_PAGE_SIZE);
   const { patientid } = useParams<{ patientid: string }>();
   const { queryList, activeQuery } = useQueryBuilderState(VARIANT_QB_ID);
-  const resolvedSqon = cloneDeep(resolveSyntheticSqon(queryList, activeQuery, 'donors'));
+
+  const getVariantResolvedSqon = (query: ISyntheticSqon) =>
+    wrapSqonWithDonorId(cloneDeep(resolveSyntheticSqon(queryList, query, 'donors')), patientid);
 
   const results = useGetVariantPageData({
-    sqon: wrapSqonWithDonorId(resolvedSqon, patientid),
+    sqon: getVariantResolvedSqon(activeQuery),
     pageSize: currentPageSize,
     offset: currentPageSize * (currentPageNum - 1),
     sort: [
@@ -63,8 +68,6 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
   const [selectedFilterContent, setSelectedFilterContent] = useState<
     React.ReactElement | undefined
   >(undefined);
-
-  const total = results.data?.Variants.hits.total || 0;
 
   const dictionary: IDictionary = {
     query: {
@@ -130,8 +133,6 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
         id={VARIANT_QB_ID}
         enableCombine={true}
         currentQuery={isEmptySqon(activeQuery) ? {} : activeQuery}
-        loading={results.loading}
-        total={total}
         dictionary={dictionary}
         facetFilterConfig={{
           enable: true,
@@ -145,6 +146,17 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
           },
           selectedFilterContent: selectedFilterContent,
           blacklistedFacets: ['genes.symbol', 'locus'],
+        }}
+        getResolvedQueryForCount={(sqon) => getVariantResolvedSqon(sqon)}
+        fetchQueryCount={async (sqon) => {
+          const { data } = await ArrangerApi.graphqlRequest<{ data: IVariantResultTree }>({
+            query: GET_VARIANT_COUNT.loc?.source.body,
+            variables: {
+              sqon: getVariantResolvedSqon(sqon),
+            },
+          });
+
+          return data?.data?.Variants.hits.total ?? 0;
         }}
       />
       <Tabs type="card" className={styles.variantTabs}>

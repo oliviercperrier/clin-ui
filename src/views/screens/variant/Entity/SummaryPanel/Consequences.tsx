@@ -1,7 +1,6 @@
 import React from 'react';
-import cx from 'classnames';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
-import { Card, Typography, Space, Tooltip, Spin } from 'antd';
+import { Typography, Space, Tooltip, Spin } from 'antd';
 import intl from 'react-intl-universal';
 import capitalize from 'lodash/capitalize';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
@@ -16,8 +15,8 @@ import {
   VariantEntity,
 } from 'graphql/variants/models';
 import { getVepImpactTag } from 'views/screens/variant/Entity/index';
-import SummaryCard from 'views/screens/variant/Entity/ResumePanel/Summary';
 import { ArrangerEdge, ArrangerResultsTree } from 'graphql/models';
+import CollapsePanel from 'components/containers/collapse';
 
 import styles from './index.module.scss';
 
@@ -173,6 +172,7 @@ const makeRows = (consequences: ArrangerEdge<ConsequenceEntity>[]) =>
     conservation: consequence.node.conservations?.phylo_p17way_primate_rankscore,
     transcript: {
       ids: consequence.node.refseq_mrna_id?.filter((i) => i?.length > 0),
+      transcriptId: consequence.node.ensembl_transcript_id,
       isCanonical: consequence.node.canonical,
     },
   }));
@@ -271,28 +271,33 @@ const columns = [
       conservation == null ? DISPLAY_WHEN_EMPTY_DATUM : conservation,
   },
   {
-    title: () => intl.get('refSeq'),
+    title: () => intl.get('transcript'),
     dataIndex: 'transcript',
-    render: (transcript: { ids: string[]; isCanonical?: boolean }) => {
-      
+    render: (transcript: { ids: string[]; transcriptId: string; isCanonical?: boolean }) => {
+
       if (!transcript.ids || transcript.ids.length === 0) {
-        return DISPLAY_WHEN_EMPTY_DATUM;
+        return <div>
+            {transcript.transcriptId}
+            {transcript.isCanonical && (
+              <CanonicalIcon className={styles.canonicalIcon} height="14" width="14" />
+            )}</div>
       }
-      
+
       return (
         transcript.ids.map(id => (
+          <div key={id}>{`${transcript.transcriptId} / `}
           <a
-            key={id}
             target="_blank"
             rel="noopener noreferrer"
-            href={`https://www.ncbi.nlm.nih.gov/nuccore/${id}.3?report=graph`}
+            href={`https://www.ncbi.nlm.nih.gov/nuccore/${id}?report=graph`}
             className={styles.transcriptLink}
           >
-            {id}
+             {id}
             {transcript.isCanonical && (
               <CanonicalIcon className={styles.canonicalIcon} height="14" width="14" />
             )}
-          </a>
+            </a>
+          </div>
         ))
       );
     },
@@ -314,85 +319,73 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
   const hasTables = tables.length > 0;
 
   return (
-    <StackLayout className={cx(styles.resumePanel, className)} vertical>
-      <Space direction="vertical" size={16}>
-        <SummaryCard loading={data.loading} variant={variantData} genes={genes} />
-        <Title level={4} className={styles.consequenceTitle}>
-          {intl.get('screen.variantDetails.summaryTab.consequencesTable.title')}
-        </Title>
-        <StackLayout className={styles.consequenceCards} vertical>
-          <Spin spinning={data.loading}>
-            {hasTables ? (
-              tables.map((tableData: TableGroup, index: number) => {
-                const symbol = tableData.symbol;
-                const omim = tableData.omim;
-                const biotype = tableData.biotype;
-                const orderedConsequences = sortConsequences(tableData.consequences);
+    <CollapsePanel header={intl.get('screen.variantDetails.summaryTab.consequencesTitle')}>
+      <StackLayout className={styles.consequenceCards} vertical>
+        <Spin spinning={data.loading}>
+          {hasTables ? (
+            tables.map((tableData: TableGroup, index: number) => {
+              const symbol = tableData.symbol;
+              const omim = tableData.omim;
+              const biotype = tableData.biotype;
+              const orderedConsequences = sortConsequences(tableData.consequences);
 
-                return (
-                  <Card
-                    title={
-                      <Space size={12}>
-                        <Space size={4}>
+              return (
+                <>
+                  <Space size={12}>
+                    <Space size={4}>
+                      <span>
+                        <a
+                          href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${symbol}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {symbol}
+                        </a>
+                      </span>
+                    </Space>
+                    <Space size={4}>
+                      {omim && (
+                        <>
+                          <span>Omim</span>
                           <span>
                             <a
-                              href={`https://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${symbol}`}
+                              href={`https://omim.org/entry/${omim}`}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              {symbol}
+                              {omim}
                             </a>
                           </span>
-                        </Space>
-                        <Space size={4}>
-                          {omim && (
-                            <>
-                              <span>Omim</span>
-                              <span>
-                                <a
-                                  href={`https://omim.org/entry/${omim}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {omim}
-                                </a>
-                              </span>
-                            </>
-                          )}
-                        </Space>
-                        <span className="bold value">{biotype}</span>
-                      </Space>
+                        </>
+                      )}
+                    </Space>
+                    <span className="bold value">{biotype}</span>
+                  </Space>
+                  <ExpandableTable
+                    bordered={true}
+                    nOfElementsWhenCollapsed={1}
+                    buttonText={(showAll, hiddenNum) =>
+                      showAll
+                        ? intl.get('screen.variant.entity.table.hidetranscript')
+                        : `${intl.get(
+                            'screen.variant.entity.table.showtranscript',
+                          )} (${hiddenNum})`
                     }
-                    className={styles.card}
                     key={index}
-                  >
-                    <ExpandableTable
-                      nOfElementsWhenCollapsed={1}
-                      buttonText={(showAll, hiddenNum) =>
-                        showAll
-                          ? intl.get('screen.variant.entity.table.hidetranscript')
-                          : `${intl.get(
-                              'screen.variant.entity.table.showtranscript',
-                            )} (${hiddenNum})`
-                      }
-                      key={index}
-                      dataSource={makeRows(orderedConsequences)}
-                      columns={columns}
-                      pagination={false}
-                      size="small"
-                    />
-                  </Card>
-                );
-              })
-            ) : (
-              <Card>
-                <NoData />
-              </Card>
-            )}
-          </Spin>
-        </StackLayout>
-      </Space>
-    </StackLayout>
+                    dataSource={makeRows(orderedConsequences)}
+                    columns={columns}
+                    pagination={false}
+                    size="small"
+                  />
+                </>
+              );
+            })
+          ) : (
+            <NoData />
+          )}
+        </Spin>
+      </StackLayout>
+    </CollapsePanel>
   );
 };
 

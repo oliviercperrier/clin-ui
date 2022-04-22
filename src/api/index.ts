@@ -1,5 +1,5 @@
 import keycloak from 'auth/keycloak';
-import { fetchRptToken, RptManager } from 'auth/rpt';
+import { RptManager } from 'auth/rpt';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();
@@ -11,16 +11,11 @@ export interface ApiResponse<T> {
 }
 
 apiInstance.interceptors.request.use((config) => {
-  // set Authorization headers on a per request basis
-  // setting headers on axios get/put/post or common seems to be shared across all axios instances
-
   const token = keycloak?.token;
-  if (token) {
-    config.headers = {
-      ...(token && { Authorization: `Bearer ${token}` }),
-      ...config.headers,
-    };
-  }
+  config.headers = {
+    ...(token && { Authorization: `Bearer ${token}` }),
+    ...config.headers,
+  };
 
   return config;
 });

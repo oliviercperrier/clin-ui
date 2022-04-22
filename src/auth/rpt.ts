@@ -1,8 +1,7 @@
 import { keycloakConfig } from 'utils/config';
 import jwtDecode from 'jwt-decode';
-import { ApiResponse, sendRequest } from 'api';
+import { sendRequest } from 'api';
 import { DecodedRpt, IRptPayload } from './types';
-import jwtdecode from 'jwt-decode';
 
 const KEYCLOAK_AUTH_GRANT_TYPE = 'urn:ietf:params:oauth:grant-type:uma-ticket';
 export const RPT_TOKEN_URL = `${keycloakConfig.url}realms/clin/protocol/openid-connect/token`;

@@ -151,6 +151,16 @@ export const VARIANT_QUERY = gql`
   }
 `;
 
+export const GET_VARIANT_COUNT = gql`
+  query getVariantCount($sqon: JSON) {
+    Variants {
+      hits(filters: $sqon) {
+        total
+      }
+    }
+  }
+`;
+
 export const TAB_FREQUENCIES_QUERY = gql`
   query GetFrequenciesTabVariant($sqon: JSON) {
     Variants {
@@ -346,6 +356,39 @@ export const TAB_SUMMARY_QUERY = gql`
                   }
                 }
               }
+            }
+            varsome {
+              acmg {
+                coding_impact
+                gene_symbol
+                transcript
+                transcript_reason
+
+                verdict {
+                  benign_subscore
+                  clinical_score
+                  pathogenic_subscore
+                  verdict
+                }
+                classifications {
+                  hits {
+                    edges {
+                      node {
+                        met_criteria
+                        name
+                        user_explain
+                      }
+                    }
+                  }
+                }
+              }
+              has_publication
+              publications {
+                hits {
+                  edges { node { id }}
+                }
+              }
+              variant_id
             }
           }
         }
