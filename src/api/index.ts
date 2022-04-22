@@ -11,9 +11,6 @@ export interface ApiResponse<T> {
 }
 
 apiInstance.interceptors.request.use((config) => {
-  // set Authorization headers on a per request basis
-  // setting headers on axios get/put/post or common seems to be shared across all axios instances
-
   const token = keycloak?.token;
   if (token) {
     config.headers = {
@@ -31,10 +28,12 @@ const rptApiInstance = axios.create({
 
 rptApiInstance.interceptors.request.use(async (config) => {
   const rpt = await RptManager.readRpt();
-  config.headers = {
-    ...(rpt && { Authorization: `Bearer ${rpt.access_token}` }),
-    ...config.headers,
-  };
+  if (rpt) {
+    config.headers = {
+      ...(rpt && { Authorization: `Bearer ${rpt.access_token}` }),
+      ...config.headers,
+    };
+  }
 
   return config;
 });
