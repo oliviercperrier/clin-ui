@@ -15,6 +15,16 @@ const extractFilename = (contentDisposition: string = '') => {
   return filenameEntry.split('=')?.[1] || '';
 };
 
+const showErrorNotification = (reportNameI18n: string) =>
+  notification.error({
+    placement: 'topLeft',
+    message: capitalize(intl.get('notification.error')),
+    description: `${capitalize(reportNameI18n)} : ${intl.get(
+      'report.notification.error.description',
+    )}`,
+    getContainer: () => window.parent.document.body,
+  });
+
 const proceedToDownload = async (
   reportNameI18n: string,
   filenameIfNotFoundInHeaders: string,
@@ -23,6 +33,9 @@ const proceedToDownload = async (
   try {
     const r = await request;
     const { data, response } = r;
+    if (!data || !response) {
+      return showErrorNotification(reportNameI18n);
+    }
     const headers = response.headers;
     const filename = extractFilename(headers['content-disposition']) || filenameIfNotFoundInHeaders;
     const blob = new Blob([data as BlobPart], { type: MIME_TYPES.APPLICATION_XLSX });
@@ -36,14 +49,7 @@ const proceedToDownload = async (
       getContainer: () => window.parent.document.body,
     });
   } catch (e) {
-    notification.error({
-      placement: 'topLeft',
-      message: capitalize(intl.get('notification.error')),
-      description: `${capitalize(reportNameI18n)} : ${intl.get(
-        'report.notification.error.description',
-      )}`,
-      getContainer: () => window.parent.document.body,
-    });
+    showErrorNotification(reportNameI18n);
   }
 };
 
@@ -58,15 +64,15 @@ const fetchTranscriptsReport = createAsyncThunk<
   );
 });
 
-const fetchNanuqSequencingReport = createAsyncThunk<
-  void,
-  { rpt: Rpt; srIds: string[] }
->('report/fetchNanuqSequencingReport', async ({ rpt, srIds }) => {
-  await proceedToDownload(
-    'nanuq',
-    `clin_nanuq_${uuid()}.xlsx`,
-    ReportsApi.fetchNanuqSequencingReport(rpt, srIds),
-  );
-});
+const fetchNanuqSequencingReport = createAsyncThunk<void, { rpt: Rpt; srIds: string[] }>(
+  'report/fetchNanuqSequencingReport',
+  async ({ rpt, srIds }) => {
+    await proceedToDownload(
+      'nanuq',
+      `clin_nanuq_${uuid()}.xlsx`,
+      ReportsApi.fetchNanuqSequencingReport(rpt, srIds),
+    );
+  },
+);
 
 export { fetchTranscriptsReport, fetchNanuqSequencingReport };
