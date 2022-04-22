@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const apiInstance = axios.create();
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   data: T | undefined;
   response: AxiosResponse;
   error: AxiosError | undefined;

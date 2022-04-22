@@ -15,7 +15,7 @@ type Props = {
 
 const ReportDownloadButton = ({ rpt, patientId, variantId }: Props) => {
   const dispatch = useDispatch();
-  const { isLoading: isLoadingReport } = useSelector(reportSelector);
+  const { isLoadingPatientTranscripts: isLoadingReport } = useSelector(reportSelector);
   return (
     <Tooltip title={intl.get('screen.patientvariant.drawer.download.report.tooltip')}>
       <Button

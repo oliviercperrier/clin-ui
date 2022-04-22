@@ -58,10 +58,6 @@ export const downloadFile = (blob: Blob, filename: string) => {
   URL.revokeObjectURL(downloadLinkElement.href);
 };
 
-export const downloadJSONFile = (content: string, filename: string) => {
-  const fileBlob = new Blob([content], { type: 'text/json' });
-  downloadFile(fileBlob, filename);
-};
 
 export const getPatientPosition = (gender: string, position: string) => {
   const loweredPosition = position.toLowerCase() || UNKNOWN_TAG;

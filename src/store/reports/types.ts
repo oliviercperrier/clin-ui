@@ -1,3 +1,4 @@
 export type TReportState = {
-    isLoading: boolean;
+    isLoadingPatientTranscripts: boolean;
+    isLoadingNanuqSequencing: boolean;
 };

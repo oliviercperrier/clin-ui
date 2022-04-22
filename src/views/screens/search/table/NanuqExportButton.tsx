@@ -1,110 +1,37 @@
-import { Button, Tooltip, Modal, Typography, message } from 'antd';
+import { Button, Tooltip } from 'antd';
 import React from 'react';
 import intl from 'react-intl-universal';
 import { PrescriptionResult } from 'graphql/prescriptions/models/Prescription';
-import { getTopBodyElement } from 'utils/helper';
+
 import { FileTextOutlined } from '@ant-design/icons';
-import { v4 as uuid } from 'uuid';
-import { getPatientPosition, downloadJSONFile } from 'utils/helper';
-import { UNKNOWN_TAG } from 'utils/constants';
-import { PatientResult } from 'graphql/patients/models/Patient';
+import { useDispatch, useSelector } from 'react-redux';
+import { reportSelector } from 'store/reports/selectors';
+import { useRpt } from 'hooks/rpt';
+import { fetchNanuqSequencingReport } from 'store/reports/thunks';
 
 interface Props {
   selectedPrescription: PrescriptionResult[];
 }
-const MAX_PRESCRIPTION = 96;
-const FETUS_DDN = '11/11/1111';
-
-const formatBirthDateForNanuq = (patientInfo: PatientResult) => {
-  if (patientInfo.fetus) {
-    return FETUS_DDN;
-  }
-  const splitDate = patientInfo.birthDate.split('-');
-  return splitDate.reverse().join('/');
-};
-
-const getDatePadValue = (n: number) => `${n}`.padStart(2, '0');
-
-const formatDateToLocalString = () => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = getDatePadValue(date.getMonth());
-  const day = getDatePadValue(date.getDate());
-  const hour = getDatePadValue(date.getHours());
-  const minute = getDatePadValue(date.getMinutes());
-  const seconde = getDatePadValue(date.getSeconds());
-  return `${year}-${month}-${day}T${hour}_${minute}_${seconde}`;
-};
-
-const generateAndDownloadNanuqExport = (patients: PrescriptionResult[]) => {
-  const nanuqFileContent = {
-    export_id: uuid(),
-    version_id: '1.0',
-    test_genomique: 'exome',
-    LDM: patients[0].laboratory.split('/')[1],
-    patients: patients.map(({ patientInfo, familyInfo, cid, mrn }) => ({
-      type_echantillon: 'ADN',
-      tissue_source: 'Sang',
-      numero_echantillon: '',
-      puit: '',
-      nom_patient: patientInfo.lastName,
-      prenom_patient: patientInfo.firstName,
-      type_specimen: 'Normal',
-      patient_id: patientInfo.cid,
-      service_request_id: cid,
-      RAMQ: patientInfo.ramq || '--',
-      dossier_medical: mrn,
-      institution: patientInfo.organization.cid,
-      DDN: formatBirthDateForNanuq(patientInfo),
-      sexe: patientInfo.gender.toLowerCase() || UNKNOWN_TAG,
-      famille_id: familyInfo.cid,
-      position: getPatientPosition(patientInfo.gender, patientInfo.position),
-    })),
-  };
-  downloadJSONFile(
-    JSON.stringify(nanuqFileContent, null, 2),
-    `${formatDateToLocalString()}-clin-nanuq.json`,
-  );
-};
-
-const handleGenerateExportNanuq = (selectedPrescription: PrescriptionResult[]) => {
-  const exceedsMaxNumOfPrescriptions = selectedPrescription.length > MAX_PRESCRIPTION;
-  if (exceedsMaxNumOfPrescriptions) {
-    Modal.error({
-      title: intl.get('screen.patientsearch.table.nanuq.modal.title'),
-      content: (
-        <div>
-          <Typography.Text>
-            {intl.get('screen.patientsearch.table.nanuq.modal.description')}
-          </Typography.Text>
-          <ul>
-            <li>
-              {intl.get(`screen.patientsearch.table.nanuq.modal.number`)} (
-              {selectedPrescription.length})
-            </li>
-          </ul>
-        </div>
-      ),
-    });
-  } else {
-    generateAndDownloadNanuqExport(selectedPrescription);
-    message.success({
-      content: intl.get('screen.patientsearch.table.nanuq.modal.success'),
-      getPopupContainer: () => getTopBodyElement(),
-    });
-  }
-};
 
 const NanuqExportButton = ({ selectedPrescription }: Props): React.ReactElement => {
+  const dispatch = useDispatch();
+  const { rpt } = useRpt();
+  const { isLoadingNanuqSequencing: isLoadingReport } = useSelector(reportSelector);
   return (
     <Tooltip title={intl.get('screen.patientsearch.table.nanuq.tootip')}>
       <Button
-        disabled={!selectedPrescription.length}
+        loading={isLoadingReport}
+        disabled={!selectedPrescription.length || !rpt}
         size="small"
         type="link"
         icon={<FileTextOutlined height="14" width="14" />}
         onClick={() => {
-          handleGenerateExportNanuq(selectedPrescription);
+          dispatch(
+            fetchNanuqSequencingReport({
+              rpt,
+              srIds: selectedPrescription.map((sp) => sp.id),
+            }),
+          );
         }}
       >
         {intl.get('screen.patientsearch.table.nanuq')}
