@@ -1,17 +1,14 @@
-import React from 'react';
 import intl from 'react-intl-universal';
 import { Tooltip } from 'antd';
 import Status, { StatusOptions } from '@ferlab/ui/core/components/labels/Status';
-
-import { TColumn } from './columns';
+import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
 import { PatientIdCell, PrescriptionIdCell } from './cell/LinkCell';
-
 import { formatDate } from 'utils/date';
+import { ITablePrescriptionResult } from 'graphql/prescriptions/models/Prescription';
 
 import './tableColumn.scss';
 
-export const prescriptionsColumns = (
-): TColumn[] => {
+export const prescriptionsColumns = (): ProColumnType<ITablePrescriptionResult>[] => {
   const statusTranslation = {
     [StatusOptions.Active]: intl.get('filters.options.active'),
     [StatusOptions.Completed]: intl.get('filters.options.completed'),
@@ -27,7 +24,6 @@ export const prescriptionsColumns = (
       render: (cid: string, prescription: any) => {
         return <PrescriptionIdCell patientId={prescription.patientInfo?.cid || ''} text={cid} />;
       },
-      summary: false,
       title: intl.get('screen.patientsearch.table.prescription'),
     },
     {
@@ -38,7 +34,8 @@ export const prescriptionsColumns = (
     },
     {
       name: 'state',
-      render: (value: string) => !!value ? <Status dictionary={statusTranslation} status={value} /> : null,
+      render: (value: string) =>
+        !!value ? <Status dictionary={statusTranslation} status={value} /> : null,
       summary: false,
       title: intl.get('screen.patientsearch.table.status'),
     },
@@ -51,6 +48,7 @@ export const prescriptionsColumns = (
           {intl.get('screen.patientsearch.table.date')}
         </Tooltip>
       ),
+      displayTitle: intl.get('screen.patientsearch.table.date'),
     },
     {
       name: ['analysis', 'code'],
