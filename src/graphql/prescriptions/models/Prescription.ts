@@ -10,6 +10,10 @@ export type DataCategory = {
   count: number;
 };
 
+export type ITablePrescriptionResult = PrescriptionResult & {
+  key: string;
+};
+
 export interface PrescriptionResult extends ArrangerNodeData {
   mrn: string;
   ethnicity: string;

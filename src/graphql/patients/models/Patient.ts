@@ -21,6 +21,10 @@ export interface HealthProfessional extends ArrangerNodeData {
   lastNameFirstName?: string;
 }
 
+export type ITablePatientResult = PatientResult & {
+  key: string;
+};
+
 export interface PatientResult extends ArrangerNodeData {
   score: string;
   birthDate: string;
