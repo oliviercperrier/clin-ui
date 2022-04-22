@@ -285,9 +285,8 @@ const columns = [
 
       return (
         transcript.ids.map(id => (
-          <div>{`${transcript.transcriptId} / `}
+          <div key={id}>{`${transcript.transcriptId} / `}
           <a
-            key={id}
             target="_blank"
             rel="noopener noreferrer"
             href={`https://www.ncbi.nlm.nih.gov/nuccore/${id}?report=graph`}
