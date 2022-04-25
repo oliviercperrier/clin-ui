@@ -2,10 +2,16 @@
 
 .resumePanel {
   .consequenceCards {
+    width: 100%;
+
     .card {
       &:not(:last-child) {
         margin-bottom: 12px;
       }
+    }
+
+    .consequenceTableWrapper {
+      width: 100%;
     }
   }
 
@@ -23,14 +29,16 @@
     }
   }
 
+  .transcriptId,
   .transcriptLink {
+    display: flex;
     align-items: center;
   }
 
   .canonicalIcon {
     fill: $blue-8;
     margin-left: 4px;
-    fill: $blue-8
+    fill: $blue-8;
   }
 
   .cellList {
