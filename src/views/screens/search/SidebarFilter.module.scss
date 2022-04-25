@@ -23,4 +23,11 @@
   &:not(:first-child) {
     margin-top: 8px;
   }
+
+  :global {
+    .ant-collapse-header {
+      align-items: center !important;
+      font-weight: 500;
+    }
+  }
 }

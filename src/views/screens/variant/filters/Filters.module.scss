@@ -34,10 +34,6 @@
       }
 
       .ant-collapse-header {
-        padding: 5px;
-      }
-
-      .ant-collapse-header {
         > :nth-child(2) {
           flex-grow: 1;
         }
@@ -45,9 +41,6 @@
         display: flex;
         align-items: center;
         font-weight: 500;
-        font-size: 14px;
-        padding-left: 16px;
-        padding-right: 16px;
       }
     }
   }
