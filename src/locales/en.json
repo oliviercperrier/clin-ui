@@ -267,5 +267,7 @@
   "screen.variantsearch.table.gnomAd": "gnomAD ",
   "standard.format.date": "Format YYYY-MM-DD",
   "transcript": "Transcript",
-  "zygosity": "zygozity"
+  "zygosity": "zygozity",
+  "see.more": "See more",
+  "see.less": "See less"
 }

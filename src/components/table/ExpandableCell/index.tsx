@@ -1,26 +1,24 @@
-import React, { useState, ReactNode } from "react";
-import { Button } from "antd";
-import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
-import styles from "./index.module.scss";
+import React, { useState } from 'react';
+import { Typography } from 'antd';
+import intl from 'react-intl-universal';
+
+import styles from './index.module.scss';
 
 type OwnProps = {
   nOfElementsWhenCollapsed?: number;
   // must be immutable since we use index as key
   dataSource: (string[] | string[][]) | React.ReactNode[];
   renderItem?: (
-    item:
-      | (string | string[] | string[][])
-      | (React.ReactNode | React.ReactNode[]),
-    id: string
+    item: (string | string[] | string[][]) | (React.ReactNode | React.ReactNode[]),
+    id: string,
   ) => React.ReactNode;
 };
 
 const DEFAULT_NUM_COLLAPSED = 3;
 
-const renderItemDefault = (
-  item: React.ReactNode | React.ReactNode[],
-  id: string
-) => <span key={id}>{item}</span>;
+const renderItemDefault = (item: React.ReactNode | React.ReactNode[], id: string) => (
+  <span key={id}>{item}</span>
+);
 
 const ExpandableCell = ({
   nOfElementsWhenCollapsed = DEFAULT_NUM_COLLAPSED,
@@ -36,14 +34,9 @@ const ExpandableCell = ({
     <>
       {slicedData.map((item, index: number) => renderItem(item, `${index} `))}
       {showButton && (
-        <Button
-          className={styles.tableCellButton}
-          type={"link"}
-          icon={showAll ? <CaretUpOutlined /> : <CaretDownOutlined />}
-          onClick={() => setShowAll(!showAll)}
-        >
-          {showAll ? "Less" : "More"}
-        </Button>
+        <Typography.Link className={styles.tableCellButton} onClick={() => setShowAll(!showAll)}>
+          {showAll ? intl.get('see.less') : intl.get('see.more')}
+        </Typography.Link>
       )}
     </>
   );
