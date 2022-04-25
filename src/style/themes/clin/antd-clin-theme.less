@@ -1,26 +1,29 @@
-@import "../../../../node_modules/antd/dist/antd.less";
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap");
-@import "./colors.less";
-@import "./antd/table.less";
-@import "./antd/collapse.less";
-@import "./antd/checkbox.less";
-@import "./antd/tags.less";
-@import "./antd/inputs.less";
-@import "./antd/selects.less";
-@import "./antd/tabs.less";
-@import "./antd/buttons.less";
-@import "./antd/drawer.less";
-@import "./antd/description.less";
+@import '../../../../node_modules/antd/dist/antd.less';
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap');
+@import './colors.less';
+@import './antd/table.less';
+@import './antd/collapse.less';
+@import './antd/checkbox.less';
+@import './antd/tags.less';
+@import './antd/inputs.less';
+@import './antd/selects.less';
+@import './antd/tabs.less';
+@import './antd/buttons.less';
+@import './antd/drawer.less';
+@import './antd/description.less';
+@import './antd/typography.less';
+@import './antd/pagination.less';
 
 // Text colors
-@font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+@font-family: 'Roboto', BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+  sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 @heading-color: @blue-9;
 @text-selection-bg: @gray-3;
 @font-size-base: 14px;
 @font-size-lg: 16px;
 @border-radius-base: 2px;
-@primary-color: @blue-9;
+@primary-color: @blue-8;
+@label-color: @gray-9;
 
 body {
   color: @gray-8;
@@ -31,13 +34,14 @@ body {
 @text-selection-bg: @blue-3;
 @text-color-secondary: @blue-3;
 @text-color: @gray-8;
-@text-color-secondary: fade(@black, 45%);
+@text-color-secondary: @gray-7;
 @heading-2-size: 24px;
 @heading-3-size: 20px;
 @heading-4-size: 16px;
 
 // Disabled states
 @disabled-color: @gray-6;
+@input-placeholder-color: @gray-6;
 
 // Backgrounds
 @background-color-light: #edf0f3;
@@ -50,8 +54,8 @@ body {
 
 // The background colors for active and hover states for things like
 // list items or table cells.
-@item-active-bg: @gray-3;
-@item-hover-bg: @blue-1;
+@item-active-bg: @blue-1;
+@item-hover-bg: @gray-3;
 
 // Border color
 @border-color-base: @border;
@@ -61,9 +65,13 @@ body {
 @typography-title-margin-top: 0;
 @typography-title-margin-bottom: 0;
 
+// DIVIDER
+@divider-color: @gray-4;
+
 // LINK
-@link-color: @blue-9;
+@link-color: @blue-8;
 @link-hover-color: @blue-8;
+@link-decoration: underline;
 
 // Outline
 @outline-width: 1px;
@@ -77,17 +85,13 @@ body {
 @shadow-1-right: 6px 0 16px -8px fade(@text-color, 8%), 9px 0 28px 0 fade(@text-color, 5%);
 @shadow-2: 0 3px 6px -4px fade(@text-color, 30%), 0 6px 16px 0 fade(@text-color, 16%);
 
-// Checkbox
-@checkbox-color: @blue-9;
-
 // Dropdown
-@dropdown-selected-color: @primary-color;
+@dropdown-selected-color: @blue-9;
 
 // Page Header
 //@page-header-back-color: @disabled-color;
 
 // Radio
-@radio-dot-color: @blue-9;
 @radio-dot-disabled-color: @gray-6;
 
 // Radio buttons
@@ -99,7 +103,8 @@ body {
   border-color: @radio-disabled-button-checked-bg;
 }
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within,
-.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within {
+.ant-radio-group-solid
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within {
   box-shadow: none;
 }
 
@@ -107,14 +112,17 @@ body {
 .ant-form-item-explain,
 .ant-form-item-extra {
   font-size: @font-size-sm;
-  margin-top: 2px;
 }
 
-@form-error-input-bg: @red-0;
+.ant-form-item-label > label {
+  font-weight: 500;
+}
+@highlight-color: @red-8;
 
 // Select
 @select-border-color: @input-border-color;
-@select-item-selected-bg: @item-active-bg;
+@select-item-selected-bg: @blue-1;
+@select-item-selected-font-weight: 500;
 
 // Cascader
 //@cascader-item-selected-bg: @item-active-bg;
@@ -129,7 +137,7 @@ body {
 @alert-message-color: @text-color;
 @alert-close-color: @text-color-secondary;
 @alert-close-hover-color: @text-color;
-@alert-warning-bg-color: #FFF1B8;
+@alert-warning-bg-color: #fff1b8;
 @alert-error-bg-color: @red-0;
 
 // Tooltip
@@ -137,14 +145,14 @@ body {
 
 // Modal
 //@modal-mask-bg: fade(#050517, 60%);
+@modal-footer-padding-vertical: 16px;
+@modal-footer-padding-horizontal: 24px;
 
 // Menu
 @menu-highlight-color: @blue-9;
 @menu-item-active-bg: @blue-1;
 @menu-dark-submenu-bg: #001529;
 @menu-dark-item-active-bg: @blue-6;
-
-
 
 // Badge
 @badge-dot-size: 8px;
