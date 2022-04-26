@@ -54,9 +54,11 @@
   }
 
   .customFilterContainer {
-    margin-top: 8px;
-    :global(.ant-collapse) {
-      border: none;
+    :global {
+      .ant-collapse,
+      .ant-collapse-item {
+        border: none;
+      }
     }
   }
 }
