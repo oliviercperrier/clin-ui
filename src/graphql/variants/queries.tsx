@@ -385,7 +385,11 @@ export const TAB_SUMMARY_QUERY = gql`
               has_publication
               publications {
                 hits {
-                  edges { node { id }}
+                  edges {
+                    node {
+                      pub_med_id
+                    }
+                  }
                 }
               }
               variant_id

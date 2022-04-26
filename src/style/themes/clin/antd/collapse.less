@@ -1,30 +1,23 @@
-@collapse-header-padding: 5px;
 @collapse-header-bg: @gray-1;
+@collapse-content-padding: 16px;
 
 .@{collapse-prefix-cls} {
   &-content {
-    border-top: 1px solid @gray-4;
+    border-top: 1px solid @gray-4 !important;
+  }
+
+  &-content-box {
+    padding: @collapse-content-padding !important;
   }
 
   & > &-item {
-    border: none !important;
+    border-color: @gray-5;
 
     &:last-child {
       border-radius: 2px;
     }
 
     > .@{collapse-prefix-cls}-header {
-      display: flex;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 24px;
-      padding-left: 16px;
-      padding-right: 16px;
-
-      > :nth-child(2) {
-        flex-grow: 1;
-      }
-
       .@{collapse-prefix-cls}-arrow {
         color: @gray-7;
       }

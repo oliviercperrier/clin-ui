@@ -216,6 +216,8 @@
   "screen.variant.entity.frequencyTab.frequency.abbv": "Frequency",
   "screen.variant.entity.frequencyTab.homozygote.abbv": "Homo",
   "screen.variant.entity.frequencyTab.nonaffected.patients": "Unaffected patients",
+  "screen.variant.entity.table.showtranscript": "{count} other transcripts",
+  "screen.variant.entity.table.hidetranscript": "Show less",
   "screen.variantDetails.clinicalAssociationsTab.condition": "Conditions",
   "screen.variantDetails.clinicalAssociationsTab.gene": "Gene",
   "screen.variantDetails.clinicalAssociationsTab.genePhenotype": "Gene - Phenotype",
@@ -265,5 +267,7 @@
   "screen.variantsearch.table.gnomAd": "gnomAD ",
   "standard.format.date": "Format YYYY-MM-DD",
   "transcript": "Transcript",
-  "zygosity": "zygozity"
+  "zygosity": "zygozity",
+  "see.more": "See more",
+  "see.less": "See less"
 }

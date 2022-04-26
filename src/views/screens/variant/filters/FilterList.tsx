@@ -49,7 +49,7 @@ const FilterList = ({ queryBuilderId, mappingResults, filterInfo }: OwnProps) =>
               <CustomFilterContainer
                 queryBuilderId={queryBuilderId}
                 key={field}
-                classname={styles.variantFilterContainer}
+                classname={styles.customFilterContainer}
                 filterKey={field}
                 mappingResults={mappingResults}
                 filtersOpen={filtersOpen}
