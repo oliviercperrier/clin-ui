@@ -1,4 +1,4 @@
-import { Spin, Table, Typography } from 'antd';
+import { Spin, Table, Tag, Typography } from 'antd';
 import intl from 'react-intl-universal';
 import { VariantEntity } from 'graphql/variants/models';
 import CollapsePanel from 'components/containers/collapse';
@@ -6,17 +6,35 @@ import NoData from '../NoData';
 
 const { Title } = Typography;
 
+const getCriteriaTagColor = (criteria: string) => {
+  switch (criteria.toLowerCase().substring(0, 2)) {
+    case 'pv':
+    case 'ps':
+      return 'red';
+    case 'pm':
+      return 'volcano';
+    case 'pp':
+      return 'gold';
+    case 'bs':
+    case 'ba':
+      return 'green';
+    case 'bp':
+      return 'blue';
+    default:
+      return 'default';
+  }
+};
+
 const columns = [
   {
     title: () => intl.get('screen.variantDetails.summaryTab.acmgCriteriaTable.criteriaColumn'),
     dataIndex: 'name',
-    className: ``,
     width: '18%',
+    render: (name: string) => <Tag color={getCriteriaTagColor(name)}>{name}</Tag>,
   },
   {
     title: () => intl.get('screen.variantDetails.summaryTab.acmgCriteriaTable.explanationColumn'),
     dataIndex: 'user_explain',
-    className: ``,
   },
 ];
 
@@ -54,7 +72,7 @@ const ACMGCriteria = ({ data }: Props) => {
         {formattedDate.length > 0 ? (
           <Table
             bordered={true}
-            dataSource={formatData(data.variantData) || []}
+            dataSource={formattedDate}
             columns={columns}
             pagination={false}
             size="small"

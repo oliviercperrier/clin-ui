@@ -330,7 +330,12 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
               const orderedConsequences = sortConsequences(tableData.consequences);
 
               return (
-                <Space direction="vertical" className={styles.consequenceTableWrapper} size={12}>
+                <Space
+                  key={index}
+                  direction="vertical"
+                  className={styles.consequenceTableWrapper}
+                  size={12}
+                >
                   <Space size={12}>
                     <Space size={4}>
                       <span>
