@@ -242,8 +242,8 @@ const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
   const hasEmptyCohorts = isExternalFreqTableEmpty(externalCohortsRows);
 
   return (
-    <StackLayout className={cx(styles.frequencyPanel, className)} vertical>
-      <Space direction="vertical" size={12}>
+    <div className={cx(styles.frequencyPanelWrapper, className)}>
+      <Space direction="vertical" className={styles.frequencyPanel} size={12}>
         <Spin spinning={loading}>
           <Card
             title={intl.get('screen.variant.entity.frequencyTab.card.title', {
@@ -267,6 +267,7 @@ const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
           <Card title={intl.get('screen.variantDetails.summaryTab.externalCohortsTable.title')}>
             {!hasEmptyCohorts ? (
               <Table
+                bordered
                 size="small"
                 dataSource={externalCohortsRows}
                 columns={externalFreqColumns}
@@ -278,7 +279,7 @@ const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
           </Card>
         </Spin>
       </Space>
-    </StackLayout>
+    </div>
   );
 };
 

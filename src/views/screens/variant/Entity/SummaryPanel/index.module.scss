@@ -1,49 +1,54 @@
 @import 'src/style/themes/clin/colors';
 
-.resumePanel {
-  .consequenceCards {
+.resumePanelWrapper {
+  display: flex;
+
+  .resumePanel {
     width: 100%;
 
-    .card {
-      &:not(:last-child) {
-        margin-bottom: 12px;
+    .consequenceCards {
+      width: 100%;
+
+      .card {
+        &:not(:last-child) {
+          margin-bottom: 12px;
+        }
+      }
+
+      .consequenceTableWrapper {
+        width: 100%;
       }
     }
 
-    .consequenceTableWrapper {
-      width: 100%;
+    .longValue {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow-wrap: initial;
     }
-  }
 
-  .longValue {
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    overflow-wrap: initial;
-  }
-
-  a {
-    text-decoration: underline;
-    &:hover {
-      text-decoration: none;
+    a {
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
     }
-  }
 
-  .transcriptId,
-  .transcriptLink {
-    display: flex;
-    align-items: center;
-  }
+    .transcriptId,
+    .transcriptLink {
+      display: flex;
+      align-items: center;
+    }
 
-  .canonicalIcon {
-    fill: $blue-8;
-    margin-left: 4px;
-    fill: $blue-8;
-  }
+    .canonicalIcon {
+      fill: $blue-8;
+      margin-left: 4px;
+    }
 
-  .cellList {
-    :not(:last-child) {
-      margin-right: 5px;
+    .cellList {
+      :not(:last-child) {
+        margin-right: 5px;
+      }
     }
   }
 }
