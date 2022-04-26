@@ -35,9 +35,9 @@ const columns = [
   {
     title: () => intl.get('screen.variantDetails.summaryTab.acmgCriteriaTable.explanationColumn'),
     dataIndex: 'user_explain',
-    render: (user_explain: string[]) => (
+    render: (userExplain: string[]) => (
       <Space direction="vertical" size={4}>
-        {user_explain}
+        {userExplain}
       </Space>
     ),
   },

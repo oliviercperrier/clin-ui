@@ -26045,13 +26045,6 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-table-filter-dropdown-btns {
   padding: 8px;
 }
-.ant-table-filter-dropdown .ant-dropdown-menu-title-content {
-  display: flex;
-}
-.ant-table-filter-dropdown .ant-dropdown-menu-item .ant-checkbox-wrapper {
-  display: flex;
-  align-items: center;
-}
 .ant-collapse-content {
   border-top: 1px solid #e1e8ef !important;
 }

@@ -27,9 +27,9 @@ interface OwnProps {
 
 const DEFAULT_PAGE_SIZE = 20;
 
-const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): DonorsEntity[] =>
-  donors?.map((donor, index) => ({
-    key: index,
+const makeRows = (donors: ArrangerEdge<DonorsEntity>[]): TTableDonorEntity[] =>
+  donors?.map((donor) => ({
+    key: donor.node.patient_id,
     id: donor.node.id,
     patient_id: donor.node.patient_id,
     organization_id: donor.node.organization_id,
@@ -89,7 +89,7 @@ const getPatientPanelColumns = (
     key: 'gender',
     dataIndex: 'gender',
     title: intl.get('screen.variantDetails.patientsTab.sex'),
-    render: (gender: string) => intl.get('screen.variantDetails.patientsTab.' + gender),
+    render: (gender: string) => intl.get(`screen.variantDetails.patientsTab.${gender}`),
     filters: [
       {
         text: intl.get('screen.variantDetails.patientsTab.male'),
@@ -129,9 +129,7 @@ const getPatientPanelColumns = (
     dataIndex: 'affected_status',
     title: intl.get('screen.variantDetails.patientsTab.status'),
     render: (affected_status: boolean) =>
-      intl.get(
-        'screen.variantDetails.patientsTab.' + (affected_status ? 'affected' : 'notaffected'),
-      ),
+      intl.get(`screen.variantDetails.patientsTab.${affected_status ? 'affected' : 'notaffected'}`),
     filters: [
       {
         text: intl.get('screen.variantDetails.patientsTab.affected'),
@@ -220,7 +218,7 @@ const PatientPanel = ({ hash, className = '' }: OwnProps) => {
           <ProTable<TTableDonorEntity>
             tableId="patient_panel_table"
             columns={getPatientPanelColumns(donorsHits)}
-            dataSource={dataSource?.map((i) => ({ ...i, key: i.patient_id }))}
+            dataSource={dataSource ?? []}
             loading={loading}
             dictionary={getProTableDictionary()}
             onChange={({ current, pageSize }) => {
