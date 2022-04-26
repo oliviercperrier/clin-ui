@@ -60,6 +60,10 @@ export type PossiblyHcComplementHits = {
   };
 };
 
+export type TTableDonorEntity = DonorsEntity & {
+  key: string;
+};
+
 export type DonorsEntity = {
   id: string;
   patient_id: string;
@@ -96,7 +100,7 @@ export type DonorsEntity = {
 
 export type ITableVariantEntity = VariantEntity & {
   key: string;
-}
+};
 
 export type VariantEntity = {
   id: string;
@@ -126,34 +130,33 @@ export type VariantEntity = {
 };
 
 export type VarsomeClassifications = {
-    met_criteria: boolean;
-    name: string;
-    id: string;
-    user_explain: string[];
-}
+  met_criteria: boolean;
+  name: string;
+  id: string;
+  user_explain: string[];
+};
 type VarsomeVerdict = {
   benign_subscore: string;
   clinical_score: number;
   pathogenic_subscore: string;
   verdict: string;
-}
+};
 
 type VarsomeAcmg = {
   verdict: VarsomeVerdict;
   classifications: ArrangerResultsTree<VarsomeClassifications>;
-}
+};
 
 type Publication = {
   id: string;
-}
+};
 
 export type Varsome = {
   acmg: VarsomeAcmg;
   variant_id: string;
   has_publication?: boolean;
-  publications: ArrangerResultsTree<Publication>
-
-}
+  publications: ArrangerResultsTree<Publication>;
+};
 
 export type GeneEntity = {
   id: string;

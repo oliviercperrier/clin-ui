@@ -35,13 +35,13 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
   const genes = (variantData?.genes as ArrangerResultsTree<GeneEntity>)?.hits.edges;
 
   return (
-    <StackLayout className={cx(styles.resumePanel, className)} vertical>
-      <Space direction="vertical" size={16}>
+    <div className={cx(styles.resumePanelWrapper, className)}>
+      <Space direction="vertical" className={styles.resumePanel} size={16}>
         <SummaryCard loading={data.loading} variant={variantData} genes={genes} />
         <Consequecenses data={data} />
         <ACMGCriteria data={data} />
       </Space>
-    </StackLayout>
+    </div>
   );
 };
 
