@@ -35,7 +35,7 @@ const ExpandableCell = ({
       {slicedData.map((item, index: number) => renderItem(item, `${index} `))}
       {showButton && (
         <Typography.Link className={styles.tableCellButton} onClick={() => setShowAll(!showAll)}>
-          {showAll ? intl.get('see.less') : intl.get('see.more')}
+          {intl.get(showAll ? 'see.less' : 'see.more')}
         </Typography.Link>
       )}
     </>

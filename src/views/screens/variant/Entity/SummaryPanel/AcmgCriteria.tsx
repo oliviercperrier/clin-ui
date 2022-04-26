@@ -23,7 +23,7 @@ const columns = [
 const formatData = (data: VariantEntity | null) => {
   if (!data) return [];
 
-  return data.varsome?.acmg.classifications?.hits.edges.map((c) => {
+  return data.varsome?.acmg?.classifications?.hits.edges.map((c) => {
     const node = c.node;
     return {
       key: node.name,
@@ -35,7 +35,6 @@ const formatData = (data: VariantEntity | null) => {
 };
 
 type Props = {
-  isOpen?: boolean;
   data: {
     loading: boolean;
     variantData: VariantEntity | null;
@@ -46,7 +45,7 @@ const Header = () => (
   <Title level={4}>{intl.get('screen.variantDetails.summaryTab.acmgCriteriaTitle')}</Title>
 );
 
-const ACMGCriteria = ({ data, isOpen = true }: Props) => {
+const ACMGCriteria = ({ data }: Props) => {
   const formattedDate = formatData(data.variantData) || [];
 
   return (
