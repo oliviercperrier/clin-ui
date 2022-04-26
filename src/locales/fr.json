@@ -204,6 +204,7 @@
   "screen.patientvariant.results.table.consequence": "Conséquences",
   "screen.patientvariant.results.table.dbsnp": "dbSNP",
   "screen.patientvariant.results.table.genotype": "Génotypes (M : P)",
+  "screen.patientvariant.results.table.occ": "Occ.",
   "screen.patientvariant.results.table.rqdm": "RQDM",
   "screen.patientvariant.results.table.type": "Type",
   "screen.patientvariant.results.table.variant": "Variant",

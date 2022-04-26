@@ -190,6 +190,7 @@ const getVariantColumns = (
   {
     className: style.userAffectedBtnCell,
     key: 'drawer',
+    title: intl.get('screen.patientvariant.results.table.occ'),
     displayTitle: 'Information',
     render: (record: VariantEntity) => {
       return (
