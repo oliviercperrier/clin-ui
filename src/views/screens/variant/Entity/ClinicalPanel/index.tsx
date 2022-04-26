@@ -61,6 +61,7 @@ const ClinicalPanel = ({ hash, className = '' }: OwnProps) => {
                 dataSource={clinVarRows}
                 columns={columnsClinVar}
                 bordered
+                size="small"
               />
             ) : (
               <NoData />
