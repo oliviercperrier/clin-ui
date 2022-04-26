@@ -34,7 +34,7 @@ const Configuration = {
   ],
   parserPreset: {
     parserOpts: {
-      headerPattern: /^(\w*)(\([a-zA-Z0-9_ ]+\))?:\s?(\s[\w+\-]*\d+)\s?([\w ]*)?$/,
+      headerPattern: /^(\w*)(\([a-zA-Z0-9_ ]+\))?:\s?(\s[\w+\-]*\d+)\s?([\w \-À-ÿ]*)?$/,
       headerCorrespondence: ['type', 'scope', 'githubTicketNumber', 'subject'],
     },
   },
