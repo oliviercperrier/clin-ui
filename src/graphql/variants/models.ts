@@ -129,7 +129,7 @@ export type VarsomeClassifications = {
     met_criteria: boolean;
     name: string;
     id: string;
-    user_explain: string;
+    user_explain: string[];
 }
 type VarsomeVerdict = {
   benign_subscore: string;

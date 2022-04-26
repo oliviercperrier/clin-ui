@@ -1,4 +1,4 @@
-import { Spin, Table, Tag, Typography } from 'antd';
+import { Space, Spin, Table, Tag, Typography } from 'antd';
 import intl from 'react-intl-universal';
 import { VariantEntity } from 'graphql/variants/models';
 import CollapsePanel from 'components/containers/collapse';
@@ -35,6 +35,11 @@ const columns = [
   {
     title: () => intl.get('screen.variantDetails.summaryTab.acmgCriteriaTable.explanationColumn'),
     dataIndex: 'user_explain',
+    render: (user_explain: string[]) => (
+      <Space direction="vertical" size={4}>
+        {user_explain}
+      </Space>
+    ),
   },
 ];
 
