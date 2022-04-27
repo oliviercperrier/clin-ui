@@ -39,7 +39,7 @@ const GenericFilters = ({ field, mappingResults }: OwnProps): React.ReactElement
             loading: mappingResults.loadingMapping,
             data: mappingResults.extendedMapping,
           },
-          className: styles.variantFilterContainer,
+          className: styles.customFilterContainer,
           filterFooter: true,
           showSearchInput: true,
           useFilterSelector: true,

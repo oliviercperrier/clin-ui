@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { Typography, Tag, Tabs, Skeleton, Button } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import intl from 'react-intl-universal';
 import LibraryIcon from 'components/icons/LibraryIcon';
 import TeamIcon from 'components/icons/TeamIcon';
@@ -16,11 +16,11 @@ import { useTabSummaryData } from 'graphql/variants/tabActions';
 import FrequencyPanel from 'views/screens/variant/Entity/FrequencyPanel';
 import ClinicalPanel from 'views/screens/variant/Entity/ClinicalPanel';
 import PatientPanel from 'views/screens/variant/Entity/PatientPanel';
-
-import styles from './index.module.scss';
 import history from 'utils/history';
 import { navigateTo } from 'utils/helper';
 import { BarChartOutlined, StockOutlined } from '@ant-design/icons';
+
+import styles from './index.module.scss';
 
 export const getVepImpactTag = (score: number | string) => {
   switch (score) {
@@ -77,9 +77,15 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
           className={styles.titleSkeleton}
           active
         >
-          {patientId &&
-            <Button className={styles.previous} size='small' type='text' icon={<ArrowLeftOutlined />} onClick={() => navigateTo(`/patient/${patientId}/#variant`)}></Button>
-          }
+          {patientId && (
+            <Button
+              className={styles.previous}
+              size="small"
+              type="text"
+              icon={<ArrowLeftOutlined />}
+              onClick={() => navigateTo(`/patient/${patientId}/#variant`)}
+            ></Button>
+          )}
           <Typography.Title className={styles.title}>{data?.hgvsg}</Typography.Title>
           <Tag color="purple">{data?.variant_type.toLocaleUpperCase()}</Tag>
           {getVepImpactTag(data?.max_impact_score)}

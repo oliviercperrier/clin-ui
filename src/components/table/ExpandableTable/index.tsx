@@ -1,9 +1,8 @@
-import React, { ReactElement, useState } from 'react';
-import { Button, Table } from 'antd';
+import { ReactElement, useState } from 'react';
+import { Table, Typography } from 'antd';
 import { TableProps } from 'antd/lib/table';
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
 type OwnProps = TableProps<any> & {
   nOfElementsWhenCollapsed?: number;
@@ -29,14 +28,9 @@ const ExpandableTable = ({
     <>
       <Table dataSource={(dataSource || []).slice(0, sliceNum)} {...tableProps} />
       {showButton && (
-        <Button
-          type={'link'}
-          icon={showAll ? <CaretUpOutlined /> : <CaretDownOutlined />}
-          onClick={() => setShowAll(!showAll)}
-          className={styles.tableExpBtn}
-        >
-          {buttonText(showAll, hiddenNum)}
-        </Button>
+        <Typography.Link onClick={() => setShowAll(!showAll)} className={styles.tableExpBtn}>
+          {buttonText(showAll, hiddenNum)} {showAll ? '-' : '+'}
+        </Typography.Link>
       )}
     </>
   );

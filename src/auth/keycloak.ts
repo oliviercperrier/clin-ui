@@ -7,3 +7,7 @@ export const getFhirPractitionerId = () =>
   keycloak.tokenParsed ? keycloak.tokenParsed.fhir_practitioner_id : undefined;
 
 export default keycloak;
+
+export const logout = () => (
+    keycloak.logout()
+)

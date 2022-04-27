@@ -8,12 +8,7 @@ import ExpandableTable from 'components/table/ExpandableTable';
 import ExpandableCell from 'components/table/ExpandableCell';
 import NoData from 'views/screens/variant/Entity/NoData';
 import CanonicalIcon from 'components/icons/CanonicalIcon';
-import {
-  ConsequenceEntity,
-  GeneEntity,
-  Impact,
-  VariantEntity,
-} from 'graphql/variants/models';
+import { ConsequenceEntity, GeneEntity, Impact, VariantEntity } from 'graphql/variants/models';
 import { getVepImpactTag } from 'views/screens/variant/Entity/index';
 import { ArrangerEdge, ArrangerResultsTree } from 'graphql/models';
 import CollapsePanel from 'components/containers/collapse';
@@ -274,32 +269,33 @@ const columns = [
     title: () => intl.get('transcript'),
     dataIndex: 'transcript',
     render: (transcript: { ids: string[]; transcriptId: string; isCanonical?: boolean }) => {
-
       if (!transcript.ids || transcript.ids.length === 0) {
-        return <div>
+        return (
+          <div className={styles.transcriptId}>
             {transcript.transcriptId}
             {transcript.isCanonical && (
               <CanonicalIcon className={styles.canonicalIcon} height="14" width="14" />
-            )}</div>
+            )}
+          </div>
+        );
       }
 
-      return (
-        transcript.ids.map(id => (
-          <div key={id}>{`${transcript.transcriptId} / `}
+      return transcript.ids.map((id) => (
+        <div key={id} className={styles.transcriptId}>
+          {`${transcript.transcriptId} / `}
           <a
             target="_blank"
             rel="noopener noreferrer"
             href={`https://www.ncbi.nlm.nih.gov/nuccore/${id}?report=graph`}
             className={styles.transcriptLink}
           >
-             {id}
+            {id}
             {transcript.isCanonical && (
               <CanonicalIcon className={styles.canonicalIcon} height="14" width="14" />
             )}
-            </a>
-          </div>
-        ))
-      );
+          </a>
+        </div>
+      ));
     },
     width: '20%',
   },
@@ -319,9 +315,13 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
   const hasTables = tables.length > 0;
 
   return (
-    <CollapsePanel header={intl.get('screen.variantDetails.summaryTab.consequencesTitle')}>
-      <StackLayout className={styles.consequenceCards} vertical>
-        <Spin spinning={data.loading}>
+    <CollapsePanel
+      header={
+        <Title level={4}>{intl.get('screen.variantDetails.summaryTab.consequencesTitle')}</Title>
+      }
+    >
+      <Spin spinning={data.loading}>
+        <Space className={styles.consequenceCards} direction="vertical" size={48}>
           {hasTables ? (
             tables.map((tableData: TableGroup, index: number) => {
               const symbol = tableData.symbol;
@@ -330,7 +330,12 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
               const orderedConsequences = sortConsequences(tableData.consequences);
 
               return (
-                <>
+                <Space
+                  key={index}
+                  direction="vertical"
+                  className={styles.consequenceTableWrapper}
+                  size={12}
+                >
                   <Space size={12}>
                     <Space size={4}>
                       <span>
@@ -367,9 +372,9 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
                     buttonText={(showAll, hiddenNum) =>
                       showAll
                         ? intl.get('screen.variant.entity.table.hidetranscript')
-                        : `${intl.get(
-                            'screen.variant.entity.table.showtranscript',
-                          )} (${hiddenNum})`
+                        : intl.get('screen.variant.entity.table.showtranscript', {
+                            count: hiddenNum,
+                          })
                     }
                     key={index}
                     dataSource={makeRows(orderedConsequences)}
@@ -377,14 +382,14 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
                     pagination={false}
                     size="small"
                   />
-                </>
+                </Space>
               );
             })
           ) : (
             <NoData />
           )}
-        </Spin>
-      </StackLayout>
+        </Space>
+      </Spin>
     </CollapsePanel>
   );
 };

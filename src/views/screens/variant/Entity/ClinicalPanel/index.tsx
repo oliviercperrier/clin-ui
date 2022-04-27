@@ -1,22 +1,22 @@
-import React from "react";
-import cx from "classnames";
-import intl from "react-intl-universal";
-import { useTabClinicalData } from "graphql/variants/tabActions";
-import StackLayout from "@ferlab/ui/core/layout/StackLayout";
-import ServerError from "components/Results/ServerError";
-import { Card, Space, Table, Spin } from "antd";
-import NoData from "views/screens/variant/Entity/NoData";
-import { makeClinVarRows, makeGenesOrderedRow } from "./utils";
-import { columnsClinVar, columnsPhenotypes } from "./columns";
+import React from 'react';
+import cx from 'classnames';
+import intl from 'react-intl-universal';
+import { useTabClinicalData } from 'graphql/variants/tabActions';
+import StackLayout from '@ferlab/ui/core/layout/StackLayout';
+import ServerError from 'components/Results/ServerError';
+import { Card, Space, Table, Spin } from 'antd';
+import NoData from 'views/screens/variant/Entity/NoData';
+import { makeClinVarRows, makeGenesOrderedRow } from './utils';
+import { columnsClinVar, columnsPhenotypes } from './columns';
 
-import styles from "./index.module.scss";
+import styles from './index.module.scss';
 
 interface OwnProps {
   className?: string;
   hash: string;
 }
 
-const ClinicalPanel = ({ hash, className = "" }: OwnProps) => {
+const ClinicalPanel = ({ hash, className = '' }: OwnProps) => {
   const { loading, data, error } = useTabClinicalData(hash);
 
   if (error) {
@@ -34,16 +34,13 @@ const ClinicalPanel = ({ hash, className = "" }: OwnProps) => {
   const genesHasRows = genesRows.length > 0;
 
   return (
-    <StackLayout
-      className={cx(styles.clinicalPanel, className)}
-      vertical
-    >
-      <Space direction="vertical" size={12}>
+    <div className={cx(styles.clinicalPanelWrapper, className)}>
+      <Space direction="vertical" className={styles.clinicalPanel} size={12}>
         <Spin spinning={loading}>
           <Card
             title={
               <span>
-                ClinVar{" "}
+                ClinVar{' '}
                 {clinvarId ? (
                   <a
                     target="_blank"
@@ -53,7 +50,7 @@ const ClinicalPanel = ({ hash, className = "" }: OwnProps) => {
                     {clinvarId}
                   </a>
                 ) : (
-                  ""
+                  ''
                 )}
               </span>
             }
@@ -63,6 +60,8 @@ const ClinicalPanel = ({ hash, className = "" }: OwnProps) => {
                 pagination={false}
                 dataSource={clinVarRows}
                 columns={columnsClinVar}
+                bordered
+                size="small"
               />
             ) : (
               <NoData />
@@ -70,13 +69,10 @@ const ClinicalPanel = ({ hash, className = "" }: OwnProps) => {
           </Card>
         </Spin>
         <Spin spinning={loading}>
-          <Card
-            title={intl.get(
-              "screen.variantDetails.clinicalAssociationsTab.genePhenotype"
-            )}
-          >
+          <Card title={intl.get('screen.variantDetails.clinicalAssociationsTab.genePhenotype')}>
             {genesHasRows ? (
               <Table
+                bordered
                 pagination={false}
                 dataSource={genesRows}
                 columns={columnsPhenotypes}
@@ -88,7 +84,7 @@ const ClinicalPanel = ({ hash, className = "" }: OwnProps) => {
           </Card>
         </Spin>
       </Space>
-    </StackLayout>
+    </div>
   );
 };
 
