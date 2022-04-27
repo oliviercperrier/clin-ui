@@ -238,6 +238,7 @@
   "screen.variantDetails.patientsTab.donor": "Patient",
   "screen.variantDetails.patientsTab.familyId": "Family",
   "screen.variantDetails.patientsTab.female": "Female",
+  "screen.variantDetails.patientsTab.unknown": "Unknown",
   "screen.variantDetails.patientsTab.filter": "Filter",
   "screen.variantDetails.patientsTab.genotypeQuality": "Genotype Quality",
   "screen.variantDetails.patientsTab.male": "Male",
