@@ -10,12 +10,12 @@ import './tableColumn.scss';
 
 export const prescriptionsColumns = (): ProColumnType<ITablePrescriptionResult>[] => {
   const statusTranslation = {
-    [StatusOptions.Active]: intl.get('filters.options.active'),
-    [StatusOptions.Completed]: intl.get('filters.options.completed'),
-    [StatusOptions.Draft]: intl.get('filters.options.draft'),
+    [StatusOptions.Active]: intl.get('filters.options.state.active'),
+    [StatusOptions.Completed]: intl.get('filters.options.state.completed'),
+    [StatusOptions.Draft]: intl.get('filters.options.state.draft'),
     [StatusOptions.Revoked]: intl.get('filters.options.revoked'),
-    [StatusOptions.Submitted]: intl.get('filters.options.submitted'),
-    [StatusOptions.Incomplete]: intl.get('filters.options.incomplete'),
+    [StatusOptions.Submitted]: intl.get('filters.options.state.submitted'),
+    [StatusOptions.Incomplete]: intl.get('filters.options.state.incomplete'),
   };
 
   return [

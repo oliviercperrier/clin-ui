@@ -92,7 +92,9 @@ export const generateFilters = ({
   });
 
 const translateWhenNeeded = (group: string, key: string) =>
-  intl.get(`filters.options.${keyEnhance(key)}`).defaultMessage(keyEnhance(key));
+  intl
+    .get(`filters.options.${underscoreToDot(group)}.${keyEnhance(key)}`)
+    .defaultMessage(keyEnhance(key));
 
 export const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] => {
   if (!aggregations || !key) return [];

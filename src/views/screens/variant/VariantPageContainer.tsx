@@ -88,18 +88,36 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
       },
       facetValueMapping: {
         panels: {
-          MITN: intl.get('filters.options.MITN'),
-          DYSTM: intl.get('filters.options.DYSTM'),
-          MYOPC: intl.get('filters.options.MYOPC'),
-          DI: intl.get('filters.options.DI'),
-          RHAB: intl.get('filters.options.RHAB'),
-          MYASC: intl.get('filters.options.MYASC'),
-          MMG: intl.get('filters.options.MMG'),
-          HYPM: intl.get('filters.options.HYPM'),
+          MITN: intl.get('filters.options.panels.MITN'),
+          DYSTM: intl.get('filters.options.panels.DYSTM'),
+          MYOPC: intl.get('filters.options.panels.MYOPC'),
+          DI: intl.get('filters.options.panels.DI'),
+          RHAB: intl.get('filters.options.panels.RHAB'),
+          MYASC: intl.get('filters.options.panels.MYASC'),
+          MMG: intl.get('filters.options.panels.MMG'),
+          HYPM: intl.get('filters.options.panels.HYPM'),
+        },
+        'consequences.predictions.fathmm_pred': {
+          T: intl.get('filters.options.consequences.predictions.fathmm_pred.T'),
+          D: intl.get('filters.options.consequences.predictions.fathmm_pred.D'),
+        },
+        'consequences.predictions.polyphen2_hvar_pred': {
+          B: intl.get('filters.options.consequences.predictions.polyphen2_hvar_pred.B'),
+          D: intl.get('filters.options.consequences.predictions.polyphen2_hvar_pred.D'),
+          P: intl.get('filters.options.consequences.predictions.polyphen2_hvar_pred.P'),
+        },
+        'consequences.predictions.sift_pred': {
+          T: intl.get('filters.options.consequences.predictions.sift_pred.T'),
+          D: intl.get('filters.options.consequences.predictions.sift_pred.D'),
+        },
+        'consequences.predictions.lrt_pred': {
+          N: intl.get('filters.options.consequences.predictions.lrt_pred.N'),
+          U: intl.get('filters.options.consequences.predictions.lrt_pred.U'),
+          D: intl.get('filters.options.consequences.predictions.lrt_pred.D'),
         },
         chromosome: {
-          true: '1'
-        }
+          true: '1',
+        },
       },
     },
     actions: {
