@@ -14,6 +14,7 @@ import {
   underscoreToDot,
 } from '@ferlab/ui/core/data/arranger/formatting';
 import { updateActiveQueryFilters } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
+import { transformNameIfNeeded } from './nameTransformer';
 
 export interface RangeAggs {
   stats: {
@@ -91,9 +92,7 @@ export const generateFilters = ({
   });
 
 const translateWhenNeeded = (group: string, key: string) =>
-  ['state', 'panels'].includes(group)
-    ? intl.get(`filters.options.${keyEnhance(key)}`)
-    : `${keyEnhance(key)}`;
+  intl.get(`filters.options.${keyEnhance(key)}`).defaultMessage(keyEnhance(key));
 
 export const getFilters = (aggregations: Aggregations | null, key: string): IFilter[] => {
   if (!aggregations || !key) return [];
@@ -102,24 +101,13 @@ export const getFilters = (aggregations: Aggregations | null, key: string): IFil
       .map((f: any) => {
         const translatedKey = translateWhenNeeded(key, f.key);
         const name = translatedKey ? translatedKey : f.key;
-        const defaultValue = {
+        return {
           data: {
             count: f.doc_count,
             key: keyEnhanceBooleanOnly(f.key),
           },
           id: f.key,
-        };
-        if (key.includes('lastNameFirstName') && f.key) {
-          const nameSplit = f.key.split(',');
-          const formatName = `${nameSplit[0].toUpperCase()} ${nameSplit[1]}`;
-          return {
-            ...defaultValue,
-            name: formatName,
-          };
-        }
-        return {
-          ...defaultValue,
-          name: name,
+          name: transformNameIfNeeded(key, f.key, name),
         };
       })
       .filter((f: any) => !(f.name === ''));
