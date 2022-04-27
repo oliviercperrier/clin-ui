@@ -4,6 +4,11 @@
   width: 100%;
 }
 
+.content-header-wrapper {
+  width: 100%;
+  display: flex;
+}
+
 .ant-row.autocomplete-row {
   border-bottom: 1px solid $gray-5;
   display: flex;
@@ -28,5 +33,5 @@
 }
 
 .buttonCreatePrescription {
-  margin-left: 14px;
+  margin-left: 12px;
 }

@@ -1,21 +1,16 @@
 import React from 'react';
 import intl from 'react-intl-universal';
-import StackLayout from '@ferlab/ui/core/layout/StackLayout';
-import { Tabs } from 'antd';
+import { Space, Tabs } from 'antd';
 import { MedicineBoxFilled } from '@ant-design/icons';
 import { ic_people } from 'react-icons-kit/md';
 import IconKit from 'react-icons-kit';
-
 import { GqlResults } from 'graphql/models';
 import { ExtendedMappingResults } from 'graphql/models';
 import { PatientResult } from 'graphql/patients/models/Patient';
 import { PrescriptionResult } from 'graphql/prescriptions/models/Prescription';
-
 import PatientsTable from './table/PatientsTable';
 import PrescriptionsTable from './table/PrescriptionsTable';
 import ContentHeader from './ContentHeader';
-
-import styles from './ContentContainer.module.scss';
 
 const { TabPane } = Tabs;
 
@@ -42,7 +37,7 @@ const ContentContainer = ({
   tabs,
   isLoading = false,
 }: PrescriptionResultsContainerProps): React.ReactElement => (
-  <StackLayout className={styles.containerLayout} vertical>
+  <Space direction="vertical" size={16}>
     <ContentHeader searchResults={searchResults} />
     <Tabs onChange={(v) => tabs.setCurrentTab(v as TableTabs)} type="card">
       <TabPane
@@ -55,9 +50,7 @@ const ContentContainer = ({
           </>
         }
       >
-        <StackLayout className={styles.tableContainer} vertical>
-          <PrescriptionsTable results={prescriptions} loading={isLoading} />
-        </StackLayout>
+        <PrescriptionsTable results={prescriptions} loading={isLoading} />
       </TabPane>
       <TabPane
         key={TableTabs.Patients}
@@ -68,12 +61,10 @@ const ContentContainer = ({
           </>
         }
       >
-        <StackLayout className={styles.tableContainer} vertical>
-          <PatientsTable results={patients} loading={isLoading} />
-        </StackLayout>
+        <PatientsTable results={patients} loading={isLoading} />
       </TabPane>
     </Tabs>
-  </StackLayout>
+  </Space>
 );
 
 export default ContentContainer;
