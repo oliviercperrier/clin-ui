@@ -97,6 +97,9 @@ const VariantPageContainer = ({ mappingResults }: VariantPageContainerData) => {
           MMG: intl.get('filters.options.MMG'),
           HYPM: intl.get('filters.options.HYPM'),
         },
+        chromosome: {
+          true: '1'
+        }
       },
     },
     actions: {
