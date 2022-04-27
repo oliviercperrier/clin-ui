@@ -248,6 +248,8 @@
   "screen.variantDetails.patientsTab.status": "Status",
   "screen.variantDetails.summaryTab.acmgCriteria.criteriaColumn": "Criteria",
   "screen.variantDetails.summaryTab.acmgCriteria.explanationColumn": "Explanation",
+  "screen.variantDetails.summaryTab.acmgCriteriaTitle": "Critères ACMG",
+  "screen.variantDetails.summaryTab.frequencyCardTitle": "Frequencies",
   "screen.variantDetails.summaryTab.consequencesTable.AAColumn": "AA",
   "screen.variantDetails.summaryTab.consequencesTable.CDNAChangeColumn": "CDNA Change",
   "screen.variantDetails.summaryTab.consequencesTable.ConsequenceColumn": "Consequence(s)",

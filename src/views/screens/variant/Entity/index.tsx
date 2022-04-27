@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation } from 'react-router';
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { Typography, Tag, Tabs, Skeleton, Button } from 'antd';
@@ -13,12 +12,10 @@ import ResumePanel from './SummaryPanel';
 import { GraphqlBackend } from 'providers/';
 import ApolloProvider from 'providers//apollo';
 import { useTabSummaryData } from 'graphql/variants/tabActions';
-import FrequencyPanel from 'views/screens/variant/Entity/FrequencyPanel';
-import ClinicalPanel from 'views/screens/variant/Entity/ClinicalPanel';
 import PatientPanel from 'views/screens/variant/Entity/PatientPanel';
 import history from 'utils/history';
 import { navigateTo } from 'utils/helper';
-import { BarChartOutlined, StockOutlined } from '@ant-design/icons';
+import { BarChartOutlined } from '@ant-design/icons';
 
 import styles from './index.module.scss';
 
@@ -111,33 +108,12 @@ const VariantEntityPage = ({ hash, tabid }: OwnProps) => {
         >
           <ResumePanel
             className={styles.pageContainer}
+            hash={hash}
             data={{
               loading: loading,
               variantData: data,
             }}
           />
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={
-            <span>
-              <StockOutlined height="16" width="16" />
-              {intl.get('screen.variantdetails.tab.frequencies')}
-            </span>
-          }
-          key={TAB_ID.FREQUENCY}
-        >
-          <FrequencyPanel className={styles.pageContainer} hash={hash} />
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={
-            <span>
-              <LibraryIcon height="16" width="16" />
-              {intl.get('screen.variantdetails.tab.clinicalAssociations')}
-            </span>
-          }
-          key={TAB_ID.CLINICAL}
-        >
-          <ClinicalPanel className={styles.pageContainer} hash={hash} />
         </Tabs.TabPane>
         <Tabs.TabPane
           tab={

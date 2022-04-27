@@ -249,6 +249,7 @@
   "screen.variantDetails.summaryTab.acmgCriteriaTable.criteriaColumn": "Critère",
   "screen.variantDetails.summaryTab.acmgCriteriaTable.explanationColumn": "Explications",
   "screen.variantDetails.summaryTab.acmgCriteriaTitle": "Critères ACMG",
+  "screen.variantDetails.summaryTab.frequencyCardTitle": "Fréquences",
   "screen.variantDetails.summaryTab.consequencesTable.AAColumn": "AA",
   "screen.variantDetails.summaryTab.consequencesTable.CDNAChangeColumn": "ADN codant",
   "screen.variantDetails.summaryTab.consequencesTable.ConsequenceColumn": "Conséquence",
