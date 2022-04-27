@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import intl from 'react-intl-universal';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { AutoComplete, Button, Col, Input, Row, Typography } from 'antd';
 import { GqlResults } from 'graphql/models';
 import { PatientResult } from 'graphql/patients/models/Patient';
@@ -42,7 +43,7 @@ const ContentHeader = ({
   const [filteredResults, setFilteredResults] = useState<PatientResult[]>([]);
 
   return (
-    <div className="content-header-wrapper">
+    <StackLayout horizontal>
       <AutoComplete
         allowClear
         autoFocus
@@ -94,7 +95,7 @@ const ContentHeader = ({
         <PlusOutlined />
         {intl.get(`screen.patient.creation.createPrescription`)}
       </Button>
-    </div>
+    </StackLayout>
   );
 };
 export default ContentHeader;
