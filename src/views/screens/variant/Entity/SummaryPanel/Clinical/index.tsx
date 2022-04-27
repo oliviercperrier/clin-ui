@@ -29,7 +29,7 @@ const ClinicalCard = ({ hash }: OwnProps) => {
   const genesHasRows = genesRows.length > 0;
 
   return (
-    <Space direction="vertical" className={styles.clinicalCard} size={12}>
+    <Space direction="vertical" className={styles.clinicalCard} size={16}>
       <Spin spinning={loading}>
         <CollapsePanel
           header={
