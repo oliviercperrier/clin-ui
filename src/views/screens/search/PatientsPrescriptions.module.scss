@@ -7,14 +7,6 @@
 .pageWrapper {
   height: calc(100vh - 59px);
   display: flex;
-
-  > div {
-    height: 100%;
-
-    &:last-child {
-      width: 100%;
-    }
-  }
 }
 
 .scrollContent {
