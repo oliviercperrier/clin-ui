@@ -36,7 +36,7 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
 
   return (
     <div className={cx(styles.resumePanelWrapper, className)}>
-      <Space direction="vertical" className={styles.resumePanel} size={16}>
+      <Space direction="vertical" className={styles.resumePanel} size="middle">
         <SummaryCard loading={data.loading} variant={variantData} genes={genes} />
         <Consequecenses data={data} />
         <ACMGCriteria data={data} />

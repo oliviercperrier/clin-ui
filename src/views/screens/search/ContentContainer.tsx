@@ -12,6 +12,8 @@ import PatientsTable from './table/PatientsTable';
 import PrescriptionsTable from './table/PrescriptionsTable';
 import ContentHeader from './ContentHeader';
 
+import "./ContentContainer.scss";
+
 const { TabPane } = Tabs;
 
 export enum TableTabs {
@@ -37,7 +39,7 @@ const ContentContainer = ({
   tabs,
   isLoading = false,
 }: PrescriptionResultsContainerProps): React.ReactElement => (
-  <Space direction="vertical" size={16}>
+  <Space direction="vertical" size="middle" className="content-container">
     <ContentHeader searchResults={searchResults} />
     <Tabs onChange={(v) => tabs.setCurrentTab(v as TableTabs)} type="card">
       <TabPane

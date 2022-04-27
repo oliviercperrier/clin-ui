@@ -75,6 +75,7 @@ const ContentHeader = ({
         onSelect={(id: string) => {
           redirectParent(`/patient/${id}`);
         }}
+        getPopupContainer={(trigger) => trigger.parentElement!}
         options={autoCompleteResults(filteredResults)}
         size="large"
       >
