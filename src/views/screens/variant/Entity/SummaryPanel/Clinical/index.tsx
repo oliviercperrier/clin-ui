@@ -29,61 +29,64 @@ const ClinicalCard = ({ hash }: OwnProps) => {
   const genesHasRows = genesRows.length > 0;
 
   return (
-    <Space direction="vertical" className={styles.clinicalCard} size={16}>
-      <Spin spinning={loading}>
-        <CollapsePanel
-          header={
-            <Title level={4}>
-              ClinVar{' '}
-              {clinvarId ? (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinvarId}`}
-                >
-                  {clinvarId}
-                </a>
-              ) : (
-                ''
-              )}
-            </Title>
-          }
-        >
-          {clinVarHasRows ? (
-            <Table
-              pagination={false}
-              dataSource={clinVarRows}
-              columns={columnsClinVar}
-              bordered
-              size="small"
-            />
-          ) : (
-            <NoData />
-          )}
-        </CollapsePanel>
-      </Spin>
-      <Spin spinning={loading}>
-        <CollapsePanel
-          header={
-            <Title level={4}>
-              {intl.get('screen.variantDetails.clinicalAssociationsTab.genePhenotype')}
-            </Title>
-          }
-        >
-          {genesHasRows ? (
-            <Table
-              bordered
-              pagination={false}
-              dataSource={genesRows}
-              columns={columnsPhenotypes}
-              size="small"
-            />
-          ) : (
-            <NoData />
-          )}
-        </CollapsePanel>
-      </Spin>
-    </Space>
+    <>
+      <Title level={3}>{intl.get('screen.variantDetails.summaryTab.clinicalCardTitle')}</Title>
+      <Space direction="vertical" className={styles.clinicalCard} size={16}>
+        <Spin spinning={loading}>
+          <CollapsePanel
+            header={
+              <Title level={4}>
+                ClinVar{' '}
+                {clinvarId ? (
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://www.ncbi.nlm.nih.gov/clinvar/variation/${clinvarId}`}
+                  >
+                    {clinvarId}
+                  </a>
+                ) : (
+                  ''
+                )}
+              </Title>
+            }
+          >
+            {clinVarHasRows ? (
+              <Table
+                pagination={false}
+                dataSource={clinVarRows}
+                columns={columnsClinVar}
+                bordered
+                size="small"
+              />
+            ) : (
+              <NoData />
+            )}
+          </CollapsePanel>
+        </Spin>
+        <Spin spinning={loading}>
+          <CollapsePanel
+            header={
+              <Title level={4}>
+                {intl.get('screen.variantDetails.clinicalAssociationsTab.genePhenotype')}
+              </Title>
+            }
+          >
+            {genesHasRows ? (
+              <Table
+                bordered
+                pagination={false}
+                dataSource={genesRows}
+                columns={columnsPhenotypes}
+                size="small"
+              />
+            ) : (
+              <NoData />
+            )}
+          </CollapsePanel>
+        </Spin>
+      </Space>
+    </>
   );
 };
 

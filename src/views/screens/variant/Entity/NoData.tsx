@@ -1,11 +1,10 @@
-import React from "react";
-import { Empty } from "antd";
+import Empty from "@ferlab/ui/core/components/Empty";
 import intl from "react-intl-universal";
 
 const NoData = () => (
   <Empty
-    image={Empty.PRESENTED_IMAGE_SIMPLE}
-    description={intl.get("screen.variantDetails.panel.emptyTable")}
+    imageType="grid"
+    description={intl.get("no.data.available")}
   />
 );
 
