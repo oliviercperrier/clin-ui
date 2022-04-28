@@ -5,5 +5,11 @@
 @btn-default-border: @blue-8;
 @btn-disable-bg: #F1F5F9;
 @btn-primary-bg: @blue-8;
+@btn-disable-border: @gray-5;
+
+.ant-btn-group .ant-btn-primary:last-child:not(:first-child)[disabled],
+.ant-btn-group .ant-btn-primary + .ant-btn-primacpry[disabled] {
+  border-left-color: @btn-disable-border;
+}
 
 .@{btn-prefix-cls} {}

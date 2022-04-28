@@ -5,6 +5,7 @@
   font-weight: 600;
   margin-bottom: 5px;
 }
+
 .searchIconsDisabled {
   color: $body-3;
 }
@@ -22,12 +23,5 @@
 .facetCollapse {
   &:not(:first-child) {
     margin-top: 8px;
-  }
-
-  :global {
-    .ant-collapse-header {
-      align-items: center !important;
-      font-weight: 500;
-    }
   }
 }
