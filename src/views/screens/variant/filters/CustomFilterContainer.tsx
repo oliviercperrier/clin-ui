@@ -82,7 +82,12 @@ const CustomFilterContainer = ({
         filters={filters}
         onChange={() => {}}
         selectedFilters={selectedFilters}
-        onSearchVisibleChange={setIsSearchVisible}
+        onSearchVisibleChange={(v) => {
+          setIsSearchVisible(v)
+        }}
+        collapseProps={{
+          headerBorderOnly: true
+        }}
         customContent={
           <CustomFilterSelector
             queryBuilderId={queryBuilderId}
