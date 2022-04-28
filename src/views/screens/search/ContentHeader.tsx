@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import intl from 'react-intl-universal';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-
 import StackLayout from '@ferlab/ui/core/layout/StackLayout';
-
 import { AutoComplete, Button, Col, Input, Row, Typography } from 'antd';
-import useFeatureToggle from 'hooks/useFeatureToggle';
-import { useDispatch } from 'react-redux';
-import { prescriptionFormActions } from 'store/prescription/slice';
-// import PatientCreation from 'components/screens/PatientCreation';
 import { GqlResults } from 'graphql/models';
 import { PatientResult } from 'graphql/patients/models/Patient';
 import { createPrescription } from 'utils/bridge';
 import { redirectParent } from 'utils/bridge';
+import useFeatureToggle from 'hooks/useFeatureToggle';
+import { useDispatch } from 'react-redux';
+import { prescriptionFormActions } from 'store/prescription/slice';
 
 import './ContentHeader.scss';
 
@@ -50,8 +47,6 @@ const ContentHeader = ({
   const { isEnabled } = useFeatureToggle('prescriptionV4');
   const [filteredResults, setFilteredResults] = useState<PatientResult[]>([]);
 
-  console.log(isEnabled)
-
   return (
     <StackLayout horizontal>
       <AutoComplete
@@ -85,6 +80,7 @@ const ContentHeader = ({
         onSelect={(id: string) => {
           redirectParent(`/patient/${id}`);
         }}
+        getPopupContainer={(trigger) => trigger.parentElement!}
         options={autoCompleteResults(filteredResults)}
         size="large"
       >

@@ -1,4 +1,3 @@
-import React from "react";
 import StackLayout from "@ferlab/ui/core/layout/StackLayout";
 import { Typography } from "antd";
 import intl from "react-intl-universal";
@@ -17,11 +16,11 @@ import {
   SingleValuedInheritance,
 } from "graphql/variants/models";
 import { DISPLAY_WHEN_EMPTY_DATUM } from "views/screens/variant/constants";
-import OmimConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/OmimConditionCell";
-import OrphanetConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/OrphanetConditionCell";
-import HpoConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/HpoConditionCell";
-import DddConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/DddConditionCell";
-import CosmicConditionCell from "views/screens/variant/Entity/ClinicalPanel/conditions/CosmicConditionCell";
+import OmimConditionCell from "views/screens/variant/Entity/SummaryPanel/Clinical/conditions/OmimConditionCell";
+import OrphanetConditionCell from "views/screens/variant/Entity/SummaryPanel/Clinical/conditions/OrphanetConditionCell";
+import HpoConditionCell from "views/screens/variant/Entity/SummaryPanel/Clinical/conditions/HpoConditionCell";
+import DddConditionCell from "views/screens/variant/Entity/SummaryPanel/Clinical/conditions/DddConditionCell";
+import CosmicConditionCell from "views/screens/variant/Entity/SummaryPanel/Clinical/conditions/CosmicConditionCell";
 
 const { Text } = Typography;
 

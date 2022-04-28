@@ -1,14 +1,15 @@
 .layout {
   display: flex;
-  flex-direction: row;
   height: 100vh;
+  width: 100%;
 }
 
 .pageWrapper {
   height: calc(100vh - 59px);
+  display: flex;
 }
 
 .scrollContent {
-  width: 100%;
   padding: 24px;
+  width: 100%;
 }

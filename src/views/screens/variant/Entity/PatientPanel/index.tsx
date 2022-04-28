@@ -99,6 +99,10 @@ const getPatientPanelColumns = (
         text: intl.get('screen.variantDetails.patientsTab.female'),
         value: 'female',
       },
+      {
+        text: intl.get('screen.variantDetails.patientsTab.unknown'),
+        value: 'unknown',
+      },
     ],
     onFilter: (value, record: DonorsEntity) => value === record.gender,
   },

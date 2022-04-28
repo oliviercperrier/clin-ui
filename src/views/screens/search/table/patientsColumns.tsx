@@ -53,10 +53,10 @@ export const patientsColumns = (): ProColumnType<ITablePatientResult>[] =>
       summary: false,
       title: (
         <Tooltip placement="topLeft" title={intl.get('standard.format.date')} arrowPointAtCenter>
-          {intl.get('screen.patientsearch.table.dateCreation')}
+          {intl.get('screen.patientsearch.table.dateModification')}
         </Tooltip>
       ),
-      displayTitle: intl.get('screen.patientsearch.table.dateCreation'),
+      displayTitle: intl.get('screen.patientsearch.table.dateModification'),
       render: (date: string) => formatDate(date),
     },
   ].map((c) => ({

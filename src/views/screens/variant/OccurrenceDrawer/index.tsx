@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Descriptions, Divider, Drawer, Space, Tooltip } from 'antd';
 import intl from 'react-intl-universal';
 import cx from 'classnames';
@@ -14,12 +14,12 @@ import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 import { ArrangerEdge } from 'graphql/models';
 import IGVModal from 'views/screens/variant/OccurrenceDrawer/IGVModal';
 import { removeUnderscoreAndCapitalize } from '@ferlab/ui/core/utils/stringUtils';
-
-import style from './index.module.scss';
 import { useRpt } from 'hooks/rpt';
 import ReportDownloadButton from './ReportDownloadButton';
 import capitalize from 'lodash/capitalize';
 import { HcComplementDescription } from './HcDescription';
+
+import style from './index.module.scss';
 
 interface OwnProps {
   patientId: string;
@@ -88,7 +88,7 @@ const OccurrenceDrawer = ({ patientId, data, opened = false, toggle }: OwnProps)
         className={cx(style.occurenceDrawer, 'occurenceDrawer')}
         getContainer={() => getTopBodyElement()}
       >
-        <Space size={24} direction="vertical">
+        <Space size="large" direction="vertical">
           <Descriptions column={1} className={cx(style.description, 'description')}>
             <Descriptions.Item label={'Variant'}>
               {variantId || DISPLAY_WHEN_EMPTY_DATUM}
