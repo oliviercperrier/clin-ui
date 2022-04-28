@@ -58,11 +58,11 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => {
                 {intl.get('screen.variantDetails.summaryTab.summaryTable.type')}
               </Text>
               <Text className={styles.contentValue}>
-                {variant
+                {variant?.variant_class
                   ? intl
                       .get(variant.variant_class)
                       .defaultMessage(capitalize(variant.variant_class))
-                  : '--'}
+                  : DISPLAY_WHEN_EMPTY_DATUM}
               </Text>
             </Row>
             <Row className={styles.row}>
@@ -70,9 +70,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => {
                 {intl.get('screen.variantDetails.summaryTab.summaryTable.cytoband')}
               </Text>
               <Text className={styles.contentValue}>
-                {genes && genes[0]
-                  ? genes[0].node.location || DISPLAY_WHEN_EMPTY_DATUM
-                  : DISPLAY_WHEN_EMPTY_DATUM}
+                {genes?.[0]?.node?.location || DISPLAY_WHEN_EMPTY_DATUM}
               </Text>
             </Row>
             <Row className={styles.row}>
