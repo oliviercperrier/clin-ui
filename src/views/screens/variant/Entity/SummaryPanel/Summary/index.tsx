@@ -7,6 +7,7 @@ import intl from 'react-intl-universal';
 import { formatTimestampToISODate } from 'utils/helper';
 import history from 'utils/history';
 import { ArrangerEdge } from 'graphql/models';
+import capitalize from 'lodash/capitalize';
 
 import styles from './index.module.scss';
 
@@ -17,10 +18,6 @@ interface OwnProps {
 }
 
 const { Text } = Typography;
-
-const translateType = (type: string) => {
-  return intl.get(type) ? intl.get(type) :type.charAt(0).toUpperCase() + type.slice(1);
-}
 
 const SummaryCard = ({ loading, variant, genes }: OwnProps) => {
   return (
@@ -61,7 +58,11 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => {
                 {intl.get('screen.variantDetails.summaryTab.summaryTable.type')}
               </Text>
               <Text className={styles.contentValue}>
-                {variant ? translateType(variant.variant_class) : '--'}
+                {variant
+                  ? intl
+                      .get(variant.variant_class)
+                      .defaultMessage(capitalize(variant.variant_class))
+                  : '--'}
               </Text>
             </Row>
             <Row className={styles.row}>
