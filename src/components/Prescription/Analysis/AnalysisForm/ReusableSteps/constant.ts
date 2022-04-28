@@ -1,3 +1,4 @@
+import { TCollapseProps } from '@ferlab/ui/core/components/Collapse';
 import { ValidateMessages } from 'rc-field-form/lib/interface';
 
 export enum STEPS_ID {
@@ -17,4 +18,10 @@ export const defaultFormItemsRules = [{ required: true, validateTrigger: 'onSumb
 
 export const defaultValidateMessages: ValidateMessages = {
   required: 'Ce champs est obligatoire',
+};
+export const defaultCollapseProps: TCollapseProps = {
+  size: 'small',
+  arrowIcon: 'caretFilled',
+  bordered: false,
+  theme: 'shade',
 };

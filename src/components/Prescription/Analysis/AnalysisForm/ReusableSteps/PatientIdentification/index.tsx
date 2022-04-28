@@ -1,4 +1,5 @@
-import { Collapse, Form, Space } from 'antd';
+import Collapse, { CollapsePanel } from '@ferlab/ui/core/components/Collapse';
+import { Form, Space } from 'antd';
 import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import PatientDataSearch, {
   IPatientDataType,
@@ -8,7 +9,7 @@ import { getNamePath } from 'components/Prescription/utils/form';
 import { IAnalysisStepForm } from 'components/Prescription/utils/type';
 import { useState } from 'react';
 import { usePrescriptionForm } from 'store/prescription';
-import { STEPS_ID } from '../constant';
+import { defaultCollapseProps, STEPS_ID } from '../constant';
 import AdditionalInformation, { ADD_INFO_FI_KEY, IAddInfoDataType } from './AdditionalInformation';
 
 import styles from './index.module.scss';
@@ -22,13 +23,13 @@ const PatientIdentification = ({}: IAnalysisStepForm) => {
   const [ramqSearchDone, setRamqSearchDone] = useState(false);
 
   const getName = (...key: string[]) => getNamePath(FORM_NAME, key);
-  const getInitialData = () => analysisData ? analysisData[FORM_NAME] : undefined;
+  const getInitialData = () => (analysisData ? analysisData[FORM_NAME] : undefined);
 
   return (
     <AnalysisForm form={form} className={styles.patientIdentificationForm} name={FORM_NAME}>
       <Space direction="vertical" className={styles.formContentWrapper}>
-        <Collapse bordered={false} defaultActiveKey={['patient']}>
-          <Collapse.Panel key="patient" header="Patient">
+        <Collapse {...defaultCollapseProps} defaultActiveKey={['patient']}>
+          <CollapsePanel key="patient" header="Patient">
             <PatientDataSearch
               form={form}
               parentKey={FORM_NAME}
@@ -44,20 +45,20 @@ const PatientIdentification = ({}: IAnalysisStepForm) => {
                 ]);
               }}
             />
-          </Collapse.Panel>
+          </CollapsePanel>
         </Collapse>
         <Form.Item noStyle shouldUpdate>
           {({ getFieldValue }) =>
             getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ)) || ramqSearchDone ? (
-              <Collapse bordered={false} defaultActiveKey={['additional_information']}>
-                <Collapse.Panel key="additional_information" header="Information supplémentaires">
+              <Collapse {...defaultCollapseProps} defaultActiveKey={['additional_information']}>
+                <CollapsePanel key="additional_information" header="Information supplémentaires">
                   <AdditionalInformation
                     form={form}
                     parentKey={FORM_NAME}
                     showNewBornSection={getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))}
                     initialData={getInitialData()}
                   />
-                </Collapse.Panel>
+                </CollapsePanel>
               </Collapse>
             ) : null
           }

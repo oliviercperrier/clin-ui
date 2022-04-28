@@ -1,13 +1,7 @@
 @collapse-header-bg: @gray-1;
 @collapse-content-padding: 16px;
 
-.@{collapse-prefix-cls} {
-  border-color: @gray-4;
-
-  &-content {
-    border-top: 1px solid @gray-4 !important;
-  }
-
+.@{collapse-prefix-cls} {  
   &-content-box {
     padding: @collapse-content-padding !important;
   }
@@ -30,7 +24,11 @@
     border-color: @gray-5;
 
     &:last-child {
-      border-radius: 2px;
+      border-radius: 2px; 
+
+      >.@{collapse-prefix-cls}-header {
+        border-radius: 2px;
+      }
     }
 
     > .@{collapse-prefix-cls}-header {

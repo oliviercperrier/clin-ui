@@ -1,4 +1,4 @@
-import { Collapse, Form, Input, Radio, Space, Typography } from 'antd';
+import { Form, Input, Radio, Space, Typography } from 'antd';
 import {
   checkShouldUpdate,
   getNamePath,
@@ -7,7 +7,7 @@ import {
 } from 'components/Prescription/utils/form';
 import { IAnalysisStepForm, IGetNamePathParams } from 'components/Prescription/utils/type';
 import { usePrescriptionForm } from 'store/prescription';
-import { defaultFormItemsRules, STEPS_ID } from '../constant';
+import { defaultCollapseProps, defaultFormItemsRules, STEPS_ID } from '../constant';
 import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import PatientDataSearch, {
   IPatientDataType,
@@ -20,6 +20,7 @@ import intl from 'react-intl-universal';
 import { useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import cx from 'classnames';
+import Collapse, { CollapsePanel } from '@ferlab/ui/core/components/Collapse';
 
 import styles from './index.module.scss';
 
@@ -128,8 +129,8 @@ const ParentIdentification = ({ parent }: OwnProps) => {
           getFieldValue(getName(PARENT_DATA_FI_KEY.ENTER_INFO_MOMENT)) ===
           EnterInfoMomentValue.NOW ? (
             <Space direction="vertical" className={styles.formContentWrapper}>
-              <Collapse bordered={false} defaultActiveKey={[parent]}>
-                <Collapse.Panel
+              <Collapse {...defaultCollapseProps} defaultActiveKey={[parent]}>
+                <CollapsePanel
                   key={parent}
                   header={intl.get(`prescription.parent.info.title.${parent}`)}
                 >
@@ -141,7 +142,7 @@ const ParentIdentification = ({ parent }: OwnProps) => {
                     initialRamqSearchDone={ramqSearchDone}
                     onResetRamq={() => {}}
                   />
-                </Collapse.Panel>
+                </CollapsePanel>
               </Collapse>
             </Space>
           ) : null
@@ -162,8 +163,8 @@ const ParentIdentification = ({ parent }: OwnProps) => {
             EnterInfoMomentValue.NOW &&
             getFieldValue(getName(PATIENT_DATA_FI_KEY.NO_RAMQ))) ||
           ramqSearchDone ? (
-            <Collapse bordered={false} defaultActiveKey={['clinical_information']}>
-              <Collapse.Panel
+            <Collapse {...defaultCollapseProps} defaultActiveKey={['clinical_information']}>
+              <CollapsePanel
                 key="clinical_information"
                 header={intl.get(`prescription.parent.info.clinical.title.${parent}`)}
               >
@@ -192,7 +193,7 @@ const ParentIdentification = ({ parent }: OwnProps) => {
                     initialData={getInitialData()}
                   />
                 )}
-              </Collapse.Panel>
+              </CollapsePanel>
             </Collapse>
           ) : null
         }

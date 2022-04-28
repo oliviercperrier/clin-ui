@@ -1,12 +1,16 @@
-import { Collapse, Form } from 'antd';
+import { Form } from 'antd';
 import { usePrescriptionForm } from 'store/prescription';
 import AnalysisForm from 'components/Prescription/Analysis/AnalysisForm';
 import { FormOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { prescriptionFormActions } from 'store/prescription/slice';
-import { STEPS_ID } from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
+import {
+  defaultCollapseProps,
+  STEPS_ID,
+} from 'components/Prescription/Analysis/AnalysisForm/ReusableSteps/constant';
 import { SubmissionStepMapping } from 'components/Prescription/Analysis/stepMapping';
 import PrescriptionSummary from 'components/Prescription/AddParentModal/PrescriptionSummary';
+import Collapse, { CollapsePanel } from '@ferlab/ui/core/components/Collapse';
 
 import styles from './index.module.scss';
 
@@ -32,21 +36,24 @@ const AddParentSubmission = () => {
       }}
     >
       <Form.Item>
-        <Collapse defaultActiveKey={['prescription_summary']}>
-          <Collapse.Panel key={'prescription_summary'} header="Informations sur l'analyse">
+        <Collapse {...defaultCollapseProps} defaultActiveKey={['prescription_summary']}>
+          <CollapsePanel key={'prescription_summary'} header="Informations sur l'analyse">
             <PrescriptionSummary />
-          </Collapse.Panel>
+          </CollapsePanel>
         </Collapse>
       </Form.Item>
       <Form.Item
         label={'Veuillez vérifier les informations ci-dessous avant de soumettre le formulaire.'}
         className="noMarginBtm"
       >
-        <Collapse defaultActiveKey={[...(config?.steps.map(({ title }) => title) ?? [])]}>
+        <Collapse
+          {...defaultCollapseProps}
+          defaultActiveKey={[...(config?.steps.map(({ title }) => title) ?? [])]}
+        >
           {config?.steps
             .filter(({ title }) => title !== currentStep?.title)
             .map((step) => (
-              <Collapse.Panel
+              <CollapsePanel
                 key={step.title}
                 header={step.title}
                 extra={
@@ -64,7 +71,7 @@ const AddParentSubmission = () => {
                 }
               >
                 {SubmissionStepMapping[step.id]}
-              </Collapse.Panel>
+              </CollapsePanel>
             ))}
         </Collapse>
       </Form.Item>
