@@ -14,7 +14,11 @@
     border-color: @gray-5;
 
     &:last-child {
-      border-radius: 2px;
+      border-radius: 2px; 
+
+      >.@{collapse-prefix-cls}-header {
+        border-radius: 2px;
+      }
     }
 
     > .@{collapse-prefix-cls}-header {
