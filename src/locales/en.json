@@ -147,7 +147,7 @@
   "screen.patient.tab.prescriptions": "Prescriptions",
   "screen.patientsearch.placeholder": "MRN, Health Insurance Number, Name, FirstName, Patient ID",
   "screen.patientsearch.table.date": "Date",
-  "screen.patientsearch.table.dateCreation": "Creation date",
+  "screen.patientsearch.table.dateModification": "Creation date",
   "screen.patientsearch.table.dob": "Date of Birth",
   "screen.patientsearch.table.establishment": "Establishment",
   "screen.patientsearch.table.gender": "Gender",
