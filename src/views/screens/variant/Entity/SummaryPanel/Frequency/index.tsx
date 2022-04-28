@@ -1,24 +1,19 @@
-import React from 'react';
-import cx from 'classnames';
-import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { useTabFrequenciesData } from 'graphql/variants/tabActions';
 import intl from 'react-intl-universal';
-import { Card, Table, Spin, Space, Tooltip } from 'antd';
+import { Table, Spin, Space, Tooltip, Typography } from 'antd';
 import {
   BoundType,
   ExternalFrequenciesEntity,
   FrequencyByAnalysisEntity,
 } from 'graphql/variants/models';
-import ServerError from 'components/Results/ServerError';
-import NoData from 'views/screens/variant/Entity/NoData';
 import { ArrangerEdge } from 'graphql/models';
 import { toExponentialNotation } from 'utils/helper';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
+import CollapsePanel from 'components/containers/collapse';
 
 import styles from './index.module.scss';
 
 interface OwnProps {
-  className?: string;
   hash: string;
 }
 
@@ -224,12 +219,10 @@ const isExternalFreqTableEmpty = (rows: ExternalFreqRow[]) =>
     ({ cohort, key, ...visibleRow }: ExternalFreqRow) => !Object.values(visibleRow).some((e) => e),
   );
 
-const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
-  const { loading, data, error } = useTabFrequenciesData(hash);
+const { Title } = Typography;
 
-  if (error) {
-    return <ServerError />;
-  }
+const FrequencyCard = ({ hash }: OwnProps) => {
+  const { loading, data } = useTabFrequenciesData(hash);
 
   let frequencies_by_analysis = makeRows(data.frequencies_by_analysis);
   frequencies_by_analysis.push({
@@ -242,45 +235,33 @@ const FrequencyPanel = ({ hash, className = '' }: OwnProps) => {
   const hasEmptyCohorts = isExternalFreqTableEmpty(externalCohortsRows);
 
   return (
-    <div className={cx(styles.frequencyPanelWrapper, className)}>
-      <Space direction="vertical" className={styles.frequencyPanel} size={12}>
-        <Spin spinning={loading}>
-          <Card
-            title={intl.get('screen.variant.entity.frequencyTab.card.title', {
-              variant: data.locus,
-            })}
-          >
-            {true ? (
-              <Table
-                bordered
-                size="small"
-                dataSource={frequencies_by_analysis}
-                columns={freqByAnalysisColumns}
-                pagination={false}
-              />
-            ) : (
-              <NoData />
-            )}
-          </Card>
-        </Spin>
-        <Spin spinning={loading}>
-          <Card title={intl.get('screen.variantDetails.summaryTab.externalCohortsTable.title')}>
-            {!hasEmptyCohorts ? (
-              <Table
-                bordered
-                size="small"
-                dataSource={externalCohortsRows}
-                columns={externalFreqColumns}
-                pagination={false}
-              />
-            ) : (
-              <NoData />
-            )}
-          </Card>
-        </Spin>
-      </Space>
-    </div>
+    <CollapsePanel
+      header={
+        <Title level={4}>{intl.get('screen.variantDetails.summaryTab.frequencyCardTitle')}</Title>
+      }
+    >
+      <Spin spinning={loading}>
+        <Space direction="vertical" className={styles.frequencyCard} size={24}>
+          <Table
+            bordered
+            size="small"
+            dataSource={frequencies_by_analysis}
+            columns={freqByAnalysisColumns}
+            pagination={false}
+          />
+          {!hasEmptyCohorts ? (
+            <Table
+              bordered
+              size="small"
+              dataSource={externalCohortsRows}
+              columns={externalFreqColumns}
+              pagination={false}
+            />
+          ) : null}
+        </Space>
+      </Spin>
+    </CollapsePanel>
   );
 };
 
-export default FrequencyPanel;
+export default FrequencyCard;

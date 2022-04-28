@@ -1,16 +1,18 @@
 import cx from 'classnames';
-import StackLayout from '@ferlab/ui/core/layout/StackLayout';
 import { Space } from 'antd';
 import { GeneEntity, VariantEntity } from 'graphql/variants/models';
 import SummaryCard from 'views/screens/variant/Entity/SummaryPanel/Summary';
 import { ArrangerResultsTree } from 'graphql/models';
 import Consequecenses from './Consequences';
 import ACMGCriteria from './AcmgCriteria';
+import FrequencyCard from './Frequency';
 
 import styles from './index.module.scss';
+import ClinicalCard from './Clinical';
 
 interface OwnProps {
   className?: string;
+  hash: string;
   data: {
     loading: boolean;
     variantData: VariantEntity | null;
@@ -30,7 +32,7 @@ export const shortToLongPrediction: Record<string, string> = {
   'lrt.u': 'unknown',
 };
 
-const ResumePanel = ({ data, className = '' }: OwnProps) => {
+const ResumePanel = ({ data, hash, className = '' }: OwnProps) => {
   const variantData = data.variantData;
   const genes = (variantData?.genes as ArrangerResultsTree<GeneEntity>)?.hits.edges;
 
@@ -40,6 +42,8 @@ const ResumePanel = ({ data, className = '' }: OwnProps) => {
         <SummaryCard loading={data.loading} variant={variantData} genes={genes} />
         <Consequecenses data={data} />
         <ACMGCriteria data={data} />
+        <FrequencyCard hash={hash} />
+        <ClinicalCard hash={hash} />
       </Space>
     </div>
   );
