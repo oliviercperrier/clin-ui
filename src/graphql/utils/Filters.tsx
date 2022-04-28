@@ -77,6 +77,9 @@ export const generateFilters = ({
           isOpen={filtersOpen}
           filterGroup={filterGroup}
           filters={filters}
+          collapseProps={{
+            headerBorderOnly: true,
+          }}
           onChange={(fg, f) =>
             updateActiveQueryFilters({
               queryBuilderId,
