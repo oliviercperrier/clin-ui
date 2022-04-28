@@ -14,6 +14,7 @@ import { useGlobals } from 'store/global';
 import { useKeycloak } from '@react-keycloak/web';
 import Spinner from 'components/uiKit/Spinner';
 import { useEffect } from 'react';
+import Empty from '@ferlab/ui/core/components/Empty';
 
 const { store, persistor } = getStoreConfig();
 
@@ -21,7 +22,7 @@ persistor.subscribe(function () {
   intl.init({
     currentLocale: store.getState().global.lang || LANG.EN,
     locales,
-    warningHandler: () => ""
+    warningHandler: () => '',
   });
 });
 
@@ -38,7 +39,10 @@ const App = () => {
   }, [keycloakIsReady, keycloak]);
 
   return (
-    <ConfigProvider locale={lang === LANG.FR ? frFR : enUS}>
+    <ConfigProvider
+      locale={lang === LANG.FR ? frFR : enUS}
+      renderEmpty={() => <Empty imageType="grid" />}
+    >
       <div className="App">{keycloakIsReady ? <Router /> : <Spinner size="small" />}</div>
     </ConfigProvider>
   );
