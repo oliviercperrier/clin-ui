@@ -82,9 +82,7 @@ const CustomFilterContainer = ({
         filters={filters}
         onChange={() => {}}
         selectedFilters={selectedFilters}
-        onSearchVisibleChange={(v) => {
-          setIsSearchVisible(v)
-        }}
+        onSearchVisibleChange={setIsSearchVisible}
         collapseProps={{
           headerBorderOnly: true
         }}
