@@ -21,6 +21,7 @@ persistor.subscribe(function () {
   intl.init({
     currentLocale: store.getState().global.lang || LANG.EN,
     locales,
+    warningHandler: () => ""
   });
 });
 

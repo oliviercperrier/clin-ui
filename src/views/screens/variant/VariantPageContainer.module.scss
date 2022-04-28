@@ -8,7 +8,7 @@
     // must check why antd.css is override QueryPills.module.scss from ferlab
     // this doesn't happend in other projects
     :global(div[class*="QueryPill_filtersDropdown"]) {
-      padding: 8px 16px;
+      padding: 16px 16px 8px 16px;
     }
   }
 
