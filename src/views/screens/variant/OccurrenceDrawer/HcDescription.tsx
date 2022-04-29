@@ -5,11 +5,13 @@ import {
   PossiblyHcComplementHits,
 } from 'graphql/variants/models';
 import { Button, Space, Tooltip, Typography } from 'antd';
+import cx from 'classnames';
 import { extractHits } from 'graphql/utils/query';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
 import intl from 'react-intl-universal';
 import { addQuery } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import { VARIANT_QB_ID } from '../constants';
+import style from './index.module.scss';
 
 type Props = {
   variantId: string;
@@ -56,6 +58,7 @@ export const HcComplementDescription = ({ defaultText, hcComplements, variantId 
           >
             <Button
               type="link"
+              className={cx(style.hcCountLink, 'hcCountLink')}
               onClick={() =>
                 addQuery({
                   queryBuilderId: VARIANT_QB_ID,
