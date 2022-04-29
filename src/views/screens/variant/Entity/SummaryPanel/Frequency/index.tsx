@@ -10,9 +10,10 @@ import { ArrangerEdge } from 'graphql/models';
 import { toExponentialNotation } from 'utils/helper';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
 import CollapsePanel from 'components/containers/collapse';
+import { isEmpty } from 'lodash';
+import NoData from 'views/screens/variant/Entity/NoData';
 
 import styles from './index.module.scss';
-
 interface OwnProps {
   hash: string;
 }
@@ -235,32 +236,47 @@ const FrequencyCard = ({ hash }: OwnProps) => {
   const hasEmptyCohorts = isExternalFreqTableEmpty(externalCohortsRows);
 
   return (
-    <CollapsePanel
-      header={
-        <Title level={4}>{intl.get('screen.variantDetails.summaryTab.frequencyCardTitle')}</Title>
-      }
-    >
-      <Spin spinning={loading}>
-        <Space direction="vertical" className={styles.frequencyCard} size={24}>
-          <Table
-            bordered
-            size="small"
-            dataSource={frequencies_by_analysis}
-            columns={freqByAnalysisColumns}
-            pagination={false}
-          />
-          {!hasEmptyCohorts ? (
-            <Table
-              bordered
-              size="small"
-              dataSource={externalCohortsRows}
-              columns={externalFreqColumns}
-              pagination={false}
-            />
-          ) : null}
-        </Space>
-      </Spin>
-    </CollapsePanel>
+    <>
+      <Title level={3}>{intl.get('screen.variantDetails.summaryTab.frequencyCardTitle')}</Title>
+      <Space direction="vertical" className={styles.frequencyCard} size={16}>
+        <CollapsePanel
+          header={<Title level={4}>{intl.get('screen.variantDetails.summaryTab.rqdmTitle')}</Title>}
+        >
+          <Spin spinning={loading}>
+            {isEmpty(frequencies_by_analysis) ? (
+              <Table
+                bordered
+                size="small"
+                dataSource={frequencies_by_analysis}
+                columns={freqByAnalysisColumns}
+                pagination={false}
+              />
+            ) : (
+              <NoData />
+            )}
+          </Spin>
+        </CollapsePanel>
+        <CollapsePanel
+          header={
+            <Title level={4}>{intl.get('screen.variantDetails.summaryTab.cohortTitle')}</Title>
+          }
+        >
+          <Spin spinning={loading}>
+            {!hasEmptyCohorts ? (
+              <Table
+                bordered
+                size="small"
+                dataSource={externalCohortsRows}
+                columns={externalFreqColumns}
+                pagination={false}
+              />
+            ) : (
+              <NoData />
+            )}
+          </Spin>
+        </CollapsePanel>
+      </Space>
+    </>
   );
 };
 

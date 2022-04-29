@@ -2,7 +2,7 @@ import { Space, Spin, Table, Tag, Typography } from 'antd';
 import intl from 'react-intl-universal';
 import { VariantEntity } from 'graphql/variants/models';
 import CollapsePanel from 'components/containers/collapse';
-import NoData from '../NoData';
+import NoData from 'views/screens/variant/Entity/NoData'
 
 const { Title } = Typography;
 
@@ -64,15 +64,15 @@ type Props = {
   };
 };
 
-const Header = () => (
-  <Title level={4}>{intl.get('screen.variantDetails.summaryTab.acmgCriteriaTitle')}</Title>
-);
-
 const ACMGCriteria = ({ data }: Props) => {
   const formattedDate = formatData(data.variantData) || [];
 
   return (
-    <CollapsePanel header={<Header />}>
+    <CollapsePanel
+      header={
+        <Title level={4}>{intl.get('screen.variantDetails.summaryTab.acmgCriteriaTitle')}</Title>
+      }
+    >
       <Spin spinning={data.loading}>
         {formattedDate.length > 0 ? (
           <Table
