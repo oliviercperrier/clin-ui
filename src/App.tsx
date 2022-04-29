@@ -41,7 +41,7 @@ const App = () => {
   return (
     <ConfigProvider
       locale={lang === LANG.FR ? frFR : enUS}
-      renderEmpty={() => <Empty imageType="grid" />}
+      renderEmpty={() => <Empty imageType="grid" description={intl.get('no.data.available')} />}
     >
       <div className="App">{keycloakIsReady ? <Router /> : <Spinner size="small" />}</div>
     </ConfigProvider>
