@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { useLocation } from 'react-router';
 import { Card, Col, Divider, Row, Spin, Typography } from 'antd';
 import { GeneEntity, VariantEntity } from 'graphql/variants/models';
 import { DISPLAY_WHEN_EMPTY_DATUM } from 'views/screens/variant/constants';
@@ -20,6 +21,8 @@ interface OwnProps {
 const { Text } = Typography;
 
 const SummaryCard = ({ loading, variant, genes }: OwnProps) => {
+  const location = useLocation();
+  const patientId = new URLSearchParams(location.search).get('patientid');
   return (
     <Card className={styles.summaryCard}>
       <Spin spinning={loading}>
@@ -120,7 +123,7 @@ const SummaryCard = ({ loading, variant, genes }: OwnProps) => {
             <Row className={styles.row}>
               <Text className={styles.contentTitle}>Patients</Text>
               <Text className={styles.contentValue}>
-                <a onClick={() => history.push(`/variant/entity/${variant?.hash}/patients`)}>
+                <a onClick={() => history.push(`/variant/entity/${variant?.hash}/patients?patientid=${patientId}`)}>
                   {variant?.frequency_RQDM.total.pn}
                 </a>
                 /{variant?.frequency_RQDM.total.an}
