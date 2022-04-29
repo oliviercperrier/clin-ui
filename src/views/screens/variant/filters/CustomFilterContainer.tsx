@@ -31,13 +31,12 @@ const CustomFilterContainer = ({
     (f: ExtendedMapping) => f.field === underscoreToDot(filterKey),
   );
 
-  const onChange = (fg: IFilterGroup, f: IFilter[]) => {
+  const onChange = (fg: IFilterGroup, f: IFilter[]) =>
     updateActiveQueryFilters({
       queryBuilderId,
       filterGroup: fg,
       selectedFilters: f,
     });
-  };
 
   const aggregations = results?.aggregations ? results?.aggregations[filterKey] : {};
   const filterGroup = getFilterGroup(found, aggregations, [], true);
@@ -84,7 +83,7 @@ const CustomFilterContainer = ({
         selectedFilters={selectedFilters}
         onSearchVisibleChange={setIsSearchVisible}
         collapseProps={{
-          headerBorderOnly: true
+          headerBorderOnly: true,
         }}
         customContent={
           <CustomFilterSelector
