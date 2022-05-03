@@ -207,6 +207,7 @@
   "screen.patientvariant.category_metric": "Metrics",
   "screen.patientvariant.category_occurrence": "Occurrence",
   "screen.patientvariant.category_pathogenicity": "Pathogenicity",
+  "screen.patientvariant.category_rqdm": "RQDM",
   "screen.patientvariant.category_variant": "Variant",
   "screen.patientvariant.drawer.affected": "Affected",
   "screen.patientvariant.drawer.allprof": "Allegic depth ALT",

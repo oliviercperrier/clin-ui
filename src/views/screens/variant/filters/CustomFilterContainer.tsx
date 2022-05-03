@@ -76,7 +76,7 @@ const CustomFilterContainer = ({
     <div className={classname} key={`${filterKey}_${filtersOpen}`}>
       <FilterContainer
         maxShowing={5}
-        isOpen={filtersOpen}
+        isOpen={filterKey === 'panels' ? true : filtersOpen}
         filterGroup={filterGroup}
         filters={filters}
         onChange={() => {}}
