@@ -11,6 +11,7 @@ import GeneIcon from 'components/icons/GeneIcon';
 import DiseaseIcon from 'components/icons/DiseaseIcon';
 import FrequencyIcon from 'components/icons/FrequencyIcon';
 import OccurenceIcon from 'components/icons/OccurenceIcon';
+import RqdmIcon from 'components/icons/RqdmIcon';
 import VariantPageContainer from 'views/screens/variant/VariantPageContainer';
 import { Spin } from 'antd';
 import { MappingResults, useGetVariantExtendedMappings } from 'graphql/variants/actions';
@@ -19,6 +20,7 @@ import { VARIANT_QB_ID } from './constants';
 import styles from './VariantSearchPage.module.scss';
 
 enum FilterTypes {
+  Rqdm,
   Variant,
   Gene,
   Pathogenicity,
@@ -29,6 +31,14 @@ enum FilterTypes {
 const filterGroups: {
   [type: string]: FilterInfo;
 } = {
+  [FilterTypes.Rqdm]: {
+    groups: [
+      {
+        title: 'screen.patientvariant.filter.grouptitle.genepanel',
+        fields: ['panels'],
+      },
+    ],
+  },
   [FilterTypes.Variant]: {
     groups: [
       {
@@ -50,11 +60,10 @@ const filterGroups: {
   },
   [FilterTypes.Gene]: {
     groups: [
-      { fields: ['consequences__biotype', 'gene_external_reference'] },
       {
-        title: 'screen.patientvariant.filter.grouptitle.genepanel',
         fields: [
-          'panels',
+          'consequences__biotype',
+          'gene_external_reference',
           'genes__hpo__hpo_term_label',
           'genes__orphanet__panel',
           'genes__omim__name',
@@ -163,30 +172,36 @@ const VariantSearchPage = (): React.ReactElement => {
   const menuItems: ISidebarMenuItem[] = [
     {
       key: '1',
+      title: intl.get('screen.patientvariant.category_rqdm'),
+      icon: <RqdmIcon className={styles.sideMenuIcon} />,
+      panelContent: filtersContainer(variantMappingResults, FilterTypes.Rqdm),
+    },
+    {
+      key: '2',
       title: intl.get('screen.patientvariant.category_variant'),
       icon: <LineStyleIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(variantMappingResults, FilterTypes.Variant),
     },
     {
-      key: '2',
+      key: '3',
       title: intl.get('screen.patientvariant.category_genomic'),
       icon: <GeneIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(variantMappingResults, FilterTypes.Gene),
     },
     {
-      key: '3',
+      key: '4',
       title: intl.get('screen.patientvariant.category_cohort'),
       icon: <FrequencyIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(variantMappingResults, FilterTypes.Frequency),
     },
     {
-      key: '4',
+      key: '5',
       title: intl.get('screen.patientvariant.category_pathogenicity'),
       icon: <DiseaseIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(variantMappingResults, FilterTypes.Pathogenicity),
     },
     {
-      key: '5',
+      key: '6',
       title: intl.get('screen.patientvariant.category_occurrence'),
       icon: <OccurenceIcon className={styles.sideMenuIcon} />,
       panelContent: filtersContainer(variantMappingResults, FilterTypes.Occurrence),
