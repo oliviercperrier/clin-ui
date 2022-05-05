@@ -244,6 +244,8 @@ const FrequencyCard = ({ hash }: OwnProps) => {
         >
           <Spin spinning={loading}>
             {isEmpty(frequencies_by_analysis) ? (
+              <NoData />
+            ) : (
               <Table
                 bordered
                 size="small"
@@ -251,8 +253,6 @@ const FrequencyCard = ({ hash }: OwnProps) => {
                 columns={freqByAnalysisColumns}
                 pagination={false}
               />
-            ) : (
-              <NoData />
             )}
           </Spin>
         </CollapsePanel>
